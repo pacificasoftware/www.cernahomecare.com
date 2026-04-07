@@ -1,0 +1,47 @@
+.footer {
+    background: #004870;
+    color: #ffffff;
+    margin-top: 3rem;
+    padding-top: 28px;
+}
+
+.inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1.25rem 1.5rem;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+    .links a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+        .links a:hover {
+            color: #d6b08c;
+        }
+
+.divider {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.copyRow {
+    background: #003654; /* darker blue */
+    padding: 0.85rem 1.5rem;
+    text-align: center;
+}
+
+.copy {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.92);
+}
