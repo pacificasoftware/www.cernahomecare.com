@@ -12,51 +12,58 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 32px;
 }
 
 .logoLink {
     display: flex;
     align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
 }
 
 .logo {
     display: block;
-    max-width: 200px;
-    height: auto;
-}
-
-.mainNav ul {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-    .mainNav ul li a.active {
-        color: #3c80d9;
-    }
-
-.mainNav a {
-    height: 124px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
     color: #004870;
-    font-size: 18px;
+    font-size: 28px;
     font-weight: 700;
-    letter-spacing: 0.02em;
-    transition: color 0.2s ease;
+    line-height: 1;
+    white-space: nowrap;
 }
 
-    .mainNav a:hover {
-        color: #3c80d9;
+.mainNav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+    .mainNav ul {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
     }
+
+    .mainNav a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #004870;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        transition: color 0.2s ease;
+        white-space: nowrap;
+    }
+
+        .mainNav a:hover {
+            color: #3c80d9;
+        }
 
 .active {
-    color: #c49a6c;
+    color: #3c80d9;
 }
 
 .callBtn {
@@ -67,4 +74,11 @@
     border-radius: 6px;
     font-weight: 700;
     white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: block;
+    max-width: 200px;
+    height: auto;
 }

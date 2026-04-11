@@ -1,70 +1,464 @@
-﻿"use client";
-
-import React from "react";
-import Image from "next/image";
-import { Roboto } from "next/font/google";
-import styles from "./home.module.css";
+﻿ 
  
+import { Roboto } from "next/font/google";
+import styles from "./home.module.css"; 
+import Image from "next/image";
+import Link from "next/link";
 
-const roboto = Roboto({
-    subsets: ["latin"],
-    weight: ["300", "400", "700"],
-    display: "swap",
-});
+const services = [
+    { title: "Companionship", icon: "💙" },
+    { title: "Appointments", icon: "📅" },
+    { title: "Bathing", icon: "🛁" },
+    { title: "Cooking", icon: "🍽️" },
+    { title: "Dressing", icon: "👕" },
+    { title: "Errands", icon: "🚗" },
+    { title: "Exercise", icon: "🏃" },
+    { title: "Grooming", icon: "✨" },
+    { title: "Laundry", icon: "🧺" },
+    { title: "Medical Help", icon: "🛡️" },
+    { title: "Mobility", icon: "🤝" },
+    { title: "Pets", icon: "🐾" },
+];
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-       
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+const carePlanItems = [
+    "Companionship",
+    "Appointments",
+    "Bathing",
+    "Cooking",
+    "Dressing",
+    "Errands",
+    "Exercise",
+    "Grooming",
+    "Laundry",
+    "Medical Help",
+    "Mobility",
+    "Pets",
+    "Showering",
+    "Toileting",
+    "Transferring",
+    "Transportation",
+];
+
+const testimonials = [
+    {
+        quote:
+            "Cerna gave our family peace of mind. The caregivers were warm, dependable, and truly attentive.",
+        name: "Family in Orange County",
+    },
+    {
+        quote:
+            "From the first consultation to daily care, everything felt thoughtful and professional.",
+        name: "Client Family",
+    },
+    {
+        quote:
+            "The care plan felt personalized from day one. We immediately felt supported.",
+        name: "Daughter of Client",
+    },
+];
+
+const steps = [
+    {
+        title: "Contact Us for a Consultation",
+        body: "Tell us about your needs and schedule a free in-home assessment with our team.",
+    },
+    {
+        title: "We Design a Custom Care Plan",
+        body: "We create a care plan tailored to your loved one’s routines, preferences, and level of support.",
+    },
+    {
+        title: "Meet Your Professional Caregiver",
+        body: "We match you with a courteous, punctual caregiver focused on comfort, safety, and consistency.",
+    },
+];
+
+function SectionHeading({
+    eyebrow,
+    title,
+    description,
+}: {
+    eyebrow?: string;
+    title: string;
+    description?: string;
+}) {
+    return (
+        <div className="mx-auto max-w-3xl text-center">
+            {eyebrow ? (
+                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
+                    {eyebrow}
+                </p>
+            ) : null}
+            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-5xl">
+                {title}
+            </h2>
+            {description ? (
+                <p className="mt-5 text-lg leading-8 text-slate-600">{description}</p>
+            ) : null}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+    );
+}
+
+export default function CernaHomePage() {
+    return (
+
+        <div className="flex min-h-screen flex-col">
+            <main className="flex-1 bg-white text-slate-900">
+              
+
+                <section>
+                    <div style={{ position: "relative", height: "820px", width: "100%" }}>
+                        <Image
+                            src="/assets/cerna-homecare.jpg"
+                            alt="Cerna — caring for seniors"
+                            fill
+                            priority
+                            sizes="100vw"
+                            quality={100}
+                            style={{ objectFit: "cover", objectPosition: "center top" }}
+                        />
+
+                        <div
+                            style={{
+                                position: "absolute",
+                                inset: 0,
+                                background: "rgba(0,0,0,0.28)",
+                            }}
+                        />
+
+                        <div
+                            style={{
+                                position: "absolute",
+                                inset: 0,
+                                display: "flex",
+                                alignItems: "flex-end",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    width: "100%",
+                                    maxWidth: "1280px",
+                                    margin: "0 auto",
+                                    padding: "0 24px 48px 24px",
+                                }}
+                            >
+                                <div style={{ maxWidth: "768px", color: "white" }}>
+                                    <p
+                                        style={{
+                                            marginBottom: "16px",
+                                            fontSize: "14px",
+                                            fontWeight: 600,
+                                            textTransform: "uppercase",
+                                            letterSpacing: "0.24em",
+                                            color: "#7dd3fc",
+                                        }}
+                                    >
+                                        Compassionate home care
+                                    </p>
+
+                                    <h1
+                                        style={{
+                                            margin: 0,
+                                            fontSize: "48px",
+                                            fontWeight: 600,
+                                            lineHeight: 1.05,
+                                        }}
+                                    >
+                                        The Home Care Journey
+                                    </h1>
+
+                                    <p
+                                        style={{
+                                            marginTop: "16px",
+                                            maxWidth: "640px",
+                                            fontSize: "24px",
+                                            lineHeight: 1.4,
+                                            color: "#e2e8f0",
+                                        }}
+                                    >
+                                        Providing Home Care Services for Over 20 Years
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+
+                 
+                </section>
+
+                <section className="relative z-10 -mt-4 bg-transparent px-6 md:px-8 lg:px-10">
+                    <div className="mx-auto max-w-7xl">
+                        <div className="ml-auto w-full max-w-xl rounded-[28px] border border-slate-200/70 bg-white p-6 shadow-2xl shadow-slate-950/15 md:p-8">
+                            <div className="mb-5">
+                                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
+                                    We are here to help
+                                </p>
+                                <h2 className="mt-2 text-2xl font-semibold text-slate-900">
+                                    Request a free consultation
+                                </h2>
+                                <p className="mt-2 text-sm leading-6 text-slate-600">
+                                    Please feel free to contact us anytime. We’ll help you
+                                    understand the next best step.
+                                </p>
+                            </div>
+
+                            <form className="space-y-4">
+                                <input
+                                    type="text"
+                                    placeholder="Name"
+                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                />
+                                <input
+                                    type="tel"
+                                    placeholder="Phone"
+                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                />
+                                <select className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-sky-500">
+                                    <option>I am looking for information on your services</option>
+                                    <option>I am looking for a job</option>
+                                </select>
+                                <input
+                                    type="email"
+                                    placeholder="Email"
+                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                />
+                                <textarea
+                                    rows={4}
+                                    placeholder="Your message"
+                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                />
+                                <button
+                                    type="submit"
+                                    className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                                >
+                                    Submit Request
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="bg-slate-50 py-20 md:py-24">
+                    <div className="mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+                        <div className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
+                            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
+                                Care plans
+                            </p>
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
+                                Tailored to your specific needs
+                            </h2>
+                            <p className="mt-5 text-base leading-8 text-slate-600">
+                                Before starting care, we spend time getting to know you or your
+                                loved one as a person, learning the routines, preferences, and
+                                support needs that shape each day.
+                            </p>
+                            <p className="mt-4 text-base leading-8 text-slate-600">
+                                Then we design a personalized care plan built around comfort,
+                                dignity, and dependable support.
+                            </p>
+                            <div className="mt-8 flex flex-wrap gap-3">
+                                {carePlanItems.map((item) => (
+                                    <span
+                                        key={item}
+                                        className="rounded-full border border-sky-100 bg-sky-50 px-4 py-2 text-sm font-medium text-sky-900"
+                                    >
+                                        {item}
+                                    </span>
+                                ))}
+                            </div>
+                            <div className="mt-8">
+                                <Link
+                                    href="/getting-started"
+                                    className="inline-flex items-center rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-500"
+                                >
+                                    Get Started
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
+                            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
+                                Free consultation
+                            </p>
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+                                Call us for a free in-home consultation.
+                            </h2>
+                            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
+                                Our team can walk you through care options, answer questions,
+                                and help you decide what kind of support makes the most sense
+                                right now.
+                            </p>
+                            <Link
+                                href="tel:8775776782"
+                                className="mt-8 inline-flex items-center rounded-2xl bg-white px-5 py-3 text-base font-semibold text-slate-900 transition hover:bg-slate-100"
+                            >
+                                (877) 577-6782
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="py-20 md:py-24">
+                    <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
+                        <SectionHeading
+                            eyebrow="Our services"
+                            title="Flexible support for everyday living"
+                            description="A clean modern presentation of the services highlighted on the current homepage."
+                        />
+
+                        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                            {services.map(({ title, icon }) => (
+                                <div
+                                    key={title}
+                                    className="group rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                                >
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-2xl">
+                                        <span aria-hidden="true">{icon}</span>
+                                    </div>
+                                    <h3 className="mt-5 text-xl font-semibold text-slate-900">
+                                        {title}
+                                    </h3>
+                                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                                        Compassionate assistance delivered with consistency,
+                                        dignity, and attention to the individual.
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-10 flex flex-wrap gap-4">
+                            <Link
+                                href="/downloads/fall-prevention-guide.pdf"
+                                className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+                            >
+                                Free Fall Prevention Guide
+                            </Link>
+                            <Link
+                                href="/downloads/nutrition-guide.pdf"
+                                className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+                            >
+                                Free Nutrition Guide
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="bg-slate-50 py-20 md:py-24">
+                    <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
+                        <SectionHeading
+                            eyebrow="Testimonials"
+                            title="Here is what some of our beloved clients have to say"
+                        />
+
+                        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+                            {testimonials.map((item) => (
+                                <blockquote
+                                    key={item.name}
+                                    className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200"
+                                >
+                                    <p className="text-lg leading-8 text-slate-700">
+                                        “{item.quote}”
+                                    </p>
+                                    <footer className="mt-6 text-sm font-semibold uppercase tracking-[0.16em] text-sky-700">
+                                        {item.name}
+                                    </footer>
+                                </blockquote>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section className="bg-slate-900 py-20 text-white md:py-24">
+                    <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
+                        <SectionHeading
+                            eyebrow="Three easy steps"
+                            title="A simple path to better care at home"
+                            description="Help us understand your care needs so we can schedule a free assessment and recommend the right plan."
+                        />
+
+                        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+                            {steps.map((step, index) => (
+                                <div
+                                    key={step.title}
+                                    className="rounded-[28px] bg-white p-8 text-slate-900 shadow-xl shadow-slate-950/20"
+                                >
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-600 text-lg font-bold text-white">
+                                        {index + 1}
+                                    </div>
+                                    <h3 className="mt-6 text-2xl font-semibold">
+                                        {step.title}
+                                    </h3>
+                                    <p className="mt-3 text-base leading-8 text-slate-600">
+                                        {step.body}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-10 text-center">
+                            <Link
+                                href="/getting-started"
+                                className="inline-flex items-center rounded-2xl bg-sky-500 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-sky-400"
+                            >
+                                Get Started Now
+                            </Link>
+                        </div>
+                    </div>
+                </section> 
+
+                {/*<section className="bg-white py-20 md:py-24">*/}
+                {/*    <div className="mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">*/}
+                {/*        <div className="overflow-hidden rounded-[28px] bg-slate-100">*/}
+                {/*            <div className="relative min-h-[320px]">*/}
+                {/*                <img*/}
+                {/*                    src="https://www.cernahomecare.com/wp-content/uploads/2025/07/cerna-caring-seniors.jpg"*/}
+                {/*                    alt="Cerna Home Care"*/}
+                {/*                    className="absolute inset-0 h-full w-full object-cover"*/}
+                {/*                />*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+
+                {/*        <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-8 md:p-10">*/}
+                {/*            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">*/}
+                {/*                Contact us*/}
+                {/*            </p>*/}
+                {/*            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">*/}
+                {/*                Industry-leading care with a human touch*/}
+                {/*            </h2>*/}
+                {/*            <p className="mt-5 text-base leading-8 text-slate-600">*/}
+                {/*                Industry leading care services provided by highly trained*/}
+                {/*                caregivers. Only the best in service and staff.*/}
+                {/*            </p>*/}
+
+                {/*            <div className="mt-8 space-y-4 text-base text-slate-700">*/}
+                {/*                <p>*/}
+                {/*                    <span className="font-semibold text-slate-900">Email:</span>{" "}*/}
+                {/*                    info@cernahc.com*/}
+                {/*                </p>*/}
+                {/*                <p>*/}
+                {/*                    <span className="font-semibold text-slate-900">Phone:</span>{" "}*/}
+                {/*                    (877) 577-6782*/}
+                {/*                </p>*/}
+                {/*            </div>*/}
+
+                {/*            <div className="mt-10 flex flex-wrap gap-3">*/}
+                {/*                <Link*/}
+                {/*                    href="/contact-us"*/}
+                {/*                    className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"*/}
+                {/*                >*/}
+                {/*                    Contact Us*/}
+                {/*                </Link>*/}
+                {/*                <Link*/}
+                {/*                    href="/locations"*/}
+                {/*                    className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-white"*/}
+                {/*                >*/}
+                {/*                    View Locations*/}
+                {/*                </Link>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</section>*/}
+            </main> 
         </div>
-      </main>
-    </div>
-  );
+    );
 }

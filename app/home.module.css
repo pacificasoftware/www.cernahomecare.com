@@ -343,9 +343,8 @@
 
 .hero {
     position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
+    height: 60vh;
+    min-height: 420px;
 }
 
 .heroImage {

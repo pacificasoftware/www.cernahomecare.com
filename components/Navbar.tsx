@@ -1,22 +1,14 @@
-﻿"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+﻿import Link from "next/link";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
-    const pathname = usePathname();
-    const isActive = (path: string) => pathname === path;
-
     return (
         <header className={styles.header}>
             <div className={styles.navRow}>
-                <Link href="/" aria-label="Go to homepage" className={styles.logoLink}>
+                <Link href="/" className={styles.logoLink}>
                     <img
-                        src="https://cernafranchising.com/wp-content/uploads/2025/07/cerna-caring-seniors.jpg"
-                        width="200"
-                        height="97"
-                        alt="Cerna Franchising Logo"
+                        src="/assets/cerna-caring-seniors.webp"
+                        alt="Cerna Home Care"
                         className={styles.logo}
                     />
                 </Link>
@@ -24,37 +16,36 @@ export default function Navbar() {
                 <nav className={styles.mainNav}>
                     <ul>
                         <li>
-                            <Link href="/" className={isActive("/") ? styles.active : ""}>
+                            <Link href="/" className={styles.active}>
                                 HOME
                             </Link>
                         </li>
                         <li>
-                            <Link href="/our-brand" className={isActive("/aboutus") ? styles.active : ""}>
-                               ABOUT US
+                            <Link href="/about-us">
+                                ABOUT US
                             </Link>
                         </li>
                         <li>
-                            <Link href="/services" className={isActive("/services") ? styles.active : ""}>
-                              SERVICES
+                            <Link href="/services">
+                                SERVICES
                             </Link>
                         </li>
                         <li>
-                            <Link href="/locations" className={isActive("/locations") ? styles.active : ""}>
-                                LOCATIONS&apos;S
+                            <Link href="/locations">
+                                LOCATIONS
                             </Link>
                         </li>
-                      
                         <li>
-                            <Link href="/contact" className={isActive("/contact") ? styles.active : ""}>
+                            <Link href="/contact-us">
                                 CONTACT US
                             </Link>
                         </li>
                     </ul>
                 </nav>
 
-                <a href="tel:8447443866" className={styles.callBtn}>
-                    (844) 744-3866
-                </a>
+                <Link href="tel:8775776782" className={styles.callBtn}>
+                    (877) 577-6782
+                </Link>
             </div>
         </header>
     );
