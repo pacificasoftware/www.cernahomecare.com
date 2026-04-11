@@ -121,7 +121,7 @@ export default function CernaHomePage() {
                             style={{
                                 position: "absolute",
                                 inset: 0,
-                                background: "rgba(0,0,0,0.28)",
+                                background: "rgba(0,0,0,0.22)",
                             }}
                         />
 
@@ -131,74 +131,56 @@ export default function CernaHomePage() {
                                 inset: 0,
                                 display: "flex",
                                 alignItems: "flex-end",
+                                justifyContent: "center",
+                                textAlign: "center",
+                                padding: "0 24px 70px 24px",
                             }}
                         >
-                            <div
-                                style={{
-                                    width: "100%",
-                                    maxWidth: "1280px",
-                                    margin: "0 auto",
-                                    padding: "0 24px 48px 24px",
-                                }}
-                            >
-                                <div style={{ maxWidth: "768px", color: "white" }}>
-                                    <p
-                                        style={{
-                                            marginBottom: "16px",
-                                            fontSize: "14px",
-                                            fontWeight: 600,
-                                            textTransform: "uppercase",
-                                            letterSpacing: "0.24em",
-                                            color: "#7dd3fc",
-                                        }}
-                                    >
-                                        Compassionate home care
-                                    </p>
+                            <div style={{ maxWidth: "1100px", color: "white" }}>
+                                <h1
+                                    style={{
+                                        margin: 0,
+                                        fontSize: "48px",
+                                        fontWeight: 300,
+                                        lineHeight: 1.05,
+                                        letterSpacing: "0.02em",
+                                        textTransform: "uppercase",
+                                        textShadow: "0 2px 12px rgba(0,0,0,0.35)",
+                                    }}
+                                >
+                                    The Home Care Journey
+                                </h1>
 
-                                    <h1
-                                        style={{
-                                            margin: 0,
-                                            fontSize: "48px",
-                                            fontWeight: 600,
-                                            lineHeight: 1.05,
-                                        }}
-                                    >
-                                        The Home Care Journey
-                                    </h1>
-
-                                    <p
-                                        style={{
-                                            marginTop: "16px",
-                                            maxWidth: "640px",
-                                            fontSize: "24px",
-                                            lineHeight: 1.4,
-                                            color: "#e2e8f0",
-                                        }}
-                                    >
-                                        Providing Home Care Services for Over 20 Years
-                                    </p>
-                                </div>
+                                <p
+                                    style={{
+                                        marginTop: "24px",
+                                        fontSize: "24px",
+                                        fontWeight: 700,
+                                        lineHeight: 1.25,
+                                        color: "white",
+                                        textShadow: "0 2px 10px rgba(0,0,0,0.35)",
+                                    }}
+                                >
+                                    Providing Home Care Services for Over 20 Years
+                                </p>
                             </div>
                         </div>
                     </div>
-                  
-
-                 
                 </section>
 
-                <section className="relative z-10 -mt-4 bg-transparent px-6 md:px-8 lg:px-10">
-                    <div className="mx-auto max-w-7xl">
-                        <div className="ml-auto w-full max-w-xl rounded-[28px] border border-slate-200/70 bg-white p-6 shadow-2xl shadow-slate-950/15 md:p-8">
-                            <div className="mb-5">
-                                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
+                <section className="bg-slate-50 py-20 md:py-24">
+                    <div className="mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+                 
+                        <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
+                            <div className="mb-6">
+                                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
                                     We are here to help
                                 </p>
-                                <h2 className="mt-2 text-2xl font-semibold text-slate-900">
+                                <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
                                     Request a free consultation
                                 </h2>
-                                <p className="mt-2 text-sm leading-6 text-slate-600">
-                                    Please feel free to contact us anytime. We’ll help you
-                                    understand the next best step.
+                                <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">
+                                    Please feel free to contact us anytime. We’ll help you understand the next best step.
                                 </p>
                             </div>
 
@@ -206,40 +188,36 @@ export default function CernaHomePage() {
                                 <input
                                     type="text"
                                     placeholder="Name"
-                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
                                 />
                                 <input
                                     type="tel"
                                     placeholder="Phone"
-                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
                                 />
-                                <select className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-sky-500">
-                                    <option>I am looking for information on your services</option>
-                                    <option>I am looking for a job</option>
+                                <select className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-300">
+                                    <option className="text-slate-900">I am looking for information on your services</option>
+                                    <option className="text-slate-900">I am looking for a job</option>
                                 </select>
                                 <input
                                     type="email"
                                     placeholder="Email"
-                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
                                 />
                                 <textarea
                                     rows={4}
                                     placeholder="Your message"
-                                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-sky-500"
+                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
                                 />
                                 <button
                                     type="submit"
-                                    className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                                    className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
                                 >
                                     Submit Request
                                 </button>
                             </form>
                         </div>
-                    </div>
-                </section>
 
-                <section className="bg-slate-50 py-20 md:py-24">
-                    <div className="mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
                         <div className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
                             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
                                 Care plans
@@ -276,35 +254,19 @@ export default function CernaHomePage() {
                             </div>
                         </div>
 
-                        <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
-                            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
-                                Free consultation
-                            </p>
-                            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-                                Call us for a free in-home consultation.
-                            </h2>
-                            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
-                                Our team can walk you through care options, answer questions,
-                                and help you decide what kind of support makes the most sense
-                                right now.
-                            </p>
-                            <Link
-                                href="tel:8775776782"
-                                className="mt-8 inline-flex items-center rounded-2xl bg-white px-5 py-3 text-base font-semibold text-slate-900 transition hover:bg-slate-100"
-                            >
-                                (877) 577-6782
-                            </Link>
-                        </div>
                     </div>
                 </section>
-
+ 
                 <section className="py-20 md:py-24">
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
-                        <SectionHeading
-                            eyebrow="Our services"
-                            title="Flexible support for everyday living"
-                            description="A clean modern presentation of the services highlighted on the current homepage."
-                        />
+                        <div className="mx-auto max-w-3xl text-center">
+                            <h2 className="text-5xl font-semibold tracking-tight text-slate-900 md:text-6xl">
+                                Our services
+                            </h2>
+                            <p className="mt-5 text-lg leading-8 text-slate-600">
+                                Flexible support for everyday living
+                            </p>
+                        </div>
 
                         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {services.map(({ title, icon }) => (
@@ -404,60 +366,7 @@ export default function CernaHomePage() {
                             </Link>
                         </div>
                     </div>
-                </section> 
-
-                {/*<section className="bg-white py-20 md:py-24">*/}
-                {/*    <div className="mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">*/}
-                {/*        <div className="overflow-hidden rounded-[28px] bg-slate-100">*/}
-                {/*            <div className="relative min-h-[320px]">*/}
-                {/*                <img*/}
-                {/*                    src="https://www.cernahomecare.com/wp-content/uploads/2025/07/cerna-caring-seniors.jpg"*/}
-                {/*                    alt="Cerna Home Care"*/}
-                {/*                    className="absolute inset-0 h-full w-full object-cover"*/}
-                {/*                />*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-
-                {/*        <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-8 md:p-10">*/}
-                {/*            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">*/}
-                {/*                Contact us*/}
-                {/*            </p>*/}
-                {/*            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">*/}
-                {/*                Industry-leading care with a human touch*/}
-                {/*            </h2>*/}
-                {/*            <p className="mt-5 text-base leading-8 text-slate-600">*/}
-                {/*                Industry leading care services provided by highly trained*/}
-                {/*                caregivers. Only the best in service and staff.*/}
-                {/*            </p>*/}
-
-                {/*            <div className="mt-8 space-y-4 text-base text-slate-700">*/}
-                {/*                <p>*/}
-                {/*                    <span className="font-semibold text-slate-900">Email:</span>{" "}*/}
-                {/*                    info@cernahc.com*/}
-                {/*                </p>*/}
-                {/*                <p>*/}
-                {/*                    <span className="font-semibold text-slate-900">Phone:</span>{" "}*/}
-                {/*                    (877) 577-6782*/}
-                {/*                </p>*/}
-                {/*            </div>*/}
-
-                {/*            <div className="mt-10 flex flex-wrap gap-3">*/}
-                {/*                <Link*/}
-                {/*                    href="/contact-us"*/}
-                {/*                    className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"*/}
-                {/*                >*/}
-                {/*                    Contact Us*/}
-                {/*                </Link>*/}
-                {/*                <Link*/}
-                {/*                    href="/locations"*/}
-                {/*                    className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-white"*/}
-                {/*                >*/}
-                {/*                    View Locations*/}
-                {/*                </Link>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</section>*/}
+                </section>  
             </main> 
         </div>
     );

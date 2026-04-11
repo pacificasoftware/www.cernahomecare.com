@@ -26,6 +26,11 @@ export default function Navbar() {
                             </Link>
                         </li>
                         <li>
+                            <Link href="/about-us">
+                              WHY CERNA
+                            </Link>
+                        </li>
+                        <li>
                             <Link href="/services">
                                 SERVICES
                             </Link>
@@ -33,6 +38,11 @@ export default function Navbar() {
                         <li>
                             <Link href="/locations">
                                 LOCATIONS
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/locations">
+                                CAREERS
                             </Link>
                         </li>
                         <li>
