@@ -7,6 +7,7 @@ const nextConfig = {
                 hostname: "www.cernahomecare.com",
             },
         ],
+        qualities: [75, 100],
     },
 };
 

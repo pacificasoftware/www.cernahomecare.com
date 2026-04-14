@@ -1,7 +1,7 @@
-﻿ 
- 
+﻿
+
 import { Roboto } from "next/font/google";
-import styles from "./home.module.css"; 
+import styles from "./home.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -103,7 +103,7 @@ export default function CernaHomePage() {
 
         <div className="flex min-h-screen flex-col">
             <main className="flex-1 bg-white text-slate-900">
-              
+
 
                 <section>
                     <div style={{ position: "relative", height: "820px", width: "100%" }}>
@@ -168,9 +168,19 @@ export default function CernaHomePage() {
                     </div>
                 </section>
 
-                <section className="bg-slate-50 py-20 md:py-24">
-                    <div className="mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
-                 
+                <section
+                    className="relative py-20 md:py-24"
+                    style={{
+                        backgroundImage: 'url("/assets/hands_blueV2-300x300.webp")',
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-slate-900/45" />
+
+                    <div className="relative mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+
                         <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
                             <div className="mb-6">
                                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
@@ -256,7 +266,7 @@ export default function CernaHomePage() {
 
                     </div>
                 </section>
- 
+
                 <section className="py-20 md:py-24">
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
                         <div className="mx-auto max-w-3xl text-center">
@@ -366,8 +376,8 @@ export default function CernaHomePage() {
                             </Link>
                         </div>
                     </div>
-                </section>  
-            </main> 
+                </section>
+            </main>
         </div>
     );
 }
