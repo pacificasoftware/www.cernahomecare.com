@@ -114,14 +114,18 @@ export default function CernaHomePage() {
                             priority
                             sizes="100vw"
                             quality={100}
-                            style={{ objectFit: "cover", objectPosition: "center top" }}
+                            style={{
+                                objectFit: "cover",
+                                objectPosition: "center top"
+                            }}
                         />
 
+                        {/* Much brighter overlay */}
                         <div
                             style={{
                                 position: "absolute",
                                 inset: 0,
-                                background: "rgba(0,0,0,0.22)",
+                                background: "rgba(0, 0, 0, 0.08)",   // Very light overlay
                             }}
                         />
 
@@ -145,12 +149,11 @@ export default function CernaHomePage() {
                                         lineHeight: 1.05,
                                         letterSpacing: "0.02em",
                                         textTransform: "uppercase",
-                                        textShadow: "0 2px 12px rgba(0,0,0,0.35)",
+                                        textShadow: "0 3px 15px rgba(0,0,0,0.5)",   // Stronger shadow for better readability
                                     }}
                                 >
                                     The Home Care Journey
                                 </h1>
-
                                 <p
                                     style={{
                                         marginTop: "24px",
@@ -158,7 +161,7 @@ export default function CernaHomePage() {
                                         fontWeight: 700,
                                         lineHeight: 1.25,
                                         color: "white",
-                                        textShadow: "0 2px 10px rgba(0,0,0,0.35)",
+                                        textShadow: "0 3px 12px rgba(0,0,0,0.5)",
                                     }}
                                 >
                                     Providing Home Care Services for Over 20 Years
@@ -179,7 +182,7 @@ export default function CernaHomePage() {
                 >
                     <div className="absolute inset-0 bg-slate-900/45" />
 
-                    <div className="relative mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+                    <div className="relative mx-auto grid max-w-7xl gap-4 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
 
                         <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
                             <div className="mb-6">
@@ -267,11 +270,45 @@ export default function CernaHomePage() {
                     </div>
                 </section>
 
+                <div className={styles.fullWidthDivider} />
+
+                <section className="bg-white py-12 md:py-16">
+                    <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
+                   <div className="relative overflow-hidden rounded-[28px] border border-sky-100 bg-gradient-to-r from-sky-50 via-white to-sky-100 px-6 pt-14 pb-10 text-center shadow-sm md:px-12 md:pt-16 md:pb-12">
+                            <div className="absolute left-0 top-0 h-full w-2 bg-sky-600" />
+                            <div className="absolute right-0 top-0 h-full w-2 bg-sky-600" />
+
+                            <p className="mt-6 text-base font-semibold uppercase tracking-[0.28em] text-sky-700 md:text-lg">
+                                Free In-Home Consultation
+                            </p>
+
+                            <h3 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+                                Call us at{" "}
+                                <a
+                                    href="tel:18775776782"
+                                    className="text-sky-700 underline decoration-sky-300 underline-offset-4 hover:text-sky-800"
+                                >
+                                    (877) 577-6782
+                                </a>{" "}
+                                for a FREE In-Home Consultation!
+                            </h3>
+
+                            <div className="mx-auto mt-1 h-px w-32 bg-sky-300" />
+
+                            {/*<p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-slate-600 md:text-xl">*/}
+                            {/*    Our team is here to answer your questions, understand your needs,*/}
+                            {/*    and help you take the next step with confidence.*/}
+                            {/*</p>*/}
+                        </div>
+                    </div>
+                </section>
+                <div className={styles.fullWidthDivider} />
+
                 <section className="py-20 md:py-24">
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
                         <div className="mx-auto max-w-3xl text-center">
                             <h2 className="text-5xl font-semibold tracking-tight text-slate-900 md:text-6xl">
-                                Our services
+                              OUR SERVICES
                             </h2>
                             <p className="mt-5 text-lg leading-8 text-slate-600">
                                 Flexible support for everyday living
@@ -315,6 +352,7 @@ export default function CernaHomePage() {
                     </div>
                 </section>
 
+
                 <section className="bg-slate-50 py-20 md:py-24">
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
                         <SectionHeading
@@ -336,6 +374,30 @@ export default function CernaHomePage() {
                                     </footer>
                                 </blockquote>
                             ))}
+                        </div>
+
+                        {/* Compact & Small YouTube Video */}
+                        <div className="mt-16 flex justify-center">
+                            <div className="w-full max-w-[280px]">
+                                <h3 className="mb-4 text-center text-lg font-semibold text-slate-800">
+                                    Watch Our Client Story
+                                </h3>
+
+                                {/* Small video container */}
+                                <div
+                                    className="relative w-full overflow-hidden rounded-2xl shadow-md border-4 border-white ring-1 ring-slate-100"
+                                    style={{ paddingBottom: "52%" }}
+                                >
+                                    <iframe
+                                        className="absolute top-0 left-0 w-full h-full rounded-2xl"
+                                        src="https://www.youtube.com/embed/SkdPyMf-qLA"
+                                        title="Client Testimonial Video"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></iframe>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

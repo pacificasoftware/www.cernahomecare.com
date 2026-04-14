@@ -35,6 +35,16 @@
     height: 20px;
     background: radial-gradient( ellipse at 50% -50%, rgba(60, 128, 217, 0.45) 0px, rgba(255, 255, 255, 0) 80% ) repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
+.fullWidthDivider {
+    width: 100vw;
+    height: 16px;
+    background-color: #005685;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
 
 .title {
     margin: 0.25rem 0 0;
