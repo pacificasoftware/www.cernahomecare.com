@@ -84,15 +84,15 @@ function SectionHeading({
     return (
         <div className="mx-auto max-w-3xl text-center">
             {eyebrow ? (
-                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
+                <p className="mb-3 text-base md:text-lg font-semibold uppercase tracking-[0.24em] ...">
                     {eyebrow}
                 </p>
             ) : null}
-            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-5xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
                 {title}
             </h2>
             {description ? (
-                <p className="mt-5 text-lg leading-8 text-slate-600">{description}</p>
+                <p className="mt-5 text-lg leading-8 text-white/80">{description}</p>
             ) : null}
         </div>
     );
@@ -193,35 +193,62 @@ export default function CernaHomePage() {
                                     Request a free consultation
                                 </h2>
                                 <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">
-                                    Please feel free to contact us anytime. We’ll help you understand the next best step.
+                                    Please feel free to contact us anytime at{" "}
+                                    <a
+                                        href="tel:18775776782"
+                                        className="font-semibold text-orange-300 underline decoration-orange-200 underline-offset-4 transition hover:text-orange-200"
+                                    >
+                                        (877) 577-6782
+                                    </a>
+                                    . We’ll help you understand the next best step.
                                 </p>
+                                <p className="mt-4 mb-8 max-w-2xl text-base leading-7 text-slate-200"/>
                             </div>
 
-                            <form className="space-y-4">
-                                <input
-                                    type="text"
-                                    placeholder="Name"
-                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                />
-                                <input
-                                    type="tel"
-                                    placeholder="Phone"
-                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                />
-                                <select className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-300">
-                                    <option className="text-slate-900">I am looking for information on your services</option>
-                                    <option className="text-slate-900">I am looking for a job</option>
-                                </select>
-                                <input
-                                    type="email"
-                                    placeholder="Email"
-                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                />
-                                <textarea
-                                    rows={4}
-                                    placeholder="Your message"
-                                    className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                />
+                            <form className="pb-6">
+                                <div className="mb-5">
+                                    <input
+                                        type="text"
+                                        placeholder="Name"
+                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
+                                    />
+                                </div>
+
+                                <div className="mb-5">
+                                    <input
+                                        type="tel"
+                                        placeholder="Phone"
+                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
+                                    />
+                                </div>
+
+                                <div className="mb-5">
+                                    <select className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-300">
+                                        <option className="text-slate-900">I am looking for information on your services</option>
+                                        <option className="text-slate-900">I am looking for a job</option>
+                                    </select>
+                                </div>
+
+                                <div className="mb-5">
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
+                                    />
+                                </div>
+
+                                <div className="mb-5">
+                                    <textarea
+                                        rows={4}
+                                        placeholder="Your message"
+                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
+                                    />
+                                </div>
+
+                                {/*<div className="mb-5 rounded-2xl border border-white/20 bg-white/10 px-4 py-4">*/}
+                                {/*    <p className="text-sm text-slate-200">CAPTCHA goes here</p>*/}
+                                {/*</div>*/}
+
                                 <button
                                     type="submit"
                                     className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
@@ -229,6 +256,7 @@ export default function CernaHomePage() {
                                     Submit Request
                                 </button>
                             </form>
+
                         </div>
 
                         <div className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
@@ -337,7 +365,7 @@ export default function CernaHomePage() {
                         <div className="mt-10 flex flex-wrap justify-center gap-4">
                             <Link
                                 href="/downloads/fall-prevention-guide.pdf"
-                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-white no-underline transition hover:opacity-90"
+                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white no-underline transition hover:opacity-90"
                                 style={{ backgroundColor: "#DD8500" }}
                             >
                                 Free Fall Prevention Guide
@@ -345,7 +373,7 @@ export default function CernaHomePage() {
 
                             <Link
                                 href="/downloads/nutrition-guide.pdf"
-                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-white no-underline transition hover:opacity-90"
+                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white no-underline transition hover:opacity-90"
                                 style={{ backgroundColor: "#DD8500" }}
                             >
                                 Free Nutrition Guide
@@ -355,8 +383,18 @@ export default function CernaHomePage() {
                 </section>
 
 
-                <section className="bg-slate-50 py-20 md:py-24">
-                    <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
+                <section className="relative overflow-hidden py-20 md:py-24" >
+                    <Image
+                        src="/assets/cerna-reviews.jpg" 
+                        alt="Cerna reviews background"
+                        fill                                               
+                        sizes="100vw"
+                        className="object-contain object-top"
+                    />
+
+                    <div className="absolute inset-0 bg-white/85" />
+
+                    <div className="relative mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
                         <SectionHeading
                             eyebrow="Testimonials"
                             title="Here is what some of our beloved clients have to say"
@@ -378,7 +416,6 @@ export default function CernaHomePage() {
                             ))}
                         </div>
 
-                        {/* Compact & Small YouTube Video */}
                         <div className="mt-14 mb-24 flex justify-center">
                             <div className="flex flex-col items-center">
                                 <h3 className="mb-3 text-center text-sm font-semibold text-slate-800">
@@ -405,40 +442,61 @@ export default function CernaHomePage() {
                 <section className="bg-slate-900 py-20 text-white md:py-24">
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
                         <SectionHeading
-                            eyebrow="Three easy steps"
-                            title="A simple path to better care at home"
+                            eyebrow="A simple path to better care at home"
+                            title="Three easy steps"
                             description="Help us understand your care needs so we can schedule a free assessment and recommend the right plan."
                         />
 
                         <div className="mt-14 grid gap-6 lg:grid-cols-3">
-                            {steps.map((step, index) => (
-                                <div
-                                    key={step.title}
-                                    className="rounded-[28px] bg-white p-8 text-slate-900 shadow-xl shadow-slate-950/20"
-                                >
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-600 text-lg font-bold text-white">
-                                        {index + 1}
+                            {steps.map((step, index) => {
+                                const stepImages = [
+                                    "/assets/1-2-150x150.webp",
+                                    "/assets/2-2-150x150.webp",
+                                    "/assets/3-2-150x150.webp",
+                                ];
+
+                                return (
+                                    <div
+                                        key={step.title}
+                                        className="rounded-[28px] bg-white p-8 text-center text-slate-900 shadow-xl shadow-slate-950/20"
+                                    >
+                                        <div className="mb-6 flex justify-center">
+                                            <img
+                                                src={stepImages[index]}
+                                                alt={`Step ${index + 1}`}
+                                                width={96}
+                                                height={96}
+                                                className="h-24 w-24 rounded-full object-cover"
+                                            />
+                                        </div>
+
+                                        <h3 className="text-2xl font-semibold">
+                                            {step.title}
+                                        </h3>
+
+                                        <p className="mt-3 text-base leading-8 text-slate-600">
+                                            {step.body}
+                                        </p>
                                     </div>
-                                    <h3 className="mt-6 text-2xl font-semibold">
-                                        {step.title}
-                                    </h3>
-                                    <p className="mt-3 text-base leading-8 text-slate-600">
-                                        {step.body}
-                                    </p>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
 
                         <div className="mt-10 text-center">
                             <Link
                                 href="/getting-started"
-                                className="inline-flex items-center rounded-2xl bg-sky-500 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-sky-400"
+                                className="inline-flex items-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white transition hover:opacity-90"
+                                style={{ backgroundColor: "#DD8500" }}
                             >
                                 Get Started Now
                             </Link>
                         </div>
                     </div>
                 </section>
+
+
+
+
             </main>
         </div>
     );
