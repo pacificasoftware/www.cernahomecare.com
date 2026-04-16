@@ -182,7 +182,7 @@ export default function CernaHomePage() {
                 >
                     <div className="absolute inset-0 bg-slate-900/45" />
 
-                    <div className="relative mx-auto grid max-w-7xl gap-4 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+                    <div className="relative mx-auto grid max-w-7xl gap-8 lg:gap-16 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
 
                         <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
                             <div className="mb-6">
@@ -334,17 +334,19 @@ export default function CernaHomePage() {
                                 </div>
                             ))}
                         </div>
-
-                        <div className="mt-10 flex flex-wrap gap-4">
+                        <div className="mt-10 flex flex-wrap justify-center gap-4">
                             <Link
                                 href="/downloads/fall-prevention-guide.pdf"
-                                className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-white no-underline transition hover:opacity-90"
+                                style={{ backgroundColor: "#DD8500" }}
                             >
                                 Free Fall Prevention Guide
                             </Link>
+
                             <Link
                                 href="/downloads/nutrition-guide.pdf"
-                                className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-white no-underline transition hover:opacity-90"
+                                style={{ backgroundColor: "#DD8500" }}
                             >
                                 Free Nutrition Guide
                             </Link>
@@ -377,24 +379,22 @@ export default function CernaHomePage() {
                         </div>
 
                         {/* Compact & Small YouTube Video */}
-                        <div className="mt-16 flex justify-center">
-                            <div className="w-full max-w-[280px]">
-                                <h3 className="mb-4 text-center text-lg font-semibold text-slate-800">
+                        <div className="mt-14 mb-24 flex justify-center">
+                            <div className="flex flex-col items-center">
+                                <h3 className="mb-3 text-center text-sm font-semibold text-slate-800">
                                     Watch Our Client Story
                                 </h3>
 
-                                {/* Small video container */}
-                                <div
-                                    className="relative w-full overflow-hidden rounded-2xl shadow-md border-4 border-white ring-1 ring-slate-100"
-                                    style={{ paddingBottom: "52%" }}
-                                >
+                                <div className="overflow-hidden rounded-2xl border-4 border-white shadow-md ring-1 ring-slate-100">
                                     <iframe
-                                        className="absolute top-0 left-0 w-full h-full rounded-2xl"
+                                        width="580"
+                                        height="401"
                                         src="https://www.youtube.com/embed/SkdPyMf-qLA"
                                         title="Client Testimonial Video"
                                         frameBorder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
+                                        className="block rounded-2xl"
                                     ></iframe>
                                 </div>
                             </div>

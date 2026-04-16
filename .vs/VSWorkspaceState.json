@@ -2,9 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\components",
-    "\\public\\assets"
+    "\\components"
   ],
-  "SelectedNode": "\\app\\page.tsx",
   "PreviewInSolutionExplorer": false
 }
