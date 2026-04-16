@@ -41,34 +41,34 @@ const carePlanItems = [
 
 const testimonials = [
     {
-        quote:
-            "Cerna gave our family peace of mind. The caregivers were warm, dependable, and truly attentive.",
-        name: "Family in Orange County",
+        quoteTitle: "I Sing Your Praises!",
+        body: "Johnna has been doing really good. She has only had 1 or maybe 2 small meltdowns during quarantine. She's doing her homework without asking, cleaning her room and making 85% of her own food. All in all she's been better than I ever could have imagined. You were so right.",
+        name: "Johnna Haynes",
     },
     {
-        quote:
-            "From the first consultation to daily care, everything felt thoughtful and professional.",
-        name: "Client Family",
+        quoteTitle: "Best Company to work for",
+        body: "I love working for cerna. I love how they care not just for caregivers but for their clients. They always do the best to fit caregivers with the right clients. My clients are pleased with them and how they have the best caregivers to send. We love cerna. A 10 star rating.",
+        name: "Shirley Rose",
     },
     {
-        quote:
-            "The care plan felt personalized from day one. We immediately felt supported.",
-        name: "Daughter of Client",
+        quoteTitle: "You are so great!",
+        body: "You did a great job teaching me about what's really going on with Johnna. Nobody was able to figure it out. We all as a team continue to work with Johnna. I actually finally enjoy coming home and spending time with her. You are amazing! I started giving her allowance once a week a while back with light chores.",
+        name: "DeAnn and Johnna King",
     },
 ];
 
 const steps = [
     {
         title: "Contact Us for a Consultation",
-        body: "Tell us about your needs and schedule a free in-home assessment with our team.",
+        body: "",
     },
     {
         title: "We Design a Custom Care Plan",
-        body: "We create a care plan tailored to your loved one’s routines, preferences, and level of support.",
+        body: "Tailored To Your Needs",
     },
     {
         title: "Meet Your Professional Caregiver",
-        body: "We match you with a courteous, punctual caregiver focused on comfort, safety, and consistency.",
+        body: "Courteous & Punctual",
     },
 ];
 
@@ -396,20 +396,32 @@ export default function CernaHomePage() {
 
                     <div className="relative mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
                         <SectionHeading
-                            eyebrow="Testimonials"
-                            title="Here is what some of our beloved clients have to say"
+                            eyebrow="Here is what some of our beloved clients have to say"
+                            title="Customer Testimonials"
                         />
 
                         <div className="mt-14 grid gap-6 lg:grid-cols-3">
                             {testimonials.map((item) => (
                                 <blockquote
                                     key={item.name}
-                                    className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200"
+                                    className="rounded-[28px] bg-white p-8 text-center shadow-sm ring-1 ring-slate-200"
                                 >
-                                    <p className="text-lg leading-8 text-slate-700">
-                                        “{item.quote}”
+                                    <div
+                                        className="mb-5 text-3xl leading-none"
+                                        style={{ color: "#DD8500" }}
+                                    >
+                                        ★★★★★
+                                    </div>
+
+                                    <h3 className="text-2xl font-medium text-sky-700">
+                                        {item.quoteTitle}
+                                    </h3>
+
+                                    <p className="mt-6 text-lg italic leading-8 text-slate-500">
+                                        {item.body}
                                     </p>
-                                    <footer className="mt-6 text-sm font-semibold uppercase tracking-[0.16em] text-sky-700">
+
+                                    <footer className="mt-8 text-base font-semibold text-slate-500">
                                         {item.name}
                                     </footer>
                                 </blockquote>
@@ -476,6 +488,17 @@ export default function CernaHomePage() {
 
                                         <p className="mt-3 text-base leading-8 text-slate-600">
                                             {step.body}
+                                            {index === 0 && (
+                                                <> 
+                                                    <a
+                                                        href="tel:18775776782"
+                                                        className="font-semibold text-sky-700 underline decoration-sky-300 underline-offset-4 transition hover:text-sky-800"
+                                                    >
+                                                        (877) 577-6782
+                                                    </a>
+                                                    .
+                                                </>
+                                            )}
                                         </p>
                                     </div>
                                 );
@@ -492,10 +515,7 @@ export default function CernaHomePage() {
                             </Link>
                         </div>
                     </div>
-                </section>
-
-
-
+                </section> 
 
             </main>
         </div>
