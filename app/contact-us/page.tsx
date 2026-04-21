@@ -1,5 +1,6 @@
-﻿import Image from "next/image";
+﻿import "./contact-us.css";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
     title: "Contact Us | Cerna Home Care",
@@ -162,9 +163,7 @@ export default function ContactUsPage() {
                         </form>
                     </div>
                 </div>
-            </section>
-
-       
+            </section> 
         </main>
     );
 }

@@ -3,12 +3,96 @@
   "WorkspaceRootPath": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\whycerna\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\whycerna\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\LatestCernaEvents.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:components\\LatestCernaEvents.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\whycerna\\whycerna.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\whycerna\\whycerna.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\blog\\[slug]\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\blog\\[slug]\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\blog\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\blog\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\lib\\blogPosts.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\lib\\blogPosts.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\home.module.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\home.module.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\getting-started.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\getting-started\\getting-started.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\contact-us.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\contact-us\\contact-us.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\careers\\careers.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\careers\\careers.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\about-us\\about-us.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\about-us\\about-us.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.tsx||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:components\\Navbar.tsx||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\about-us\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\about-us\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\contact\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\getting-started\\contact\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\locations\\locations.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\locations\\locations.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\services\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\services\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\locations\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\locations\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\contact-us\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\careers\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\careers\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\services\\services.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\services\\services.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\needs\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\getting-started\\needs\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\getting-started\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Footer.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
@@ -23,20 +107,8 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\layout.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\home.module.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\home.module.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\next.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:next.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\.next\\dev\\server\\chunks\\ssr\\[root-of-the-server]__01eqota._.js.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.next\\dev\\server\\chunks\\ssr\\[root-of-the-server]__01eqota._.js.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.tsx||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:components\\Navbar.tsx||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\globals.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -58,7 +130,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -67,55 +139,305 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "page.tsx",
-              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\page.tsx",
-              "RelativeDocumentMoniker": "app\\contact-us\\page.tsx",
-              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\page.tsx",
-              "RelativeToolTip": "app\\contact-us\\page.tsx",
-              "ViewState": "AgIAAI4AAAAAAAAAAAAmwJcAAAAAAAAAAAAAAA==",
+              "Title": "LatestCernaEvents.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\LatestCernaEvents.tsx",
+              "RelativeDocumentMoniker": "components\\LatestCernaEvents.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\LatestCernaEvents.tsx",
+              "RelativeToolTip": "components\\LatestCernaEvents.tsx",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBUAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-04-15T06:30:40.88Z"
+              "WhenOpened": "2026-04-21T06:30:25.686Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\blog\\page.tsx",
+              "RelativeDocumentMoniker": "app\\blog\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\blog\\page.tsx",
+              "RelativeToolTip": "app\\blog\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-21T06:20:33.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\blog\\[slug]\\page.tsx",
+              "RelativeDocumentMoniker": "app\\blog\\[slug]\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\blog\\[slug]\\page.tsx",
+              "RelativeToolTip": "app\\blog\\[slug]\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-21T06:20:09.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "blogPosts.ts",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\lib\\blogPosts.ts",
+              "RelativeDocumentMoniker": "app\\lib\\blogPosts.ts",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\lib\\blogPosts.ts",
+              "RelativeToolTip": "app\\lib\\blogPosts.ts",
+              "ViewState": "AgIAAPUHAAAAAAAAAAAAwAEIAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-21T06:18:25.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "contact-us.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\contact-us.css",
+              "RelativeDocumentMoniker": "app\\contact-us\\contact-us.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\contact-us.css",
+              "RelativeToolTip": "app\\contact-us\\contact-us.css",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAADYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-21T04:57:34.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "whycerna.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\whycerna\\whycerna.css",
+              "RelativeDocumentMoniker": "app\\whycerna\\whycerna.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\whycerna\\whycerna.css",
+              "RelativeToolTip": "app\\whycerna\\whycerna.css",
+              "ViewState": "AgIAAMkBAAAAAAAAAAAAwNgBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-21T04:55:23.333Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\whycerna\\page.tsx",
+              "RelativeDocumentMoniker": "app\\whycerna\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\whycerna\\page.tsx",
+              "RelativeToolTip": "app\\whycerna\\page.tsx",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAAwIcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-21T02:41:39.058Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "careers.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\careers\\careers.css",
+              "RelativeDocumentMoniker": "app\\careers\\careers.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\careers\\careers.css",
+              "RelativeToolTip": "app\\careers\\careers.css",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAD4AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-20T21:25:26.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "about-us.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\about-us\\about-us.css",
+              "RelativeDocumentMoniker": "app\\about-us\\about-us.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\about-us\\about-us.css",
+              "RelativeToolTip": "app\\about-us\\about-us.css",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAAALkAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-20T21:14:10.739Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\about-us\\page.tsx",
+              "RelativeDocumentMoniker": "app\\about-us\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\about-us\\page.tsx",
+              "RelativeToolTip": "app\\about-us\\page.tsx",
+              "ViewState": "AgIAAMYAAAAAAAAAAAAAANYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-20T19:51:28.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "getting-started.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\getting-started.css",
+              "RelativeDocumentMoniker": "app\\getting-started\\getting-started.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\getting-started.css",
+              "RelativeToolTip": "app\\getting-started\\getting-started.css",
+              "ViewState": "AgIAAMYAAAAAAAAAAAAAwHUBAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-17T15:39:39.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "home.module.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\home.module.css",
+              "RelativeDocumentMoniker": "app\\home.module.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\home.module.css",
+              "RelativeToolTip": "app\\home.module.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-30T06:34:22.315Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "page.tsx",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\page.tsx",
               "RelativeDocumentMoniker": "app\\page.tsx",
               "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\page.tsx",
               "RelativeToolTip": "app\\page.tsx",
-              "ViewState": "AgIAAF0BAAAAAAAAAAAQwGsBAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAABIBAAAAAAAAAAAjwCkBAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-03-30T06:33:35.003Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 19,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\careers\\page.tsx",
+              "RelativeDocumentMoniker": "app\\careers\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\careers\\page.tsx",
+              "RelativeToolTip": "app\\careers\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-20T21:22:25.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\locations\\page.tsx",
+              "RelativeDocumentMoniker": "app\\locations\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\locations\\page.tsx",
+              "RelativeToolTip": "app\\locations\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-20T21:26:12.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\services\\page.tsx",
+              "RelativeDocumentMoniker": "app\\services\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\services\\page.tsx",
+              "RelativeToolTip": "app\\services\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-21T02:41:46.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "locations.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\locations\\locations.css",
+              "RelativeDocumentMoniker": "app\\locations\\locations.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\locations\\locations.css",
+              "RelativeToolTip": "app\\locations\\locations.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-21T02:41:50.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\contact\\page.tsx",
+              "RelativeDocumentMoniker": "app\\getting-started\\contact\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\contact\\page.tsx",
+              "RelativeToolTip": "app\\getting-started\\contact\\page.tsx",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAO8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-17T19:16:52.607Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Navbar.tsx",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.tsx",
               "RelativeDocumentMoniker": "components\\Navbar.tsx",
               "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.tsx",
               "RelativeToolTip": "components\\Navbar.tsx",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBsAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAnwBEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-03-30T06:18:43.968Z"
+              "WhenOpened": "2026-03-30T06:18:43.968Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Navbar.module.css",
-              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.module.css",
-              "RelativeDocumentMoniker": "components\\Navbar.module.css",
-              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.module.css",
-              "RelativeToolTip": "components\\Navbar.module.css",
-              "ViewState": "AgIAADMAAAAAAAAAAAAiwEAAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 20,
+              "Title": "services.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\services\\services.css",
+              "RelativeDocumentMoniker": "app\\services\\services.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\services\\services.css",
+              "RelativeToolTip": "app\\services\\services.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-03-30T06:30:17.889Z"
+              "WhenOpened": "2026-04-20T21:24:45.347Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 21,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\needs\\page.tsx",
+              "RelativeDocumentMoniker": "app\\getting-started\\needs\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\needs\\page.tsx",
+              "RelativeToolTip": "app\\getting-started\\needs\\page.tsx",
+              "ViewState": "AgIAAK8AAAAAAAAAAAAQwLYAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-17T19:13:39.065Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\page.tsx",
+              "RelativeDocumentMoniker": "app\\getting-started\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\getting-started\\page.tsx",
+              "RelativeToolTip": "app\\getting-started\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-16T21:13:51.62Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\page.tsx",
+              "RelativeDocumentMoniker": "app\\contact-us\\page.tsx",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\contact-us\\page.tsx",
+              "RelativeToolTip": "app\\contact-us\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-04-15T06:30:40.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
               "Title": "Footer.tsx",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Footer.tsx",
               "RelativeDocumentMoniker": "components\\Footer.tsx",
@@ -123,11 +445,12 @@
               "RelativeToolTip": "components\\Footer.tsx",
               "ViewState": "AgIAAGsAAAAAAAAAAAAAAHoAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-03-30T06:19:29.809Z"
+              "WhenOpened": "2026-03-30T06:19:29.809Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 25,
               "Title": "layout.tsx",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\layout.tsx",
               "RelativeDocumentMoniker": "app\\layout.tsx",
@@ -135,23 +458,12 @@
               "RelativeToolTip": "app\\layout.tsx",
               "ViewState": "AgIAAAYAAAAAAAAAAAAYwBYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-03-30T05:57:42.442Z"
+              "WhenOpened": "2026-03-30T05:57:42.442Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "home.module.css",
-              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\home.module.css",
-              "RelativeDocumentMoniker": "app\\home.module.css",
-              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\home.module.css",
-              "RelativeToolTip": "app\\home.module.css",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAwC8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-03-30T06:34:22.315Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 27,
               "Title": "globals.css",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\app\\globals.css",
               "RelativeDocumentMoniker": "app\\globals.css",
@@ -159,11 +471,12 @@
               "RelativeToolTip": "app\\globals.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-04-08T23:01:55.861Z"
+              "WhenOpened": "2026-04-08T23:01:55.861Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 26,
               "Title": "next.config.ts",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\next.config.ts",
               "RelativeDocumentMoniker": "next.config.ts",
@@ -171,11 +484,25 @@
               "RelativeToolTip": "next.config.ts",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-04-08T22:41:51.74Z"
+              "WhenOpened": "2026-04-08T22:41:51.74Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 28,
+              "Title": "Navbar.module.css",
+              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.module.css",
+              "RelativeDocumentMoniker": "components\\Navbar.module.css",
+              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Navbar.module.css",
+              "RelativeToolTip": "components\\Navbar.module.css",
+              "ViewState": "AgIAADMAAAAAAAAAAAAiwEAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-30T06:30:17.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
               "Title": "Footer.module.css",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\components\\Footer.module.css",
               "RelativeDocumentMoniker": "components\\Footer.module.css",
@@ -183,23 +510,12 @@
               "RelativeToolTip": "components\\Footer.module.css",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAwBQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-03-30T06:29:56.324Z"
+              "WhenOpened": "2026-03-30T06:29:56.324Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "[root-of-the-server]__01eqota._.js.map",
-              "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\.next\\dev\\server\\chunks\\ssr\\[root-of-the-server]__01eqota._.js.map",
-              "RelativeDocumentMoniker": ".next\\dev\\server\\chunks\\ssr\\[root-of-the-server]__01eqota._.js.map",
-              "ToolTip": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\.next\\dev\\server\\chunks\\ssr\\[root-of-the-server]__01eqota._.js.map",
-              "RelativeToolTip": ".next\\dev\\server\\chunks\\ssr\\[root-of-the-server]__01eqota._.js.map",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAACrWwAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-04-11T19:55:30.171Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 29,
               "Title": "postcss.config.mjs",
               "DocumentMoniker": "C:\\SourceCode\\CERNA\\www.cernahomecare.com\\postcss.config.mjs",
               "RelativeDocumentMoniker": "postcss.config.mjs",
@@ -207,7 +523,8 @@
               "RelativeToolTip": "postcss.config.mjs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-04-08T23:03:09.339Z"
+              "WhenOpened": "2026-04-08T23:03:09.339Z",
+              "EditorCaption": ""
             }
           ]
         }
