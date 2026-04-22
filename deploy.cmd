@@ -3,6 +3,8 @@ setlocal
 
 set "SRC=C:\sourcecode\www.cernahomecare.com"
 set "DST=C:\inetpub\wwwroot\www.cernahomecare.com"
+set "SERVICE=CernaHomeCareWeb"
+set "PORT=3020"
 
 cd /d "%SRC%"
 
@@ -12,8 +14,8 @@ rmdir /s /q .next 2>nul
 call npm run build || exit /b 1
 
 echo.
-echo === Stop Service (cernahomecareWeb) ===
-sc stop cernahomecareWeb >nul 2>nul
+echo === Stop Service (%SERVICE%) ===
+sc stop %SERVICE% >nul 2>nul
 timeout /t 2 >nul
 
 echo.
@@ -44,19 +46,19 @@ if not exist "%SRC%\web.config" (
 copy /Y "%SRC%\web.config" "%DST%\web.config" >nul
 
 echo.
-echo === Start Service (cernahomecareWeb) ===
-sc start cernahomecareWeb >nul 2>nul
+echo === Start Service (%SERVICE%) ===
+sc start %SERVICE% >nul 2>nul
 
 echo.
-echo === Wait for port 3010 ===
+echo === Wait for port %PORT% ===
 for /l %%i in (1,1,30) do (
-  powershell -NoProfile -Command "try { (Invoke-WebRequest -UseBasicParsing http://127.0.0.1:3010 -TimeoutSec 2).StatusCode } catch { 0 }" | find "200" >nul && (
-    echo Site is up on port 3010.
+  powershell -NoProfile -Command "try { (Invoke-WebRequest -UseBasicParsing http://127.0.0.1:%PORT% -TimeoutSec 2).StatusCode } catch { 0 }" | find "200" >nul && (
+    echo Site is up on port %PORT%.
     exit /b 0
   )
   timeout /t 1 >nul
 )
 
-echo ERROR: Site did not start on port 3010.
-sc query cernahomecareWeb
+echo ERROR: Site did not start on port %PORT%.
+sc query %SERVICE%
 exit /b 1
