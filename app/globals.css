@@ -24,3 +24,35 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.blog-content .alignRight {
+    float: right;
+    margin: 0 0 1rem 1.5rem;
+}
+
+.blog-content .alignLeft {
+    float: left;
+    margin: 0 1.5rem 1rem 0;
+}
+
+.blog-content .alignCenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.blog-content p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.blog-content ul,
+.blog-content ol {
+    margin: 1rem 0 1rem 1.5rem;
+}

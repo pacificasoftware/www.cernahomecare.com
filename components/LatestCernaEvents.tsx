@@ -3,7 +3,7 @@ import Link from "next/link";
 import { blogPosts } from "@/lib/blogPosts";
 
 export default function LatestCernaEvents() {
-    const latestPosts = blogPosts.slice(0, 8);
+    const latestPosts = blogPosts.slice(0, 110);
 
     return (
         <section className="events-carousel-section">
@@ -15,9 +15,9 @@ export default function LatestCernaEvents() {
                 </div>
 
                 <div className="events-carousel-track">
-                    {latestPosts.map((post) => (
+                    {latestPosts.map((post, index) => (
                         <Link
-                            key={post.slug}
+                            key={`${post.slug}-${index}`}
                             href={`/blog/${post.slug}`}
                             className="events-card"
                         >
