@@ -54,7 +54,7 @@ export default async function BlogDetailPage({
                         href="/blog"
                         className="inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition hover:text-blue-800"
                     >
-                        ← Back to Blog
+                        ← Back to Articles
                     </Link>
 
                     <div className="mt-8">
