@@ -1,6 +1,18 @@
 ﻿import Link from "next/link";
 import styles from "./Navbar.module.css";
 
+const serviceLinks = [
+    { href: "/services", label: "Our Services" },
+    { href: "/services/home-care", label: "Home Care" },
+    { href: "/services/memory-care", label: "Memory Care" },
+    { href: "/services/care-management", label: "Care Management" },
+    { href: "/services/mysafepatch", label: "MySafePatch" },
+    { href: "/services/medical-appointments", label: "Medical Appointments" },
+    { href: "/services/wellness-visits", label: "Wellness Visits" },
+    { href: "/services/fall-prevention", label: "Fall Prevention" },
+    { href: "/services/assisted-living", label: "Assisted Living" },
+];
+
 export default function Navbar() {
     return (
         <header className={styles.header}>
@@ -14,41 +26,41 @@ export default function Navbar() {
                 </Link>
 
                 <nav className={styles.mainNav}>
-                    <ul>
+                    <ul className={styles.navList}>
                         <li>
                             <Link href="/" className={styles.active}>
                                 HOME
                             </Link>
                         </li>
                         <li>
-                            <Link href="/about-us">
-                                ABOUT US
-                            </Link>
+                            <Link href="/about-us">ABOUT US</Link>
                         </li>
                         <li>
-                            <Link href="/whycerna">
-                              WHY CERNA
-                            </Link>
+                            <Link href="/whycerna">WHY CERNA</Link>
                         </li>
-                        <li>
-                            <Link href="/services">
+
+                        <li className={styles.servicesItem}>
+                            <Link href="/services" className={styles.servicesLink}>
                                 SERVICES
                             </Link>
+
+                            <ul className={styles.servicesDropdown}>
+                                {serviceLinks.map((item) => (
+                                    <li key={item.href}>
+                                        <Link href={item.href}>{item.label}</Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+
+                        <li>
+                            <Link href="/locations">LOCATIONS</Link>
                         </li>
                         <li>
-                            <Link href="/locations">
-                                LOCATIONS
-                            </Link>
+                            <Link href="/careers">CAREERS</Link>
                         </li>
                         <li>
-                            <Link href="/careers">
-                                CAREERS
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/contact-us">
-                                CONTACT US
-                            </Link>
+                            <Link href="/contact-us">CONTACT US</Link>
                         </li>
                     </ul>
                 </nav>
