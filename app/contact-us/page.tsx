@@ -52,7 +52,7 @@ export default function ContactUsPage() {
         <main>
             <section className="relative min-h-[620px] overflow-hidden">
                 <Image
-                    src="/assets/caregiver-helping-elderly.jpg"
+                    src="/assets/caregiver-helping-elderly-patient-hero.png"
                     alt="Caregiver helping elderly person"
                     fill
                     priority
