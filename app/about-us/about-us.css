@@ -1,12 +1,12 @@
-.about-hero {
-    padding: 32px 0 44px;
+﻿.about-hero {
+    padding: 48px 0;
     background: #dbe6f2;
 }
 
 .about-hero-container {
-    max-width: 1528px;
+    max-width: 1700px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 18px;
 }
 
 .about-hero-grid {
@@ -26,9 +26,9 @@
 .about-hero-image-frame {
     position: relative;
     height: 100%;
-    min-height: 340px;  
+    min-height: 300px; /* ⬅️ shorter */
+    max-height: 380px; /* ⬅️ caps height */
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
 }
 
 .about-hero-image {
@@ -66,7 +66,7 @@
 .about-hero-text {
     margin-top: 24px;
     font-size: 18px;
-    line-height: 1.7;
+    line-height: 1.25;
     color: #777777;
 }
 
@@ -109,7 +109,7 @@
 
 @media (min-width: 768px) {
     .about-hero {
-        padding: 44px 0;
+        padding: 28px 0;
     }
 
     .about-hero-container {
@@ -127,8 +127,8 @@
     }
 
     .about-hero-grid {
-        grid-template-columns: 1.08fr 0.92fr;
-        gap: 32px;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 30px;
     }
 
     .about-hero-image-wrap {
