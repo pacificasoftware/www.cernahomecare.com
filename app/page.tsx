@@ -120,54 +120,22 @@ export default function CernaHomePage() {
                             }}
                         />
 
-                        {/* Much brighter overlay */}
-                        <div
-                            style={{
-                                position: "absolute",
-                                inset: 0,
-                                background: "rgba(0, 0, 0, 0.08)",   // Very light overlay
-                            }}
-                        />
+                        <Link
+                            href="http://dev.cernafranchising.com/"
+                            className="absolute right-6 top-6 z-20 rounded-full bg-white/95 px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#00456B] shadow-xl ring-2 ring-[#DD8500] backdrop-blur transition hover:bg-[#DD8500] hover:text-white md:right-10 md:top-10"
+                        >
+                            ★ Become a Franchishee
+                        </Link>
 
                         <div
                             style={{
                                 position: "absolute",
                                 inset: 0,
-                                display: "flex",
-                                alignItems: "flex-end",
-                                justifyContent: "center",
-                                textAlign: "center",
-                                padding: "0 24px 70px 24px",
+                                background: "rgba(0, 0, 0, 0.08)",
                             }}
-                        >
-                            <div style={{ maxWidth: "1100px", color: "white" }}>
-                                <h1
-                                    style={{
-                                        margin: 0,
-                                        fontSize: "48px",
-                                        fontWeight: 300,
-                                        lineHeight: 1.05,
-                                        letterSpacing: "0.02em",
-                                        textTransform: "uppercase",
-                                        textShadow: "0 3px 15px rgba(0,0,0,0.5)",   // Stronger shadow for better readability
-                                    }}
-                                >
-                                    The Home Care Journey
-                                </h1>
-                                <p
-                                    style={{
-                                        marginTop: "24px",
-                                        fontSize: "24px",
-                                        fontWeight: 700,
-                                        lineHeight: 1.25,
-                                        color: "white",
-                                        textShadow: "0 3px 12px rgba(0,0,0,0.5)",
-                                    }}
-                                >
-                                    Providing Home Care Services for Over 20 Years
-                                </p>
-                            </div>
-                        </div>
+                        />
+
+                        {/* existing hero text stays here */}
                     </div>
                 </section>
 

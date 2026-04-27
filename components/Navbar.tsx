@@ -1,4 +1,7 @@
-﻿import Link from "next/link";
+﻿"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 
 const serviceLinks = [
@@ -13,7 +16,26 @@ const serviceLinks = [
     { href: "/services/assisted-living", label: "Assisted Living" },
 ];
 
+const mainLinks = [
+    { href: "/", label: "HOME" },
+    { href: "/about-us", label: "ABOUT US" },
+    { href: "/whycerna", label: "WHY CERNA" },
+    { href: "/locations", label: "LOCATIONS" },
+    { href: "/careers", label: "CAREERS" },
+    { href: "/contact-us", label: "CONTACT US" },
+];
+
 export default function Navbar() {
+    const pathname = usePathname();
+
+    const isActive = (href: string) => {
+        if (href === "/") return pathname === "/";
+        return pathname === href || pathname.startsWith(`${href}/`);
+    };
+
+    const isServicesActive =
+        pathname === "/services" || pathname.startsWith("/services/");
+
     return (
         <header className={styles.header}>
             <div className={styles.navRow}>
@@ -27,41 +49,52 @@ export default function Navbar() {
 
                 <nav className={styles.mainNav}>
                     <ul className={styles.navList}>
-                        <li>
-                            <Link href="/" className={styles.active}>
-                                HOME
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/about-us">ABOUT US</Link>
-                        </li>
-                        <li>
-                            <Link href="/whycerna">WHY CERNA</Link>
-                        </li>
+                        {mainLinks.slice(0, 3).map((item) => (
+                            <li key={item.href}>
+                                <Link
+                                    href={item.href}
+                                    className={isActive(item.href) ? styles.active : undefined}
+                                >
+                                    {item.label}
+                                </Link>
+                            </li>
+                        ))}
 
                         <li className={styles.servicesItem}>
-                            <Link href="/services" className={styles.servicesLink}>
+                            <Link
+                                href="/services"
+                                className={`${styles.servicesLink} ${isServicesActive ? styles.active : ""
+                                    }`}
+                            >
                                 SERVICES
                             </Link>
 
                             <ul className={styles.servicesDropdown}>
                                 {serviceLinks.map((item) => (
                                     <li key={item.href}>
-                                        <Link href={item.href}>{item.label}</Link>
+                                        <Link
+                                            href={item.href}
+                                            className={
+                                                isActive(item.href) ? styles.active : undefined
+                                            }
+                                        >
+                                            {item.label}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
                         </li>
 
-                        <li>
-                            <Link href="/locations">LOCATIONS</Link>
-                        </li>
-                        <li>
-                            <Link href="/careers">CAREERS</Link>
-                        </li>
-                        <li>
-                            <Link href="/contact-us">CONTACT US</Link>
-                        </li>
+                        {mainLinks.slice(3).map((item) => (
+                            <li key={item.href}>
+                                <Link
+                                    href={item.href}
+                                    className={isActive(item.href) ? styles.active : undefined}
+                                >
+                                    {item.label}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </nav>
 
