@@ -1,9 +1,8 @@
-﻿
-
-import { Roboto } from "next/font/google";
+﻿import { Roboto } from "next/font/google";
 import styles from "./home.module.css";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "next/link";  
+import HomeConsultationForm from "@/components/HomeConsultationForm";
 
 const services = [
     { title: "Companionship", icon: "💙" },
@@ -150,16 +149,17 @@ export default function CernaHomePage() {
                 >
                     <div className="absolute inset-0 bg-slate-900/45" />
 
-                    <div className="relative mx-auto grid max-w-7xl gap-8 lg:gap-16 px-6 md:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
-
+                    <div className="relative mx-auto grid max-w-7xl gap-12 px-6 md:gap-16 md:px-8 lg:grid-cols-[minmax(560px,600px)_minmax(560px,600px)] lg:justify-center lg:gap-40 lg:px-10">
                         <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
                             <div className="mb-6">
                                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
                                     We are here to help
                                 </p>
+
                                 <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
                                     Request a free consultation
                                 </h2>
+
                                 <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">
                                     Please feel free to contact us anytime at{" "}
                                     <a
@@ -170,79 +170,33 @@ export default function CernaHomePage() {
                                     </a>
                                     . We’ll help you understand the next best step.
                                 </p>
-                                <p className="mt-4 mb-8 max-w-2xl text-base leading-7 text-slate-200"/>
+
+                                <p className="mt-4 mb-8 max-w-2xl text-base leading-7 text-slate-200" />
                             </div>
 
-                            <form className="pb-6">
-                                <div className="mb-5">
-                                    <input
-                                        type="text"
-                                        placeholder="Name"
-                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                    />
-                                </div>
-
-                                <div className="mb-5">
-                                    <input
-                                        type="tel"
-                                        placeholder="Phone"
-                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                    />
-                                </div>
-
-                                <div className="mb-5">
-                                    <select className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-300">
-                                        <option className="text-slate-900">I am looking for information on your services</option>
-                                        <option className="text-slate-900">I am looking for a job</option>
-                                    </select>
-                                </div>
-
-                                <div className="mb-5">
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                    />
-                                </div>
-
-                                <div className="mb-5">
-                                    <textarea
-                                        rows={4}
-                                        placeholder="Your message"
-                                        className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
-                                    />
-                                </div>
-
-                                {/*<div className="mb-5 rounded-2xl border border-white/20 bg-white/10 px-4 py-4">*/}
-                                {/*    <p className="text-sm text-slate-200">CAPTCHA goes here</p>*/}
-                                {/*</div>*/}
-
-                                <button
-                                    type="submit"
-                                    className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-                                >
-                                    Submit Request
-                                </button>
-                            </form>
-
+                            <HomeConsultationForm />
                         </div>
 
                         <div className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
                             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
                                 Care plans
                             </p>
+
                             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
                                 Tailored to your specific needs
                             </h2>
+
                             <p className="mt-5 text-base leading-8 text-slate-600">
-                                Before starting care, we spend time getting to know you or your
-                                loved one as a person, learning the routines, preferences, and
-                                support needs that shape each day.
+                                Before starting care, we spend time getting to know you or your loved one
+                                as a person, learning the routines, preferences, and support needs that
+                                shape each day.
                             </p>
+
                             <p className="mt-4 text-base leading-8 text-slate-600">
-                                Then we design a personalized care plan built around comfort,
-                                dignity, and dependable support.
+                                Then we design a personalized care plan built around comfort, dignity,
+                                and dependable support.
                             </p>
+
                             <div className="mt-8 flex flex-wrap gap-3">
                                 {carePlanItems.map((item) => (
                                     <span
@@ -253,6 +207,7 @@ export default function CernaHomePage() {
                                     </span>
                                 ))}
                             </div>
+
                             <div className="mt-8">
                                 <Link
                                     href="/getting-started"
@@ -262,7 +217,6 @@ export default function CernaHomePage() {
                                 </Link>
                             </div>
                         </div>
-
                     </div>
                 </section>
 

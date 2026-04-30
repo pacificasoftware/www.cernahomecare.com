@@ -19,7 +19,7 @@ const serviceLinks = [
 const mainLinks = [
     { href: "/", label: "HOME" },
     { href: "/about-us", label: "ABOUT US" },
-    { href: "/whycerna", label: "WHY CERNA" },
+    { href: "/why-cerna", label: "WHY CERNA" },
     { href: "/locations", label: "LOCATIONS" },
     { href: "/careers", label: "CAREERS" },
     { href: "/contact-us", label: "CONTACT US" },

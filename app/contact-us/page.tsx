@@ -1,6 +1,7 @@
 ﻿import "./contact-us.css";
 import Link from "next/link";
 import Image from "next/image";
+import ContactForm from "./ContactForm";
 
 export const metadata = {
     title: "Contact Us | Cerna Home Care",
@@ -112,55 +113,7 @@ export default function ContactUsPage() {
                     </h2>
 
                     <div className="rounded-[8px] bg-white p-8 shadow-sm md:p-10">
-                        <form className="grid gap-5">
-                            <div className="grid gap-5 md:grid-cols-2">
-                                <input
-                                    type="text"
-                                    placeholder="First Name"
-                                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Last Name"
-                                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
-                                />
-                            </div>
-
-                            <div className="grid gap-5 md:grid-cols-2">
-                                <input
-                                    type="email"
-                                    placeholder="Email Address"
-                                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
-                                />
-                                <input
-                                    type="tel"
-                                    placeholder="Phone Number"
-                                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
-                                />
-                            </div>
-
-                            <input
-                                type="text"
-                                placeholder="Subject"
-                                className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
-                            />
-
-                            <textarea
-                                placeholder="How can we help?"
-                                rows={6}
-                                className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
-                            />
-
-                            <div className="pt-2 text-center">
-                                <button
-                                    type="submit"
-                                    className="inline-flex items-center justify-center px-10 py-4 text-xl font-bold text-white transition hover:opacity-90"
-                                    style={{ backgroundColor: "#DD8500" }}
-                                >
-                                    SEND MESSAGE
-                                </button>
-                            </div>
-                        </form>
+                        <ContactForm />
                     </div>
                 </div>
             </section> 
