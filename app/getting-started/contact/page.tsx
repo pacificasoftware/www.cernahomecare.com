@@ -57,16 +57,17 @@ export default function GettingStartedContactPage() {
 
         try {
             const payload = {
-                city: "",
-                capitalRequirement: "0",
                 name: "Getting Started - Step 3",
+                firstName: "Getting Started",
+                lastName: "Step 3",
                 email: form.email,
                 phone: form.phone,
-                message: `Getting Started submission - Step 3
-
-Email: ${form.email}
-Phone: ${form.phone}
-Consent Accepted: ${form.consent ? "Yes" : "No"}`,
+                subject: "New Getting Started Inquiry",
+                purpose: "services",
+                message: `Getting Started submission - Step 3 
+                        Email: ${form.email}
+                        Phone: ${form.phone}
+                        Consent Accepted: ${form.consent ? "Yes" : "No"}`,
             };
 
             const res = await fetch("/api/contact", {

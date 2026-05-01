@@ -2,22 +2,22 @@
 import Link from "next/link";
 
 const services = [
-    "Companionship",
-    "Appointments",
-    "Bathing",
-    "Cooking",
-    "Dressing",
-    "Errands",
-    "Exercise",
-    "Grooming",
-    "Laundry",
-    "Medical Help",
-    "Mobility",
-    "Pets",
-    "Showering",
-    "Toileting",
-    "Transfering",
-    "Transportation",
+    { name: "Companionship", icon: "/assets/icons/Companionship.webp" },
+    { name: "Appointments", icon: "/assets/icons/Appointments.webp" },
+    { name: "Bathing", icon: "/assets/icons/Bathing.webp" },
+    { name: "Cooking", icon: "/assets/icons/Cooking.webp" },
+    { name: "Dressing", icon: "/assets/icons/Dressing.webp" },
+    { name: "Errands", icon: "/assets/icons/Errands.webp" },
+    { name: "Exercise", icon: "/assets/icons/Exersize.webp" },
+    { name: "Grooming", icon: "/assets/icons/Grooming.webp" },
+    { name: "Laundry", icon: "/assets/icons/Laundry.webp" },
+    { name: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
+    { name: "Mobility", icon: "/assets/icons/Mobility.webp" },
+    { name: "Pets", icon: "/assets/icons/Pets.webp" },
+    { name: "Showering", icon: "/assets/icons/Shoering.webp" },
+    { name: "Toileting", icon: "/assets/icons/Toileting.webp" },
+    { name: "Transfering", icon: "/assets/icons/Transfering.webp" },
+    { name: "Transportation", icon: "/assets/icons/Transportation.webp" },
 ];
 
 export default function ServicesPage() {
@@ -80,16 +80,28 @@ export default function ServicesPage() {
                 <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {services.map((service) => (
                         <div
-                            key={service}
-                            className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                            key={service.name}
+                            className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
                         >
-                            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 text-xl font-bold text-[#1f73d8]">
-                                ✓
+                            <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#D9F1F7]" />
+
+                            <div className="relative mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#00456B] shadow-md">
+                                <Image
+                                    src={service.icon}
+                                    alt={`${service.name} icon`}
+                                    width={38}
+                                    height={38}
+                                    className="object-contain brightness-0 invert"
+                                />
                             </div>
-                            <h3 className="text-xl font-bold text-[#00456B]">{service}</h3>
-                            <p className="mt-3 text-sm leading-7 text-slate-600">
-                                Professional, attentive support tailored to each client’s daily
-                                needs and comfort.
+
+                            <h3 className="relative text-xl font-bold text-[#00456B]">
+                                {service.name}
+                            </h3>
+
+                            <p className="relative mt-3 text-sm leading-7 text-slate-600">
+                                Professional, attentive support tailored to each client’s daily needs
+                                and comfort.
                             </p>
                         </div>
                     ))}
@@ -154,7 +166,7 @@ export default function ServicesPage() {
                                 Ready to speak with our care team?
                             </h2>
                             <p className="mt-4 max-w-2xl text-lg leading-8 text-sky-50">
-                                We are here to help you find the right level of care for you or
+                                We are here to help you find the right level of  care for you or
                                 your loved one. Contact Cerna Home Care today for a complimentary
                                 in-home consultation.
                             </p>

@@ -7,7 +7,7 @@ const featureCards = [
         title: "Our Care Services",
         description:
             "Bathing, grooming, meal preparation, outings, transportation, and more — all tailored to the unique needs of each client.",
-        href: "/our-services",
+        href: "/services",
     },
     {
         title: "Become a Caregiver",
