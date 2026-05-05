@@ -9,6 +9,7 @@ const locations = [
         state: "CA",
         title: "Orange County, CA",
         address: "2151 Michelson Dr, Irvine, CA 92612",
+        phone: "(949) 298-3200",
         image: "/assets/cernaoffice.png",
     },
     {
@@ -16,6 +17,7 @@ const locations = [
         state: "TX",
         title: "Southlake, TX",
         address: "1560 E Southlake Blvd, Southlake, TX 76092",
+        phone: "(682) 324-9800",
         image: "/assets/1560-E-Southlake-Blvd-Southlake-TX-Building-Photo-1-Large.jpg",
     },
     {
@@ -23,6 +25,7 @@ const locations = [
         state: "CA",
         title: "South Bay, CA",
         address: "3780 Kilroy Airport Way, Long Beach, CA 90806",
+        phone: "(562) 242-1830",
         image: "/assets/3780-Kilroy-Airport-Way.jpg",
     },
     {
@@ -30,6 +33,7 @@ const locations = [
         state: "CA",
         title: "Marin County, CA",
         address: "700 Larkspur Landing Circle, Larkspur, CA 94939",
+        phone: "(415) 799-2628",
         image: "/assets/700-Larkspur-Landing.jpg",
     },
     {
@@ -37,7 +41,7 @@ const locations = [
         state: "CA",
         title: "San Diego, CA",
         address: "12526 High Bluff Drive, San Diego, CA 92130",
-        phone: "(858) 225-7736",
+        phone: "(877) 572-3762",
         image: "/assets/12526-High-Bluff-Dr.jpg",
     },
     {
@@ -45,7 +49,7 @@ const locations = [
         state: "CA",
         title: "Pasadena, CA",
         address: "1055 E Colorado Blvd., 5th Floor, Pasadena, CA 91106",
-        phone: "(562) 242-1830",
+        phone: "(818) 839-5602",
         image: "/assets/1055 E Colorado Blvd.jpg",
     },
     {
@@ -177,6 +181,17 @@ export default function LocationsPage() {
                                 <p className="mt-3 text-sm leading-6 text-slate-600">
                                     {location.address}
                                 </p>
+
+                                {location.phone && (
+                                    <p className="mt-3 text-sm font-semibold text-[#00456B]">
+                                        <a
+                                            href={`tel:${location.phone.replace(/\D/g, "")}`}
+                                            className="hover:text-[#DD8500]"
+                                        >
+                                            {location.phone}
+                                        </a>
+                                    </p>
+                                )}
 
                                 <a
                                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
