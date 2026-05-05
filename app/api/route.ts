@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
                     message:
                         data?.message ||
                         rawText ||
-                        "Failed to send email � please try again later",
+                        "Failed to send email – please try again later",
                     upstreamStatus: dotnetRes.status,
                 },
                 { status: dotnetRes.status }
