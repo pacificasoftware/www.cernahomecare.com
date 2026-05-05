@@ -13,7 +13,7 @@ export default function WhyCernaPage() {
                         {/* Left Image */}
                         <div className="why-hero-image-wrap">
                             <Image
-                                src="/assets/cernaoffcie.png"  
+                                src="/assets/cernaoffice.png"  
                                 alt="Cerna Home Care building"
                                 width={420}
                                 height={260} 
