@@ -26,14 +26,44 @@ export default function Footer() {
         <footer>
             <div style={{ backgroundColor: "#00456B", color: "white", padding: "40px 24px" }}>
                 <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-                    <div style={{ marginBottom: "24px", textAlign: "center" }}>
-                        <Image
-                            src="/assets/healthcare-cerna.webp"
-                            alt="Footer highlights"
-                            width={1000}
-                            height={120}
-                            style={{ maxWidth: "100%", height: "auto" }}
-                        />
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+                            gap: "24px",
+                            paddingBottom: "28px",
+                            marginBottom: "28px",
+                            borderBottom: "1px solid rgba(255,255,255,0.2)",
+                            textAlign: "center",
+                        }}
+                    >
+                        <div>
+                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>✍️</div>
+                            <p style={{ fontWeight: 700, fontSize: "18px" }}>
+                                Free Assessment
+                            </p>
+                        </div>
+
+                        <div>
+                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>📝</div>
+                            <p style={{ fontWeight: 700, fontSize: "18px" }}>
+                                No Contracts
+                            </p>
+                        </div>
+
+                        <div>
+                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>⏱️</div>
+                            <p style={{ fontWeight: 700, fontSize: "18px" }}>
+                                We are available 24/7
+                            </p>
+                        </div>
+
+                        <div>
+                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>💳</div>
+                            <p style={{ fontWeight: 700, fontSize: "18px" }}>
+                                100% Secure payments
+                            </p>
+                        </div>
                     </div>
 
                     <div
