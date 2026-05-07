@@ -2,12 +2,14 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const locations = [
     {
         city: "Orange County",
         state: "CA",
         title: "Orange County, CA",
+        slug: "orange-county",
         address: "2151 Michelson Dr, Irvine, CA 92612",
         phone: "(949) 298-3200",
         image: "/assets/cernaoffice.png",
@@ -16,6 +18,7 @@ const locations = [
         city: "Southlake",
         state: "TX",
         title: "Southlake, TX",
+        slug: "southlake",
         address: "1560 E Southlake Blvd, Southlake, TX 76092",
         phone: "(682) 324-9800",
         image: "/assets/1560-E-Southlake-Blvd-Southlake-TX-Building-Photo-1-Large.jpg",
@@ -24,6 +27,7 @@ const locations = [
         city: "South Bay",
         state: "CA",
         title: "South Bay, CA",
+        slug: "south-bay",
         address: "3780 Kilroy Airport Way, Long Beach, CA 90806",
         phone: "(562) 242-1830",
         image: "/assets/3780-Kilroy-Airport-Way.jpg",
@@ -32,6 +36,7 @@ const locations = [
         city: "Marin County",
         state: "CA",
         title: "Marin County, CA",
+        slug: "marin-county",
         address: "700 Larkspur Landing Circle, Larkspur, CA 94939",
         phone: "(415) 799-2628",
         image: "/assets/700-Larkspur-Landing.jpg",
@@ -40,6 +45,7 @@ const locations = [
         city: "San Diego",
         state: "CA",
         title: "San Diego, CA",
+        slug: "san-diego",
         address: "12526 High Bluff Drive, San Diego, CA 92130",
         phone: "(877) 572-3762",
         image: "/assets/12526-High-Bluff-Dr.jpg",
@@ -48,6 +54,7 @@ const locations = [
         city: "Pasadena",
         state: "CA",
         title: "Pasadena, CA",
+        slug: "pasadena",
         address: "1055 E Colorado Blvd., 5th Floor, Pasadena, CA 91106",
         phone: "(818) 839-5602",
         image: "/assets/1055 E Colorado Blvd.jpg",
@@ -56,6 +63,7 @@ const locations = [
         city: "Dallas",
         state: "TX",
         title: "Dallas, TX",
+        slug: "dallas",
         address: "101 E Park Blvd Suite 771, Plano, TX 75074",
         phone: "(972) 330-2005",
         image: "/assets/101-E-Park-Blvd-Plano-TX.jpg",
@@ -64,6 +72,7 @@ const locations = [
         city: "Las Vegas",
         state: "NV",
         title: "Las Vegas, NV",
+        slug: "las-vegas",
         address: "8180 Rafael Rivera Way #305, Las Vegas, NV 89113",
         phone: "(702) 673-1900",
         image: "/assets/8180_rafael_rivera.png",
@@ -158,7 +167,10 @@ export default function LocationsPage() {
                             key={`${location.title}-${location.address}`}
                             className="group overflow-hidden rounded-[28px] bg-white shadow-md ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-xl"
                         >
-                            <div className="relative h-56 overflow-hidden bg-slate-100">
+                            <Link
+                                href={`/${location.slug}`}
+                                className="relative block h-56 overflow-hidden bg-slate-100"
+                            >
                                 <Image
                                     src={location.image}
                                     alt={`${location.title} office map`}
@@ -171,7 +183,7 @@ export default function LocationsPage() {
                                 <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#00456B] shadow">
                                     {location.state}
                                 </div>
-                            </div>
+                            </Link>
 
                             <div className="p-6 text-center">
                                 <h3 className="text-2xl font-bold text-[#00456B]">

@@ -21,6 +21,7 @@ export default function ContactForm() {
             phone: String(formData.get("phone") || "").trim(),
             subject: String(formData.get("subject") || "").trim(),
             message: String(formData.get("message") || "").trim(),
+            company: String(formData.get("company") || "").trim(),
             purpose: "General",
         };
 
@@ -60,7 +61,15 @@ export default function ContactForm() {
             }
 
             if (!response.ok) {
-                throw new Error(result?.message || raw || "Request failed.");
+                setIsError(true);
+
+                const cleanMessage =
+                    result && typeof result === "object" && "message" in result
+                        ? result.message
+                        : "We could not send your message right now. Please try again later or call us directly.";
+
+                setStatusMessage(cleanMessage);
+                return;
             }
 
             setStatusMessage(
@@ -71,7 +80,7 @@ export default function ContactForm() {
         } catch (error: any) {
             setIsError(true);
             setStatusMessage(
-                error?.message || "Sorry, we could not send your message right now."
+                error?.message || "Sorry, we could not send your message right now333!."
             );
         } finally {
             setIsSubmitting(false);
@@ -89,6 +98,14 @@ export default function ContactForm() {
                 <input name="email" type="email" placeholder="Email Address" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
                 <input name="phone" type="tel" placeholder="Phone Number" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
             </div>
+
+            <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+            />
 
             <input name="subject" type="text" placeholder="Subject" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
 

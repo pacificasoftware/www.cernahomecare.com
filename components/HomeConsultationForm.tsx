@@ -48,7 +48,15 @@ export default function HomeConsultationForm() {
             const result = raw ? JSON.parse(raw) : null;
 
             if (!response.ok) {
-                throw new Error(result?.message || "Request failed.");
+                setIsError(true);
+
+                const cleanMessage =
+                    result && typeof result === "object" && "message" in result
+                        ? result.message
+                        : "We could not send your message right now. Please try again later or call us directly.";
+
+                setStatusMessage(cleanMessage);
+                return;
             }
 
             setStatusMessage("Thank you. We received your request and will be in touch shortly.");
