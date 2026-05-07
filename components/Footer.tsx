@@ -167,30 +167,34 @@ export default function Footer() {
 
                             <div>
                                 {[
-                                    "Website Terms",
-                                    "Privacy Policy",
-                                    "Locations",
-                                    "Write a Review",
+                                    { label: "Website Terms", href: "/website-terms" },
+                                    { label: "Privacy Policy", href: "/privacy-policy" },
+                                    { label: "Locations", href: "/locations" },
+                                    { label: "Write a Review", href: "/write-a-review" },
                                 ].map((item) => (
-                                    <div
-                                        key={item}
+                                    <Link
+                                        key={item.label}
+                                        href={item.href}
                                         style={{
+                                            display: "block",
                                             borderBottom: "1px solid white",
                                             padding: "12px 0",
                                             fontSize: "18px",
+                                            color: "#D26E4B",
+                                            textDecoration: "none",
                                         }}
                                     >
                                         <span
                                             style={{
-                                                color: "#D26E4B",
                                                 fontWeight: 700,
                                                 marginRight: "10px",
                                             }}
                                         >
                                             &gt;
                                         </span>
-                                        <span style={{ color: "#D26E4B" }}>{item}</span>
-                                    </div>
+
+                                        {item.label}
+                                    </Link>
                                 ))}
                             </div>
                         </div>
@@ -210,30 +214,34 @@ export default function Footer() {
 
                             <div>
                                 {[
-                                    "Downloads",
-                                    "Financial Support",
-                                    "Insurance Information",
-                                    "Affiliations",
+                                    { label: "Downloads", href: "/downloads" },
+                                    { label: "Financial Support", href: "/financial-support" },
+                                    { label: "Insurance Information", href: "/insurance-information" },
+                                    { label: "Affiliations", href: "/affiliations" },
                                 ].map((item) => (
-                                    <div
-                                        key={item}
+                                    <Link
+                                        key={item.label}
+                                        href={item.href}
                                         style={{
+                                            display: "block",
                                             borderBottom: "1px solid white",
                                             padding: "12px 0",
                                             fontSize: "18px",
+                                            color: "#D26E4B",
+                                            textDecoration: "none",
                                         }}
                                     >
                                         <span
                                             style={{
-                                                color: "#AA6E4B",
                                                 fontWeight: 700,
                                                 marginRight: "10px",
                                             }}
                                         >
                                             &gt;
                                         </span>
-                                        <span style={{ color: "#D26E4B" }}>{item}</span>
-                                    </div>
+
+                                        {item.label}
+                                    </Link>
                                 ))}
                             </div>
                         </div>
