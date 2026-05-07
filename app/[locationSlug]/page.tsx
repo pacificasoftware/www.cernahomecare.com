@@ -1,6 +1,7 @@
 ﻿import Link from "next/link";
 import { notFound } from "next/navigation";
 import { locations } from "@/lib/locations";
+import LocationServicesTabs from "@/components/LocationServicesTabs";
 
 type Props = {
     params: Promise<{
@@ -118,6 +119,66 @@ export default async function LocationPage({ params }: Props) {
                         their safety. What do we do? Did we plan for this? Can mom stay
                         home? Does she have to go into a nursing home?
                     </p>
+                </div>
+            </section>
+            <LocationServicesTabs />
+
+            <section className="bg-white">
+                <div
+                    className="h-[90px] bg-cover bg-center"
+                    style={{ backgroundImage: 'url("/assets/banner.webp")' }}
+                />
+
+                <div className="mx-auto max-w-7xl px-6 py-16 text-center">
+                    <h2 className="text-3xl font-extrabold text-black md:text-4xl">
+                        Both our Clients and their Families Love Us!
+                    </h2>
+
+                    <div className="mt-12 grid gap-10 md:grid-cols-3">
+                        <div className="bg-slate-100 px-8 py-12">
+                            <div className="text-2xl text-[#DD8500]">★★★★★</div>
+                            <h3 className="mt-4 text-xl font-bold text-[#00456B]">
+                                I Sing Your Praises!
+                            </h3>
+                            <p className="mt-4 text-base italic leading-7 text-slate-600">
+                                Johnna has been doing really good. She has only had 1 or maybe 2
+                                small meltdowns during quarantine. She’s doing her homework without
+                                asking, cleaning her room and making 85% of her own food. All in all
+                                she’s been better than I ever could have imagined. You were so right.
+                            </p>
+                            <p className="mt-8 font-bold text-slate-600">Johnna Haynes</p>
+                        </div>
+
+                        <div className="bg-slate-100 px-8 py-12">
+                            <div className="text-2xl text-[#DD8500]">★★★★★</div>
+                            <h3 className="mt-4 text-xl font-bold text-[#00456B]">
+                                Best Company to work for
+                            </h3>
+                            <p className="mt-4 text-base italic leading-7 text-slate-600">
+                                I love working for Cerna. I love how they care not just for
+                                caregivers but for their clients. They always do the best to fit
+                                caregivers with the right clients. My clients are pleased with them
+                                and how they have the best caregivers to send.
+                            </p>
+                            <p className="mt-8 font-bold text-slate-600">Shirley Rose</p>
+                        </div>
+
+                        <div className="bg-slate-100 px-8 py-12">
+                            <div className="text-2xl text-[#DD8500]">★★★★★</div>
+                            <h3 className="mt-4 text-xl font-bold text-[#00456B]">
+                                You are so great!
+                            </h3>
+                            <p className="mt-4 text-base italic leading-7 text-slate-600">
+                                You did a great job teaching me about what’s really going on with
+                                Johnna. Nobody was able to figure it out. We all as a team continue
+                                to work with Johnna. I actually finally enjoy coming home and
+                                spending time with her.
+                            </p>
+                            <p className="mt-8 font-bold text-slate-600">
+                                DeAnn and Johnna King
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
