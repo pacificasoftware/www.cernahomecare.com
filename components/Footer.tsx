@@ -38,28 +38,70 @@ export default function Footer() {
                         }}
                     >
                         <div>
-                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>✍️</div>
+                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center text-white">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-12 w-12">
+                                    <path d="M4 20h16" />
+                                    <path d="M6 16l10-10 2 2-10 10H6v-2Z" />
+                                </svg>
+                            </div>
                             <p style={{ fontWeight: 700, fontSize: "18px" }}>
                                 Free Assessment
                             </p>
                         </div>
 
                         <div>
-                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>📝</div>
+                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center text-white">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.8"
+                                    className="h-12 w-12"
+                                >
+                                    <path d="M6 3h9l3 3v15H6V3Z" />
+                                    <path d="M14 3v4h4" />
+                                    <path d="M9 12h6" />
+                                    <path d="M9 16h6" />
+                                </svg>
+                            </div>
                             <p style={{ fontWeight: 700, fontSize: "18px" }}>
                                 No Contracts
                             </p>
                         </div>
 
                         <div>
-                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>⏱️</div>
+                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center text-white">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.8"
+                                    className="h-12 w-12"
+                                >
+                                    <circle cx="12" cy="12" r="8" />
+                                    <path d="M12 8v5l3 2" />
+                                    <path d="M8 2h8" />
+                                </svg>
+                            </div>
                             <p style={{ fontWeight: 700, fontSize: "18px" }}>
                                 We are available 24/7
                             </p>
                         </div>
 
                         <div>
-                            <div style={{ fontSize: "42px", marginBottom: "12px" }}>💳</div>
+                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center text-white">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.8"
+                                    className="h-12 w-12"
+                                >
+                                    <rect x="3" y="6" width="18" height="12" rx="2" />
+                                    <path d="M3 10h18" />
+                                    <path d="M7 15h4" />
+                                </svg>
+                            </div>
                             <p style={{ fontWeight: 700, fontSize: "18px" }}>
                                 100% Secure payments
                             </p>
