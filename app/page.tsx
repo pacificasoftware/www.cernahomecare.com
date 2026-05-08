@@ -298,6 +298,7 @@ export default function CernaHomePage() {
                                 href="/downloads/nutrition-guide.pdf"
                                 className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white no-underline transition hover:opacity-90"
                                 style={{ backgroundColor: "#DD8500" }}
+                                target="_blank"
                             >
                                 Free Nutrition Guide
                             </Link>
