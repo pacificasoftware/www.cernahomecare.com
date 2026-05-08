@@ -48,7 +48,7 @@ const locations = [
         title: "San Diego, CA",
         slug: "san-diego",
         address: "12526 High Bluff Drive, San Diego, CA 92130",
-        phone: "(877) 572-3762",
+        phone: "(858) 225-7736",
         image: "/assets/12526-High-Bluff-Dr.jpg",
     },
     {
@@ -57,7 +57,7 @@ const locations = [
         title: "Pasadena, CA",
         slug: "pasadena",
         address: "1055 E Colorado Blvd., 5th Floor, Pasadena, CA 91106",
-        phone: "(818) 839-5602",
+        phone: "(562) 242 1830",
         image: "/assets/1055 E Colorado Blvd.jpg",
     },
     {
