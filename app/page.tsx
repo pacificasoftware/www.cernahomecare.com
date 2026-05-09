@@ -5,18 +5,18 @@ import Link from "next/link";
 import HomeConsultationForm from "@/components/HomeConsultationForm";
 
 const services = [
-    { title: "Companionship", icon: "💙" },
-    { title: "Appointments", icon: "📅" },
-    { title: "Bathing", icon: "🛁" },
-    { title: "Cooking", icon: "🍽️" },
-    { title: "Dressing", icon: "👕" },
-    { title: "Errands", icon: "🚗" },
-    { title: "Exercise", icon: "🏃" },
-    { title: "Grooming", icon: "✨" },
-    { title: "Laundry", icon: "🧺" },
-    { title: "Medical Help", icon: "🛡️" },
-    { title: "Mobility", icon: "🤝" },
-    { title: "Pets", icon: "🐾" },
+    { title: "Companionship", icon: "/assets/icons/Companionship.webp" },
+    { title: "Appointments", icon: "/assets/icons/Appointments.webp" },
+    { title: "Bathing", icon: "/assets/icons/Bathing.webp" },
+    { title: "Cooking", icon: "/assets/icons/Cooking.webp" },
+    { title: "Dressing", icon: "/assets/icons/Dressing.webp" },
+    { title: "Errands", icon: "/assets/icons/Errands.webp" },
+    { title: "Exercise", icon: "/assets/icons/Exersize.webp" },
+    { title: "Grooming", icon: "/assets/icons/Grooming.webp" },
+    { title: "Laundry", icon: "/assets/icons/Laundry.webp" },
+    { title: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
+    { title: "Mobility", icon: "/assets/icons/Mobility.webp" },
+    { title: "Pets", icon: "/assets/icons/Pets.webp" },
 ];
 
 const carePlanItems = [
@@ -270,21 +270,32 @@ export default function CernaHomePage() {
                             {services.map(({ title, icon }) => (
                                 <div
                                     key={title}
-                                    className="group rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                                    className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
                                 >
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-2xl">
-                                        <span aria-hidden="true">{icon}</span>
+                                    <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#D9F1F7]" />
+
+                                    <div className="relative mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#00456B] shadow-md">
+                                        <Image
+                                            src={icon}
+                                            alt={`${title} icon`}
+                                            width={38}
+                                            height={38}
+                                            className="object-contain brightness-0 invert"
+                                        />
                                     </div>
-                                    <h3 className="mt-5 text-xl font-semibold text-slate-900">
+
+                                    <h3 className="relative text-xl font-bold text-[#00456B]">
                                         {title}
                                     </h3>
-                                    <p className="mt-2 text-sm leading-7 text-slate-600">
+
+                                    <p className="relative mt-3 text-sm leading-7 text-slate-600">
                                         Compassionate assistance delivered with consistency,
                                         dignity, and attention to the individual.
                                     </p>
                                 </div>
                             ))}
                         </div>
+
                         <div className="mt-10 flex flex-wrap justify-center gap-4">
                             <Link
                                 href="/downloads/fall-prevention-guide.pdf"
