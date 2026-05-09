@@ -22,7 +22,7 @@ export default function ContactForm() {
             subject: String(formData.get("subject") || "").trim(),
             message: String(formData.get("message") || "").trim(),
             company: String(formData.get("company") || "").trim(),
-            purpose: "General",
+            purpose: "services",
         };
 
         if (
