@@ -120,7 +120,7 @@ export default function CernaHomePage() {
                         />
 
                         <Link
-                            href="http://dev.cernafranchising.com/"
+                            href="https://www.cernafranchising.com/"
                             target="_blank"
                             className="absolute right-6 top-6 z-20 rounded-full bg-white/95 px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#00456B] shadow-xl ring-2 ring-[#DD8500] backdrop-blur transition hover:bg-[#DD8500] hover:text-white md:right-10 md:top-10"
                         >
