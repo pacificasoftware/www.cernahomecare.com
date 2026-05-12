@@ -135,27 +135,28 @@ export default function CernaHomePage() {
                             }}
                         />
 
-                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pt-72 text-center md:pt-156">
-                            <div className="max-w-4xl">
+                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pt-[22rem] text-center md:pt-[27rem]">
+                            <div className="max-w-5xl">
                                 <h1
-                                    className="text-2xl font-extrabold uppercase tracking-[0.12em] text-white drop-shadow-2xl md:text-4xl lg:text-5xl"
+                                    className="text-2xl font-extralight uppercase tracking-[0.06em] text-white md:text-4xl lg:text-5xl"
                                     style={{
-                                        textShadow: "0 4px 18px rgba(0,0,0,0.45)",
+                                        textShadow: "0 2px 10px rgba(0,0,0,0.40)",
                                     }}
                                 >
                                     THE HOME CARE JOURNEY
                                 </h1>
 
                                 <p
-                                    className="mt-3 text-base font-medium text-white md:text-xl"
+                                    className="mt-3 text-sm font-light tracking-[0.02em] text-white md:text-lg lg:text-xl"
                                     style={{
-                                        textShadow: "0 3px 12px rgba(0,0,0,0.45)",
+                                        textShadow: "0 2px 10px rgba(0,0,0,0.40)",
                                     }}
                                 >
                                     Providing Home Care Services for Over 20 Years
                                 </p>
                             </div>
                         </div>
+
                     </div>
                 </section>
 
