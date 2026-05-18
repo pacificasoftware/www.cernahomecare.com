@@ -136,7 +136,7 @@ export default async function LocationPage({ params }: Props) {
                             </a>
 
                             <h2 className="mt-8 text-3xl font-extrabold text-[#00456B]">
-                                Get your FREE consultation today{" "}
+                                Get your FREE consultation today{" "} <br/>Call: &nbsp;
                                 <a href={location.phones?.[0]?.href ?? location.phoneHref}>
                                     {location.phones?.[0]?.number ?? location.phone}
                                 </a>

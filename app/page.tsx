@@ -161,7 +161,7 @@ export default function CernaHomePage() {
                 </section>
 
                 <section
-                    className="relative py-20 md:py-24"
+                    className="relative py-12 md:py-14"
                     style={{
                         backgroundImage: 'url("/assets/hands_blueV2-300x300.webp")',
                         backgroundSize: "cover",
@@ -171,9 +171,9 @@ export default function CernaHomePage() {
                 >
                     <div className="absolute inset-0 bg-slate-900/45" />
 
-                    <div className="relative mx-auto grid max-w-7xl gap-12 px-6 md:gap-16 md:px-8 lg:grid-cols-[minmax(560px,600px)_minmax(560px,600px)] lg:justify-center lg:gap-40 lg:px-10">
-                        <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-8 text-white shadow-sm md:p-10">
-                            <div className="mb-6">
+                    <div className="relative mx-auto grid max-w-7xl gap-8 px-6 md:gap-10 md:px-8 lg:grid-cols-[minmax(520px,560px)_minmax(520px,560px)] lg:justify-center lg:gap-40 lg:px-10">
+                        <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-6 text-white shadow-sm md:p-8">
+                            <div className="mb-5">
                                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
                                     We are here to help
                                 </p>
@@ -192,51 +192,54 @@ export default function CernaHomePage() {
                                     </a>
                                     . We’ll help you understand the next best step.
                                 </p>
-
-                                <p className="mt-4 mb-8 max-w-2xl text-base leading-7 text-slate-200" />
                             </div>
 
                             <HomeConsultationForm />
                         </div>
 
-                        <div className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
-                            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
-                                Care plans
-                            </p>
+                        <div className="flex items-center">
+                            <div className="overflow-hidden rounded-[28px] bg-white shadow-xl ring-1 ring-slate-200">
+                                <div className="relative h-[220px] w-full md:h-[280px] md:w-[560px]">
+                                    <Image
+                                        src="/assets/caregiver-helping-elderly-patient-hero.png"
+                                        alt="Cerna Homecare caregiver helping a senior at home"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 560px"
+                                        className="object-cover"
+                                        quality={100}
+                                    />
+                                </div>
 
-                            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
-                                Tailored to your specific needs
-                            </h2>
+                                <div className="p-5 md:p-6">
+                                    <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
+                                        Peace of Mind at Home
+                                    </p>
 
-                            <p className="mt-5 text-base leading-8 text-slate-600">
-                                Before starting care, we spend time getting to know you or your loved one
-                                as a person, learning the routines, preferences, and support needs that
-                                shape each day.
-                            </p>
+                                    <h2 className="mt-3 text-2xl font-bold leading-tight text-[#00456B] md:text-3xl">
+                                        Compassionate care for the people who matter most
+                                    </h2>
 
-                            <p className="mt-4 text-base leading-8 text-slate-600">
-                                Then we design a personalized care plan built around comfort, dignity,
-                                and dependable support.
-                            </p>
+                                    <p className="mt-4 text-sm leading-7 text-slate-600">
+                                        Choosing home care can feel overwhelming. Our team helps families
+                                        navigate the process with compassion, clear communication, and
+                                        dependable support tailored to each individual situation.
+                                    </p>
 
-                            <div className="mt-8 flex flex-wrap gap-3">
-                                {carePlanItems.map((item) => (
-                                    <span
-                                        key={item}
-                                        className="rounded-full border border-sky-100 bg-sky-50 px-4 py-2 text-sm font-medium text-sky-900"
-                                    >
-                                        {item}
-                                    </span>
-                                ))}
-                            </div>
+                                    <p className="mt-3 text-sm leading-7 text-slate-600">
+                                        Whether your loved one needs companionship, daily assistance, or
+                                        more involved care, Cerna Homecare is here to help provide comfort,
+                                        dignity, and peace of mind at home.
+                                    </p>
 
-                            <div className="mt-8">
-                                <Link
-                                    href="/getting-started"
-                                    className="inline-flex items-center rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-500"
-                                >
-                                    Get Started
-                                </Link>
+                                    <div className="mt-5 flex justify-center">
+                                        <Link
+                                            href="/getting-started"
+                                            className="inline-flex rounded-full bg-[#DD8500] px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#c67600]"
+                                        >
+                                            Request a Free Consultation
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
