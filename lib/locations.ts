@@ -1,12 +1,21 @@
-﻿export type LocationData = {
+﻿export type LocationPhone = {
+    label: string;
+    number: string;
+    href: string;
+};
+
+export type LocationData = {
     slug: string;
     name: string;
     state: string;
     heroImage: string;
     addressLine1: string;
     addressLine2: string;
+
     phone: string;
     phoneHref: string;
+    phones?: LocationPhone[];
+
     email: string;
     mapUrl: string;
     coverageTitle: string;
@@ -141,5 +150,41 @@ export const locations: Record<string, LocationData> = {
         mapUrl: "https://www.google.com/maps/search/?api=1&query=8180+Rafael+Rivera+Way+305+Las+Vegas+NV+89113",
         coverageTitle: "LAS VEGAS COVERAGE AREAS",
         coverageAreas: ["Las Vegas", "Henderson", "Summerlin", "Spring Valley", "Enterprise", "Paradise"],
+    },
+    "orlando": {
+        slug: "orlando",
+        name: "Orlando",
+        state: "FL",
+        heroImage: "/assets/orlando.jpg",
+        addressLine1: "1741 Ocoee Apopka Rd,Suite 119",
+        addressLine2: "Apopka, FL 32703",
+        phone: "(407) 495-4344",
+        phoneHref: "tel:14074954344",
+        phones: [
+            { label: "Local", number: "(407) 495-4344", href: "tel:14074954344" },
+            { label: "Toll Free", number: "(877) 897-7372", href: "tel:18778977372" },
+        ],
+        email: "info@cernahc.com",
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=8180+Rafael+Rivera+Way+305+Las+Vegas+NV+89113",
+        coverageTitle: "ORLANDO COVERAGE AREAS",
+        coverageAreas: [],
+    },
+    "tampa": {
+        slug: "tampa",
+        name: "Tampa",
+        state: "FL",
+        heroImage: "/assets/tampa.jpg",
+        addressLine1: "3812 W Linebaugh Ave,Suite 108",
+        addressLine2: "Tampa, FL 33618",
+        phone: "(813) 776-6099",
+        phoneHref: "tel:18137766099",
+        phones: [
+            { label: "Local", number: "(813) 776-6099", href: "tel:18137766099" },
+            { label: "Toll Free", number: "(877) 897-7773", href: "tel:18778977773" },
+        ],
+        email: "info@cernahc.com",
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=8180+Rafael+Rivera+Way+305+Las+Vegas+NV+89113",
+        coverageTitle: "TAMPA COVERAGE AREAS",
+        coverageAreas: [],
     },
 };

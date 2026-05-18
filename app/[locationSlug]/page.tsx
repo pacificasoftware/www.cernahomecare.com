@@ -3,11 +3,26 @@ import { notFound } from "next/navigation";
 import { locations } from "@/lib/locations";
 import LocationServicesTabs from "@/components/LocationServicesTabs";
 import LocationMiniContactForm from "@/components/LocationMiniContactForm";
+import FloridaCoverageSelector from "@/components/FloridaCoverageSelector";
 
 type Props = {
     params: Promise<{
         locationSlug: string;
     }>;
+};
+
+const formatPhoneNumber = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 10);
+
+    if (digits.length <= 3) {
+        return digits;
+    }
+
+    if (digits.length <= 6) {
+        return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    }
+
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
 };
 
 export default async function LocationPage({ params }: Props) {
@@ -40,15 +55,19 @@ export default async function LocationPage({ params }: Props) {
                             {location.coverageTitle}
                         </h2>
 
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[17px] leading-7 text-slate-700">
-                            {location.coverageAreas.map((area) => (
-                                <div key={area}>{area}</div>
-                            ))}
-                        </div>
+                        {location.state === "FL" ? (
+                            <FloridaCoverageSelector locationSlug={location.slug} />
+                        ) : (
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-[17px] leading-7 text-slate-700">
+                                {location.coverageAreas.map((area) => (
+                                    <div key={area}>{area}</div>
+                                ))}
+                            </div>
+                        )}
 
                         <p className="mt-8 text-base leading-7 text-slate-700">
-                            This office covers all of {location.name}, {location.state} — For a
-                            more comprehensive list of coverage{" "}
+                            This office covers all of {location.name}, {location.state} — For a more
+                            comprehensive list of coverage{" "}
                             <Link href="/locations" className="font-bold text-[#DD8500]">
                                 click here
                             </Link>
@@ -76,12 +95,29 @@ export default async function LocationPage({ params }: Props) {
                                 {location.addressLine2}
                             </h2>
 
-                            <a
-                                href={location.phoneHref}
-                                className="mt-8 block text-3xl font-extrabold text-[#00456B]"
-                            >
-                                {location.phone}
-                            </a>
+                            <div className="mt-8 space-y-2">
+                                {location.phones?.length ? (
+                                    location.phones.map((phone) => (
+                                        <a
+                                            key={phone.href}
+                                            href={phone.href}
+                                            className="block text-3xl font-extrabold text-[#00456B] hover:text-[#DD8500]"
+                                        >
+                                            {phone.number}{" "}
+                                            <span className="text-xl font-bold text-slate-600">
+                                                ({phone.label})
+                                            </span>
+                                        </a>
+                                    ))
+                                ) : (
+                                    <a
+                                        href={location.phoneHref}
+                                        className="block text-3xl font-extrabold text-[#00456B] hover:text-[#DD8500]"
+                                    >
+                                        {location.phone}
+                                    </a>
+                                )}
+                            </div>
 
                             <a
                                 href={`mailto:${location.email}`}
@@ -101,7 +137,9 @@ export default async function LocationPage({ params }: Props) {
 
                             <h2 className="mt-8 text-3xl font-extrabold text-[#00456B]">
                                 Get your FREE consultation today{" "}
-                                <a href={location.phoneHref}>{location.phone}</a>
+                                <a href={location.phones?.[0]?.href ?? location.phoneHref}>
+                                    {location.phones?.[0]?.number ?? location.phone}
+                                </a>
                             </h2>
 
                             <LocationMiniContactForm />

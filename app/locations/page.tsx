@@ -4,6 +4,14 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
  
+const stateNames: Record<string, string> = {
+    CA: "California",
+    TX: "Texas",
+    NV: "Nevada",
+    FL: "Florida",
+};
+
+const getStateName = (state: string) => stateNames[state] ?? state;
 
 const locations = [
     {
@@ -77,6 +85,32 @@ const locations = [
         address: "8180 Rafael Rivera Way #305, Las Vegas, NV 89113",
         phone: "(702) 673-1900",
         image: "/assets/8180_rafael_rivera.png",
+    }, 
+    {
+        city: "Orlando",
+        state: "FL",
+        title: "Orlando, FL",
+        slug: "orlando",
+        address: "1741 Ocoee Apopka Rd, Suite 119, Apopka, FL 32703",
+        phone: "(407) 495-4344",
+        phones: [
+            { label: "Local", number: "(407) 495-4344", href: "tel:14074954344" },
+            { label: "Toll Free", number: "(877) 897-7372", href: "tel:18778977372" },
+        ],
+        image: "/assets/orlando.jpg",
+    },
+    {
+        city: "Tampa",
+        state: "FL",
+        title: "Tampa, FL",
+        slug: "tampa",
+        address: "3812 W Linebaugh Ave, Suite 108, Tampa, FL 33618",
+        phone: "(813) 776-6099",
+        phones: [
+            { label: "Local", number: "(813) 776-6099", href: "tel:18137766099" },
+            { label: "Toll Free", number: "(877) 897-7773", href: "tel:18778977773" },
+        ],
+        image: "/assets/tampa.jpg",
     },
 ];
 
@@ -129,36 +163,34 @@ export default function LocationsPage() {
             </section>
 
             <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-                <div className="mb-10 flex flex-col justify-between gap-5 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200 md:flex-row md:items-center">
-                    <div>
-                        <h2 className="text-2xl font-bold text-[#00456B]">
-                            Find a Cerna Location Near You
-                        </h2>
-                        <p className="mt-2 text-slate-600">
-                            Filter by state to quickly view available service areas.
-                        </p>
-                    </div>
+                <div className="mb-10 rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-slate-200">
+                    <h2 className="text-2xl font-bold text-[#00456B]">
+                        Find a Cerna Location Near You
+                    </h2>
 
-                    <div className="flex items-center gap-3">
-                        <label
-                            htmlFor="state-filter"
-                            className="text-sm font-semibold text-slate-700"
-                        >
-                            Filter by state
-                        </label>
+                    <p className="mx-auto mt-2 max-w-2xl text-slate-600">
+                        Select a state to view available Cerna Homecare locations.
+                    </p>
 
-                        <select
-                            id="state-filter"
-                            value={selectedState}
-                            onChange={(e) => setSelectedState(e.target.value)}
-                            className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-[#00456B] outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                        >
-                            {states.map((state) => (
-                                <option key={state} value={state}>
-                                    {state === "All" ? "All States" : state}
-                                </option>
-                            ))}
-                        </select>
+                    <div className="mt-6 flex justify-center">
+                        <div className="relative w-full max-w-xs">
+                            <select
+                                id="state-filter"
+                                value={selectedState}
+                                onChange={(e) => setSelectedState(e.target.value)}
+                                className="w-full appearance-none rounded-2xl border border-slate-300 bg-whitepl-12 pr-12 text-center text-center-last py-3 text-center text-sm font-semibold text-[#00456B] outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
+                            >
+                                {states.map((state) => (
+                                    <option key={state} value={state}>
+                                        {state === "All" ? "All States" : getStateName(state)}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[#00456B]">
+                                ▼
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -182,7 +214,7 @@ export default function LocationsPage() {
                                 />
 
                                 <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#00456B] shadow">
-                                    {location.state}
+                                    {getStateName(location.state)}
                                 </div>
                             </Link>
 
@@ -195,16 +227,29 @@ export default function LocationsPage() {
                                     {location.address}
                                 </p>
 
-                                {location.phone && (
-                                    <p className="mt-3 text-sm font-semibold text-[#00456B]">
-                                        <a
-                                            href={`tel:${location.phone.replace(/\D/g, "")}`}
-                                            className="hover:text-[#DD8500]"
-                                        >
-                                            {location.phone}
-                                        </a>
-                                    </p>
-                                )}
+                                <div className="mt-3 space-y-1 text-sm font-semibold text-[#00456B]">
+                                    {location.phones?.length ? (
+                                        location.phones.map((phone) => (
+                                            <p key={phone.href}>
+                                                <a href={phone.href} className="hover:text-[#DD8500]">
+                                                    {phone.number}{" "}
+                                                    <span className="font-medium text-slate-600">
+                                                        ({phone.label})
+                                                    </span>
+                                                </a>
+                                            </p>
+                                        ))
+                                    ) : location.phone ? (
+                                        <p>
+                                            <a
+                                                href={`tel:${location.phone.replace(/\D/g, "")}`}
+                                                className="hover:text-[#DD8500]"
+                                            >
+                                                {location.phone}
+                                            </a>
+                                        </p>
+                                    ) : null}
+                                </div>
 
                                 <a
                                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(

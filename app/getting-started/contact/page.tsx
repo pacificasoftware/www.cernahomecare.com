@@ -19,7 +19,7 @@ export default function GettingStartedContactPage() {
     const [form, setForm] = useState<FormState>(initialForm);
     const [submitting, setSubmitting] = useState(false);
     const [pageMsg, setPageMsg] = useState<string | null>(null);
-    const [pageError, setPageError] = useState<string | null>(null);
+    const [pageError, setPageError] = useState<string | null>(null); 
 
     function handleChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -178,13 +178,18 @@ export default function GettingStartedContactPage() {
                                     Phone <span>*</span>
                                 </label>
                                 <input
-                                    id="phone"
-                                    name="phone"
                                     type="tel"
-                                    placeholder="Phone"
-                                    className="getting-started-input"
+                                    name="phone"
                                     value={form.phone}
-                                    onChange={handleChange}
+                                    onChange={(e) =>
+                                        setForm((prev) => ({
+                                            ...prev,
+                                            phone: formatPhoneNumber(e.target.value),
+                                        }))
+                                    }
+                                    placeholder="Phone Number"
+                                    maxLength={14}
+                                    className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
                                 />
                             </div>
 

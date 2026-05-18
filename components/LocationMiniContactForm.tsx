@@ -7,6 +7,20 @@ export default function LocationMiniContactForm() {
     const [statusMessage, setStatusMessage] = useState("");
     const [isError, setIsError] = useState(false);
 
+    const formatPhoneNumber = (value: string) => {
+        const digits = value.replace(/\D/g, "").slice(0, 10);
+
+        if (digits.length <= 3) {
+            return digits;
+        }
+
+        if (digits.length <= 6) {
+            return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+        }
+
+        return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -120,6 +134,10 @@ export default function LocationMiniContactForm() {
                     name="phone"
                     type="tel"
                     placeholder="Phone Number"
+                    maxLength={14}
+                    onChange={(e) => {
+                        e.target.value = formatPhoneNumber(e.target.value);
+                    }}
                     className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[#00456B]"
                 />
 
