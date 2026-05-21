@@ -56,7 +56,7 @@ const locations = [
         title: "San Diego, CA",
         slug: "san-diego",
         address: "12526 High Bluff Drive, San Diego, CA 92130",
-        phone: "(858) 225-7736",
+        phone: "(877) 577 6782",
         image: "/assets/12526-High-Bluff-Dr.jpg",
     },
     {
