@@ -118,14 +118,48 @@ export default function JobsPage() {
                                 We are always looking for caring, dependable people who want
                                 to provide excellent support to clients and families.
                             </p>
+                                   
 
-                            <div className="mt-8 rounded-2xl bg-slate-50 p-5">
-                                <p className="text-base leading-7 text-slate-700">
-                                    Flexible schedules, rewarding work, supportive leadership,
-                                    and opportunities to grow your caregiving career with
-                                    Cerna Home Care.
-                                </p>
-                            </div>
+                                    <div className="mt-8 rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-200">
+                                        <div className="flex items-start gap-4">
+                                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#DD8500]/15 text-[#DD8500]">
+                                                <svg
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    className="h-7 w-7"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        d="M7 3v3M17 3v3M4.5 9.5h15M6.5 21h11A2.5 2.5 0 0 0 20 18.5v-11A2.5 2.5 0 0 0 17.5 5h-11A2.5 2.5 0 0 0 4 7.5v11A2.5 2.5 0 0 0 6.5 21Z"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.8"
+                                                        strokeLinecap="round"
+                                                    />
+                                                    <path
+                                                        d="M8 14l2.2 2.2L16 10.8"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.8"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            </div>
+
+                                            <div>
+                                                <h3 className="text-lg font-extrabold text-[#00456B]">
+                                                    Flexible Schedules
+                                                </h3>
+
+                                                <p className="mt-2 text-base leading-7 text-slate-700">
+                                                    Flexible schedules, rewarding work, supportive leadership,
+                                                    and opportunities to grow your caregiving career with
+                                                    Cerna Home Care.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                               
+                         
                         </div>
                     </div>
                 </div>
