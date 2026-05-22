@@ -22,7 +22,7 @@ export default function ContactForm() {
             subject: String(formData.get("subject") || "").trim(),
             message: String(formData.get("message") || "").trim(),
             company: String(formData.get("company") || "").trim(),
-            purpose: "services",
+            purpose: String(formData.get("purpose") || "").trim(),
         };
 
         if (
@@ -108,6 +108,23 @@ export default function ContactForm() {
             />
 
             <input name="subject" type="text" placeholder="Subject" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
+
+            <select
+                name="purpose"
+                required
+                defaultValue=""
+                className="w-full border border-slate-300 px-4 py-3 text-lg text-slate-700 outline-none focus:border-[#00456B]"
+            >
+                <option value="" disabled>
+                    Please Select
+                </option>
+                <option value="services">
+                    I am looking for information on your services
+                </option>
+                <option value="jobs">
+                    I am looking for a job
+                </option>
+            </select>
 
             <textarea name="message" placeholder="How can we help?" rows={6} className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
 

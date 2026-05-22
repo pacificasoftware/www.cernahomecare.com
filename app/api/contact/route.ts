@@ -15,6 +15,14 @@ function looksLikeSpam(value: unknown) {
     return false;
 }
 
+function isPayrollInquiry(value: unknown) {
+    const v = clean(value).toLowerCase();
+
+    if (!v) return false;
+
+    return /\b(payroll|pay roll|paycheck|pay check|paychecks|paystub|pay stub|wages|salary|direct deposit|timesheet|time sheet|hours worked|missing pay|late pay|paid|payment)\b/i.test(v);
+}
+
 function isValidZip(value: unknown) {
     const zip = clean(value);
     if (!zip) return true;
@@ -80,6 +88,7 @@ Return ONLY valid JSON:
     if (!aiRes.ok) {
         return { allowed: true, reason: "ai_city_check_failed" };
     }
+
 
     const data = await aiRes.json();
     const content = data?.choices?.[0]?.message?.content;
@@ -251,6 +260,29 @@ export async function POST(req: Request) {
                     { status: 400 }
                 );
             }
+        }
+
+        const payrollText = [
+            body.name,
+            body.firstName,
+            body.lastName,
+            body.subject,
+            body.message,
+            body.remarks,
+            body.comments,
+            body.purpose,
+        ].join(" ");
+
+        if (isPayrollInquiry(payrollText)) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message:
+                        "For any paycheck related issues, please contact Cerna HQ and ask for the Payroll Dept.",
+                    reason: "payroll_inquiry",
+                },
+                { status: 400 }
+            );
         }
 
         if (message || name || city) {

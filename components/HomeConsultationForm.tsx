@@ -33,15 +33,22 @@ export default function HomeConsultationForm() {
         const payload = {
             name: fullName,
             firstName: nameParts[0] || fullName,
-            lastName: nameParts.slice(1).join(" ") || "",
+            lastName: nameParts.slice(1).join(" ") || "N/A",
             email: String(formData.get("email") || "").trim(),
             phone: String(formData.get("phone") || "").trim(),
             subject: "Home Page Consultation Request",
             message: String(formData.get("message") || "").trim(),
-            purpose: String(formData.get("purpose") || "services").trim().toLowerCase(),
+            purpose: String(formData.get("purpose") || "").trim(),
         };
 
-        if (!payload.name || !payload.email || !payload.phone || !payload.message || !payload.purpose) {
+        if (
+            !payload.firstName ||
+            !payload.lastName ||
+            !payload.email ||
+            !payload.phone ||
+            !payload.message ||
+            !payload.purpose
+           ) {
             setIsError(true);
             setStatusMessage("Please complete all required fields.");
             return;
@@ -59,7 +66,14 @@ export default function HomeConsultationForm() {
             });
 
             const raw = await response.text();
-            const result = raw ? JSON.parse(raw) : null;
+
+            let result: any = null;
+
+            try {
+                result = raw ? JSON.parse(raw) : null;
+            } catch {
+                result = null;
+            }
 
             if (!response.ok) {
                 setIsError(true);
@@ -73,11 +87,12 @@ export default function HomeConsultationForm() {
                 return;
             }
 
+            setIsError(false);
             setStatusMessage("Thank you. We received your request and will be in touch shortly.");
             form.reset();
-        } catch (error: any) {
+        } catch {
             setIsError(true);
-            setStatusMessage(error?.message || "Sorry, we could not send your message right now.");
+            setStatusMessage("Sorry, we could not send your message right now.");
         } finally {
             setIsSubmitting(false);
         }
@@ -110,10 +125,13 @@ export default function HomeConsultationForm() {
             <div className="mb-5">
                 <select
                     name="purpose"
-                    defaultValue="services"
                     required
+                    defaultValue=""
                     className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-300"
                 >
+                    <option value="" disabled>
+                        Please Select...
+                    </option>
                     <option value="services" className="text-slate-900">
                         I am looking for information on your services
                     </option>
