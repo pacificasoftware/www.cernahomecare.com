@@ -1,12 +1,17 @@
 ﻿"use client";
 
 import { useState } from "react";
-import Image from "next/image";
-
-const APPLY_URL =
-    "https://cerna.clearcareonline.com/apply/?eid=8l7%2BoECKgmhFZnOI7D%2BdBsxIsPickzn0qSECv7JcoJYiafllaB6G%2BPYHwVNwlVkwnwus1zIOfDNbAWij1Txz2XimNt1yFy7MVUGgHLMwg1UTvi87";
-
+import Image from "next/image"; 
 const states = ["Texas", "California", "Nevada", "Florida"];
+
+function formatPhone(value: string) {
+    const digits = value.replace(/\D/g, "").slice(0, 10);
+
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
 
 export default function JobsPage() {
     const [selectedState, setSelectedState] = useState("California");
@@ -43,55 +48,92 @@ export default function JobsPage() {
                         </p>
 
                         <h3 className="mt-4 text-3xl font-extrabold">
-                            Where are you looking to work?
+                            Start your application
                         </h3>
 
-                        <div className="mt-6 grid gap-4">
-                            {states.map((state) => {
-                                const isSelected = selectedState === state;
-
-                                return (
-                                    <button
-                                        key={state}
-                                        type="button"
-                                        onClick={() => setSelectedState(state)}
-                                        className={`rounded-2xl p-5 text-left font-bold ring-1 transition ${isSelected
-                                                ? "bg-[#DD8500] text-white ring-[#DD8500]"
-                                                : "bg-white/10 text-white ring-white/15 hover:bg-white/20"
-                                            }`}
-                                    >
-                                        {state}
-                                    </button>
-                                );
-                            })}
-                        </div>
-
-                        <p className="mt-5 text-sm font-semibold text-white/80">
-                            Selected state:{" "}
-                            <span className="text-white">{selectedState}</span>
+                        <p className="mt-3 text-base leading-7 text-white/85">
+                            Send us your contact information and our team will follow up with you.
                         </p>
 
-                        <p className="mt-6 text-base leading-7 text-white/90">
-                            For more information or help applying, please call us at{" "}
-                            <a
-                                href="tel:18775776782"
-                                className="font-extrabold text-white underline underline-offset-4"
-                            >
-                                1 (877) 577-6782
-                            </a>
-                            .
-                        </p>
+                        <form
+                            className="mt-6 grid gap-4"
+                            onSubmit={async (e) => {
+                                e.preventDefault();
 
-                        <div className="mt-8">
-                            <a
-                                href={APPLY_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex w-full justify-center rounded-lg bg-[#DD8500] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#c87500]"
+                                const form = e.currentTarget;
+                                const formData = new FormData(form);
+
+                                const response = await fetch("/api/jobs/apply", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        firstName: formData.get("firstName"),
+                                        lastName: formData.get("lastName"),
+                                        phone: formData.get("phone"),
+                                        email: formData.get("email"),
+                                    }),
+                                });
+
+                                if (!response.ok) {
+                                    const errorText = await response.text();
+
+                                    console.error("Apply form failed:", response.status, errorText);
+
+                                    alert(
+                                        `Status: ${response.status}\n\n` +
+                                        (errorText || "No response body returned.")
+                                    );
+
+                                    return;
+                                }
+
+                                alert("Thank you! Your information has been submitted.");
+                                form.reset();
+                            }}
+                        >
+                            <input
+                                name="firstName"
+                                required
+                                placeholder="First Name"
+                                className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                            />
+
+                            <input
+                                name="lastName"
+                                required
+                                placeholder="Last Name"
+                                className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                            />
+
+                            <input
+                                name="phone"
+                                required
+                                placeholder="Phone"
+                                inputMode="tel"
+                                maxLength={14}
+                                onChange={(e) => {
+                                    e.currentTarget.value = formatPhone(e.currentTarget.value);
+                                }}
+                                className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                            />
+
+                            <input
+                                name="email"
+                                type="email"
+                                required
+                                placeholder="Email"
+                                className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                            />
+
+                            <button
+                                type="submit"
+                                className="mt-2 rounded-lg bg-[#DD8500] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#c87500]"
                             >
-                                Apply Now for {selectedState}
-                            </a>
-                        </div>
+                                Submit
+                            </button>
+                        </form>
                     </aside>
 
                     {/* RIGHT PANEL */}
