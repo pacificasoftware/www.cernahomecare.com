@@ -5,18 +5,78 @@ import Link from "next/link";
 import HomeConsultationForm from "@/components/HomeConsultationForm";
 
 const services = [
-    { title: "Companionship", icon: "/assets/icons/Companionship.webp" },
-    { title: "Appointments", icon: "/assets/icons/Appointments.webp" },
-    { title: "Bathing", icon: "/assets/icons/Bathing.webp" },
-    { title: "Cooking", icon: "/assets/icons/Cooking.webp" },
-    { title: "Dressing", icon: "/assets/icons/Dressing.webp" },
-    { title: "Errands", icon: "/assets/icons/Errands.webp" },
-    { title: "Exercise", icon: "/assets/icons/Exersize.webp" },
-    { title: "Grooming", icon: "/assets/icons/Grooming.webp" },
-    { title: "Laundry", icon: "/assets/icons/Laundry.webp" },
-    { title: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
-    { title: "Mobility", icon: "/assets/icons/Mobility.webp" },
-    { title: "Pets", icon: "/assets/icons/Pets.webp" },
+    {
+        title: "Companionship",
+        icon: "/assets/icons/Companionship.webp",
+        description:
+            "Friendly support and meaningful conversation to help clients feel connected, engaged, and cared for at home.",
+    },
+    {
+        title: "Appointments",
+        icon: "/assets/icons/Appointments.webp",
+        description:
+            "Reliable assistance with getting ready for appointments, transportation coordination, and helpful reminders.",
+    },
+    {
+        title: "Bathing",
+        icon: "/assets/icons/Bathing.webp",
+        description:
+            "Respectful personal care support that helps clients bathe safely while maintaining comfort and dignity.",
+    },
+    {
+        title: "Cooking",
+        icon: "/assets/icons/Cooking.webp",
+        description:
+            "Help with preparing nutritious meals and snacks based on each client’s preferences and daily routine.",
+    },
+    {
+        title: "Dressing",
+        icon: "/assets/icons/Dressing.webp",
+        description:
+            "Gentle assistance with choosing clothing and getting dressed so clients can start the day with confidence.",
+    },
+    {
+        title: "Errands",
+        icon: "/assets/icons/Errands.webp",
+        description:
+            "Support with everyday errands such as groceries, pharmacy visits, and other important household needs.",
+    },
+    {
+        title: "Exercise",
+        icon: "/assets/icons/Exersize.webp",
+        description:
+            "Encouragement and assistance with light movement and safe activity to support strength and well-being.",
+    },
+    {
+        title: "Grooming",
+        icon: "/assets/icons/Grooming.webp",
+        description:
+            "Help with daily grooming routines so clients can feel refreshed, comfortable, and their best.",
+    },
+    {
+        title: "Laundry",
+        icon: "/assets/icons/Laundry.webp",
+        description:
+            "Assistance with washing, drying, folding, and organizing laundry to keep the home running smoothly.",
+    },
+    {
+        title: "Medical Help",
+        icon: "/assets/icons/Medical-Help.webp",
+        description:
+            "Helpful reminders and support with wellness routines, medications, and non-medical care needs.",
+    },
+    {
+        title: "Mobility",
+        icon: "/assets/icons/Mobility.webp",
+        description:
+            "Safe assistance with walking, transfers, and moving around the home to promote independence.",
+    },
+    {
+        title: "Pets",
+        icon: "/assets/icons/Pets.webp",
+        description:
+            "Light support with pet care routines so clients can continue enjoying the companionship of their animals.",
+    },
 ];
 
 const carePlanItems = [
@@ -291,7 +351,7 @@ export default function CernaHomePage() {
                         </div>
 
                         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {services.map(({ title, icon }) => (
+                            {services.map(({ title, icon, description }) => (
                                 <div
                                     key={title}
                                     className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
@@ -313,8 +373,7 @@ export default function CernaHomePage() {
                                     </h3>
 
                                     <p className="relative mt-3 text-sm leading-7 text-slate-600">
-                                        Compassionate assistance delivered with consistency,
-                                        dignity, and attention to the individual.
+                                        {description}
                                     </p>
                                 </div>
                             ))}
