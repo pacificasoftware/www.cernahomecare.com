@@ -1,152 +1,577 @@
-﻿import Image from "next/image";
-import Link from "next/link";
+﻿"use client";
 
-export const metadata = {
-    title: "Careers | Cerna Home Care",
-    description:
-        "Apply now for Cerna Home Care jobs and view available caregiver and healthcare career opportunities.",
-};
+import Image from "next/image";
+import { useState } from "react";
+import { Raleway } from "next/font/google";
+import { Fragment } from "react";
 
-const celebrationImages = [
+const ralewayThin = Raleway({
+    subsets: ["latin"],
+    weight: "100",
+});
+function formatPhone(value: string) {
+    const digits = value.replace(/\D/g, "").slice(0, 10);
+
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
+function formatZip(value: string) {
+    return value.replace(/\D/g, "").slice(0, 5);
+}
+
+const reasons = [
     {
-        src: "/assets/love-work.webp",
-        alt: "Cerna Home Care team celebration",
+        title: "Easy hiring process",
+        text: "Apply in under 10 minutes",
     },
     {
-        src: "/assets/love-works.webp",
-        alt: "Cerna Home Care careers celebration",
+        title: "Flexible scheduling",
+        text: "Full-time, part-time & per diem",
     },
     {
-        src: "/assets/cerna-crew.webp",
-        alt: "Cerna Home Care crew",
+        title: "Competitive pay",
+        text: "Bi-weekly direct deposit",
+    },
+    {
+        title: "Refer-a-friend bonus",
+        text: "Earn when you bring people in",
+    },
+    {
+        title: "Career advancement",
+        text: "Caregiver → care manager",
+    },
+    {
+        title: "Paid training",
+        text: "We invest in your growth",
     },
 ];
 
+const steps = [
+    {
+        number: "1",
+        title: "Enter your ZIP",
+        text: "Find openings at the franchise near you",
+    },
+    {
+        number: "2",
+        title: "Browse jobs",
+        text: "Pick a role that fits your skills and schedule",
+    },
+    {
+        number: "3",
+        title: "Apply online",
+        text: "Quick and easy, takes less than 10 minutes",
+    },
+    {
+        number: "4",
+        title: "We call you",
+        text: "Our team reviews every application personally",
+    },
+];
+
+const caregiverShifts = [
+    "Newport Beach – 7am to 7pm FRI THRU SUN",
+    "Irvine – 9am to 7pm SAT THRU SUN",
+    "Rancho Mission Viejo – 7am to 7pm FRI THRU SUN",
+    "Orange – 8am to 2pm FRI THRU SUN",
+    "Newport Beach – 7am to 3pm WED, SAT",
+    "Laguna Woods – 4pm to 9pm SAT, SUN",
+];
+
 export default function CareersPage() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [resumeName, setResumeName] = useState("");
+    const [zipCode, setZipCode] = useState("");
+
     return (
         <main className="bg-white">
-            <section className="bg-white">
-                <div className="mx-auto max-w-5xl px-6 py-12 text-center sm:px-8 lg:px-10">
-                    <h1 className="text-4xl font-extrabold tracking-tight text-[#00456B] sm:text-5xl">
-                        Apply Now!
-                    </h1>
 
-                    <p className="mx-auto mt-6 max-w-2xl text-lg font-bold leading-8 text-blue-700">
-                        For more information or to get assistance with applying to Cerna Home Care
-                        please call us at{" "}
-                        <a href="tel:18775776782" className="underline underline-offset-4">
-                            1 (877) 577-6782
-                        </a>
-                        .
-                    </p>
+            {/* HERO */}
+            <section className="relative min-h-[490px] overflow-hidden bg-[#003E68]">
+                <div className="absolute inset-0">
+                    <Image
+                        src="/assets/careers/caregiver-hero.webp"
+                        alt="Cerna Home Care caregivers"
+                        fill
+                        priority
+                        sizes="100vw"
+                        className="scale-80 object-cover object-center"
+                    />
+                </div>
 
-                    <p className="mt-6 text-lg uppercase tracking-wide text-slate-600">
-                        Thank you for your interest in working with Cerna.
-                    </p>
+                <div className="relative flex min-h-[420px] w-full items-center px-6 py-10 sm:px-8 lg:px-14 xl:px-20">
+                    <div className="w-full max-w-[430px]">
+                        <h1 className="text-white">
+                            <span className="block text-[24px] font-black leading-[0.92] tracking-[-0.04em] sm:text-[30px] lg:text-[34px]">
+                                Make a Difference
+                            </span>
 
-                    <div className="mt-7">
-                        <Link
-                            href="/jobs"
-                            className="inline-flex bg-[#005B89] px-12 py-4 text-lg font-extrabold uppercase tracking-wide text-white transition hover:bg-[#00456B]"
-                        >
-                            See Available Job Listings
-                        </Link>
+                            <span className="mt-1 block leading-none tracking-[-0.05em]">
+                                <span
+                                    className={`${ralewayThin.className} text-[46px] leading-[0.84] tracking-[-0.04em] text-white/90 sm:text-[56px] lg:text-[66px]`}
+                                >
+                                    Every
+                                </span>
+
+                                <span className="ml-2 align-baseline text-[42px] font-black leading-[0.84] sm:text-[52px] lg:text-[60px]">
+                                    Day
+                                </span>
+                            </span>
+                        </h1>
+
+                        <div className="mt-3 h-px w-[255px] max-w-full bg-white/55" />
+
+                        <p className="mt-3 flex max-w-[390px] items-start gap-2.5 text-[16px] font-light leading-[1.22] tracking-[-0.035em] text-white/90 sm:text-[18px] lg:text-[20px]">
+                            <span className="mt-1 inline-block h-3.5 w-3.5 shrink-0 rotate-45 bg-white shadow-sm" />
+                            <span>
+                                Join the{" "}
+                                <span className="font-semibold text-white">
+                                    CERNA Home Care
+                                </span>{" "}
+                                team and build a career rooted in compassion, purpose, and
+                                community.
+                            </span>
+                        </p>
+
+                        <div className="mt-4 w-full max-w-[410px] rounded-xl bg-white/20 px-5 pb-3 pt-3 shadow-xl ring-1 ring-white/10 backdrop-blur-sm">
+                            <label className="block border-b border-white/70 pb-2.5 text-[16px] font-light leading-[1.05] tracking-[-0.03em] text-white sm:text-[18px]">
+                                Enter your ZIP code to find jobs near you
+                            </label>
+
+                            <div className="mt-2.5 flex items-center gap-2.5">
+                                <input
+                                    value={zipCode}
+                                    onChange={(e) => setZipCode(formatZip(e.target.value))}
+                                    placeholder="e.g. 90210"
+                                    inputMode="numeric"
+                                    maxLength={5}
+                                    pattern="[0-9]{5}"
+                                    className="h-[38px] w-[135px] rounded-md border border-black bg-[#05070a] px-3 text-[15px] font-medium text-white placeholder:text-white outline-none focus:ring-2 focus:ring-white/60"
+                                />
+
+                                <a
+                                    href="#openings"
+                                    className="inline-flex h-[38px] items-center justify-center rounded-md border border-white/80 bg-white/10 px-4 text-[16px] font-semibold text-white transition hover:bg-white/20"
+                                >
+                                    <span className="mr-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-[11px] text-[#236491]">
+                                        ●
+                                    </span>
+                                    Find Jobs
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className="bg-[#236491]">
-                <div className="mx-auto max-w-7xl px-6 pb-20 pt-14 sm:px-8 lg:px-10">
-                    <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                        It’s Always fun at Cerna – Cerna Celebrations!
+            {/* JOIN TEAM */}
+            <section className="bg-[#f5f7fb]">
+                <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
+                    <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+                        {/* LEFT COLUMN */}
+                        <div>
+                            <p className="inline-flex rounded-md bg-[#00456B] px-4 py-1 text-sm font-extrabold text-white">
+                                Caregiver Jobs
+                            </p>
+
+                            <h2 className="mt-5 max-w-[560px] font-black leading-[0.88] tracking-[-0.095em]">
+                                <span className="text-[36px] text-[#4f4f52] sm:text-[46px] lg:text-[54px]">
+                                    Join
+                                </span>
+
+                                <span
+                                    className={`${ralewayThin.className} ml-1 text-[44px] font-thin text-[#00456B] sm:text-[56px] lg:text-[64px]`}
+                                >
+                                    the
+                                </span>
+
+                                <span className="ml-1 text-[44px] text-[#00456B] sm:text-[56px] lg:text-[64px]">
+                                    CERNA
+                                </span>
+
+                                <br />
+
+                                <span className="text-[44px] text-[#00456B] sm:text-[56px] lg:text-[64px]">
+                                    Home
+                                </span>
+
+                                <span
+                                    className={`${ralewayThin.className} ml-1 text-[44px] font-thin text-[#00456B] sm:text-[56px] lg:text-[64px]`}
+                                >
+                                    Care
+                                </span>
+
+                                <span className="ml-1 text-[44px] text-[#4f4f52] sm:text-[56px] lg:text-[64px]">
+                                    team
+                                </span>
+                            </h2>
+
+                            <p className="mt-5 text-lg leading-8 text-slate-700">
+                                Build a career that fits your life while making a real difference
+                                for others. As a Cerna Home Care caregiver, you’ll help seniors
+                                live safely and comfortably at home, forming real connections and
+                                bringing peace of mind to families.
+                            </p>
+
+                            <h3 className="mt-8 rounded-md bg-[#00456B] px-4 py-2 text-center text-lg font-black text-white">
+                                6 reasons to join the Cerna team
+                            </h3>
+
+                            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                                {reasons.map((reason) => (
+                                    <div
+                                        key={reason.title}
+                                        className="rounded-2xl bg-[#00456B] p-5 text-white shadow-sm"
+                                    >
+                                        <div className="text-sm font-black">
+                                            {reason.title}
+                                        </div>
+
+                                        <div className="mt-1 text-sm leading-6 text-white/85">
+                                            {reason.text}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* RIGHT IMAGE - LEVEL WITH LEFT CONTENT */}
+                        <div className="relative h-full min-h-[520px] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
+                            <Image
+                                src="/assets/careers/caregiver-team.webp"
+                                alt="Cerna caregiver helping a senior at home"
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 620px"
+                                className="object-cover"
+                            />
+                        </div>
+                    </div>
+
+                    {/* FULL-WIDTH BOTTOM IMAGE */}
+                    <div className="relative mt-10 h-[260px] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl sm:h-[320px] lg:h-[360px]">
+                        <Image
+                            src="/assets/careers/outdoors_coffee.webp"
+                            alt="Cerna caregiver with senior clients outside"
+                            fill
+                            sizes="100vw"
+                            className="object-cover"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* STEPS */}
+            <section className="bg-white px-6 py-14 sm:px-8 lg:px-10">
+                <div className="mx-auto max-w-7xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <h2 className="mx-auto w-fit rounded-md bg-[#00456B] px-5 py-2 text-center text-lg font-black text-white">
+                        How to start your career with CERNA
                     </h2>
 
-                    <div className="mt-12 grid gap-10 md:grid-cols-3">
-                        {celebrationImages.map((image) => (
-                            <div key={image.src} className="overflow-hidden">
-                                <div className="relative h-[250px] bg-slate-100">
-                                    <Image
-                                        src={image.src}
-                                        alt={image.alt}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 420px"
-                                        className="object-cover"
-                                        quality={100}
-                                    />
+                    <div className="mt-8 flex flex-col items-center justify-center gap-4 md:flex-row md:gap-2 lg:gap-3">
+                        {steps.map((step, index) => (
+                            <Fragment key={step.number}>
+                                <div className="w-full max-w-[200px] text-center md:w-[175px] lg:w-[190px]">
+                                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#00456B] text-4xl font-black text-white">
+                                        {step.number}
+                                    </div>
+
+                                    <h3 className="mt-4 text-base font-black text-[#111827]">
+                                        {step.title}
+                                    </h3>
+
+                                    <p className="mx-auto mt-2 max-w-[190px] text-sm leading-6 text-slate-600">
+                                        {step.text}
+                                    </p>
                                 </div>
-                            </div>
+
+                                {index < steps.length - 1 && (
+                                    <div className="flex h-10 w-10 items-center justify-center md:-mt-16 md:h-20 md:w-12">
+                                        <div className="relative h-[16px] w-[34px] rotate-90 bg-[#00456B] md:rotate-0">
+                                            <div className="absolute right-[-14px] top-1/2 h-0 w-0 -translate-y-1/2 border-y-[14px] border-l-[16px] border-y-transparent border-l-[#00456B]" />
+                                        </div>
+                                    </div>
+                                )}
+                            </Fragment>
                         ))}
                     </div>
                 </div>
             </section>
 
-            <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10 lg:py-20">
-                <div>
-                    <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
-                        Need Help Applying?
-                    </p>
-                    <div className="mt-3 h-1 w-12 rounded-full bg-[#DD8500]" />
 
-                    <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
-                        We’re here to help you get started
-                    </h2>
-
-                    <p className="mt-6 text-lg leading-8 text-slate-700">
-                        For more information or assistance with applying to Cerna Home
-                        Care, please call us at{" "}
-                        <a
-                            href="tel:18775776782"
-                            className="font-extrabold text-[#00456B] underline decoration-[#DD8500] decoration-2 underline-offset-4"
-                        >
-                            1 (877) 577-6782
-                        </a>
-                        .
-                    </p>
-
-                    <p className="mt-5 text-lg font-extrabold uppercase tracking-wide text-slate-800">
-                        Thank you for your interest in working with Cerna.
-                    </p>
+            {/* APPLICATION FORM */}
+            <section
+                id="apply"
+                className="relative overflow-hidden bg-white px-6 py-16 sm:px-8 lg:px-10"
+            >
+                {/* faded blurred background */}
+                <div className="pointer-events-none absolute inset-0">
+                    <div className="absolute left-[-160px] top-[-120px] h-[420px] w-[420px] rounded-full bg-[#00456B]/20 blur-[95px]" />
+                    <div className="absolute right-[-170px] top-[120px] h-[460px] w-[460px] rounded-full bg-[#DD8500]/15 blur-[105px]" />
+                    <div className="absolute bottom-[-180px] left-1/2 h-[440px] w-[680px] -translate-x-1/2 rounded-full bg-[#00456B]/10 blur-[115px]" />
                 </div>
 
-                <div className="rounded-3xl bg-slate-50 p-8 shadow-sm ring-1 ring-slate-200">
-                    <h3 className="text-2xl font-extrabold text-[#00456B]">
-                        Why join Cerna?
-                    </h3>
+                <div className="relative z-10">
+                    <div className="mx-auto max-w-5xl text-center">
+                        <p className="text-3xl font-black tracking-tight text-slate-700">
+                            Complete the
+                        </p>
 
-                    <div className="mt-6 grid gap-4">
-                        {[
-                            "Meaningful work helping seniors and families",
-                            "Supportive care-focused team environment",
-                            "Opportunities for caregiver and healthcare roles",
-                            "A company culture that values compassion and service",
-                        ].map((item) => (
-                            <div key={item} className="flex gap-3 text-slate-700">
-                                <span className="font-extrabold text-[#DD8500]">✓</span>
-                                <span>{item}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section> 
-
-            <section className="bg-white px-6 py-16 sm:px-8 lg:px-10">
-                <div className="mx-auto flex max-w-7xl flex-col gap-8 rounded-3xl bg-[#00456B] p-8 text-white shadow-xl lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                        <h2 className="text-3xl font-extrabold tracking-tight">
-                            Ready to apply?
+                        <h2 className="text-5xl font-black tracking-tight text-[#00456B] sm:text-6xl">
+                            Form Below
                         </h2>
-                        <p className="mt-4 max-w-3xl text-lg leading-8 text-white/90">
-                            View available job listings or contact our team for help with
-                            the application process.
+
+                        <p className="mt-2 text-2xl font-semibold text-slate-700">
+                            And we’ll get in touch with you
                         </p>
                     </div>
 
-                    <Link
-                        href="/jobs"
-                        className="inline-flex shrink-0 justify-center rounded-lg bg-[#DD8500] px-8 py-4 text-sm font-extrabold uppercase tracking-wide text-white shadow-md transition hover:bg-[#c87500]"
+                <div className="mx-auto mt-10 max-w-5xl rounded-3xl bg-white p-6 shadow-2xl ring-1 ring-slate-200 sm:p-10">
+                    <p className="mb-6 text-sm font-semibold leading-6 text-slate-700">
+                        Thank you for your interest in collaborating with us. Kindly fill
+                        out the information below, including your preferred location, so
+                        that we can reach out to you.
+                    </p>
+
+                    <form
+                        className="grid gap-5"
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+
+                            const form = e.currentTarget;
+                            const formData = new FormData(form);
+
+                            const fullName = String(formData.get("FullName") || "").trim();
+                            const phone = String(formData.get("Phone") || "").trim();
+                            const email = String(formData.get("Email") || "").trim();
+                            const resume = formData.get("Resume") as File | null;
+
+                            if (!fullName || !phone || !email) {
+                                alert("Please enter your name, phone, and email.");
+                                return;
+                            }
+
+                            if (!resume || resume.size === 0) {
+                                alert("Please attach your resume.");
+                                return;
+                            }
+
+                            const allowedExtensions = [".pdf", ".doc", ".docx"];
+                            const fileName = resume.name.toLowerCase();
+                            const isAllowed = allowedExtensions.some((ext) =>
+                                fileName.endsWith(ext)
+                            );
+
+                            if (!isAllowed) {
+                                alert("Please upload a PDF, DOC, or DOCX resume.");
+                                return;
+                            }
+
+                            if (resume.size > 10 * 1024 * 1024) {
+                                alert("Resume cannot exceed 10 MB.");
+                                return;
+                            }
+
+                            const apiBaseUrl =
+                                process.env.NEXT_PUBLIC_API_BASE_URL ||
+                                "https://api.cernahomecare.com";
+
+                            const uploadUrl = `${apiBaseUrl}/api/applications/submit-with-resume`;
+
+                            try {
+                                setIsSubmitting(true);
+
+                                const response = await fetch(uploadUrl, {
+                                    method: "POST",
+                                    body: formData,
+                                });
+
+                                const responseText = await response.text();
+
+                                let result: any = null;
+
+                                try {
+                                    result = responseText ? JSON.parse(responseText) : null;
+                                } catch {
+                                    result = null;
+                                }
+
+                                if (!response.ok) {
+                                    alert(
+                                        result?.statusMessage ||
+                                        result?.message ||
+                                        `Application failed. Status: ${response.status}`
+                                    );
+                                    return;
+                                }
+
+                                alert("Thank you! Your application has been submitted.");
+                                form.reset();
+                                setResumeName("");
+                            } catch (error) {
+                                console.error("Application submit failed:", error);
+                                alert("Something went wrong submitting your application.");
+                            } finally {
+                                setIsSubmitting(false);
+                            }
+                        }}
                     >
-                        See Available Job Listings
-                    </Link>
+                        <label className="grid gap-1 text-sm font-bold text-slate-700">
+                            <span>
+                                Your Name <span className="text-[#DD8500]">*</span>
+                            </span>
+
+                            <input
+                                name="FullName"
+                                required
+                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                            />
+                        </label>
+
+                        <label className="grid gap-1 text-sm font-bold text-slate-700">
+                            <span>
+                                Phone <span className="text-[#DD8500]">*</span>
+                            </span>
+
+                            <input
+                                name="Phone"
+                                required
+                                placeholder="(714) 555-1212"
+                                inputMode="tel"
+                                maxLength={14}
+                                onChange={(e) => {
+                                    e.currentTarget.value = formatPhone(e.currentTarget.value);
+                                }}
+                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                            />
+                        </label>
+
+                        <label className="grid gap-1 text-sm font-bold text-slate-700">
+                            <span>
+                                Email Address <span className="text-[#DD8500]">*</span>
+                            </span>
+
+                            <input
+                                name="Email"
+                                type="email"
+                                required
+                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                            />
+                        </label>
+
+                        <label className="grid gap-1 text-sm font-bold text-slate-700">
+                            <span>Address</span>
+
+                            <input
+                                name="Address"
+                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                            />
+                        </label>
+
+                        <div className="grid gap-2">
+                            <span className="text-sm font-bold text-slate-700">
+                                Do you currently have a HCA Per ID?
+                            </span>
+
+                            <div className="grid max-w-xs grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+                                <label className="cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="HasHcaPerId"
+                                        value="YES"
+                                        defaultChecked
+                                        className="peer sr-only"
+                                    />
+
+                                    <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                        YES
+                                    </span>
+                                </label>
+
+                                <label className="cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="HasHcaPerId"
+                                        value="NO"
+                                        className="peer sr-only"
+                                    />
+
+                                    <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                        NO
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <label className="grid gap-1 text-sm font-bold text-slate-700">
+                            <span>How did you hear about us?</span>
+
+                            <select
+                                name="HowHeardAboutUs"
+                                defaultValue=""
+                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                            >
+                                <option value="" disabled>
+                                    Please select
+                                </option>
+                                <option value="Google Search">Google Search</option>
+                                <option value="Friend or Family">Friend or Family</option>
+                                <option value="Social Media">Social Media</option>
+                                <option value="Indeed">Indeed</option>
+                                <option value="Job Board">Job Board</option>
+                                <option value="Cerna Website">Cerna Website</option>
+                                <option value="Walk-In">Walk-In</option>
+                                <option value="Referral">Referral</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </label>
+
+                        <div className="grid gap-2">
+                            <span className="text-sm font-bold text-slate-700">
+                                Upload your resume <span className="text-[#DD8500]">*</span>
+                            </span>
+
+                            <div className="flex flex-col gap-3 sm:flex-row">
+                                <label className="inline-flex cursor-pointer items-center justify-center rounded-lg bg-slate-300 px-8 py-4 text-sm font-extrabold text-slate-800 transition hover:bg-slate-400">
+                                    Attach file here
+
+                                    <input
+                                        name="Resume"
+                                        type="file"
+                                        accept=".pdf,.doc,.docx"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            setResumeName(e.currentTarget.files?.[0]?.name ?? "");
+                                        }}
+                                    />
+                                </label>
+
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="inline-flex items-center justify-center rounded-lg bg-[#00456B] px-10 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#003a5a] disabled:cursor-not-allowed disabled:opacity-60"
+                                >
+                                    {isSubmitting ? "Submitting..." : "Submit"}
+                                </button>
+                            </div>
+
+                            {resumeName ? (
+                                <p className="text-sm font-semibold text-slate-600">
+                                    Attached: {resumeName}
+                                </p>
+                            ) : null}
+                        </div>
+
+                        <p className="max-w-4xl text-xs leading-5 text-slate-600">
+                            By submitting this form I agree to be contacted by CERNA Home
+                            Care via call, email and text. To opt out, you can reply
+                            “stop” at any time or click the unsubscribe link in the emails.
+                            Message and data rates may apply.
+                        </p>
+                    </form>
+                    </div>
                 </div>
             </section>
         </main>
