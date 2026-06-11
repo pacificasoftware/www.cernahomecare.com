@@ -136,7 +136,7 @@ export default function CareersPage() {
                             </span>
                         </p>
 
-                        <div className="mt-4 w-full max-w-[410px] rounded-xl bg-white/20 px-5 pb-3 pt-3 shadow-xl ring-1 ring-white/10 backdrop-blur-sm">
+                        <div className="mt-8 w-full max-w-[410px] rounded-xl bg-white/20 px-5 pb-3 pt-3 shadow-xl ring-1 ring-white/10 backdrop-blur-sm">
                             <label className="block border-b border-white/70 pb-2.5 text-[16px] font-light leading-[1.05] tracking-[-0.03em] text-white sm:text-[18px]">
                                 Enter your ZIP code to find jobs near you
                             </label>
@@ -239,22 +239,22 @@ export default function CareersPage() {
                         </div>
 
                         {/* RIGHT IMAGE - LEVEL WITH LEFT CONTENT */}
-                        <div className="relative h-full min-h-[520px] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
+                        <div className="relative mx-auto h-full min-h-[520px] w-full max-w-[520px] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
                             <Image
                                 src="/assets/careers/caregiver-team.webp"
                                 alt="Cerna caregiver helping a senior at home"
                                 fill
-                                sizes="(max-width: 1024px) 100vw, 620px"
-                                className="object-cover"
+                                sizes="(max-width: 1024px) 100vw, 520px"
+                                className="scale-[1.12] object-cover"
                             />
                         </div>
                     </div>
 
                     {/* FULL-WIDTH BOTTOM IMAGE */}
-                    <div className="relative mt-10 h-[260px] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl sm:h-[320px] lg:h-[360px]">
+                    <div className="relative mt-8 h-[220px] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl sm:h-[270px] lg:h-[300px]">
                         <Image
                             src="/assets/careers/outdoors_coffee.webp"
-                            alt="Cerna caregiver with senior clients outside"
+                            alt="..."
                             fill
                             sizes="100vw"
                             className="object-cover"
@@ -264,8 +264,8 @@ export default function CareersPage() {
             </section>
 
             {/* STEPS */}
-            <section className="bg-white px-6 py-14 sm:px-8 lg:px-10">
-                <div className="mx-auto max-w-7xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+       <section className="bg-white px-6 pb-14 pt-0 sm:px-8 lg:px-10">
+                <div className="mx-auto max-w-7xl rounded-3xl border-2 border-[#00456B]/35 bg-white p-6 shadow-[0_14px_40px_rgba(0,69,107,0.14)]">
                     <h2 className="mx-auto w-fit rounded-md bg-[#00456B] px-5 py-2 text-center text-lg font-black text-white">
                         How to start your career with CERNA
                     </h2>
@@ -314,7 +314,7 @@ export default function CareersPage() {
                 </div>
 
                 <div className="relative z-10">
-                    <div className="mx-auto max-w-5xl text-center">
+                    <div className="mx-auto max-w-3xl text-center">
                         <p className="text-3xl font-black tracking-tight text-slate-700">
                             Complete the
                         </p>
@@ -328,7 +328,7 @@ export default function CareersPage() {
                         </p>
                     </div>
 
-                <div className="mx-auto mt-10 max-w-5xl rounded-3xl bg-white p-6 shadow-2xl ring-1 ring-slate-200 sm:p-10">
+                    <div className="mx-auto mt-10 max-w-3xl rounded-3xl bg-white/90 p-6 shadow-2xl ring-1 ring-slate-200 backdrop-blur-sm sm:p-8">
                     <p className="mb-6 text-sm font-semibold leading-6 text-slate-700">
                         Thank you for your interest in collaborating with us. Kindly fill
                         out the information below, including your preferred location, so
