@@ -18,6 +18,47 @@ function formatPhone(value: string) {
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
 }
 
+const getGoogleMapImageUrl = (
+    latitude?: number | null,
+    longitude?: number | null
+) => {
+    if (latitude === null || latitude === undefined) return "";
+    if (longitude === null || longitude === undefined) return "";
+
+    return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=11&size=180x120&scale=2&markers=color:red%7C${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+
+};
+
+const formatJobDistance = (
+    distanceMiles?: number | null,
+    searchedZip?: string,
+    jobZip?: string | null
+) => {
+    if (searchedZip && jobZip && searchedZip.trim() === jobZip.trim()) {
+        return "In your ZIP code";
+    }
+
+    if (distanceMiles === null || distanceMiles === undefined) {
+        return "";
+    }
+
+    return `${distanceMiles.toLocaleString(undefined, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+    })} miles away`;
+};
+
+const formatDistanceMiles = (distanceMiles?: number | null) => {
+    if (distanceMiles === null || distanceMiles === undefined) {
+        return "";
+    }
+
+    return `${distanceMiles.toLocaleString(undefined, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+    })} miles away`;
+};
+
 function formatZip(value: string) {
     return value.replace(/\D/g, "").slice(0, 5);
 }
@@ -71,17 +112,10 @@ const steps = [
         text: "Our team reviews every application personally",
     },
 ];
-
-const caregiverShifts = [
-    "Newport Beach – 7am to 7pm FRI THRU SUN",
-    "Irvine – 9am to 7pm SAT THRU SUN",
-    "Rancho Mission Viejo – 7am to 7pm FRI THRU SUN",
-    "Orange – 8am to 2pm FRI THRU SUN",
-    "Newport Beach – 7am to 3pm WED, SAT",
-    "Laguna Woods – 4pm to 9pm SAT, SUN",
-];
+ 
 
 export default function CareersPage() {
+    const [applicationSuccessMessage, setApplicationSuccessMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [resumeName, setResumeName] = useState("");
     const [zipCode, setZipCode] = useState("");
@@ -95,9 +129,42 @@ export default function CareersPage() {
     const [jobsLoading, setJobsLoading] = useState(false);
     const [jobsError, setJobsError] = useState("");
     const [jobGroups, setJobGroups] = useState<FranchiseeJobGroup[]>([]);
-
+     
     async function loadJobsNearZip() { 
-       
+
+        const geocodeZip = async (zip: string) => {
+            const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+            if (!googleApiKey) {
+                throw new Error("Google Maps API key is missing.");
+            }
+
+            const response = await fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                    zip
+                )}&components=country:US&key=${encodeURIComponent(googleApiKey)}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                    },
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok || result.status !== "OK" || !result.results?.length) {
+                throw new Error(result?.error_message || "Unable to geocode ZIP code.");
+            }
+
+            const location = result.results[0].geometry.location;
+
+            return {
+                latitude: Number(location.lat),
+                longitude: Number(location.lng),
+            };
+        };
+
         if (zipCode.length !== 5) {
             alert("Please enter a valid 5-digit ZIP code.");
             return;
@@ -116,18 +183,40 @@ export default function CareersPage() {
                 process.env.NEXT_PUBLIC_API_BASE_URL ||
                 "https://api.cernahomecare.com";
 
-            const url = `${apiBaseUrl.replace(/\/$/, "")}/api/public/jobs/active`;
+            const trimmedZip = zipCode.trim();
+            const coords = await geocodeZip(trimmedZip);
+
+            const latitude = coords.latitude;
+            const longitude = coords.longitude; 
+         
+
+            const url = `${apiBaseUrl.replace(
+                /\/$/,
+                ""
+            )}/api/public/jobs/active?latitude=${encodeURIComponent(
+                String(latitude)
+            )}&longitude=${encodeURIComponent(String(longitude))}&radiusMiles=50`; 
 
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
                 },
-            }); 
+            });
 
             if (!response.ok) {
                 throw new Error(`Failed to load jobs. Status: ${response.status}`);
             }
+
+            const getGoogleMapImageUrl = (
+                latitude?: number | null,
+                longitude?: number | null
+            ) => {
+                if (latitude === null || latitude === undefined) return "";
+                if (longitude === null || longitude === undefined) return "";
+
+                return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=12&size=120x120&scale=2&markers=color:red%7C${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+            };
 
             const jobs = (await response.json()) as PublicJob[];
 
@@ -140,6 +229,9 @@ export default function CareersPage() {
                             franchiseeCity: job.franchiseeCity,
                             franchiseeState: job.franchiseeState,
                             franchiseeZipCode: job.franchiseeZipCode,
+                            distanceMiles: job.distanceMiles,
+                            latitude: job.latitude,
+                            longitude: job.longitude,
                             jobs: [],
                         };
                     }
@@ -163,26 +255,34 @@ export default function CareersPage() {
         jobId: number;
         franchiseeId: number;
         franchiseeName: string;
-        franchiseeCity: string | null;
-        franchiseeState: string | null;
-        franchiseeZipCode: string | null;
+        franchiseeCity: string;
+        franchiseeState: string;
+        franchiseeZipCode: string;
+
         jobTitle: string;
-        jobType: string | null;
-        shiftType: string | null;
-        jobDescription: string | null;
-        city: string | null;
-        state: string | null;
-        zipCode: string | null;
-        payRange: string | null;
-        sortOrder: number;
+        jobType?: string | null;
+        shiftType?: string | null;
+        jobDescription?: string | null;
+        city?: string | null;
+        state?: string | null;
+        zipCode?: string | null;
+        payRange?: string | null;
+        sortOrder?: number | null;
+
+        distanceMiles?: number | null;
+        latitude?: number | null;
+        longitude?: number | null;
     };
 
     type FranchiseeJobGroup = {
         franchiseeId: number;
         franchiseeName: string;
-        franchiseeCity: string | null;
-        franchiseeState: string | null;
-        franchiseeZipCode: string | null;
+        franchiseeCity: string;
+        franchiseeState: string;
+        franchiseeZipCode: string;
+        distanceMiles?: number | null;
+        latitude?: number | null;
+        longitude?: number | null;
         jobs: PublicJob[];
     };
 
@@ -431,16 +531,24 @@ export default function CareersPage() {
                     </div>
 
                     <div className="mx-auto mt-10 max-w-3xl rounded-3xl bg-white/90 p-6 shadow-2xl ring-1 ring-slate-200 backdrop-blur-sm sm:p-8">
-                    <p className="mb-6 text-sm font-semibold leading-6 text-slate-700">
-                        Thank you for your interest in collaborating with us. Kindly fill
-                        out the information below, including your preferred location, so
-                        that we can reach out to you.
-                    </p>
+                        {applicationSuccessMessage && (
+                            <div className="mb-6 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-black leading-6 text-green-800">
+                                {applicationSuccessMessage}
+                            </div>
+                        )}
+
+                        <p className="mb-6 text-sm font-semibold leading-6 text-slate-700">
+                            Thank you for your interest in collaborating with us. Kindly fill
+                            out the information below, including your preferred location, so
+                            that we can reach out to you.
+                        </p>
 
                     <form
                         className="grid gap-5"
                         onSubmit={async (e) => {
                             e.preventDefault();
+
+                            setApplicationSuccessMessage("");
 
                             const form = e.currentTarget;
                             const formData = new FormData(form);
@@ -509,9 +617,13 @@ export default function CareersPage() {
                                     return;
                                 }
 
-                                alert("Thank you! Your application has been submitted.");
+                                setApplicationSuccessMessage(
+                                    "Your resume has been sent and a representative will contact you soon."
+                                );
+
                                 form.reset();
                                 setResumeName("");
+
                             } catch (error) {
                                 console.error("Application submit failed:", error);
                                 alert("Something went wrong submitting your application.");
@@ -679,8 +791,8 @@ export default function CareersPage() {
 
             {/* JOBS POPUP */}
             {isJobsPopupOpen && (
-                <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 px-4 pb-6 pt-[150px] backdrop-blur-sm sm:pb-10 sm:pt-[160px]">
-                    <div className="relative max-h-[70vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+                <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 px-4 pb-6 pt-[120px] backdrop-blur-sm sm:pb-10 sm:pt-[125px]">
+                    <div className="relative max-h-[82vh] w-full max-w-4xl overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
                         <button
                             type="button"
                             onClick={() => {
@@ -702,7 +814,7 @@ export default function CareersPage() {
                                     </p>
 
                                     <h2 className="mt-2 text-3xl font-black tracking-tight text-[#00456B] sm:text-4xl">
-                                        Closest CERNA locations hiring near {zipCode}
+                                        Cerna locations hiring near {zipCode}
                                     </h2>
 
                                     <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-slate-600">
@@ -711,8 +823,22 @@ export default function CareersPage() {
                                 </div>
 
                                 {jobsLoading && (
-                                    <div className="mt-8 rounded-2xl bg-slate-50 p-6 text-center font-bold text-slate-600">
-                                        Loading available jobs...
+                                    <div className="mt-8 rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-10 text-center shadow-sm">
+                                        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#00456B]/10">
+                                            <div className="relative h-14 w-14">
+                                                <div className="absolute inset-0 rounded-full border-4 border-slate-200" />
+                                                <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-[#DD8500] border-r-[#00456B]" />
+                                                <div className="absolute inset-3 rounded-full bg-white shadow-inner" />
+                                            </div>
+                                        </div>
+
+                                        <p className="mt-5 text-lg font-black text-[#00456B]">
+                                            Finding jobs near you...
+                                        </p>
+
+                                        <p className="mt-2 text-sm font-semibold text-slate-500">
+                                            Checking nearby CERNA locations within 50 miles.
+                                        </p>
                                     </div>
                                 )}
 
@@ -736,15 +862,36 @@ export default function CareersPage() {
                                                 className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
                                             >
                                                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                                                    <div>
-                                                        <h3 className="text-xl font-black text-[#00456B]">
-                                                            {group.franchiseeName}
-                                                        </h3>
+                                                    <div className="flex gap-4">
+                                                        {group.latitude !== null &&
+                                                            group.latitude !== undefined &&
+                                                            group.longitude !== null &&
+                                                            group.longitude !== undefined && (
+                                                                <a
+                                                                    href={`https://www.google.com/maps/search/?api=1&query=${group.latitude},${group.longitude}`}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="block shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-200 shadow-sm transition hover:opacity-90"
+                                                                    aria-label={`Open map for ${group.franchiseeName}`}
+                                                                >
+                                                                    <img
+                                                                        src={getGoogleMapImageUrl(group.latitude, group.longitude)}
+                                                                        alt={`Map for ${group.franchiseeName}`}
+                                                                        className="h-24 w-24 object-cover"
+                                                                    />
+                                                                </a>
+                                                            )}
 
-                                                        <p className="mt-1 text-sm font-semibold text-slate-500">
-                                                            {group.franchiseeCity}, {group.franchiseeState}{" "}
-                                                            {group.franchiseeZipCode}
-                                                        </p>
+                                                        <div>
+                                                            <h3 className="text-xl font-black text-[#00456B]">
+                                                                {group.franchiseeName}
+                                                            </h3>
+
+                                                            <p className="mt-1 text-sm font-semibold text-slate-500">
+                                                                {group.franchiseeCity}, {group.franchiseeState}{" "}
+                                                                {group.franchiseeZipCode}
+                                                            </p> 
+                                                        </div>
                                                     </div>
 
                                                     <span className="w-fit rounded-full bg-[#DD8500]/15 px-3 py-1 text-sm font-black text-[#DD8500]">
@@ -771,45 +918,74 @@ export default function CareersPage() {
                                                                         : "bg-white text-slate-900 ring-slate-200 hover:ring-[#00456B]/40"
                                                                     }`}
                                                             >
-                                                                <p className="font-black">
-                                                                    {job.jobTitle}
-                                                                </p>
+                                                                <div className="flex gap-4">
+                                                                    {job.latitude !== null &&
+                                                                        job.latitude !== undefined &&
+                                                                        job.longitude !== null &&
+                                                                        job.longitude !== undefined && (
+                                                                            <a
+                                                                                href={`https://www.google.com/maps/search/?api=1&query=${job.latitude},${job.longitude}`}
+                                                                                target="_blank"
+                                                                                rel="noreferrer"
+                                                                                onClick={(e) => e.stopPropagation()}
+                                                                                className="block h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-200 shadow-sm transition hover:opacity-90"
+                                                                                aria-label={`Open map for ${job.jobTitle}`}
+                                                                            >
+                                                                                <img
+                                                                                    src={getGoogleMapImageUrl(job.latitude, job.longitude)}
+                                                                                    alt={`Map for ${job.jobTitle}`}
+                                                                                    className="h-full w-full object-cover"
+                                                                                />
+                                                                            </a>
+                                                                        )}
 
-                                                                {(job.jobType ||
-                                                                    job.shiftType ||
-                                                                    job.payRange) && (
-                                                                        <p
-                                                                            className={`mt-1 text-sm font-semibold ${isSelected
-                                                                                    ? "text-white/90"
-                                                                                    : "text-[#00456B]"
-                                                                                }`}
-                                                                        >
-                                                                            {[
-                                                                                job.jobType,
-                                                                                job.shiftType,
-                                                                                job.payRange,
-                                                                            ]
-                                                                                .filter(Boolean)
-                                                                                .join(" • ")}
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="font-black">
+                                                                            {job.jobTitle}
                                                                         </p>
-                                                                    )}
+                                                                        {(job.city || job.state || job.zipCode || job.distanceMiles !== null) && (
+                                                                            <p
+                                                                                className={`mt-1 text-sm font-bold ${isSelected ? "text-white/90" : "text-slate-600"
+                                                                                    }`}
+                                                                            >
+                                                                                {[job.city, job.state].filter(Boolean).join(", ")}{" "}
+                                                                                {job.zipCode}
 
-                                                                {job.jobDescription && (
-                                                                    <p
-                                                                        className={`mt-2 text-sm leading-6 ${isSelected
-                                                                                ? "text-white/85"
-                                                                                : "text-slate-600"
-                                                                            }`}
-                                                                    >
-                                                                        {job.jobDescription}
-                                                                    </p>
-                                                                )}
+                                                                                {(job.distanceMiles !== null || job.zipCode) && (
+                                                                                    <span className={isSelected ? "text-[#FFD08A]" : "text-[#DD8500]"}>
+                                                                                        {" "}
+                                                                                        • {formatJobDistance(job.distanceMiles, zipCode, job.zipCode)}
+                                                                                    </span>
+                                                                                )}
+                                                                            </p>
+                                                                        )}
+                                                                        {(job.jobType || job.shiftType || job.payRange) && (
+                                                                            <p
+                                                                                className={`mt-1 text-sm font-semibold ${isSelected ? "text-white/90" : "text-[#00456B]"
+                                                                                    }`}
+                                                                            >
+                                                                                {[job.jobType, job.shiftType, job.payRange]
+                                                                                    .filter(Boolean)
+                                                                                    .join(" • ")}
+                                                                            </p>
+                                                                        )}
 
-                                                                {isSelected && (
-                                                                    <p className="mt-3 text-xs font-black uppercase tracking-wide text-[#FFD08A]">
-                                                                        Selected
-                                                                    </p>
-                                                                )}
+                                                                        {job.jobDescription && (
+                                                                            <p
+                                                                                className={`mt-2 text-sm leading-6 ${isSelected ? "text-white/85" : "text-slate-600"
+                                                                                    }`}
+                                                                            >
+                                                                                {job.jobDescription}
+                                                                            </p>
+                                                                        )}
+
+                                                                        {isSelected && (
+                                                                            <p className="mt-3 text-xs font-black uppercase tracking-wide text-[#FFD08A]">
+                                                                                Selected
+                                                                            </p>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
                                                             </button>
                                                         );
                                                     })}
@@ -829,6 +1005,13 @@ export default function CareersPage() {
                                                     {selectedPopupJob && (
                                                         <p className="mt-1 text-sm font-semibold text-slate-500">
                                                             {selectedPopupJob.franchiseeName}
+                                                            {selectedPopupJob.distanceMiles !== null &&
+                                                                selectedPopupJob.distanceMiles !== undefined && (
+                                                                    <>
+                                                                        {" "}
+                                                                        • {formatDistanceMiles(selectedPopupJob.distanceMiles)}
+                                                                    </>
+                                                                )}
                                                         </p>
                                                     )}
                                                 </div>
@@ -878,7 +1061,16 @@ export default function CareersPage() {
                                         {selectedPopupJob.franchiseeName} •{" "}
                                         {selectedPopupJob.franchiseeCity},{" "}
                                         {selectedPopupJob.franchiseeState}
+
+                                        {selectedPopupJob.distanceMiles !== null &&
+                                            selectedPopupJob.distanceMiles !== undefined && (
+                                                <>
+                                                    {" "}
+                                                    • {formatDistanceMiles(selectedPopupJob.distanceMiles)}
+                                                </>
+                                            )}
                                     </p>
+
                                 </div>
 
                                 <form
