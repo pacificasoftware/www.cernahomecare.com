@@ -120,6 +120,7 @@ export default function CareersPage() {
     const [resumeName, setResumeName] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [isJobsPopupOpen, setIsJobsPopupOpen] = useState(false);
+    const [searchedCity, setSearchedCity] = useState("");
 
     const [selectedPopupJob, setSelectedPopupJob] = useState<PublicJob | null>(null);
     const [showPopupApplicationForm, setShowPopupApplicationForm] = useState(false);
@@ -130,41 +131,7 @@ export default function CareersPage() {
     const [jobsError, setJobsError] = useState("");
     const [jobGroups, setJobGroups] = useState<FranchiseeJobGroup[]>([]);
      
-    async function loadJobsNearZip() { 
-
-        const geocodeZip = async (zip: string) => {
-            const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-
-            if (!googleApiKey) {
-                throw new Error("Google Maps API key is missing.");
-            }
-
-            const response = await fetch(
-                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-                    zip
-                )}&components=country:US&key=${encodeURIComponent(googleApiKey)}`,
-                {
-                    method: "GET",
-                    headers: {
-                        Accept: "application/json",
-                    },
-                }
-            );
-
-            const result = await response.json();
-
-            if (!response.ok || result.status !== "OK" || !result.results?.length) {
-                throw new Error(result?.error_message || "Unable to geocode ZIP code.");
-            }
-
-            const location = result.results[0].geometry.location;
-
-            return {
-                latitude: Number(location.lat),
-                longitude: Number(location.lng),
-            };
-        };
-
+    async function loadJobsNearZip() {
         if (zipCode.length !== 5) {
             alert("Please enter a valid 5-digit ZIP code.");
             return;
@@ -173,6 +140,7 @@ export default function CareersPage() {
         try {
             setJobsLoading(true);
             setJobsError("");
+            setSearchedCity("");
             setJobGroups([]);
             setSelectedPopupJob(null);
             setShowPopupApplicationForm(false);
@@ -184,18 +152,15 @@ export default function CareersPage() {
                 "https://api.cernahomecare.com";
 
             const trimmedZip = zipCode.trim();
-            const coords = await geocodeZip(trimmedZip);
-
-            const latitude = coords.latitude;
-            const longitude = coords.longitude; 
-         
 
             const url = `${apiBaseUrl.replace(
                 /\/$/,
                 ""
-            )}/api/public/jobs/active?latitude=${encodeURIComponent(
-                String(latitude)
-            )}&longitude=${encodeURIComponent(String(longitude))}&radiusMiles=50`; 
+            )}/api/public/jobs/active?zipCode=${encodeURIComponent(
+                trimmedZip
+            )}&radiusMiles=50`;
+
+            console.log("Jobs API URL:", url);
 
             const response = await fetch(url, {
                 method: "GET",
@@ -204,21 +169,24 @@ export default function CareersPage() {
                 },
             });
 
-            if (!response.ok) {
-                throw new Error(`Failed to load jobs. Status: ${response.status}`);
+            const text = await response.text();
+
+            let result: any = {};
+
+            if (text.trim()) {
+                result = JSON.parse(text);
             }
 
-            const getGoogleMapImageUrl = (
-                latitude?: number | null,
-                longitude?: number | null
-            ) => {
-                if (latitude === null || latitude === undefined) return "";
-                if (longitude === null || longitude === undefined) return "";
+            if (!response.ok) {
+                throw new Error(
+                    result?.message || `Failed to load jobs. Status: ${response.status}`
+                );
+          
+            }
 
-                return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=12&size=120x120&scale=2&markers=color:red%7C${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
-            };
+            setSearchedCity(result.searchedCity || "");
 
-            const jobs = (await response.json()) as PublicJob[];
+            const jobs = (result.jobs || []) as PublicJob[];
 
             const grouped = jobs.reduce<Record<number, FranchiseeJobGroup>>(
                 (acc, job) => {
@@ -244,7 +212,7 @@ export default function CareersPage() {
 
             setJobGroups(Object.values(grouped).slice(0, 3));
         } catch (error) {
-            console.error(error);
+            console.error("Load jobs failed:", error);
             setJobsError("Sorry, we could not load jobs right now.");
         } finally {
             setJobsLoading(false);
@@ -813,8 +781,9 @@ export default function CareersPage() {
                                         Jobs Near You
                                     </p>
 
-                                    <h2 className="mt-2 text-3xl font-black tracking-tight text-[#00456B] sm:text-4xl">
+                                    <h2 className="mt-2 text-xl font-black tracking-tight text-[#00456B] sm:text-2xl">
                                         Cerna locations hiring near {zipCode}
+                                        {searchedCity ? ` (${searchedCity})` : ""}
                                     </h2>
 
                                     <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-slate-600">
