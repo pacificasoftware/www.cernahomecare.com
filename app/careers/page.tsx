@@ -832,24 +832,24 @@ export default function CareersPage() {
                                             >
                                                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                                                     <div className="flex gap-4">
-                                                        {group.latitude !== null &&
-                                                            group.latitude !== undefined &&
-                                                            group.longitude !== null &&
-                                                            group.longitude !== undefined && (
-                                                                <a
-                                                                    href={`https://www.google.com/maps/search/?api=1&query=${group.latitude},${group.longitude}`}
-                                                                    target="_blank"
-                                                                    rel="noreferrer"
-                                                                    className="block shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-200 shadow-sm transition hover:opacity-90"
-                                                                    aria-label={`Open map for ${group.franchiseeName}`}
-                                                                >
-                                                                    <img
-                                                                        src={getGoogleMapImageUrl(group.latitude, group.longitude)}
-                                                                        alt={`Map for ${group.franchiseeName}`}
-                                                                        className="h-24 w-24 object-cover"
-                                                                    />
-                                                                </a>
-                                                            )}
+                                                        {/*{group.latitude !== null &&*/}
+                                                        {/*    group.latitude !== undefined &&*/}
+                                                        {/*    group.longitude !== null &&*/}
+                                                        {/*    group.longitude !== undefined && (*/}
+                                                        {/*        <a*/}
+                                                        {/*            href={`https://www.google.com/maps/search/?api=1&query=${group.latitude},${group.longitude}`}*/}
+                                                        {/*            target="_blank"*/}
+                                                        {/*            rel="noreferrer"*/}
+                                                        {/*            className="block shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-200 shadow-sm transition hover:opacity-90"*/}
+                                                        {/*            aria-label={`Open map for ${group.franchiseeName}`}*/}
+                                                        {/*        >*/}
+                                                        {/*            <img*/}
+                                                        {/*                src={getGoogleMapImageUrl(group.latitude, group.longitude)}*/}
+                                                        {/*                alt={`Map for ${group.franchiseeName}`}*/}
+                                                        {/*                className="h-24 w-24 object-cover"*/}
+                                                        {/*            />*/}
+                                                        {/*        </a>*/}
+                                                        {/*    )}*/}
 
                                                         <div>
                                                             <h3 className="text-xl font-black text-[#00456B]">
