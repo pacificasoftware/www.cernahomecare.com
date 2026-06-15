@@ -111,8 +111,7 @@ const steps = [
         title: "We call you",
         text: "Our team reviews every application personally",
     },
-];
- 
+]; 
 
 export default function CareersPage() {
     const [applicationSuccessMessage, setApplicationSuccessMessage] = useState("");
@@ -178,10 +177,13 @@ export default function CareersPage() {
             }
 
             if (!response.ok) {
-                throw new Error(
-                    result?.message || `Failed to load jobs. Status: ${response.status}`
+                console.warn("Jobs lookup returned no results:", result);
+
+                setJobsError(
+                    `We do not currently have openings within 50 miles of ${trimmedZip}. Please try another ZIP code or check back soon.`
                 );
-          
+
+                return;
             }
 
             setSearchedCity(result.searchedCity || "");
@@ -212,8 +214,11 @@ export default function CareersPage() {
 
             setJobGroups(Object.values(grouped).slice(0, 3));
         } catch (error) {
-            console.error("Load jobs failed:", error);
-            setJobsError("Sorry, we could not load jobs right now.");
+            console.warn("Jobs lookup failed:", error);
+
+            setJobsError(
+                `We do not currently have openings within 50 miles of ${zipCode}. Please try another ZIP code or check back soon.`
+            );
         } finally {
             setJobsLoading(false);
         }
@@ -810,10 +815,16 @@ export default function CareersPage() {
                                         </p>
                                     </div>
                                 )}
-
                                 {jobsError && !jobsLoading && (
-                                    <div className="mt-8 rounded-2xl bg-red-50 p-6 text-center font-bold text-red-700">
-                                        {jobsError}
+                                    <div className="mt-8 rounded-2xl bg-slate-50 p-6 text-center">
+                                        <p className="text-lg font-black text-[#00456B]">
+                                            No jobs found near this ZIP code
+                                        </p>
+
+                                        <p className="mt-2 text-sm font-semibold text-slate-600">
+                                            We do not currently have openings within 50 miles of {zipCode}.
+                                            Please try another ZIP code or check back soon.
+                                        </p>
                                     </div>
                                 )}
 
