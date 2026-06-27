@@ -111,7 +111,63 @@ const steps = [
         title: "We call you",
         text: "Our team reviews every application personally",
     },
-]; 
+];
+
+
+async function getZipInfo(zip: string) {
+    const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+    if (!mapsKey) {
+        return {
+            isValid: false,
+            label: "",
+        };
+    }
+
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        zip
+    )}&components=country:US|postal_code:${encodeURIComponent(zip)}&key=${mapsKey}`;
+
+    const response = await fetch(url);
+    const result = await response.json();
+
+    if (result.status !== "OK" || !result.results?.length) {
+        return {
+            isValid: false,
+            label: "",
+        };
+    }
+
+    const components = result.results[0].address_components || [];
+
+    const cityComponent =
+        components.find((component: any) =>
+            component.types.includes("locality")
+        ) ||
+        components.find((component: any) =>
+            component.types.includes("postal_town")
+        ) ||
+        components.find((component: any) =>
+            component.types.includes("administrative_area_level_3")
+        ) ||
+        components.find((component: any) =>
+            component.types.includes("administrative_area_level_2")
+        );
+
+    const stateComponent = components.find((component: any) =>
+        component.types.includes("administrative_area_level_1")
+    );
+
+    const city = cityComponent?.long_name || "";
+    const state = stateComponent?.long_name || "";
+
+    const label = [city, state].filter(Boolean).join(", ");
+
+    return {
+        isValid: Boolean(label),
+        label,
+    };
+}
 
 export default function CareersPage() {
     const [applicationSuccessMessage, setApplicationSuccessMessage] = useState("");
@@ -120,6 +176,7 @@ export default function CareersPage() {
     const [zipCode, setZipCode] = useState("");
     const [isJobsPopupOpen, setIsJobsPopupOpen] = useState(false);
     const [searchedCity, setSearchedCity] = useState("");
+    const [isInvalidZip, setIsInvalidZip] = useState(false);
 
     const [selectedPopupJob, setSelectedPopupJob] = useState<PublicJob | null>(null);
     const [showPopupApplicationForm, setShowPopupApplicationForm] = useState(false);
@@ -129,7 +186,7 @@ export default function CareersPage() {
     const [jobsLoading, setJobsLoading] = useState(false);
     const [jobsError, setJobsError] = useState("");
     const [jobGroups, setJobGroups] = useState<FranchiseeJobGroup[]>([]);
-     
+
     async function loadJobsNearZip() {
         if (zipCode.length !== 5) {
             alert("Please enter a valid 5-digit ZIP code.");
@@ -140,6 +197,7 @@ export default function CareersPage() {
             setJobsLoading(true);
             setJobsError("");
             setSearchedCity("");
+            setIsInvalidZip(false);
             setJobGroups([]);
             setSelectedPopupJob(null);
             setShowPopupApplicationForm(false);
@@ -151,6 +209,16 @@ export default function CareersPage() {
                 "https://api.cernahomecare.com";
 
             const trimmedZip = zipCode.trim();
+            const zipInfo = await getZipInfo(trimmedZip);
+
+            if (!zipInfo.isValid) {
+                setIsInvalidZip(true);
+                setJobsError("Invalid ZIP code.");
+                return;
+            }
+
+            // Show the ZIP city/state immediately, even before the jobs API returns.
+            setSearchedCity(zipInfo.label);
 
             const url = `${apiBaseUrl.replace(
                 /\/$/,
@@ -158,8 +226,6 @@ export default function CareersPage() {
             )}/api/public/jobs/active?zipCode=${encodeURIComponent(
                 trimmedZip
             )}&radiusMiles=50`;
-
-            console.log("Jobs API URL:", url);
 
             const response = await fetch(url, {
                 method: "GET",
@@ -176,6 +242,9 @@ export default function CareersPage() {
                 result = JSON.parse(text);
             }
 
+            // Keep the Google city/state label even if the API returns no jobs.
+            setSearchedCity(zipInfo.label || result.searchedCity || result.city || "");
+
             if (!response.ok) {
                 console.warn("Jobs lookup returned no results:", result);
 
@@ -186,9 +255,15 @@ export default function CareersPage() {
                 return;
             }
 
-            setSearchedCity(result.searchedCity || "");
-
             const jobs = (result.jobs || []) as PublicJob[];
+
+            if (jobs.length === 0) {
+                setJobsError(
+                    `We do not currently have openings within 50 miles of ${trimmedZip}. Please try another ZIP code or check back soon.`
+                );
+
+                return;
+            }
 
             const grouped = jobs.reduce<Record<number, FranchiseeJobGroup>>(
                 (acc, job) => {
@@ -340,8 +415,8 @@ export default function CareersPage() {
                         </div>
                     </div>
                 </div>
-            </section> 
-           
+            </section>
+
             {/* JOIN TEAM */}
             <section className="bg-[#f5f7fb]">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
@@ -439,7 +514,7 @@ export default function CareersPage() {
             </section>
 
             {/* STEPS */}
-             <section className="bg-white px-6 pb-14 pt-0 sm:px-8 lg:px-10">
+            <section className="bg-white px-6 pb-14 pt-0 sm:px-8 lg:px-10">
                 <div className="mx-auto max-w-7xl rounded-3xl border-2 border-[#00456B]/35 bg-white p-6 shadow-[0_14px_40px_rgba(0,69,107,0.14)]">
                     <h2 className="mx-auto w-fit rounded-md bg-[#00456B] px-5 py-2 text-center text-lg font-black text-white">
                         How to start your career with CERNA
@@ -516,248 +591,248 @@ export default function CareersPage() {
                             that we can reach out to you.
                         </p>
 
-                    <form
-                        className="grid gap-5"
-                        onSubmit={async (e) => {
-                            e.preventDefault();
+                        <form
+                            className="grid gap-5"
+                            onSubmit={async (e) => {
+                                e.preventDefault();
 
-                            setApplicationSuccessMessage("");
+                                setApplicationSuccessMessage("");
 
-                            const form = e.currentTarget;
-                            const formData = new FormData(form);
+                                const form = e.currentTarget;
+                                const formData = new FormData(form);
 
-                            const fullName = String(formData.get("FullName") || "").trim();
-                            const phone = String(formData.get("Phone") || "").trim();
-                            const email = String(formData.get("Email") || "").trim();
-                            const resume = formData.get("Resume") as File | null;
+                                const fullName = String(formData.get("FullName") || "").trim();
+                                const phone = String(formData.get("Phone") || "").trim();
+                                const email = String(formData.get("Email") || "").trim();
+                                const resume = formData.get("Resume") as File | null;
 
-                            if (!fullName || !phone || !email) {
-                                alert("Please enter your name, phone, and email.");
-                                return;
-                            }
-
-                            if (!resume || resume.size === 0) {
-                                alert("Please attach your resume.");
-                                return;
-                            }
-
-                            const allowedExtensions = [".pdf", ".doc", ".docx"];
-                            const fileName = resume.name.toLowerCase();
-                            const isAllowed = allowedExtensions.some((ext) =>
-                                fileName.endsWith(ext)
-                            );
-
-                            if (!isAllowed) {
-                                alert("Please upload a PDF, DOC, or DOCX resume.");
-                                return;
-                            }
-
-                            if (resume.size > 10 * 1024 * 1024) {
-                                alert("Resume cannot exceed 10 MB.");
-                                return;
-                            }
-
-                            const apiBaseUrl =
-                                process.env.NEXT_PUBLIC_API_BASE_URL ||
-                                "https://api.cernahomecare.com";
-
-                            const uploadUrl = `${apiBaseUrl}/api/applications/submit-with-resume`;
-
-                            try {
-                                setIsSubmitting(true);
-
-                                const response = await fetch(uploadUrl, {
-                                    method: "POST",
-                                    body: formData,
-                                });
-
-                                const responseText = await response.text();
-
-                                let result: any = null;
-
-                                try {
-                                    result = responseText ? JSON.parse(responseText) : null;
-                                } catch {
-                                    result = null;
-                                }
-
-                                if (!response.ok) {
-                                    alert(
-                                        result?.statusMessage ||
-                                        result?.message ||
-                                        `Application failed. Status: ${response.status}`
-                                    );
+                                if (!fullName || !phone || !email) {
+                                    alert("Please enter your name, phone, and email.");
                                     return;
                                 }
 
-                                setApplicationSuccessMessage(
-                                    "Your resume has been sent and a representative will contact you soon."
+                                if (!resume || resume.size === 0) {
+                                    alert("Please attach your resume.");
+                                    return;
+                                }
+
+                                const allowedExtensions = [".pdf", ".doc", ".docx"];
+                                const fileName = resume.name.toLowerCase();
+                                const isAllowed = allowedExtensions.some((ext) =>
+                                    fileName.endsWith(ext)
                                 );
 
-                                form.reset();
-                                setResumeName("");
+                                if (!isAllowed) {
+                                    alert("Please upload a PDF, DOC, or DOCX resume.");
+                                    return;
+                                }
 
-                            } catch (error) {
-                                console.error("Application submit failed:", error);
-                                alert("Something went wrong submitting your application.");
-                            } finally {
-                                setIsSubmitting(false);
-                            }
-                        }}
-                    >
-                        <label className="grid gap-1 text-sm font-bold text-slate-700">
-                            <span>
-                                Your Name <span className="text-[#DD8500]">*</span>
-                            </span>
+                                if (resume.size > 10 * 1024 * 1024) {
+                                    alert("Resume cannot exceed 10 MB.");
+                                    return;
+                                }
 
-                            <input
-                                name="FullName"
-                                required
-                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
-                            />
-                        </label>
+                                const apiBaseUrl =
+                                    process.env.NEXT_PUBLIC_API_BASE_URL ||
+                                    "https://api.cernahomecare.com";
 
-                        <label className="grid gap-1 text-sm font-bold text-slate-700">
-                            <span>
-                                Phone <span className="text-[#DD8500]">*</span>
-                            </span>
+                                const uploadUrl = `${apiBaseUrl}/api/applications/submit-with-resume`;
 
-                            <input
-                                name="Phone"
-                                required
-                                placeholder="(714) 555-1212"
-                                inputMode="tel"
-                                maxLength={14}
-                                onChange={(e) => {
-                                    e.currentTarget.value = formatPhone(e.currentTarget.value);
-                                }}
-                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
-                            />
-                        </label>
+                                try {
+                                    setIsSubmitting(true);
 
-                        <label className="grid gap-1 text-sm font-bold text-slate-700">
-                            <span>
-                                Email Address <span className="text-[#DD8500]">*</span>
-                            </span>
+                                    const response = await fetch(uploadUrl, {
+                                        method: "POST",
+                                        body: formData,
+                                    });
 
-                            <input
-                                name="Email"
-                                type="email"
-                                required
-                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
-                            />
-                        </label>
+                                    const responseText = await response.text();
 
-                        <label className="grid gap-1 text-sm font-bold text-slate-700">
-                            <span>Address</span>
+                                    let result: any = null;
 
-                            <input
-                                name="Address"
-                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
-                            />
-                        </label>
+                                    try {
+                                        result = responseText ? JSON.parse(responseText) : null;
+                                    } catch {
+                                        result = null;
+                                    }
 
-                        <div className="grid gap-2">
-                            <span className="text-sm font-bold text-slate-700">
-                                Do you currently have a HCA Per ID?
-                            </span>
+                                    if (!response.ok) {
+                                        alert(
+                                            result?.statusMessage ||
+                                            result?.message ||
+                                            `Application failed. Status: ${response.status}`
+                                        );
+                                        return;
+                                    }
 
-                            <div className="grid max-w-xs grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
-                                <label className="cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="HasHcaPerId"
-                                        value="YES"
-                                        defaultChecked
-                                        className="peer sr-only"
-                                    />
+                                    setApplicationSuccessMessage(
+                                        "Your resume has been sent and a representative will contact you soon."
+                                    );
 
-                                    <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
-                                        YES
-                                    </span>
-                                </label>
+                                    form.reset();
+                                    setResumeName("");
 
-                                <label className="cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="HasHcaPerId"
-                                        value="NO"
-                                        className="peer sr-only"
-                                    />
+                                } catch (error) {
+                                    console.error("Application submit failed:", error);
+                                    alert("Something went wrong submitting your application.");
+                                } finally {
+                                    setIsSubmitting(false);
+                                }
+                            }}
+                        >
+                            <label className="grid gap-1 text-sm font-bold text-slate-700">
+                                <span>
+                                    Your Name <span className="text-[#DD8500]">*</span>
+                                </span>
 
-                                    <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
-                                        NO
-                                    </span>
-                                </label>
+                                <input
+                                    name="FullName"
+                                    required
+                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                                />
+                            </label>
+
+                            <label className="grid gap-1 text-sm font-bold text-slate-700">
+                                <span>
+                                    Phone <span className="text-[#DD8500]">*</span>
+                                </span>
+
+                                <input
+                                    name="Phone"
+                                    required
+                                    placeholder="(714) 555-1212"
+                                    inputMode="tel"
+                                    maxLength={14}
+                                    onChange={(e) => {
+                                        e.currentTarget.value = formatPhone(e.currentTarget.value);
+                                    }}
+                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                                />
+                            </label>
+
+                            <label className="grid gap-1 text-sm font-bold text-slate-700">
+                                <span>
+                                    Email Address <span className="text-[#DD8500]">*</span>
+                                </span>
+
+                                <input
+                                    name="Email"
+                                    type="email"
+                                    required
+                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                                />
+                            </label>
+
+                            <label className="grid gap-1 text-sm font-bold text-slate-700">
+                                <span>Address</span>
+
+                                <input
+                                    name="Address"
+                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
+                                />
+                            </label>
+
+                            <div className="grid gap-2">
+                                <span className="text-sm font-bold text-slate-700">
+                                    Do you currently have a HCA Per ID?
+                                </span>
+
+                                <div className="grid max-w-xs grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+                                    <label className="cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="HasHcaPerId"
+                                            value="YES"
+                                            defaultChecked
+                                            className="peer sr-only"
+                                        />
+
+                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                            YES
+                                        </span>
+                                    </label>
+
+                                    <label className="cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="HasHcaPerId"
+                                            value="NO"
+                                            className="peer sr-only"
+                                        />
+
+                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                            NO
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
 
-                        <label className="grid gap-1 text-sm font-bold text-slate-700">
-                            <span>How did you hear about us?</span>
+                            <label className="grid gap-1 text-sm font-bold text-slate-700">
+                                <span>How did you hear about us?</span>
 
-                            <select
-                                name="HowHeardAboutUs"
-                                defaultValue=""
-                                className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
-                            >
-                                <option value="" disabled>
-                                    Please select
-                                </option>
-                                <option value="Google Search">Google Search</option>
-                                <option value="Friend or Family">Friend or Family</option>
-                                <option value="Social Media">Social Media</option>
-                                <option value="Indeed">Indeed</option>
-                                <option value="Job Board">Job Board</option>
-                                <option value="Cerna Website">Cerna Website</option>
-                                <option value="Walk-In">Walk-In</option>
-                                <option value="Referral">Referral</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </label>
-
-                        <div className="grid gap-2">
-                            <span className="text-sm font-bold text-slate-700">
-                                Upload your resume <span className="text-[#DD8500]">*</span>
-                            </span>
-
-                            <div className="flex flex-col gap-3 sm:flex-row">
-                                <label className="inline-flex cursor-pointer items-center justify-center rounded-lg bg-slate-300 px-8 py-4 text-sm font-extrabold text-slate-800 transition hover:bg-slate-400">
-                                    Attach file here
-
-                                    <input
-                                        name="Resume"
-                                        type="file"
-                                        accept=".pdf,.doc,.docx"
-                                        className="hidden"
-                                        onChange={(e) => {
-                                            setResumeName(e.currentTarget.files?.[0]?.name ?? "");
-                                        }}
-                                    />
-                                </label>
-
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="inline-flex items-center justify-center rounded-lg bg-[#00456B] px-10 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#003a5a] disabled:cursor-not-allowed disabled:opacity-60"
+                                <select
+                                    name="HowHeardAboutUs"
+                                    defaultValue=""
+                                    className="rounded-md border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-[#111827] outline-none focus:bg-white focus:ring-2 focus:ring-[#DD8500]"
                                 >
-                                    {isSubmitting ? "Submitting..." : "Submit"}
-                                </button>
+                                    <option value="" disabled>
+                                        Please select
+                                    </option>
+                                    <option value="Google Search">Google Search</option>
+                                    <option value="Friend or Family">Friend or Family</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Indeed">Indeed</option>
+                                    <option value="Job Board">Job Board</option>
+                                    <option value="Cerna Website">Cerna Website</option>
+                                    <option value="Walk-In">Walk-In</option>
+                                    <option value="Referral">Referral</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </label>
+
+                            <div className="grid gap-2">
+                                <span className="text-sm font-bold text-slate-700">
+                                    Upload your resume <span className="text-[#DD8500]">*</span>
+                                </span>
+
+                                <div className="flex flex-col gap-3 sm:flex-row">
+                                    <label className="inline-flex cursor-pointer items-center justify-center rounded-lg bg-slate-300 px-8 py-4 text-sm font-extrabold text-slate-800 transition hover:bg-slate-400">
+                                        Attach file here
+
+                                        <input
+                                            name="Resume"
+                                            type="file"
+                                            accept=".pdf,.doc,.docx"
+                                            className="hidden"
+                                            onChange={(e) => {
+                                                setResumeName(e.currentTarget.files?.[0]?.name ?? "");
+                                            }}
+                                        />
+                                    </label>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="inline-flex items-center justify-center rounded-lg bg-[#00456B] px-10 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#003a5a] disabled:cursor-not-allowed disabled:opacity-60"
+                                    >
+                                        {isSubmitting ? "Submitting..." : "Submit"}
+                                    </button>
+                                </div>
+
+                                {resumeName ? (
+                                    <p className="text-sm font-semibold text-slate-600">
+                                        Attached: {resumeName}
+                                    </p>
+                                ) : null}
                             </div>
 
-                            {resumeName ? (
-                                <p className="text-sm font-semibold text-slate-600">
-                                    Attached: {resumeName}
-                                </p>
-                            ) : null}
-                        </div>
-
-                        <p className="max-w-4xl text-xs leading-5 text-slate-600">
-                            By submitting this form I agree to be contacted by CERNA Home
-                            Care via call, email and text. To opt out, you can reply
-                            “stop” at any time or click the unsubscribe link in the emails.
-                            Message and data rates may apply.
-                        </p>
-                    </form>
+                            <p className="max-w-4xl text-xs leading-5 text-slate-600">
+                                By submitting this form I agree to be contacted by CERNA Home
+                                Care via call, email and text. To opt out, you can reply
+                                “stop” at any time or click the unsubscribe link in the emails.
+                                Message and data rates may apply.
+                            </p>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -787,8 +862,10 @@ export default function CareersPage() {
                                     </p>
 
                                     <h2 className="mt-2 text-xl font-black tracking-tight text-[#00456B] sm:text-2xl">
-                                        Cerna locations hiring near {zipCode}
-                                        {searchedCity ? ` (${searchedCity})` : ""}
+                                        {isInvalidZip
+                                            ? `Invalid ZIP code: ${zipCode}`
+                                            : `Cerna locations hiring near ${zipCode}`}
+                                        {!isInvalidZip && searchedCity ? ` (${searchedCity})` : ""}
                                     </h2>
 
                                     <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-slate-600">
@@ -818,12 +895,15 @@ export default function CareersPage() {
                                 {jobsError && !jobsLoading && (
                                     <div className="mt-8 rounded-2xl bg-slate-50 p-6 text-center">
                                         <p className="text-lg font-black text-[#00456B]">
-                                            No jobs found near this ZIP code
+                                            {isInvalidZip
+                                                ? "Invalid ZIP code"
+                                                : `No jobs found near ${searchedCity || zipCode}`}
                                         </p>
 
                                         <p className="mt-2 text-sm font-semibold text-slate-600">
-                                            We do not currently have openings within 50 miles of {zipCode}.
-                                            Please try another ZIP code or check back soon.
+                                            {isInvalidZip
+                                                ? "Please enter a valid 5-digit US ZIP code and try again."
+                                                : `We do not currently have openings within 50 miles of ${zipCode}. Please try another ZIP code or check back soon.`}
                                         </p>
                                     </div>
                                 )}
@@ -870,7 +950,7 @@ export default function CareersPage() {
                                                             <p className="mt-1 text-sm font-semibold text-slate-500">
                                                                 {group.franchiseeCity}, {group.franchiseeState}{" "}
                                                                 {group.franchiseeZipCode}
-                                                            </p> 
+                                                            </p>
                                                         </div>
                                                     </div>
 
@@ -894,8 +974,8 @@ export default function CareersPage() {
                                                                     setShowPopupApplicationForm(false);
                                                                 }}
                                                                 className={`rounded-xl p-4 text-left shadow-sm ring-2 transition ${isSelected
-                                                                        ? "bg-[#00456B] text-white ring-[#DD8500]"
-                                                                        : "bg-white text-slate-900 ring-slate-200 hover:ring-[#00456B]/40"
+                                                                    ? "bg-[#00456B] text-white ring-[#DD8500]"
+                                                                    : "bg-white text-slate-900 ring-slate-200 hover:ring-[#00456B]/40"
                                                                     }`}
                                                             >
                                                                 <div className="flex gap-4">

@@ -310,7 +310,7 @@ export async function POST(req: Request) {
         const apiBaseUrl =
             process.env.SAFEPATCH_API_BASE_URL || "https://api.mysafepatch.com/api";
 
-        const apiKey = process.env.SAFEPATCH_API_KEY;
+        const apiKey = process.env.API_KEY;
         const apiKeyHeader = process.env.SAFEPATCH_API_KEY_HEADER ?? "X-API-KEY";
 
         if (!apiKey) {

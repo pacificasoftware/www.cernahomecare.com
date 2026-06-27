@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import { locationServices } from "@/lib/locationServices";
 import Link from "next/link";
  
 const stateNames: Record<string, string> = {
@@ -114,6 +115,7 @@ const locations = [
     },
 ];
 
+
 export default function LocationsPage() {
     const [selectedState, setSelectedState] = useState("All");
 
@@ -128,6 +130,7 @@ export default function LocationsPage() {
 
     return (
         <main className="bg-slate-50">
+
             <section className="bg-[#d9f1f7]">
                 <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:grid-cols-2 lg:px-8">
                     <div>
@@ -178,8 +181,7 @@ export default function LocationsPage() {
                                 id="state-filter"
                                 value={selectedState}
                                 onChange={(e) => setSelectedState(e.target.value)}
-                                className="w-full appearance-none rounded-2xl border border-slate-300 bg-whitepl-12 pr-12 text-center text-center-last py-3 text-center text-sm font-semibold text-[#00456B] outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                            >
+                                className="w-full appearance-none rounded-2xl border border-slate-300 bg-white pl-12 pr-12 py-3 text-center text-sm font-semibold text-[#00456B] outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"                            >
                                 {states.map((state) => (
                                     <option key={state} value={state}>
                                         {state === "All" ? "All States" : getStateName(state)}
