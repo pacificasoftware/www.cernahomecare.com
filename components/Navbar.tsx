@@ -85,9 +85,16 @@ export default function Navbar() {
                             <div className={styles.servicesTopRow}>
                                 <Link
                                     href="/services"
-                                    onClick={closeMenu}
-                                    className={`${styles.servicesLink} ${isServicesActive ? styles.active : ""
-                                        }`}
+                                    onClick={(e) => {
+                                        if (window.innerWidth <= 1024) {
+                                            e.preventDefault();
+                                            setServicesOpen((prev) => !prev);
+                                            return;
+                                        }
+
+                                        closeMenu();
+                                    }}
+                                    className={`${styles.servicesLink} ${isServicesActive ? styles.active : ""}`}
                                 >
                                     SERVICES
                                 </Link>

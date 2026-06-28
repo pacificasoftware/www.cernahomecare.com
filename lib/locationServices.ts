@@ -82,7 +82,7 @@ export const locationServices = {
         title: "Companion Care",
         shortDescription:
             "Friendly support, conversation, errands, appointments, meal help, and daily companionship.",
-        image: "/assets/companion.webp",
+        image: "/assets/companionV2.webp",
         seoTitle: "Companion Care Services",
         heroTitle: "Companion Care at Home",
         intro:

@@ -106,8 +106,10 @@
     display: none;
 }
 
-.servicesItem:hover .servicesDropdown {
-    display: block;
+@media (min-width: 1025px) {
+    .servicesItem:hover .servicesDropdown {
+        display: block;
+    }
 }
 
 .servicesDropdown li {
@@ -167,6 +169,13 @@
 }
 
 @media (max-width: 1024px) {
+    .servicesItem,
+    .servicesTopRow,
+    .servicesDropdown,
+    .servicesDropdown li,
+    .servicesDropdown li a {
+        touch-action: manipulation;
+    }
     .navRow {
         min-height: 88px;
         gap: 16px;
@@ -217,6 +226,7 @@
             width: 100%;
             padding: 14px 0;
             font-size: 15px;
+            transition: none;
         }
 
     .servicesTopRow {
@@ -242,10 +252,6 @@
         cursor: pointer;
     }
 
-    .servicesItem:hover .servicesDropdown {
-        display: none;
-    }
-
     .servicesDropdown {
         position: static;
         display: none;
@@ -254,22 +260,23 @@
         box-shadow: none;
         border-radius: 0;
         padding: 0 0 10px 14px;
+        margin: 0;
         background: #f8fbfd;
     }
 
-        .servicesDropdown.mobileServicesOpen {
-            display: block;
-        }
+    .servicesItem .servicesDropdown.mobileServicesOpen {
+        display: block;
+    }
 
-        .servicesDropdown li {
-            border-bottom: none;
-        }
+    .servicesDropdown li {
+        border-bottom: none;
+    }   
 
-            .servicesDropdown li a {
-                padding: 10px 12px;
-                font-size: 14px;
-                background: transparent;
-            }
+        .servicesDropdown li a {
+            padding: 10px 12px;
+            font-size: 14px;
+            background: transparent;
+        }
 
     .mobileCallItem {
         display: block;
@@ -287,4 +294,7 @@
         border-radius: 8px;
         font-weight: 700;
     }
+
+
 }
+
