@@ -1,14 +1,9 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { Raleway } from "next/font/google";
+import { useState } from "react"; 
 import { Fragment } from "react";
-
-const ralewayThin = Raleway({
-    subsets: ["latin"],
-    weight: "100",
-});
+ 
 function formatPhone(value: string) {
     const digits = value.replace(/\D/g, "").slice(0, 10);
 
@@ -360,7 +355,7 @@ export default function CareersPage() {
 
                             <span className="mt-1 block leading-none tracking-[-0.05em]">
                                 <span
-                                    className={`${ralewayThin.className} text-[46px] leading-[0.84] tracking-[-0.04em] text-white/90 sm:text-[56px] lg:text-[66px]`}
+                                    className={`font-raleway-thin} text-[46px] leading-[0.84] tracking-[-0.04em] text-white/90 sm:text-[56px] lg:text-[66px]`}
                                 >
                                     Every
                                 </span>
@@ -433,7 +428,7 @@ export default function CareersPage() {
                                 </span>
 
                                 <span
-                                    className={`${ralewayThin.className} ml-1 text-[44px] font-thin text-[#00456B] sm:text-[56px] lg:text-[64px]`}
+                                    className={`font-raleway-thin ml-1 text-[44px] font-thin text-[#00456B] sm:text-[56px] lg:text-[64px]`}
                                 >
                                     the
                                 </span>
@@ -449,7 +444,7 @@ export default function CareersPage() {
                                 </span>
 
                                 <span
-                                    className={`${ralewayThin.className} ml-1 text-[44px] font-thin text-[#00456B] sm:text-[56px] lg:text-[64px]`}
+                                    className={`font-raleway-thin ml-1 text-[44px] font-thin text-[#00456B] sm:text-[56px] lg:text-[64px]`}
                                 >
                                     Care
                                 </span>

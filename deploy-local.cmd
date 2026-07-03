@@ -13,8 +13,6 @@ if "%TARGET%"=="" (
 )
 
 set "SRC=C:\SourceCode\CERNA\www.cernahomecare.com"
-
-REM Change this to your server name or IP
 set "SERVER=198.71.51.74"
 
 if /I "%TARGET%"=="prod" (
@@ -49,20 +47,46 @@ echo Destination:  %REMOTE_DST%
 echo Service:      %SERVICE%
 echo Port:         %PORT%
 echo Env file:     %ENVFILE%
+echo Health URL:   %HEALTH_URL%
 echo ==========================================
 echo.
 
 cd /d "%SRC%" || exit /b 1
 
 echo.
-echo === Build locally ===
+echo === Clean local build output ===
 rmdir /s /q .next 2>nul
-call npm run build || exit /b 1
+
+echo.
+echo === Build locally ===
+call npm run build
+if errorlevel 1 (
+  echo.
+  echo ERROR: Build failed.
+  exit /b 1
+)
+
+echo.
+echo === Verify standalone output ===
+if not exist ".\.next\standalone\server.js" (
+  echo.
+  echo ERROR: .next\standalone\server.js not found.
+  echo Make sure next.config has output: "standalone".
+  exit /b 1
+)
 
 echo.
 echo === Stop remote service (%SERVICE%) ===
 sc \\%SERVER% stop "%SERVICE%" >nul 2>nul
-timeout /t 3 >nul
+
+echo Waiting for service to stop...
+for /l %%i in (1,1,20) do (
+  sc \\%SERVER% query "%SERVICE%" | find /I "STOPPED" >nul && goto ServiceStopped
+  timeout /t 1 >nul
+)
+
+:ServiceStopped
+echo Service stop check complete.
 
 echo.
 echo === Ensure remote destination exists ===
@@ -70,26 +94,38 @@ if not exist "%REMOTE_DST%" mkdir "%REMOTE_DST%"
 
 echo.
 echo === Copy standalone output to server ===
-robocopy ".\.next\standalone" "%REMOTE_DST%" /MIR /XF web.config .env.production .env.development .env.local >nul
-if %ERRORLEVEL% GEQ 8 exit /b 1
+robocopy ".\.next\standalone" "%REMOTE_DST%" /MIR /R:2 /W:2 /XF web.config .env.production .env.development .env.local
+if %ERRORLEVEL% GEQ 8 (
+  echo.
+  echo ERROR: Failed copying standalone output.
+  exit /b 1
+)
 
 echo.
 echo === Copy static assets to server ===
-robocopy ".\.next\static" "%REMOTE_DST%\.next\static" /MIR >nul
-if %ERRORLEVEL% GEQ 8 exit /b 1
+if not exist "%REMOTE_DST%\.next" mkdir "%REMOTE_DST%\.next"
+
+robocopy ".\.next\static" "%REMOTE_DST%\.next\static" /MIR /R:2 /W:2
+if %ERRORLEVEL% GEQ 8 (
+  echo.
+  echo ERROR: Failed copying static assets.
+  exit /b 1
+)
 
 echo.
 echo === Copy public folder to server ===
-robocopy ".\public" "%REMOTE_DST%\public" /MIR >nul
-if %ERRORLEVEL% GEQ 8 exit /b 1
+robocopy ".\public" "%REMOTE_DST%\public" /MIR /R:2 /W:2
+if %ERRORLEVEL% GEQ 8 (
+  echo.
+  echo ERROR: Failed copying public folder.
+  exit /b 1
+)
 
 echo.
 echo === Copy environment file ===
 if exist "%SRC%\%ENVFILE%" (
   copy /Y "%SRC%\%ENVFILE%" "%REMOTE_DST%\%ENVFILE%" >nul
 
-  REM Next standalone commonly expects production env at runtime.
-  REM For dev target, also copy .env.development as .env.production unless your service handles NODE_ENV differently.
   if /I "%TARGET%"=="dev" (
     copy /Y "%SRC%\%ENVFILE%" "%REMOTE_DST%\.env.production" >nul
   )
@@ -107,11 +143,36 @@ if not exist "%SRC%\web.config" (
 copy /Y "%SRC%\web.config" "%REMOTE_DST%\web.config" >nul
 
 echo.
+echo === Verify remote files ===
+if not exist "%REMOTE_DST%\server.js" (
+  echo.
+  echo ERROR: server.js was not copied to remote destination.
+  exit /b 1
+)
+
+if not exist "%REMOTE_DST%\.next\static" (
+  echo.
+  echo ERROR: .next\static was not copied to remote destination.
+  exit /b 1
+)
+
+if not exist "%REMOTE_DST%\public" (
+  echo.
+  echo ERROR: public folder was not copied to remote destination.
+  exit /b 1
+)
+
+echo.
 echo === Start remote service (%SERVICE%) ===
 sc \\%SERVER% start "%SERVICE%" >nul 2>nul
 
+echo Waiting for service to start...
+timeout /t 5 >nul
+
+sc \\%SERVER% query "%SERVICE%"
+
 echo.
-echo === Wait for site ===
+echo === Health check ===
 for /l %%i in (1,1,30) do (
   powershell -NoProfile -Command "try { (Invoke-WebRequest -UseBasicParsing '%HEALTH_URL%' -TimeoutSec 3).StatusCode } catch { 0 }" | find "200" >nul && (
     echo.
@@ -119,11 +180,18 @@ for /l %%i in (1,1,30) do (
     echo Deploy complete: %TARGET%
     exit /b 0
   )
+
   timeout /t 1 >nul
 )
 
 echo.
 echo ERROR: Site did not respond successfully.
 echo.
+echo Service status:
 sc \\%SERVER% query "%SERVICE%"
+
+echo.
+echo Remote folder contents:
+dir "%REMOTE_DST%"
+
 exit /b 1
