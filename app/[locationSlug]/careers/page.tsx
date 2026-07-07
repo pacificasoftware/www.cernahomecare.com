@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
-
+import LocalJobApplicationForm from "./LocalJobApplicationForm";
+ 
 const franchisees: Record<
     string,
     {
@@ -114,11 +115,20 @@ export default async function LocalCareersPage({ params }: PageProps) {
                 </p>
 
                 <div className="mt-8 flex justify-center gap-4">
+
+                    {/*  V2*/}
+                    {/*<a*/}
+                    {/*    href="#open-positions"*/}
+                    {/*    className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#c67600]"*/}
+                    {/*>*/}
+                    {/*    View Open Positions*/}
+                    {/*</a>*/}
+
                     <a
-                        href="#open-positions"
+                        href="#apply-now"
                         className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#c67600]"
                     >
-                        View Open Positions
+                        Apply Now
                     </a>
 
                     <a
@@ -164,44 +174,72 @@ export default async function LocalCareersPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section id="open-positions" className="bg-white px-6 py-20 lg:px-8">
-                <div className="mx-auto max-w-5xl text-center">
-                    <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                        Open Positions
-                    </p>
-
-                    <h2 className="text-3xl font-bold text-[#00456B]">
-                        Jobs Near {franchisee.city}
-                    </h2>
-
-                    <p className="mx-auto mt-4 max-w-2xl text-slate-600">
-                        View current caregiver opportunities for {franchisee.name}.
-                    </p>
-
-                    <div className="mt-10 rounded-3xl bg-slate-50 p-8 text-left ring-1 ring-slate-200">
-                        <h3 className="text-xl font-bold text-[#00456B]">
-                            Caregiver / Home Care Aide
-                        </h3>
-
-                        <p className="mt-2 text-slate-600">
-                            Location: {franchisee.city}, {franchisee.state}
-                        </p>
-
-                        <p className="mt-4 text-slate-700">
-                            Provide compassionate in-home support including companionship,
-                            personal care, meal preparation, errands, memory care support,
-                            respite care, and post-hospital assistance.
-                        </p>
-
-                        <a
-                            href={`mailto:careers@cernahomecare.com?subject=Caregiver Application - ${franchisee.city}`}
-                            className="mt-6 inline-flex rounded-full bg-[#DD8500] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#c67600]"
-                        >
+            <section id="apply-now" className="bg-white px-6 py-20 lg:px-8">
+                <div className="mx-auto max-w-5xl">
+                    <div className="text-center">
+                        <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
                             Apply Now
-                        </a>
+                        </p>
+
+                        <h2 className="text-3xl font-bold text-[#00456B]">
+                            Apply for a Caregiver Position in {franchisee.city}
+                        </h2>
+
+                        <p className="mx-auto mt-4 max-w-2xl text-slate-600">
+                            Complete the form below and our local {franchisee.city} team will
+                            contact you about caregiver opportunities with {franchisee.name}.
+                        </p>
+                    </div>
+
+                    <div className="mt-10">
+                        <LocalJobApplicationForm
+                            locationName={franchisee.name}
+                            locationCity={franchisee.city}
+                            locationState={franchisee.state}
+                            jobsZip={franchisee.jobsZip}
+                        />
                     </div>
                 </div>
             </section>
+
+            {/*<section id="open-positions" className="bg-white px-6 py-20 lg:px-8">*/}
+            {/*    <div className="mx-auto max-w-5xl text-center">*/}
+            {/*        <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">*/}
+            {/*            Open Positions*/}
+            {/*        </p>*/}
+
+            {/*        <h2 className="text-3xl font-bold text-[#00456B]">*/}
+            {/*            Jobs Near {franchisee.city}*/}
+            {/*        </h2>*/}
+
+            {/*        <p className="mx-auto mt-4 max-w-2xl text-slate-600">*/}
+            {/*            View current caregiver opportunities for {franchisee.name}.*/}
+            {/*        </p>*/}
+
+            {/*        <div className="mt-10 rounded-3xl bg-slate-50 p-8 text-left ring-1 ring-slate-200">*/}
+            {/*            <h3 className="text-xl font-bold text-[#00456B]">*/}
+            {/*                Caregiver / Home Care Aide*/}
+            {/*            </h3>*/}
+
+            {/*            <p className="mt-2 text-slate-600">*/}
+            {/*                Location: {franchisee.city}, {franchisee.state}*/}
+            {/*            </p>*/}
+
+            {/*            <p className="mt-4 text-slate-700">*/}
+            {/*                Provide compassionate in-home support including companionship,*/}
+            {/*                personal care, meal preparation, errands, memory care support,*/}
+            {/*                respite care, and post-hospital assistance.*/}
+            {/*            </p>*/}
+
+            {/*            <a*/}
+            {/*                href={`mailto:careers@cernahomecare.com?subject=Caregiver Application - ${franchisee.city}`}*/}
+            {/*                className="mt-6 inline-flex rounded-full bg-[#DD8500] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#c67600]"*/}
+            {/*            >*/}
+            {/*                Apply Now*/}
+            {/*            </a>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
         </main>
     );
 }

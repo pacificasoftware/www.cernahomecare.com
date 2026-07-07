@@ -1,5 +1,6 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
+import LocalContactForm from "./LocalContactForm";
 
 const franchisees: Record<
     string,
@@ -353,136 +354,12 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                             will contact you to learn more about your care needs.
                         </p>
 
-                        <form className="mt-8 grid gap-5">
-                            <div className="grid gap-5 md:grid-cols-2">
-                                <div>
-                                    <label
-                                        htmlFor="firstName"
-                                        className="mb-2 block text-sm font-bold text-[#00456B]"
-                                    >
-                                        First Name
-                                    </label>
-                                    <input
-                                        id="firstName"
-                                        name="firstName"
-                                        type="text"
-                                        className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                                    />
-                                </div>
+                        <LocalContactForm
+                            locationName={franchisee.name}
+                            locationAreaName={franchisee.areaName}
+                            locationState={franchisee.state}
+                        />
 
-                                <div>
-                                    <label
-                                        htmlFor="lastName"
-                                        className="mb-2 block text-sm font-bold text-[#00456B]"
-                                    >
-                                        Last Name
-                                    </label>
-                                    <input
-                                        id="lastName"
-                                        name="lastName"
-                                        type="text"
-                                        className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="grid gap-5 md:grid-cols-2">
-                                <div>
-                                    <label
-                                        htmlFor="phone"
-                                        className="mb-2 block text-sm font-bold text-[#00456B]"
-                                    >
-                                        Phone
-                                    </label>
-                                    <input
-                                        id="phone"
-                                        name="phone"
-                                        type="tel"
-                                        className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label
-                                        htmlFor="email"
-                                        className="mb-2 block text-sm font-bold text-[#00456B]"
-                                    >
-                                        Email
-                                    </label>
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor="careType"
-                                    className="mb-2 block text-sm font-bold text-[#00456B]"
-                                >
-                                    Type of Care Needed
-                                </label>
-                                <select
-                                    id="careType"
-                                    name="careType"
-                                    defaultValue=""
-                                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                                >
-                                    <option value="" disabled>
-                                        Select an option
-                                    </option>
-                                    <option value="hourly-personal-care">
-                                        Hourly & Personal Care
-                                    </option>
-                                    <option value="live-in-care">Live-In Care</option>
-                                    <option value="memory-dementia-care">
-                                        Memory & Dementia Care
-                                    </option>
-                                    <option value="post-hospital-care">
-                                        Post Hospital Care
-                                    </option>
-                                    <option value="companion-care">Companion Care</option>
-                                    <option value="respite-care">Respite Care</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor="message"
-                                    className="mb-2 block text-sm font-bold text-[#00456B]"
-                                >
-                                    How Can We Help?
-                                </label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    rows={5}
-                                    className="w-full resize-none rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
-                                />
-                            </div>
-
-                            <input
-                                type="hidden"
-                                name="location"
-                                value={franchisee.areaName}
-                            />
-
-                            <button
-                                type="submit"
-                                className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#c67600]"
-                            >
-                                Submit Request
-                            </button>
-
-                            <p className="text-sm leading-6 text-slate-500">
-                                Note: this form layout is ready for styling and frontend
-                                display. You will still need to connect it to your form/API
-                                handler before submissions are sent anywhere.
-                            </p>
-                        </form>
                     </div>
 
                     <aside className="space-y-8">

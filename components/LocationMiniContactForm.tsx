@@ -2,7 +2,21 @@
 
 import { useState } from "react";
 
-export default function LocationMiniContactForm() {
+type Props = {
+    locationName?: string;
+    locationState?: string;
+    serviceTitle?: string;
+};
+
+function clean(value: unknown) {
+    return String(value ?? "").trim();
+}
+
+export default function LocationMiniContactForm({
+    locationName = "Cerna Home Care",
+    locationState = "",
+    serviceTitle = "Home Care",
+}: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
     const [isError, setIsError] = useState(false);
@@ -27,25 +41,29 @@ export default function LocationMiniContactForm() {
         const form = e.currentTarget;
         const formData = new FormData(form);
 
-        const fullName = String(formData.get("fullName") || "").trim();
-        const [firstName = "", ...lastParts] = fullName.split(" ");
+        const fullName = clean(formData.get("fullName"));
+        const [firstName = "", ...lastParts] = fullName.split(" ").filter(Boolean);
         const lastName = lastParts.join(" ") || "N/A";
+        const interest = clean(formData.get("interest"));
 
         const payload = {
+            purpose: "contact",
+            inquiryType: interest,
             name: fullName,
             firstName,
             lastName,
-            email: String(formData.get("email") || "").trim(),
-            phone: String(formData.get("phone") || "").trim(),
-            subject: "Location Page Inquiry",
-            message: `Location page mini form submission. Interest: ${String(
-                formData.get("interest") || ""
-            ).trim()}`,
-            company: String(formData.get("company") || "").trim(),
-            purpose:
-                String(formData.get("interest") || "").trim() === "Employment"
-                    ? "jobs"
-                    : "services",
+            email: clean(formData.get("email")),
+            phone: clean(formData.get("phone")),
+            zipCode: "Not provided",
+            subject: `${serviceTitle} Consultation Request - ${locationName}`,
+            message: [
+                "Location page mini form submission.",
+                "",
+                `Interest: ${interest}`,
+                `Service: ${serviceTitle}`,
+                `Location: ${locationName}${locationState ? `, ${locationState}` : ""}`,
+            ].join("\n"),
+            company: clean(formData.get("company")),
         };
 
         if (!payload.name || !payload.email || !payload.phone) {
@@ -59,7 +77,7 @@ export default function LocationMiniContactForm() {
         setStatusMessage("");
 
         try {
-            const response = await fetch("/api/contact", {
+            const response = await fetch("/api/sendemail", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -80,18 +98,19 @@ export default function LocationMiniContactForm() {
                 setIsError(true);
                 setStatusMessage(
                     result?.message ||
-                        "We could not send your message right now. Please try again later or call us directly."
+                    "We could not send your message right now. Please try again later or call us directly."
                 );
                 return;
             }
 
+            setIsError(false);
             setStatusMessage("Thank you. A member of our team will be in touch shortly.");
             form.reset();
         } catch (error: any) {
             setIsError(true);
             setStatusMessage(
                 error?.message ||
-                    "We could not send your message right now. Please try again later or call us directly."
+                "We could not send your message right now. Please try again later or call us directly."
             );
         } finally {
             setIsSubmitting(false);
@@ -159,7 +178,10 @@ export default function LocationMiniContactForm() {
             </div>
 
             {statusMessage ? (
-                <p className={`mt-4 text-center text-sm font-semibold ${isError ? "text-red-700" : "text-green-700"}`}>
+                <p
+                    className={`mt-4 text-center text-sm font-semibold ${isError ? "text-red-700" : "text-green-700"
+                        }`}
+                >
                     {statusMessage}
                 </p>
             ) : null}

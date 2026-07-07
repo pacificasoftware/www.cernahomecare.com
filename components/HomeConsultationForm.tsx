@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 
+function clean(value: unknown) {
+    return String(value ?? "").trim();
+}
+
 export default function HomeConsultationForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -27,18 +31,30 @@ export default function HomeConsultationForm() {
         const form = e.currentTarget;
         const formData = new FormData(form);
 
-        const fullName = String(formData.get("name") || "").trim();
-        const nameParts = fullName.split(" ");
+        const fullName = clean(formData.get("name"));
+        const nameParts = fullName.split(" ").filter(Boolean);
+
+        const selectedPurpose = clean(formData.get("purpose"));
 
         const payload = {
+            purpose: "contact",
+            inquiryType: selectedPurpose,
             name: fullName,
             firstName: nameParts[0] || fullName,
             lastName: nameParts.slice(1).join(" ") || "N/A",
-            email: String(formData.get("email") || "").trim(),
-            phone: String(formData.get("phone") || "").trim(),
+            email: clean(formData.get("email")),
+            phone: clean(formData.get("phone")),
+            zipCode: "Not provided",
             subject: "Home Page Consultation Request",
-            message: String(formData.get("message") || "").trim(),
-            purpose: String(formData.get("purpose") || "").trim(),
+            message:
+                [
+                    `Inquiry Type: ${selectedPurpose}`,
+                    "",
+                    clean(formData.get("message")) || "Home page consultation request.",
+                ]
+                    .filter(Boolean)
+                    .join("\n"),
+            company: "",
         };
 
         if (
@@ -46,9 +62,9 @@ export default function HomeConsultationForm() {
             !payload.lastName ||
             !payload.email ||
             !payload.phone ||
-            !payload.message ||
-            !payload.purpose
-           ) {
+            !selectedPurpose ||
+            !payload.message
+        ) {
             setIsError(true);
             setStatusMessage("Please complete all required fields.");
             return;
@@ -59,7 +75,7 @@ export default function HomeConsultationForm() {
         setStatusMessage("");
 
         try {
-            const response = await fetch("/api/contact", {
+            const response = await fetch("/api/sendemail", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
@@ -120,7 +136,7 @@ export default function HomeConsultationForm() {
                     }}
                     className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
                 />
-            </div> 
+            </div>
 
             <div className="mb-5">
                 <select
@@ -168,7 +184,10 @@ export default function HomeConsultationForm() {
             </button>
 
             {statusMessage ? (
-                <p className={`mt-4 text-center text-sm font-semibold ${isError ? "text-red-300" : "text-green-300"}`}>
+                <p
+                    className={`mt-4 text-center text-sm font-semibold ${isError ? "text-red-300" : "text-green-300"
+                        }`}
+                >
                     {statusMessage}
                 </p>
             ) : null}

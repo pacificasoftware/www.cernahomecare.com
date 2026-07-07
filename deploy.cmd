@@ -1,123 +1,118 @@
 @echo off
-setlocal EnableExtensions
+setlocal EnableExtensions EnableDelayedExpansion
 
-set "TARGET=%~1"
+REM ==========================================
+REM Cerna Home Care Website - Production Deploy
+REM ==========================================
 
-if "%TARGET%"=="" (
-  echo.
-  echo Usage:
-  echo   deploy.bat dev
-  echo   deploy.bat prod
-  echo.
-  exit /b 1
-)
+REM Local project folder
+set "SRC=C:\SourceCode\CERNA\www.cernahomecare.com"
 
-set "SRC=C:\sourcecode\www.cernahomecare.com"
+REM Server details
+set "SERVER=198.71.51.74"
+set "SSH_PORT=2222"
+set "SSH_USER=Administrator"
+set "SSH_KEY=%USERPROFILE%\.ssh\cerna_deploy_key"
 
-if /I "%TARGET%"=="prod" (
-  set "DST=C:\inetpub\wwwroot\www.cernahomecare.com"
-  set "SERVICE=CernaHomeCareWeb"
-  set "PORT=3020"
-  set "ENVFILE=.env.production"
-  set "SITEURL=http://127.0.0.1:3020"
-) else if /I "%TARGET%"=="dev" (
-  set "DST=C:\inetpub\wwwroot\dev.cernahomecare.com"
-  set "SERVICE=CernaHomeCareWebDev"
-  set "PORT=3021"
-  set "ENVFILE=.env.development"
-  set "SITEURL=http://127.0.0.1:3021"
-) else (
-  echo.
-  echo ERROR: Invalid target "%TARGET%".
-  echo Use:
-  echo   deploy.bat dev
-  echo   deploy.bat prod
-  echo.
-  exit /b 1
-)
+REM Production site only
+set "REMOTE_DST=C:\inetpub\wwwroot\www.cernahomecare.com"
+set "SERVICE=CernaHomeCareWeb"
+set "ENVFILE=.env.production"
+set "PORT=3020"
+set "HEALTH_URL=https://www.cernahomecare.com"
+
+set "PACKAGE=%SRC%\deploy-web-prod.zip"
+set "REMOTE_ZIP=%REMOTE_DST%\deploy-web-prod.zip"
 
 echo.
 echo ==========================================
-echo Deploying Cerna Homecare Web
-echo Target:  %TARGET%
-echo Source:  %SRC%
-echo Dest:    %DST%
-echo Service: %SERVICE%
-echo Port:    %PORT%
-echo Env:     %ENVFILE%
+echo Deploying Cerna Home Care Website - PROD
+echo Source:      %SRC%
+echo Destination: %REMOTE_DST%
+echo Service:     %SERVICE%
+echo Port:        %PORT%
+echo Env File:    %ENVFILE%
+echo Health URL:  %HEALTH_URL%
 echo ==========================================
 echo.
 
 cd /d "%SRC%" || exit /b 1
 
 echo.
-echo === Build ===
-rmdir /s /q .next 2>nul
-call npm run build || exit /b 1
+echo Installing dependencies...
+call npm install
+if errorlevel 1 exit /b 1
 
 echo.
-echo === Stop Service (%SERVICE%) ===
-sc stop "%SERVICE%" >nul 2>nul
-timeout /t 2 >nul
+echo Removing old local build...
+if exist "%SRC%\.next" rmdir /s /q "%SRC%\.next"
 
 echo.
-echo === Ensure destination folder exists ===
-if not exist "%DST%" mkdir "%DST%"
+echo Building Next.js app...
+call npm run build
+if errorlevel 1 exit /b 1
 
 echo.
-echo === Copy standalone output ===
-robocopy ".\.next\standalone" "%DST%" /MIR /XF web.config .env.production .env.development .env.local >nul
-if %ERRORLEVEL% GEQ 8 exit /b 1
-
-echo.
-echo === Copy static assets ===
-robocopy ".\.next\static" "%DST%\.next\static" /MIR >nul
-if %ERRORLEVEL% GEQ 8 exit /b 1
-
-echo.
-echo === Copy public folder ===
-robocopy ".\public" "%DST%\public" /MIR >nul
-if %ERRORLEVEL% GEQ 8 exit /b 1
-
-echo.
-echo === Copy environment file ===
-if exist "%SRC%\%ENVFILE%" (
-  copy /Y "%SRC%\%ENVFILE%" "%DST%\%ENVFILE%" >nul
-
-  if /I not "%ENVFILE%"==".env.production" (
-    copy /Y "%SRC%\%ENVFILE%" "%DST%\.env.production" >nul
-  )
-) else (
-  echo WARNING: "%SRC%\%ENVFILE%" not found. Skipping env file copy.
-)
-
-echo.
-echo === Copy web.config ===
-if not exist "%SRC%\web.config" (
-  echo ERROR: "%SRC%\web.config" not found.
+echo Checking standalone output...
+if not exist "%SRC%\.next\standalone\server.js" (
+  echo ERROR: .next\standalone\server.js not found.
+  echo Make sure next.config has: output: "standalone"
   exit /b 1
 )
 
-copy /Y "%SRC%\web.config" "%DST%\web.config" >nul
-
 echo.
-echo === Start Service (%SERVICE%) ===
-sc start "%SERVICE%" >nul 2>nul
-
-echo.
-echo === Wait for site on port %PORT% ===
-for /l %%i in (1,1,30) do (
-  powershell -NoProfile -Command "try { (Invoke-WebRequest -UseBasicParsing '%SITEURL%' -TimeoutSec 2).StatusCode } catch { 0 }" | find "200" >nul && (
-    echo.
-    echo Site is up on port %PORT%.
-    echo Deploy complete: %TARGET%
-    exit /b 0
-  )
-  timeout /t 1 >nul
+echo Checking production environment file...
+if not exist "%SRC%\%ENVFILE%" (
+  echo ERROR: "%SRC%\%ENVFILE%" not found.
+  echo This file should include required production values such as SAFEPATCH_API_KEY.
+  exit /b 1
 )
 
 echo.
-echo ERROR: Site did not start on port %PORT%.
+echo Checking production web config...
+if not exist "%SRC%\web.production.config" (
+  echo ERROR: "%SRC%\web.production.config" not found.
+  exit /b 1
+)
+
 echo.
-sc query "%SERVICE%"
-exit /b 1
+echo Removing old deploy zip...
+if exist "%PACKAGE%" del /f /q "%PACKAGE%"
+
+echo.
+echo Creating deploy package...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='Stop'; if (Test-Path 'deploy-package') { Remove-Item 'deploy-package' -Recurse -Force }; New-Item -ItemType Directory -Force 'deploy-package' | Out-Null; Copy-Item '.next\standalone\*' 'deploy-package' -Recurse -Force; New-Item -ItemType Directory -Force 'deploy-package\.next\static' | Out-Null; Copy-Item '.next\static\*' 'deploy-package\.next\static' -Recurse -Force; if (Test-Path 'public') { Copy-Item 'public' 'deploy-package\public' -Recurse -Force }; Copy-Item 'web.production.config' 'deploy-package\web.config' -Force; Copy-Item '%ENVFILE%' 'deploy-package\.env.production' -Force; Compress-Archive -Path 'deploy-package\*' -DestinationPath '%PACKAGE%' -Force; Remove-Item 'deploy-package' -Recurse -Force"
+
+if errorlevel 1 exit /b 1  
+
+echo.
+echo Deploying on server with full clean folder reset...
+ssh -i "%SSH_KEY%" -p %SSH_PORT% %SSH_USER%@%SERVER% "powershell -NoProfile -ExecutionPolicy Bypass -Command ""$ErrorActionPreference='Stop'; Stop-Service '%SERVICE%' -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 5; if (Test-Path '%REMOTE_DST%') { Remove-Item '%REMOTE_DST%' -Recurse -Force -ErrorAction SilentlyContinue }; New-Item -ItemType Directory -Force '%REMOTE_DST%' | Out-Null;"""
+if errorlevel 1 exit /b 1
+
+echo.
+echo Copying zip to clean server folder...
+scp -i "%SSH_KEY%" -P %SSH_PORT% "%PACKAGE%" %SSH_USER%@%SERVER%:"%REMOTE_ZIP%"
+if errorlevel 1 exit /b 1
+
+echo.
+echo Expanding package and restarting service...
+ssh -i "%SSH_KEY%" -p %SSH_PORT% %SSH_USER%@%SERVER% "powershell -NoProfile -ExecutionPolicy Bypass -Command ""$ErrorActionPreference='Stop'; Expand-Archive -Path '%REMOTE_ZIP%' -DestinationPath '%REMOTE_DST%' -Force; Remove-Item '%REMOTE_ZIP%' -Force -ErrorAction SilentlyContinue; Start-Service '%SERVICE%'; Start-Sleep -Seconds 5; iisreset; Get-Service '%SERVICE%'; Get-Item '%REMOTE_DST%\server.js'; Get-Item '%REMOTE_DST%\web.config'; Get-Item '%REMOTE_DST%\.env.production'"""
+if errorlevel 1 exit /b 1
+
+echo.
+echo Removing local deploy zip...
+if exist "%PACKAGE%" del /f /q "%PACKAGE%"
+
+echo.
+echo Checking production site...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "try { $r = Invoke-WebRequest '%HEALTH_URL%' -UseBasicParsing -TimeoutSec 30; Write-Host 'HTTP Status:' $r.StatusCode } catch { Write-Host 'Health check failed:' $_.Exception.Message; exit 1 }"
+if errorlevel 1 exit /b 1
+
+echo.
+echo ==========================================
+echo Production deploy complete.
+echo ==========================================
+echo.
+
+endlocal

@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 
+function clean(value: unknown) {
+    return String(value ?? "").trim();
+}
+
 export default function ContactForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -13,25 +17,30 @@ export default function ContactForm() {
         const form = e.currentTarget;
         const formData = new FormData(form);
 
+        const selectedPurpose = clean(formData.get("purpose"));
+
         const payload = {
-            name: `${String(formData.get("firstName") || "").trim()} ${String(formData.get("lastName") || "").trim()}`.trim(),
-            firstName: String(formData.get("firstName") || "").trim(),
-            lastName: String(formData.get("lastName") || "").trim(),
-            email: String(formData.get("email") || "").trim(),
-            phone: String(formData.get("phone") || "").trim(),
-            subject: String(formData.get("subject") || "").trim(),
-            message: String(formData.get("message") || "").trim(),
-            company: String(formData.get("company") || "").trim(),
-            purpose: String(formData.get("purpose") || "").trim(),
+            purpose: "contact",
+            inquiryType: selectedPurpose,
+            firstName: clean(formData.get("firstName")),
+            lastName: clean(formData.get("lastName")),
+            email: clean(formData.get("email")),
+            phone: clean(formData.get("phone")),
+            zipCode: "Not provided",
+            subject: clean(formData.get("subject")) || "Cerna Home Care Contact Form",
+            message: clean(formData.get("message")) || "Contact form inquiry",
+            company: clean(formData.get("company")),
         };
+
+        console.log("Sending contact form payload:", payload);
 
         if (
             !payload.firstName ||
             !payload.lastName ||
             !payload.email ||
             !payload.phone ||
-            !payload.message || 
-            !payload.purpose
+            !payload.message ||
+            !selectedPurpose
         ) {
             setIsError(true);
             setStatusMessage("Please complete all required fields.");
@@ -43,7 +52,7 @@ export default function ContactForm() {
         setStatusMessage("");
 
         try {
-            const response = await fetch("/api/contact", {
+            const response = await fetch("/api/sendemail", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -72,6 +81,7 @@ export default function ContactForm() {
                 return;
             }
 
+            setIsError(false);
             setStatusMessage(
                 "Thank you for contacting Cerna Home Care. We have received your message and a member of our team will be in touch shortly."
             );
@@ -80,7 +90,7 @@ export default function ContactForm() {
         } catch (error: any) {
             setIsError(true);
             setStatusMessage(
-                error?.message || "Sorry, we could not send your message right now333!."
+                error?.message || "Sorry, we could not send your message right now."
             );
         } finally {
             setIsSubmitting(false);
@@ -90,13 +100,33 @@ export default function ContactForm() {
     return (
         <form className="grid gap-5" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-5 md:grid-cols-2">
-                <input name="firstName" type="text" placeholder="First Name" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
-                <input name="lastName" type="text" placeholder="Last Name" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
+                <input
+                    name="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
+                />
+                <input
+                    name="lastName"
+                    type="text"
+                    placeholder="Last Name"
+                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
+                />
             </div>
 
             <div className="grid gap-5 md:grid-cols-2">
-                <input name="email" type="email" placeholder="Email Address" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
-                <input name="phone" type="tel" placeholder="Phone Number" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
+                <input
+                    name="email"
+                    type="email"
+                    placeholder="Email Address"
+                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
+                />
+                <input
+                    name="phone"
+                    type="tel"
+                    placeholder="Phone Number"
+                    className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
+                />
             </div>
 
             <input
@@ -107,7 +137,12 @@ export default function ContactForm() {
                 className="hidden"
             />
 
-            <input name="subject" type="text" placeholder="Subject" className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
+            <input
+                name="subject"
+                type="text"
+                placeholder="Subject"
+                className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
+            />
 
             <select
                 name="purpose"
@@ -126,7 +161,12 @@ export default function ContactForm() {
                 </option>
             </select>
 
-            <textarea name="message" placeholder="How can we help?" rows={6} className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]" />
+            <textarea
+                name="message"
+                placeholder="How can we help?"
+                rows={6}
+                className="w-full border border-slate-300 px-4 py-3 text-lg outline-none focus:border-[#00456B]"
+            />
 
             <div className="pt-2 text-center">
                 <button
@@ -140,7 +180,10 @@ export default function ContactForm() {
             </div>
 
             {statusMessage ? (
-                <p className={`text-center text-lg ${isError ? "text-red-700" : "text-green-700"}`}>
+                <p
+                    className={`text-center text-lg ${isError ? "text-red-700" : "text-green-700"
+                        }`}
+                >
                     {statusMessage}
                 </p>
             ) : null}

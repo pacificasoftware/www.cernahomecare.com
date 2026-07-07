@@ -1,6 +1,63 @@
-﻿import Image from "next/image";
-import Link from "next/link";
+﻿"use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const footerLocationConfig: Record<
+    string,
+    {
+        label: string;
+        phone: string;
+        email?: string;
+    }
+> = {
+    "orange-county": {
+        label: "Orange County",
+        phone: "(949) 298-3200",
+    },
+    southlake: {
+        label: "Southlake",
+        phone: "(682) 324-9800",
+    },
+    "south-bay": {
+        label: "South Bay",
+        phone: "(562) 242-1830",
+    },
+    "marin-county": {
+        label: "Marin County",
+        phone: "(415) 799-2628",
+    },
+    "san-diego": {
+        label: "San Diego",
+        phone: "(877) 577-6782",
+    },
+    pasadena: {
+        label: "Pasadena",
+        phone: "(562) 242-1830",
+    },
+    dallas: {
+        label: "Dallas",
+        phone: "(972) 330-2005",
+    },
+    "las-vegas": {
+        label: "Las Vegas",
+        phone: "(702) 673-1900",
+    },
+    orlando: {
+        label: "Orlando",
+        phone: "(407) 495-4344",
+    },
+    tampa: {
+        label: "Tampa",
+        phone: "(813) 776-6099",
+    },
+};
+
+const corporateFooter = {
+    label: "Cerna Home Care",
+    phone: "(877) 577-6782",
+    email: "info@cernahc.com",
+};
 function SocialIcon({
     href,
     label,
@@ -21,7 +78,26 @@ function SocialIcon({
     );
 }
 
+type FooterLocation = {
+    franchiseeName?: string | null;
+    phone?: string | null;
+    email?: string | null;
+    city?: string | null;
+    state?: string | null;
+};
+
+
 export default function Footer() {
+    const pathname = usePathname();
+    const locationSlug = pathname.split("/").filter(Boolean)[0] || "";
+    const locationConfig = footerLocationConfig[locationSlug];
+
+    const footerTitle = locationConfig
+        ? `Cerna Home Care ${locationConfig.label}`
+        : corporateFooter.label;
+
+    const footerPhone = locationConfig?.phone || corporateFooter.phone;
+    const footerEmail = locationConfig?.email || corporateFooter.email; 
     return (
         <footer>
             <div style={{ backgroundColor: "#00456B", color: "white", padding: "40px 24px" }}>
@@ -138,18 +214,30 @@ export default function Footer() {
                                     marginBottom: "20px",
                                 }}
                             >
-                                Industry leading care services provided by highly trained Care
+                                {footerTitle} provides industry leading care services with highly trained Care
                                 Givers. Only the best in service and staff!
                             </p>
 
                             <p style={{ color: "white", fontSize: "18px", marginBottom: "12px" }}>
-                                <strong>Email:</strong> info@cernahc.com
+                                <strong>Email:</strong>{" "}
+                                <a
+                                    href={`mailto:${footerEmail}`}
+                                    style={{ color: "#D26E4B", textDecoration: "none" }}
+                                >
+                                    {footerEmail}
+                                </a>
                             </p>
 
                             <p style={{ color: "white", fontSize: "18px" }}>
                                 <strong>Phone:</strong>{" "}
-                                <span style={{ color: "#D26E4B" }}>(877) 577-6782</span>
-                            </p>
+                                <a
+                                    href={`tel:${footerPhone.replace(/[^\d+]/g, "")}`}
+                                    style={{ color: "#D26E4B", textDecoration: "none" }}
+                                >
+                                    {footerPhone}
+                                </a>
+                            </p> 
+                          
                         </div>
 
                         <div>
