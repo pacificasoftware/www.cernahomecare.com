@@ -1,7 +1,22 @@
-Ôªø"use client";
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
+
+type Franchisee = {
+    franchiseeId: number;
+    slug: string;
+    name: string;
+    city: string;
+    state: string;
+    phone: string;
+    phoneHref: string;
+    jobsZip?: string | null;
+};
+
+type Props = {
+    franchisee: Franchisee;
+};
 
 function formatPhone(value: string) {
     const digits = value.replace(/\D/g, "").slice(0, 10);
@@ -12,14 +27,12 @@ function formatPhone(value: string) {
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
 }
 
-export default function JobsPageV2() {
-
+export default function LocalApplyClient({ franchisee }: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [resumeName, setResumeName] = useState("");
 
     return (
         <main className="bg-white">
-            {/* HERO */}
             <section className="bg-slate-50">
                 <div className="mx-auto max-w-7xl px-6 py-8 text-center sm:px-8 lg:px-10">
                     <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-[#DD8500]">
@@ -29,20 +42,18 @@ export default function JobsPageV2() {
                     <div className="mx-auto mt-2 h-1 w-20 rounded-full bg-[#DD8500]" />
 
                     <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
-                        Current Employment Openings
+                        Apply with {franchisee.name}
                     </h1>
 
                     <p className="mx-auto mt-3 max-w-3xl text-base leading-7 text-slate-700">
-                        Cerna Home Care is hiring compassionate caregivers who want to make
-                        a meaningful difference for seniors and families.
+                        Complete the short form below and our {franchisee.city} team will
+                        contact you about caregiver opportunities.
                     </p>
                 </div>
             </section>
 
-            {/* MAIN PANELS */}
             <section className="mx-auto max-w-7xl px-6 py-8 sm:px-8 lg:px-10">
                 <div className="grid gap-8 lg:grid-cols-2">
-                    {/* LEFT PANEL */}
                     <aside className="rounded-3xl bg-[#00456B] p-8 text-white shadow-xl">
                         <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
                             Get In Touch
@@ -53,10 +64,11 @@ export default function JobsPageV2() {
                         </h3>
 
                         <p className="mt-3 text-base leading-7 text-white/85">
-                            Thank you for your interest in collaborating with us. Kindly fill out
-                            the information below, including your preferred location, so that we can
-                            reach out to you.
+                            Thank you for your interest in joining {franchisee.name}. Kindly
+                            fill out the information below so our local {franchisee.city} team
+                            can reach out to you.
                         </p>
+
                         <form
                             className="mt-6 grid gap-4"
                             onSubmit={async (e) => {
@@ -64,6 +76,15 @@ export default function JobsPageV2() {
 
                                 const form = e.currentTarget;
                                 const formData = new FormData(form);
+
+                                formData.append("FranchiseeId", String(franchisee.franchiseeId));
+                                formData.append("LocationName", franchisee.name);
+                                formData.append("LocationCity", franchisee.city);
+                                formData.append("LocationState", franchisee.state);
+
+                                if (franchisee.jobsZip) {
+                                    formData.append("AppliedZipCode", franchisee.jobsZip);
+                                }
 
                                 const fullName = String(formData.get("FullName") || "").trim();
                                 const phone = String(formData.get("Phone") || "").trim();
@@ -97,9 +118,13 @@ export default function JobsPageV2() {
                                 }
 
                                 const apiBaseUrl =
-                                    process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.cernahomecare.com";
+                                    process.env.NEXT_PUBLIC_API_BASE_URL ||
+                                    "https://api.cernahomecare.com";
 
-                                const uploadUrl = `${apiBaseUrl}/api/applications/submit-with-resume`;
+                                const uploadUrl = `${apiBaseUrl.replace(
+                                    /\/$/,
+                                    ""
+                                )}/api/applications/submit-with-resume`;
 
                                 try {
                                     setIsSubmitting(true);
@@ -139,6 +164,36 @@ export default function JobsPageV2() {
                                 }
                             }}
                         >
+                            <input
+                                type="hidden"
+                                name="FranchiseeId"
+                                value={franchisee.franchiseeId}
+                            />
+
+                            <input
+                                type="hidden"
+                                name="LocationName"
+                                value={franchisee.name}
+                            />
+
+                            <input
+                                type="hidden"
+                                name="LocationCity"
+                                value={franchisee.city}
+                            />
+
+                            <input
+                                type="hidden"
+                                name="LocationState"
+                                value={franchisee.state}
+                            />
+
+                            <input
+                                type="hidden"
+                                name="AppliedZipCode"
+                                value={franchisee.jobsZip ?? ""}
+                            />
+
                             <label className="grid gap-1 text-sm font-semibold">
                                 <span>
                                     Your Name <span className="text-[#DD8500]">*</span>
@@ -205,6 +260,7 @@ export default function JobsPageV2() {
                                             defaultChecked
                                             className="peer sr-only"
                                         />
+
                                         <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-white transition peer-checked:bg-[#DD8500] peer-checked:text-white">
                                             YES
                                         </span>
@@ -217,6 +273,7 @@ export default function JobsPageV2() {
                                             value="NO"
                                             className="peer sr-only"
                                         />
+
                                         <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-white transition peer-checked:bg-[#DD8500] peer-checked:text-white">
                                             NO
                                         </span>
@@ -246,7 +303,6 @@ export default function JobsPageV2() {
                                     <option value="Other">Other</option>
                                 </select>
                             </label>
-
 
                             <div className="grid gap-2">
                                 <span className="text-sm font-semibold">
@@ -282,15 +338,13 @@ export default function JobsPageV2() {
 
                             <p className="text-xs leading-5 text-white/75">
                                 By submitting this form I agree to be contacted by CERNA Home Care
-                                via call, email and text. To opt out, you can reply ‚Äústop‚Äù at any
+                                via call, email and text. To opt out, you can reply ìstopî at any
                                 time or click the unsubscribe link in the emails. Message and data
                                 rates may apply.
                             </p>
                         </form>
-
                     </aside>
 
-                    {/* RIGHT PANEL */}
                     <div className="overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-slate-200">
                         <div className="relative h-[260px] w-full">
                             <Image
@@ -311,8 +365,9 @@ export default function JobsPageV2() {
                             </h2>
 
                             <p className="mt-5 text-lg leading-8 text-slate-700">
-                                We are always looking for caring, dependable people who want
-                                to provide excellent support to clients and families.
+                                {franchisee.name} is always looking for caring, dependable
+                                people who want to provide excellent support to clients and
+                                families in {franchisee.city}.
                             </p>
 
                             <div className="mt-8 rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-200">
@@ -348,15 +403,22 @@ export default function JobsPageV2() {
                                         <p className="mt-2 text-base leading-7 text-slate-700">
                                             Flexible schedules, rewarding work, supportive leadership,
                                             and opportunities to grow your caregiving career with
-                                            Cerna Home Care.
+                                            {franchisee.name}.
                                         </p>
                                     </div>
                                 </div>
                             </div>
+
+                            <a
+                                href={franchisee.phoneHref}
+                                className="mt-8 inline-flex rounded-lg bg-[#00456B] px-6 py-4 text-sm font-extrabold text-white transition hover:bg-[#003a5a]"
+                            >
+                                Call {franchisee.phone}
+                            </a>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
     );
-} 
+}
