@@ -10,6 +10,9 @@ type CareersApplicationFormProps = {
     locationSlug: string;
     jobTitle?: string | null;
     franchiseeName?: string | null;
+    jobCity?: string | null;
+    jobState?: string | null;
+    distanceMiles?: number | null;
 };
 
 function formatPhone(value: string) {
@@ -26,8 +29,7 @@ function formatPhone(value: string) {
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(
         6
     )}`;
-}
-
+} 
 export default function CareersApplicationForm({
     franchiseeId,
     jobId,
@@ -35,6 +37,9 @@ export default function CareersApplicationForm({
     locationSlug,
     jobTitle,
     franchiseeName,
+    jobCity,
+    jobState,
+    distanceMiles,
 }: CareersApplicationFormProps) {
     const router = useRouter();
 
@@ -66,6 +71,30 @@ export default function CareersApplicationForm({
             </section>
 
             <section className="mx-auto max-w-4xl px-6 py-12">
+                {jobTitle && (
+                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                        <p className="text-xs font-black uppercase tracking-[0.18em] text-[#DD8500]">
+                            Applying for
+                        </p>
+
+                        <h2 className="mt-2 text-2xl font-extrabold text-[#00456B]">
+                            {jobTitle}
+                        </h2>
+
+                        <p className="mt-2 text-sm font-semibold text-slate-600">
+                            {[
+                                franchiseeName,
+                                [jobCity, jobState].filter(Boolean).join(", "),
+                                distanceMiles !== null && distanceMiles !== undefined
+                                    ? `${distanceMiles.toFixed(1)} miles away`
+                                    : null,
+                            ]
+                                .filter(Boolean)
+                                .join(" • ")}
+                        </p>
+                    </div>
+                )}
+
                 <form
                     className="grid gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:p-10"
                     onSubmit={async (e) => {
