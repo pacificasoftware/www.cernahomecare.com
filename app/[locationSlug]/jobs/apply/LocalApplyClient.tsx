@@ -1,7 +1,7 @@
-"use client";
+ï»¿"use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import { FormEvent, useState } from "react";
 
 type Franchisee = {
     franchiseeId: number;
@@ -18,21 +18,188 @@ type Props = {
     franchisee: Franchisee;
 };
 
+type SendEmailResponse = {
+    message?: string;
+    statusMessage?: string;
+};
+
 function formatPhone(value: string) {
     const digits = value.replace(/\D/g, "").slice(0, 10);
 
-    if (digits.length <= 3) return digits;
-    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    if (digits.length <= 3) {
+        return digits;
+    }
 
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    if (digits.length <= 6) {
+        return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    }
+
+    return `(${digits.slice(0, 3)}) ${digits.slice(
+        3,
+        6
+    )}-${digits.slice(6)}`;
 }
 
-export default function LocalApplyClient({ franchisee }: Props) {
+export default function LocalApplyClient({
+    franchisee,
+}: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [resumeName, setResumeName] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const locationName = [franchisee.city, franchisee.state]
+        .filter(Boolean)
+        .join(", ");
+
+    async function handleSubmit(
+        event: FormEvent<HTMLFormElement>
+    ) {
+        event.preventDefault();
+
+        if (isSubmitting) {
+            return;
+        }
+
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+
+        const firstName = String(
+            formData.get("firstName") || ""
+        ).trim();
+
+        const lastName = String(
+            formData.get("lastName") || ""
+        ).trim();
+
+        const phone = String(
+            formData.get("phone") || ""
+        ).trim();
+
+        const email = String(
+            formData.get("email") || ""
+        ).trim();
+
+        const zipCode = String(
+            formData.get("zipCode") || ""
+        ).trim();
+
+        if (
+            !firstName ||
+            !lastName ||
+            !phone ||
+            !email ||
+            !zipCode
+        ) {
+            setSuccessMessage("");
+            setErrorMessage(
+                "Please complete all required fields."
+            );
+
+            return;
+        }
+
+        if (!/^\d{5}$/.test(zipCode)) {
+            setSuccessMessage("");
+            setErrorMessage(
+                "Please enter a valid five-digit ZIP code."
+            );
+
+            return;
+        }
+
+        const payload = {
+            purpose: "job_apply",
+
+            firstName,
+            lastName,
+            phone,
+            email,
+            zipCode,
+
+            franchiseeId: franchisee.franchiseeId,
+            franchiseeName: franchisee.name,
+            locationSlug: franchisee.slug,
+            locationCity: franchisee.city,
+            locationState: franchisee.state,
+            locationZipCode: franchisee.jobsZip ?? "",
+
+            subject: `Cerna Home Care Job Application - ${franchisee.name}`,
+
+            message: [
+                `New job application for ${franchisee.name}.`,
+                "",
+                `Applicant: ${firstName} ${lastName}`,
+                `Phone: ${phone}`,
+                `Email: ${email}`,
+                `Applicant ZIP Code: ${zipCode}`,
+                `Franchisee: ${franchisee.name}`,
+                `Franchisee ID: ${franchisee.franchiseeId}`,
+                `Location: ${locationName || "Not provided"}`,
+                `Location Slug: ${franchisee.slug}`,
+            ].join("\n"),
+
+            company: "",
+        };
+
+        try {
+            setIsSubmitting(true);
+            setSuccessMessage("");
+            setErrorMessage("");
+
+            const response = await fetch("/api/sendemail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const responseText = await response.text();
+
+            let result: SendEmailResponse | null = null;
+
+            if (responseText.trim()) {
+                try {
+                    result = JSON.parse(responseText);
+                } catch {
+                    result = {
+                        message: responseText,
+                    };
+                }
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    result?.statusMessage ||
+                    result?.message ||
+                    `Application failed with status ${response.status}.`
+                );
+            }
+
+            form.reset();
+
+            setSuccessMessage(
+                `Thank you! Your information has been sent to ${franchisee.name}.`
+            );
+        } catch (error) {
+            console.error(
+                "Localized job application failed:",
+                error
+            );
+
+            setErrorMessage(
+                error instanceof Error
+                    ? error.message
+                    : "Something went wrong submitting your information."
+            );
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
 
     return (
         <main className="bg-white">
+            {/* HERO */}
             <section className="bg-slate-50">
                 <div className="mx-auto max-w-7xl px-6 py-8 text-center sm:px-8 lg:px-10">
                     <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-[#DD8500]">
@@ -42,332 +209,210 @@ export default function LocalApplyClient({ franchisee }: Props) {
                     <div className="mx-auto mt-2 h-1 w-20 rounded-full bg-[#DD8500]" />
 
                     <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
-                        Apply with {franchisee.name}
+                        Careers with {franchisee.name}
                     </h1>
 
                     <p className="mx-auto mt-3 max-w-3xl text-base leading-7 text-slate-700">
-                        Complete the short form below and our {franchisee.city} team will
-                        contact you about caregiver opportunities.
+                        {franchisee.name} is hiring compassionate
+                        caregivers who want to make a meaningful
+                        difference for seniors and families
+                        {locationName
+                            ? ` in ${locationName}`
+                            : ""}.
                     </p>
                 </div>
             </section>
 
+            {/* MAIN PANELS */}
             <section className="mx-auto max-w-7xl px-6 py-8 sm:px-8 lg:px-10">
                 <div className="grid gap-8 lg:grid-cols-2">
+                    {/* APPLICATION FORM */}
                     <aside className="rounded-3xl bg-[#00456B] p-8 text-white shadow-xl">
                         <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
-                            Get In Touch
+                            Apply Today
                         </p>
 
-                        <h3 className="mt-4 text-3xl font-extrabold">
-                            Complete the short form below and we'll be in touch.
-                        </h3>
+                        <h2 className="mt-4 text-3xl font-extrabold">
+                            Start your application
+                        </h2>
 
                         <p className="mt-3 text-base leading-7 text-white/85">
-                            Thank you for your interest in joining {franchisee.name}. Kindly
-                            fill out the information below so our local {franchisee.city} team
-                            can reach out to you.
+                            Send us your contact information and
+                            our local team will follow up with you
+                            about caregiver opportunities.
                         </p>
 
                         <form
                             className="mt-6 grid gap-4"
-                            onSubmit={async (e) => {
-                                e.preventDefault();
-
-                                const form = e.currentTarget;
-                                const formData = new FormData(form);
-
-                                formData.append("FranchiseeId", String(franchisee.franchiseeId));
-                                formData.append("LocationName", franchisee.name);
-                                formData.append("LocationCity", franchisee.city);
-                                formData.append("LocationState", franchisee.state);
-
-                                if (franchisee.jobsZip) {
-                                    formData.append("AppliedZipCode", franchisee.jobsZip);
-                                }
-
-                                const fullName = String(formData.get("FullName") || "").trim();
-                                const phone = String(formData.get("Phone") || "").trim();
-                                const email = String(formData.get("Email") || "").trim();
-                                const resume = formData.get("Resume") as File | null;
-
-                                if (!fullName || !phone || !email) {
-                                    alert("Please enter your name, phone, and email.");
-                                    return;
-                                }
-
-                                if (!resume || resume.size === 0) {
-                                    alert("Please attach your resume.");
-                                    return;
-                                }
-
-                                const allowedExtensions = [".pdf", ".doc", ".docx"];
-                                const fileName = resume.name.toLowerCase();
-                                const isAllowed = allowedExtensions.some((ext) =>
-                                    fileName.endsWith(ext)
-                                );
-
-                                if (!isAllowed) {
-                                    alert("Please upload a PDF, DOC, or DOCX resume.");
-                                    return;
-                                }
-
-                                if (resume.size > 10 * 1024 * 1024) {
-                                    alert("Resume cannot exceed 10 MB.");
-                                    return;
-                                }
-
-                                const apiBaseUrl =
-                                    process.env.NEXT_PUBLIC_API_BASE_URL ||
-                                    "https://api.cernahomecare.com";
-
-                                const uploadUrl = `${apiBaseUrl.replace(
-                                    /\/$/,
-                                    ""
-                                )}/api/applications/submit-with-resume`;
-
-                                try {
-                                    setIsSubmitting(true);
-
-                                    const response = await fetch(uploadUrl, {
-                                        method: "POST",
-                                        body: formData,
-                                    });
-
-                                    const responseText = await response.text();
-
-                                    let result: any = null;
-
-                                    try {
-                                        result = responseText ? JSON.parse(responseText) : null;
-                                    } catch {
-                                        result = null;
-                                    }
-
-                                    if (!response.ok) {
-                                        alert(
-                                            result?.statusMessage ||
-                                            result?.message ||
-                                            `Application failed. Status: ${response.status}`
-                                        );
-                                        return;
-                                    }
-
-                                    alert("Thank you! Your application has been submitted.");
-                                    form.reset();
-                                    setResumeName("");
-                                } catch (error) {
-                                    console.error("Application submit failed:", error);
-                                    alert("Something went wrong submitting your application.");
-                                } finally {
-                                    setIsSubmitting(false);
-                                }
-                            }}
+                            onSubmit={handleSubmit}
                         >
                             <input
                                 type="hidden"
-                                name="FranchiseeId"
+                                name="franchiseeId"
                                 value={franchisee.franchiseeId}
                             />
 
                             <input
                                 type="hidden"
-                                name="LocationName"
+                                name="franchiseeName"
                                 value={franchisee.name}
                             />
 
                             <input
                                 type="hidden"
-                                name="LocationCity"
-                                value={franchisee.city}
+                                name="locationSlug"
+                                value={franchisee.slug}
                             />
 
-                            <input
-                                type="hidden"
-                                name="LocationState"
-                                value={franchisee.state}
-                            />
-
-                            <input
-                                type="hidden"
-                                name="AppliedZipCode"
-                                value={franchisee.jobsZip ?? ""}
-                            />
-
-                            <label className="grid gap-1 text-sm font-semibold">
-                                <span>
-                                    Your Name <span className="text-[#DD8500]">*</span>
+                            <label className="grid gap-1.5">
+                                <span className="text-sm font-bold">
+                                    First Name
                                 </span>
 
                                 <input
-                                    name="FullName"
+                                    name="firstName"
                                     required
-                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                                    autoComplete="given-name"
+                                    placeholder="First Name"
+                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-[#DD8500]"
                                 />
                             </label>
 
-                            <label className="grid gap-1 text-sm font-semibold">
-                                <span>
-                                    Phone <span className="text-[#DD8500]">*</span>
+                            <label className="grid gap-1.5">
+                                <span className="text-sm font-bold">
+                                    Last Name
                                 </span>
 
                                 <input
-                                    name="Phone"
+                                    name="lastName"
                                     required
+                                    autoComplete="family-name"
+                                    placeholder="Last Name"
+                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-[#DD8500]"
+                                />
+                            </label>
+
+                            <label className="grid gap-1.5">
+                                <span className="text-sm font-bold">
+                                    Phone
+                                </span>
+
+                                <input
+                                    name="phone"
+                                    required
+                                    autoComplete="tel"
                                     placeholder="(714) 555-1212"
                                     inputMode="tel"
                                     maxLength={14}
-                                    onChange={(e) => {
-                                        e.currentTarget.value = formatPhone(e.currentTarget.value);
+                                    onChange={(event) => {
+                                        event.currentTarget.value =
+                                            formatPhone(
+                                                event.currentTarget.value
+                                            );
                                     }}
-                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-[#DD8500]"
                                 />
                             </label>
 
-                            <label className="grid gap-1 text-sm font-semibold">
-                                <span>
-                                    Email Address <span className="text-[#DD8500]">*</span>
+                            <label className="grid gap-1.5">
+                                <span className="text-sm font-bold">
+                                    Email
                                 </span>
 
                                 <input
-                                    name="Email"
+                                    name="email"
                                     type="email"
                                     required
-                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                                    autoComplete="email"
+                                    placeholder="Email Address"
+                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-[#DD8500]"
                                 />
                             </label>
 
-                            <label className="grid gap-1 text-sm font-semibold">
-                                <span>Address</span>
+                            <label className="grid gap-1.5">
+                                <span className="text-sm font-bold">
+                                    ZIP Code
+                                </span>
 
                                 <input
-                                    name="Address"
-                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[#DD8500]"
+                                    name="zipCode"
+                                    required
+                                    autoComplete="postal-code"
+                                    placeholder="ZIP Code"
+                                    inputMode="numeric"
+                                    maxLength={5}
+                                    pattern="[0-9]{5}"
+                                    onChange={(event) => {
+                                        event.currentTarget.value =
+                                            event.currentTarget.value
+                                                .replace(/\D/g, "")
+                                                .slice(0, 5);
+                                    }}
+                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-[#DD8500]"
                                 />
                             </label>
 
-                            <div className="grid gap-2">
-                                <span className="text-sm font-semibold">
-                                    Do you currently have a HCA Per ID?
-                                </span>
-
-                                <div className="grid w-1/2 grid-cols-2 gap-2 rounded-xl bg-white/10 p-1">
-                                    <label className="cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="HasHcaPerId"
-                                            value="YES"
-                                            defaultChecked
-                                            className="peer sr-only"
-                                        />
-
-                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-white transition peer-checked:bg-[#DD8500] peer-checked:text-white">
-                                            YES
-                                        </span>
-                                    </label>
-
-                                    <label className="cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="HasHcaPerId"
-                                            value="NO"
-                                            className="peer sr-only"
-                                        />
-
-                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-white transition peer-checked:bg-[#DD8500] peer-checked:text-white">
-                                            NO
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <label className="grid gap-1 text-sm font-semibold">
-                                <span>How did you hear about us?</span>
-
-                                <select
-                                    name="HowHeardAboutUs"
-                                    defaultValue=""
-                                    className="rounded-xl border border-white/20 bg-white px-4 py-3 font-semibold text-[#111827] outline-none focus:ring-2 focus:ring-[#DD8500]"
+                            {errorMessage ? (
+                                <div
+                                    role="alert"
+                                    className="rounded-xl border border-red-300/40 bg-red-950/35 px-4 py-3 text-sm font-semibold text-white"
                                 >
-                                    <option value="" disabled>
-                                        Please select
-                                    </option>
-                                    <option value="Google Search">Google Search</option>
-                                    <option value="Friend or Family">Friend or Family</option>
-                                    <option value="Social Media">Social Media</option>
-                                    <option value="Indeed">Indeed</option>
-                                    <option value="Job Board">Job Board</option>
-                                    <option value="Cerna Website">Cerna Website</option>
-                                    <option value="Walk-In">Walk-In</option>
-                                    <option value="Referral">Referral</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </label>
+                                    {errorMessage}
+                                </div>
+                            ) : null}
 
-                            <div className="grid gap-2">
-                                <span className="text-sm font-semibold">
-                                    Upload your resume <span className="text-[#DD8500]">*</span>
-                                </span>
-
-                                <label className="inline-flex cursor-pointer items-center justify-center rounded-lg bg-white/70 px-6 py-4 text-sm font-extrabold text-[#00456B] transition hover:bg-white">
-                                    Attach file here
-
-                                    <input
-                                        name="Resume"
-                                        type="file"
-                                        accept=".pdf,.doc,.docx"
-                                        className="hidden"
-                                        onChange={(e) => {
-                                            setResumeName(e.currentTarget.files?.[0]?.name ?? "");
-                                        }}
-                                    />
-                                </label>
-
-                                {resumeName ? (
-                                    <p className="text-sm text-white/80">{resumeName}</p>
-                                ) : null}
-                            </div>
+                            {successMessage ? (
+                                <div
+                                    role="status"
+                                    className="rounded-xl border border-emerald-300/40 bg-emerald-950/35 px-4 py-3 text-sm font-semibold text-white"
+                                >
+                                    {successMessage}
+                                </div>
+                            ) : null}
 
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="mt-2 rounded-lg bg-[#DD8500] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#c87500] disabled:cursor-not-allowed disabled:opacity-60"
                             >
-                                {isSubmitting ? "Submitting..." : "Submit"}
+                                {isSubmitting
+                                    ? "Submitting..."
+                                    : "Submit"}
                             </button>
-
-                            <p className="text-xs leading-5 text-white/75">
-                                By submitting this form I agree to be contacted by CERNA Home Care
-                                via call, email and text. To opt out, you can reply “stop” at any
-                                time or click the unsubscribe link in the emails. Message and data
-                                rates may apply.
-                            </p>
                         </form>
                     </aside>
 
+                    {/* RIGHT PANEL */}
                     <div className="overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-slate-200">
                         <div className="relative h-[260px] w-full">
                             <Image
                                 src="/assets/love-work-400x269.webp"
-                                alt="Caregiver team"
+                                alt={`Caregiver team at ${franchisee.name}`}
                                 fill
+                                sizes="(max-width: 1024px) 100vw, 50vw"
                                 className="object-cover"
+                                priority
                             />
                         </div>
 
                         <div className="p-8">
                             <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
-                                Join Our Team
+                                Join Our Local Team
                             </p>
 
                             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#00456B]">
-                                Join a care team that values compassion
+                                Join a care team that values
+                                compassion
                             </h2>
 
                             <p className="mt-5 text-lg leading-8 text-slate-700">
-                                {franchisee.name} is always looking for caring, dependable
-                                people who want to provide excellent support to clients and
-                                families in {franchisee.city}.
+                                {franchisee.name} is always looking
+                                for caring, dependable people who
+                                want to provide excellent support to
+                                clients and families
+                                {franchisee.city
+                                    ? ` throughout ${franchisee.city} and nearby communities`
+                                    : ""}.
                             </p>
 
                             <div className="mt-8 rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-200">
@@ -385,6 +430,7 @@ export default function LocalApplyClient({ franchisee }: Props) {
                                                 strokeWidth="1.8"
                                                 strokeLinecap="round"
                                             />
+
                                             <path
                                                 d="M8 14l2.2 2.2L16 10.8"
                                                 stroke="currentColor"
@@ -401,20 +447,25 @@ export default function LocalApplyClient({ franchisee }: Props) {
                                         </h3>
 
                                         <p className="mt-2 text-base leading-7 text-slate-700">
-                                            Flexible schedules, rewarding work, supportive leadership,
-                                            and opportunities to grow your caregiving career with
+                                            Flexible schedules,
+                                            rewarding work, supportive
+                                            leadership, and
+                                            opportunities to grow your
+                                            caregiving career with{" "}
                                             {franchisee.name}.
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
-                            <a
-                                href={franchisee.phoneHref}
-                                className="mt-8 inline-flex rounded-lg bg-[#00456B] px-6 py-4 text-sm font-extrabold text-white transition hover:bg-[#003a5a]"
-                            >
-                                Call {franchisee.phone}
-                            </a>
+                            {franchisee.phone ? (
+                                <a
+                                    href={franchisee.phoneHref}
+                                    className="mt-8 inline-flex rounded-lg bg-[#00456B] px-6 py-4 text-sm font-extrabold text-white transition hover:bg-[#003a5a]"
+                                >
+                                    Call {franchisee.phone}
+                                </a>
+                            ) : null}
                         </div>
                     </div>
                 </div>

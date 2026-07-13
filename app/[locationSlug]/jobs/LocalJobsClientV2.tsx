@@ -86,20 +86,21 @@ export default function LocalJobsClient({
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        async function loadJobs() {
-            if (!franchisee.jobsZip) {
-                setErrorMessage(
-                    "No ZIP code is configured for this location."
-                );
-                setIsLoading(false);
-                return;
-            }
+        let isCancelled = false;
 
+        async function loadJobs() {
             try {
                 setIsLoading(true);
                 setErrorMessage("");
 
-                const url = `/api/public/jobs/active/franchisee/${franchisee.franchiseeId}`;
+                const apiBaseUrl = (
+                    process.env.NEXT_PUBLIC_API_BASE_URL ||
+                    "https://api.cernahomecare.com"
+                ).replace(/\/$/, "");
+
+                const url = `${apiBaseUrl}/api/public/jobs/active/franchisee/${franchisee.franchiseeId}`;
+
+                console.log("Loading franchisee jobs from:", url);
 
                 const response = await fetch(url, {
                     method: "GET",
@@ -109,100 +110,161 @@ export default function LocalJobsClient({
                     cache: "no-store",
                 });
 
-                const text = await response.text();
+                const responseText = await response.text();
 
-                let result: any = {};
+                console.log("Franchisee jobs response:", {
+                    status: response.status,
+                    body: responseText,
+                });
 
-                if (text.trim()) {
-                    result = JSON.parse(text);
+                let result: any = null;
+
+                if (responseText.trim()) {
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch {
+                        throw new Error(
+                            `The jobs API returned invalid JSON. Status: ${response.status}. Response: ${responseText.slice(
+                                0,
+                                300
+                            )}`
+                        );
+                    }
                 }
 
                 if (!response.ok) {
                     throw new Error(
+                        result?.statusMessage ||
                         result?.message ||
-                        `Request failed with status ${response.status}`
+                        `Unable to load franchisee jobs. Status: ${response.status}`
                     );
                 }
 
-                const rawJobs = (
-                    Array.isArray(result)
-                        ? result
-                        : Array.isArray(result.jobs)
-                            ? result.jobs
-                            : Array.isArray(result.Jobs)
-                                ? result.Jobs
-                                : []
-                ) as any[];
+                const rawJobs = Array.isArray(result)
+                    ? result
+                    : Array.isArray(result?.jobs)
+                        ? result.jobs
+                        : Array.isArray(result?.Jobs)
+                            ? result.Jobs
+                            : [];
 
-                const normalizedJobs: PublicJob[] = rawJobs.map((job) => ({
-                    jobId: job.jobId ?? job.JobId,
-                    franchiseeId:
-                        job.franchiseeId ?? job.FranchiseeId,
+                const normalizedJobs = rawJobs.map((item: any) => ({
+                    jobId: Number(item.jobId ?? item.JobId),
+
+                    franchiseeId: Number(
+                        item.franchiseeId ?? item.FranchiseeId
+                    ),
 
                     franchiseeName:
-                        job.franchiseeName ??
-                        job.FranchiseeName ??
+                        item.franchiseeName ??
+                        item.FranchiseeName ??
                         franchisee.name,
 
                     franchiseeCity:
-                        job.franchiseeCity ??
-                        job.FranchiseeCity ??
+                        item.franchiseeCity ??
+                        item.FranchiseeCity ??
                         franchisee.city,
 
                     franchiseeState:
-                        job.franchiseeState ??
-                        job.FranchiseeState ??
+                        item.franchiseeState ??
+                        item.FranchiseeState ??
                         franchisee.state,
 
                     franchiseeZipCode:
-                        job.franchiseeZipCode ??
-                        job.FranchiseeZipCode ??
+                        item.franchiseeZipCode ??
+                        item.FranchiseeZipCode ??
                         franchisee.jobsZip ??
-                        "",
+                        null,
 
-                    jobTitle: job.jobTitle ?? job.JobTitle,
-                    jobType: job.jobType ?? job.JobType,
-                    shiftType: job.shiftType ?? job.ShiftType,
+                    jobTitle:
+                        item.jobTitle ??
+                        item.JobTitle ??
+                        "Caregiver",
+
+                    jobType:
+                        item.jobType ??
+                        item.JobType ??
+                        null,
+
+                    shiftType:
+                        item.shiftType ??
+                        item.ShiftType ??
+                        null,
+
                     jobDescription:
-                        job.jobDescription ?? job.JobDescription,
+                        item.jobDescription ??
+                        item.JobDescription ??
+                        null,
 
-                    city: job.city ?? job.City,
-                    state: job.state ?? job.State,
-                    zipCode: job.zipCode ?? job.ZipCode,
-                    payRange: job.payRange ?? job.PayRange,
-                    sortOrder: job.sortOrder ?? job.SortOrder,
+                    city:
+                        item.city ??
+                        item.City ??
+                        franchisee.city,
+
+                    state:
+                        item.state ??
+                        item.State ??
+                        franchisee.state,
+
+                    zipCode:
+                        item.zipCode ??
+                        item.ZipCode ??
+                        franchisee.jobsZip ??
+                        null,
+
+                    payRange:
+                        item.payRange ??
+                        item.PayRange ??
+                        null,
+
+                    sortOrder:
+                        item.sortOrder ??
+                        item.SortOrder ??
+                        null,
+
+                    latitude:
+                        item.latitude ??
+                        item.Latitude ??
+                        null,
+
+                    longitude:
+                        item.longitude ??
+                        item.Longitude ??
+                        null,
 
                     distanceMiles:
-                        job.distanceMiles ?? job.DistanceMiles,
-
-                    latitude: job.latitude ?? job.Latitude,
-                    longitude: job.longitude ?? job.Longitude,
+                        item.distanceMiles ??
+                        item.DistanceMiles ??
+                        null,
                 }));
 
-                const franchiseeJobs = normalizedJobs.sort((a, b) => {
-                    const sortA = a.sortOrder ?? 999;
-                    const sortB = b.sortOrder ?? 999;
-
-                    if (sortA !== sortB) {
-                        return sortA - sortB;
-                    }
-
-                    return a.jobId - b.jobId;
-                });
-
-                setJobs(franchiseeJobs);
+                if (!isCancelled) {
+                    setJobs(normalizedJobs);
+                }
             } catch (error) {
-                console.error("Jobs lookup failed:", error);
+                console.error("Unable to load franchisee jobs:", error);
 
-                setErrorMessage(
-                    "Something went wrong loading the available jobs."
-                );
+                if (!isCancelled) {
+                    setJobs([]);
+
+                    setErrorMessage(
+                        error instanceof Error
+                            ? error.message
+                            : "Unable to load franchisee jobs."
+                    );
+                }
             } finally {
-                setIsLoading(false);
+                if (!isCancelled) {
+                    setIsLoading(false);
+                }
             }
         }
 
-        loadJobs();
+        void loadJobs();
+
+        return () => {
+            isCancelled = true;
+        };
     }, [
         franchisee.franchiseeId,
         franchisee.jobsZip,

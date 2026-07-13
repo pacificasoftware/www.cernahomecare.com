@@ -29,38 +29,41 @@ export default function MySafePatchPage() {
     return (
         <main className="bg-white text-slate-800">
             {/* SECTION 1 */}
+            {/* SECTION 1 — HERO */}
             <section
-                className="relative overflow-hidden bg-cover bg-center bg-no-repeat"
+                className="relative min-h-[520px] overflow-hidden bg-cover bg-center bg-no-repeat md:min-h-[620px]"
                 style={{ backgroundImage: "url('/assets/man_on_ground.webp')" }}
             >
-               <div className="absolute inset-0 bg-white/20" />
+                {/* Subtle image overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/5 to-black/15" />
 
-                <div className="relative z-10 mx-auto grid max-w-[1400px] items-center gap-12 px-6 py-16 md:grid-cols-2 lg:py-24">
-                    <div>
-                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#1f73d8]">
+                <div className="relative z-10 mx-auto flex min-h-[520px] max-w-[1400px] items-end justify-end px-6 py-10 md:min-h-[620px] md:items-center md:py-16">
+                    {/* RIGHT-SIDE TRANSLUCENT PANEL */}
+                    <div className="w-full max-w-[520px] rounded-[24px] border border-white/30 bg-[#002f49]/75 p-5 shadow-2xl backdrop-blur-md md:p-7">
+                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sky-200">
                             MySafePatch
                         </p>
 
-                        <h1 className="mt-3 text-4xl font-extrabold leading-tight text-[#00456B] md:text-5xl">
+                        <h1 className="mt-2 text-2xl font-extrabold leading-tight text-white drop-shadow-md md:text-3xl">
                             A New Non-Invasive and Reliable Safety Wearable
                         </h1>
 
-                        <p className="mt-6 text-2xl font-bold text-[#DD8500]">
+                        <p className="mt-3 text-lg font-extrabold leading-snug text-[#ffc166] drop-shadow-sm">
                             24/7 Fall Detection with Monitoring and Alerts
                         </p>
 
-                        <p className="mt-6 text-lg leading-8 text-slate-600">
+                        <p className="mt-3 text-sm font-medium leading-6 text-white/95 md:text-base">
                             MySafePatch helps families stay connected with a discreet wearable
                             safety device and app-based monitoring designed around health,
                             safety, caring, and immediate alerts.
                         </p>
 
-                        <div className="mt-8 flex flex-wrap gap-4">
+                        <div className="mt-5 flex flex-wrap gap-3">
                             <Link
                                 href="https://www.mysafepatch.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex rounded-xl bg-[#DD8500] px-8 py-4 text-lg font-bold text-white transition hover:opacity-90"
+                                className="inline-flex rounded-lg bg-[#DD8500] px-5 py-2.5 text-sm font-bold text-white shadow-lg transition hover:bg-[#c97700]"
                             >
                                 Shop Now
                             </Link>
@@ -69,27 +72,37 @@ export default function MySafePatchPage() {
                                 href="https://www.mysafepatch.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex rounded-xl bg-[#005685] px-8 py-4 text-lg font-bold text-white transition hover:opacity-90"
+                                className="inline-flex rounded-lg border border-white/60 bg-white/15 px-5 py-2.5 text-sm font-bold text-white shadow-lg transition hover:bg-white/25"
                             >
                                 Learn More
                             </Link>
                         </div>
                     </div>
+                </div>
+            </section>
 
-                    <div className="rounded-[28px] bg-white p-8 shadow-xl">
-                        <div className="grid gap-5">
-                            {highlights.map((item) => (
-                                <div
-                                    key={item.title}
-                                    className="rounded-2xl border border-slate-200 p-6"
-                                >
-                                    <h3 className="text-xl font-extrabold text-[#00456B]">
-                                        {item.title}
-                                    </h3>
-                                    <p className="mt-3 leading-7 text-slate-600">{item.text}</p>
+            {/* SECTION 1B — HIGHLIGHTS BELOW HERO */}
+            <section className="bg-[#f8fbfd]">
+                <div className="mx-auto max-w-[1200px] px-6 py-10 md:py-12">
+                    <div className="grid gap-5 md:grid-cols-3">
+                        {highlights.map((item) => (
+                            <div
+                                key={item.title}
+                                className="rounded-[20px] border border-slate-200 bg-white p-6 shadow-md"
+                            >
+                                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-sky-50 text-lg font-extrabold text-[#1f73d8]">
+                                    ✓
                                 </div>
-                            ))}
-                        </div>
+
+                                <h3 className="text-xl font-extrabold text-[#00456B]">
+                                    {item.title}
+                                </h3>
+
+                                <p className="mt-3 leading-7 text-slate-600">
+                                    {item.text}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

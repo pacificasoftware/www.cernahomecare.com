@@ -125,6 +125,7 @@ export default function LocalAvailableJobsModal({
                 distanceMiles: job.distanceMiles ?? job.DistanceMiles,
             })) as LocalJob[];
 
+
             const filteredJobs = normalizedJobs
                 .filter((job) => Number(job.franchiseeId) === Number(franchiseeId))
                 .sort((a, b) => {

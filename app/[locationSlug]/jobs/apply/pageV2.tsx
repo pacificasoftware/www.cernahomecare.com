@@ -211,7 +211,7 @@ export default async function LocalJobApplicationPage({
                 </h1>
 
                 <p className="mt-4 text-slate-600">
-                    Please return to the jobs page and select a position.
+                    Please return to the jobs page and select a position.q
                 </p>
 
                 <Link
