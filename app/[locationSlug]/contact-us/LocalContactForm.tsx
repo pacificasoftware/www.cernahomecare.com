@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 type LocalContactFormProps = {
+    locationSlug: string;
     locationName: string;
     locationAreaName: string;
     locationState: string;
@@ -24,9 +25,9 @@ function formatPhoneNumber(value: string) {
     }
 
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-}
-
+} 
 export default function LocalContactForm({
+    locationSlug,
     locationName,
     locationAreaName,
     locationState,
@@ -65,14 +66,14 @@ export default function LocalContactForm({
             zipCode: "Not provided",
             subject: `Care Inquiry - ${locationAreaName}`,
             message: `
-New Local Contact Inquiry
+                        New Local Contact Inquiry
 
-Location: ${locationName}
-Area: ${locationAreaName}, ${locationState}
-Care Type: ${careType || "Not selected"}
+                        Location: ${locationName}
+                        Area: ${locationAreaName}, ${locationState}
+                        Care Type: ${careType || "Not selected"}
 
-Message:
-${messageText || "Contact form inquiry"}
+                        Message:
+                        ${messageText || "Contact form inquiry"}
             `.trim(),
             company,
         };

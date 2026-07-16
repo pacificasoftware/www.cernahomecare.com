@@ -30,6 +30,7 @@ export default function ContactForm() {
             subject: clean(formData.get("subject")) || "Cerna Home Care Contact Form",
             message: clean(formData.get("message")) || "Contact form inquiry",
             company: clean(formData.get("company")),
+            franchiseeId: null,
         };
 
         console.log("Sending contact form payload:", payload);
