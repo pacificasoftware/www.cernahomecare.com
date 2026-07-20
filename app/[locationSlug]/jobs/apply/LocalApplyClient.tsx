@@ -105,8 +105,8 @@ export default function LocalApplyClient({
             );
 
             return;
-        }
-
+        } 
+       
         const payload = {
             purpose: "job_apply",
 
@@ -118,6 +118,7 @@ export default function LocalApplyClient({
 
             franchiseeId: franchisee.franchiseeId,
             franchiseeName: franchisee.name,
+
             locationSlug: franchisee.slug,
             locationCity: franchisee.city,
             locationState: franchisee.state,
@@ -171,8 +172,8 @@ export default function LocalApplyClient({
             if (!response.ok) {
                 throw new Error(
                     result?.statusMessage ||
-                    result?.message ||
-                    `Application failed with status ${response.status}.`
+                        result?.message ||
+                        `Application failed with status ${response.status}.`
                 );
             }
 

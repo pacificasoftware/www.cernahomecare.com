@@ -129,7 +129,7 @@ const steps = [
         body: "Courteous & Punctual",
     },
 ];
-
+ 
 function SectionHeading({
     eyebrow,
     title,
@@ -253,7 +253,7 @@ export default function CernaHomePage() {
                                 </p>
                             </div>
 
-                            <HomeConsultationForm />
+                       <HomeConsultationForm />
                         </div>
 
                         <div className="flex items-center">

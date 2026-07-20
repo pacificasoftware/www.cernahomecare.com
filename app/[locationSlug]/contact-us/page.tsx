@@ -354,11 +354,12 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                             will contact you to learn more about your care needs.
                         </p>
 
-                        <LocalContactForm
-                            locationName={franchisee.name}
-                            locationAreaName={franchisee.areaName}
-                            locationState={franchisee.state}
-                        />
+                           <LocalContactForm
+                        locationSlug={locationSlug}
+                        locationName={franchisee.name}
+                        locationAreaName={franchisee.areaName}
+                        locationState={franchisee.state}
+                    />
 
                     </div>
 

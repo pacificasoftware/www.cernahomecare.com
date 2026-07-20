@@ -74,6 +74,7 @@ export default function JobsPage() {
                                 const payload = {
                                     purpose: "job_apply",
                                     franchiseeId: null,
+                                    locationSlug: null,
                                     firstName: String(
                                         formData.get("firstName") || ""
                                     ).trim(),

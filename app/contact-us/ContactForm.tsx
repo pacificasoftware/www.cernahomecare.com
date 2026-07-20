@@ -31,6 +31,7 @@ export default function ContactForm() {
             message: clean(formData.get("message")) || "Contact form inquiry",
             company: clean(formData.get("company")),
             franchiseeId: null,
+            locationSlug: null,
         };
 
         console.log("Sending contact form payload:", payload);

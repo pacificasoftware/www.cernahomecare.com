@@ -137,10 +137,11 @@ export default async function LocationServicePage({ params }: Props) {
                         </p>
 
                         <div className="mt-6">
-                            <LocationMiniContactForm
+                      <LocationMiniContactForm
                                 locationName={location.name}
                                 locationState={location.state}
-                                serviceTitle={service.title}
+                                serviceTitle="Home Care"
+                                locationSlug={locationSlug}
                             />
                         </div>
                     </aside>

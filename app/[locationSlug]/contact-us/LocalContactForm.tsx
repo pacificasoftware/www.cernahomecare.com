@@ -56,27 +56,36 @@ export default function LocalContactForm({
             return;
         }
 
-        const payload = {
-            purpose: "services",
-            inquiryType: careType || "General Contact",
-            firstName,
-            lastName,
-            phone,
-            email,
-            zipCode: "Not provided",
-            subject: `Care Inquiry - ${locationAreaName}`,
-            message: `
-                        New Local Contact Inquiry
+      const payload = {
+                purpose: "services",
+                inquiryType: careType || "General Contact",
 
-                        Location: ${locationName}
-                        Area: ${locationAreaName}, ${locationState}
-                        Care Type: ${careType || "Not selected"}
+                firstName,
+                lastName,
+                phone,
+                email,
 
-                        Message:
-                        ${messageText || "Contact form inquiry"}
-            `.trim(),
-            company,
-        };
+                zipCode: "Not provided",
+
+                subject:
+                    `Care Inquiry - ${locationAreaName}`,
+
+                message: `
+                    New Local Contact Inquiry
+
+                    Location: ${locationName}
+                    Area: ${locationAreaName}, ${locationState}
+                    Care Type: ${careType || "Not selected"}
+
+                    Message:
+                    ${messageText || "Contact form inquiry"}
+                `.trim(),
+
+                company,
+
+             franchiseeId: null,
+             locationSlug,
+            };
 
         setIsSubmitting(true);
         setIsError(false);

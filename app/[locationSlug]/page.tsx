@@ -155,7 +155,12 @@ export default async function LocationPage({ params }: Props) {
                     </div>
 
                     <div className="rounded-[32px] bg-white p-8 shadow-xl ring-1 ring-slate-200">
-                        <LocationMiniContactForm />
+                   <LocationMiniContactForm
+                        locationName={location.name}
+                        locationState={location.state}
+                        serviceTitle="Home Care"
+                        locationSlug={locationSlug}
+                    />
                     </div>
                 </div>
             </section>

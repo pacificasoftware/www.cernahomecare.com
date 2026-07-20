@@ -2,11 +2,19 @@
 
 import { useState } from "react";
 
+type HomeConsultationFormProps = {
+    locationSlug?: string | null;
+    franchiseeId?: number | null;
+};
+
 function clean(value: unknown) {
     return String(value ?? "").trim();
 }
 
-export default function HomeConsultationForm() {
+export default function HomeConsultationForm({
+    locationSlug = null,
+    franchiseeId = null,
+}: HomeConsultationFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
     const [isError, setIsError] = useState(false);
@@ -36,43 +44,54 @@ export default function HomeConsultationForm() {
 
         const selectedPurpose = clean(formData.get("purpose"));
 
-        const payload = {
-            purpose: "contact",
-            inquiryType: selectedPurpose,
-            name: fullName,
-            firstName: nameParts[0] || fullName,
-            lastName: nameParts.slice(1).join(" ") || "N/A",
-            email: clean(formData.get("email")),
-            phone: clean(formData.get("phone")),
-            zipCode: "Not provided",
-            subject: "Home Page Consultation Request",
-            message:
-                [
+       const payload = {
+                purpose: "contact",
+                inquiryType: selectedPurpose,
+
+                name: fullName,
+                firstName: nameParts[0] || fullName,
+                lastName:
+                    nameParts.slice(1).join(" ") || "N/A",
+
+                email: clean(formData.get("email")),
+                phone: clean(formData.get("phone")),
+
+                zipCode: "Not provided",
+
+                subject: "Home Page Consultation Request",
+
+                message: [
                     `Inquiry Type: ${selectedPurpose}`,
                     "",
-                    clean(formData.get("message")) || "Home page consultation request.",
+                    clean(formData.get("message")) ||
+                        "Home page consultation request.",
                 ]
                     .filter(Boolean)
                     .join("\n"),
-            company: "",
-        };
 
-        if (
-            !payload.firstName ||
-            !payload.lastName ||
-            !payload.email ||
-            !payload.phone ||
-            !selectedPurpose ||
-            !payload.message
-        ) {
-            setIsError(true);
-            setStatusMessage("Please complete all required fields.");
-            return;
-        }
+                company: "",
+               franchiseeId,
+                locationSlug,
+            };
 
-        setIsSubmitting(true);
-        setIsError(false);
-        setStatusMessage("");
+            if (
+                !payload.firstName ||
+                !payload.lastName ||
+                !payload.email ||
+                !payload.phone ||
+                !selectedPurpose ||
+                !payload.message
+            ) {
+                setIsError(true);
+                setStatusMessage(
+                    "Please complete all required fields."
+                );
+                return;
+            }
+
+            setIsSubmitting(true);
+            setIsError(false);
+            setStatusMessage("");
 
         try {
             const response = await fetch("/api/sendemail", {

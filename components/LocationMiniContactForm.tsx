@@ -6,6 +6,8 @@ type Props = {
     locationName?: string;
     locationState?: string;
     serviceTitle?: string;
+    locationSlug: string;
+    franchiseeId?: number | null;
 };
 
 function clean(value: unknown) {
@@ -16,6 +18,8 @@ export default function LocationMiniContactForm({
     locationName = "Cerna Home Care",
     locationState = "",
     serviceTitle = "Home Care",
+    locationSlug,
+    franchiseeId = null,
 }: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -46,31 +50,40 @@ export default function LocationMiniContactForm({
         const lastName = lastParts.join(" ") || "N/A";
         const interest = clean(formData.get("interest"));
 
-        const payload = {
-            purpose: "contact",
-            inquiryType: interest,
-            name: fullName,
-            firstName,
-            lastName,
-            email: clean(formData.get("email")),
-            phone: clean(formData.get("phone")),
-            zipCode: "Not provided",
-            subject: `${serviceTitle} Consultation Request - ${locationName}`,
-            message: [
-                "Location page mini form submission.",
-                "",
-                `Interest: ${interest}`,
-                `Service: ${serviceTitle}`,
-                `Location: ${locationName}${locationState ? `, ${locationState}` : ""}`,
-            ].join("\n"),
-            company: clean(formData.get("company")),
-        };
+       const payload = {
+                purpose: "contact",
+                inquiryType: interest,
 
-        if (!payload.name || !payload.email || !payload.phone) {
-            setIsError(true);
-            setStatusMessage("Please complete all required fields.");
-            return;
-        }
+                name: fullName,
+                firstName,
+                lastName,
+
+                email: clean(formData.get("email")),
+                phone: clean(formData.get("phone")),
+
+                zipCode: "Not provided",
+
+                subject: `${serviceTitle} Consultation Request - ${locationName}`,
+
+                message: [
+                    "Location page mini form submission.",
+                    "",
+                    `Interest: ${interest}`,
+                    `Service: ${serviceTitle}`,
+                    `Location: ${locationName}${locationState ? `, ${locationState}` : ""}`,
+                ].join("\n"),
+
+                company: clean(formData.get("company")),
+
+                franchiseeId: franchiseeId ?? null,
+                locationSlug,
+            };
+
+            if (!payload.name || !payload.email || !payload.phone) {
+                setIsError(true);
+                setStatusMessage("Please complete all required fields.");
+                return;
+            }
 
         setIsSubmitting(true);
         setIsError(false);
