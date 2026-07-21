@@ -233,8 +233,8 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                             Personalized Plans
                         </h2>
                         <p className="mt-3 leading-7 text-slate-600">
-                            From hourly personal care to live-in care, memory support,
-                            companion care, respite care, and post-hospital care, we tailor
+                            From hourly personal care to 24 Hour Care, memory support,
+                            companion care, respite care, and Covered care, we tailor
                             our services around each family.
                         </p>
                     </div>
@@ -273,16 +273,16 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                         </h3>
 
                         <ul className="mt-6 space-y-4 text-slate-700">
-                            <li>✓ Hourly & Personal Care</li>
-                            <li>✓ Live-In Care</li>
+                            <li>✓ Specialized Care</li>
+                            <li>✓ 24 Hour Care</li>
                             <li>✓ Memory & Dementia Care</li>
-                            <li>✓ Post Hospital Care</li>
+                            <li>✓ Covered Care</li>
                             <li>✓ Companion Care</li>
                             <li>✓ Respite Care</li>
                         </ul>
 
                         <Link
-                            href={`/${locationSlug}/hourly-personal-care`}
+                            href={`/${locationSlug}/specialized-care`}
                             className="mt-8 inline-flex rounded-full bg-[#00456B] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#003552]"
                         >
                             Explore Local Services

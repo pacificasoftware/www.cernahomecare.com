@@ -131,7 +131,7 @@ export default async function LocalCareersPage({ params }: PageProps) {
 
                         <p className="mt-4 text-base leading-7 text-slate-700">
                             Support local families with personal care, companionship, memory care,
-                            respite care, and post-hospital support.
+                            respite care, and Covered support.
                         </p>
                     </div>
 

@@ -1,13 +1,13 @@
 ﻿// lib/locationServices.ts
 
 export const locationServices = {
-    "hourly-personal-care": {
-        title: "Hourly & Personal Care",
+    "specialized-care": {
+        title: "Specialized Care",
         shortDescription:
             "Flexible in-home support for bathing, dressing, grooming, mobility, meals, and daily routines.",
-        image: "/assets/hourly-personal-care.webp",
-        seoTitle: "Hourly & Personal Care Services",
-        heroTitle: "Hourly & Personal Care at Home",
+        image: "/assets/specialized-care.webp",
+        seoTitle: "Specialized Care Services",
+        heroTitle: "Specialized Care at Home",
         intro:
             "Cerna Homecare provides hourly and personal care services designed to help clients remain safe, comfortable, and independent at home.",
         sections: [
@@ -25,19 +25,19 @@ export const locationServices = {
     },
 
     "live-in-care": {
-        title: "Live-In Care",
+        title: "24 Hour Care",
         shortDescription:
             "Around-the-clock support for families who need a consistent caregiver presence in the home.",
         image: "/assets/live-in.webp",
         seoTitle: "Live-In Home Care Services",
-        heroTitle: "Live-In Care for Families",
+        heroTitle: "24 Hour Care for Families",
         intro:
-            "Live-in care can provide peace of mind for families who want their loved one supported at home instead of moving into a facility.",
+            "24 Hour Care can provide peace of mind for families who want their loved one supported at home instead of moving into a facility.",
         sections: [
             {
                 heading: "Consistent care in the home",
                 body:
-                    "Live-in care helps provide continuity, companionship, and assistance with daily needs while allowing clients to remain in familiar surroundings.",
+                    "24 Hour Care helps provide continuity, companionship, and assistance with daily needs while allowing clients to remain in familiar surroundings.",
             },
         ],
     },
@@ -60,12 +60,12 @@ export const locationServices = {
         ],
     },
 
-    "post-hospital-care": {
-        title: "Post-Hospital Care",
+    "Covered-care": {
+        title: "Covered Care",
         shortDescription:
             "Short-term home support after surgery, hospitalization, rehab, or a health setback.",
-        image: "/assets/post-hospital-care.webp",
-        seoTitle: "Post-Hospital Home Care",
+        image: "/assets/Covered-care.webp",
+        seoTitle: "Covered Home Care",
         heroTitle: "Care After Hospital Discharge",
         intro:
             "After a hospital stay, many families need help at home to reduce stress and support a safer recovery.",

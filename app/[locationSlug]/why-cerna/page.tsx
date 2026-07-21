@@ -132,7 +132,7 @@ const benefits = [
     {
         title: "Flexible Care Options",
         description:
-            "From hourly care to live-in support, respite care, post-hospital care, and memory care, families can choose what fits their situation.",
+            "From hourly care to live-in support, respite care, Covered care, and memory care, families can choose what fits their situation.",
         icon: "🏡",
     },
     {
@@ -321,10 +321,10 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
                         </h3>
 
                         <ul className="mt-6 space-y-4 leading-7 text-slate-700">
-                            <li>✓ Hourly & Personal Care</li>
-                            <li>✓ Live-In Care</li>
+                            <li>✓ Specialized Care</li>
+                            <li>✓ 24 Hour Care</li>
                             <li>✓ Memory & Dementia Care</li>
-                            <li>✓ Post Hospital Care</li>
+                            <li>✓ Covered Care</li>
                             <li>✓ Companion Care</li>
                             <li>✓ Respite Care</li>
                         </ul>

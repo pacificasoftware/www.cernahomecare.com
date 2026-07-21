@@ -31,6 +31,11 @@ export default function GettingStartedNeedsPage() {
         e.preventDefault();
         setPageError(null);
 
+        sessionStorage.setItem(
+            "gettingStarted:corporate:step2",
+            JSON.stringify(form)
+        );
+
         router.push("/getting-started/contact");
     }
 

@@ -43,6 +43,11 @@ export default function GettingStartedPage() {
             return;
         }
 
+        sessionStorage.setItem(
+            "gettingStarted:corporate:step1",
+            JSON.stringify(form)
+        );
+
         router.push("/getting-started/needs");
     }
 

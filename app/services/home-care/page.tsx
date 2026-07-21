@@ -4,7 +4,7 @@ import styles from "./HomeCarePage.module.css";
 
 const careTypes = [
     {
-        title: "Live-in Care",
+        title: "Specialized Care",
         desc: "Care provided up to 16 hours per day with a dedicated caregiver always present.",
     },
     {
@@ -24,8 +24,12 @@ const careTypes = [
         desc: "Help with appointments, errands, and daily mental engagement activities.",
     },
     {
-        title: "Care Management",
+        title: "Respite Care",
         desc: "Ongoing coordination and support — always available when you need us.",
+    },
+    {
+        title: "MySafePatch",
+        desc: "Personal safety technology that helps support independence with emergency assistance, fall detection, and added peace of mind.",
     },
 ];
 
@@ -35,7 +39,7 @@ export default function HomeCarePage() {
             <section className={styles.heroSection}>
                 <div className={styles.heroContainer}>
                     <div className={styles.heroContent}>
-                        <h1 className={styles.heroTitle}>Hourly &amp; Personal Care Services</h1>
+                        <h1 className={styles.heroTitle}>Specialized Care Services</h1>
 
                         <p className={styles.heroText}>
                             With Cerna In-Home Care Services, you are treated like family.

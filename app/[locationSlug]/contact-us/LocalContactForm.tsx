@@ -222,12 +222,13 @@ export default function LocalContactForm({
                     <option value="" disabled>
                         Select an option
                     </option>
-                    <option value="Hourly & Personal Care">Hourly & Personal Care</option>
-                    <option value="Live-In Care">Live-In Care</option>
+                    <option value="Specialized Care">Specialized Care</option>
+                    <option value="24 Hour Care">24 Hour Care</option>
                     <option value="Memory & Dementia Care">Memory & Dementia Care</option>
-                    <option value="Post Hospital Care">Post Hospital Care</option>
+                    <option value="Covered Care">Covered Care</option>
                     <option value="Companion Care">Companion Care</option>
                     <option value="Respite Care">Respite Care</option>
+                    <option value="MySafePatch">MySafePatch</option>
                 </select>
             </div>
 

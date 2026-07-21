@@ -399,17 +399,17 @@ export default async function LocalContactUsPage({ params }: PageProps) {
 
                             <div className="mt-6 grid gap-3">
                                 <Link
-                                    href={`/${locationSlug}/hourly-personal-care`}
+                                    href={`/${locationSlug}/specialized-care`}
                                     className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
                                 >
-                                    Hourly & Personal Care
+                                    Specialized Care
                                 </Link>
 
                                 <Link
                                     href={`/${locationSlug}/live-in-care`}
                                     className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
                                 >
-                                    Live-In Care
+                                    24 Hour Care
                                 </Link>
 
                                 <Link
@@ -420,10 +420,10 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                                 </Link>
 
                                 <Link
-                                    href={`/${locationSlug}/post-hospital-care`}
+                                    href={`/${locationSlug}/Covered-care`}
                                     className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
                                 >
-                                    Post Hospital Care
+                                    Covered Care
                                 </Link>
 
                                 <Link

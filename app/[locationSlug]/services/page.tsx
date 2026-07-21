@@ -118,15 +118,15 @@ const franchisees: Record<
 
 const services = [
     {
-        title: "Hourly & Personal Care",
-        slug: "hourly-personal-care",
+        title: "Specialized Care",
+        slug: "specialized-care",
         description:
             "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
         icon: "🧡",
     },
     {
-        title: "Live-In Care",
-        slug: "live-in-care",
+        title: "24 Hour Care",
+        slug: "24hr-care",
         description:
             "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
         icon: "🏡",
@@ -139,8 +139,8 @@ const services = [
         icon: "🧠",
     },
     {
-        title: "Post Hospital Care",
-        slug: "post-hospital-care",
+        title: "Covered Care",
+        slug: "covered-care",
         description:
             "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
         icon: "⚕️",
@@ -158,6 +158,13 @@ const services = [
         description:
             "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
         icon: "🌿",
+    },
+    {
+        title: "MySafePatch",
+        slug: "mysafepatch",
+        icon: "/assets/icons/MySafePatch.webp",
+        description:
+            "Personal safety technology that helps support independence with emergency assistance, fall detection, and added peace of mind.",
     },
 ];
 
@@ -213,7 +220,7 @@ export default async function LocalServicesPage({ params }: PageProps) {
                         <p className="mt-6 text-lg leading-8 text-slate-700">
                             {franchisee.name} provides personalized in-home care services
                             for seniors and families throughout {franchisee.areaName}. From
-                            hourly care to memory support, post-hospital care, companion
+                            hourly care to memory support, Covered care, companion
                             care, and respite care, our team helps clients remain safe,
                             comfortable, and independent at home.
                         </p>
@@ -273,8 +280,18 @@ export default async function LocalServicesPage({ params }: PageProps) {
                             href={`/${locationSlug}/${service.slug}`}
                             className="group rounded-[32px] bg-white p-8 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-xl"
                         >
-                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d9f1f7] text-3xl transition group-hover:bg-[#DD8500]/15">
-                                {service.icon}
+                            <div className="mb-6 flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-[#d9f1f7] text-3xl transition group-hover:bg-[#DD8500]/15">
+                                {service.icon.startsWith("/") ? (
+                                    <Image
+                                        src={service.icon}
+                                        alt={`${service.title} icon`}
+                                        width={40}
+                                        height={40}
+                                        className="object-contain"
+                                    />
+                                ) : (
+                                    service.icon
+                                )}
                             </div>
 
                             <h3 className="text-2xl font-bold text-[#00456B] transition group-hover:text-[#DD8500]">

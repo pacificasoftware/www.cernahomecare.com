@@ -20,7 +20,7 @@ const services = [
                 </p>
 
                 <ul className="mt-6 list-disc space-y-4 pl-6 text-lg leading-8 text-slate-700">
-                    <li><strong>Live-in Care</strong> live-in care aid that provides care 16 hours per day and is always there</li>
+                    <li><strong>24 Hour Care</strong> 24 Hour Care aid that provides care 16 hours per day and is always there</li>
                     <li><strong>Hourly Care</strong> any schedule, any times from four hours to 24 hours</li>
                     <li><strong>24 Hour Care</strong> two 12 hour shifts when your loved one needs day and night attendance</li>
                     <li><strong>Memory Care</strong> Trained care providers with memory, Alzheimer’s and dementia care experience</li>
@@ -38,11 +38,11 @@ const services = [
         ),
     },
     {
-        title: "Live In Care",
+        title: "24 Hour Care",
         content: (
             <>
                 <h2 className="text-3xl font-extrabold text-[#00456B]">
-                    Live In Caregiver for 24/7 Assistance
+                    24 Hour Caregiver for 24/7 Assistance
                 </h2>
 
                 <p className="mt-6 text-lg leading-8 text-slate-700">
@@ -55,7 +55,7 @@ const services = [
                 </p>
 
                 <p className="mt-6 text-lg leading-8 text-slate-700">
-                    Our live in caregivers provide companionship, bathing, grooming, light
+                    Our 24 Hour Caregivers provide companionship, bathing, grooming, light
                     housekeeping, medication reminders, exercise, general assistance,
                     errands, cooking and much, much more. Cerna maintains Workman’s
                     Compensation Insurance, Liability Insurance and a Surety Bond to ensure

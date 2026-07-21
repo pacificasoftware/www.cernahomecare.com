@@ -50,9 +50,9 @@ export default function ServicesPage() {
                     </div>
 
                     <div className="flex justify-center md:justify-end">
-                        <div className="relative h-[320px] w-[320px] overflow-hidden rounded-full shadow-xl md:h-[460px] md:w-[460px]">
+                        <div className="relative h-[240px] w-[240px] overflow-hidden rounded-full shadow-xl md:h-[340px] md:w-[340px]">
                             <Image
-                                src="/assets/cerna-services.webp"
+                                src="/assets/cerna-services.png"
                                 alt="Cerna Home Care services"
                                 fill
                                 className="object-cover"
@@ -69,7 +69,7 @@ export default function ServicesPage() {
                         Our Care Services
                     </p>
                     <h2 className="mt-3 text-4xl font-extrabold text-[#00456B]">
-                        Our Services
+                        Duties Provided
                     </h2>
                     <p className="mt-5 text-lg leading-8 text-slate-600">
                         We provide compassionate, personalized support to help clients stay

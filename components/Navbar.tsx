@@ -3,18 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styles from "./Navbar.module.css";
+import styles from "./Navbar.module.css"; 
 
 const corporateServiceLinks = [
-    { href: "/services", label: "Our Services" },
-    { href: "/services/home-care", label: "Home Care" },
-    { href: "/services/memory-care", label: "Memory Care" },
-    { href: "/services/care-management", label: "Care Management" },
+    { href: "/services/specialized-care", label: "Specialized Care" },
+    { href: "/services/live-in-care", label: "24 Hour Care" },
+    { href: "/services/memory-dementia-care", label: "Memory & Dementia Care" },
+    { href: "/services/Covered-care", label: "Covered Care" },
+    { href: "/services/companion-care", label: "Companion Care" },
+    { href: "/services/respite-care", label: "Respite Care" },
     { href: "/services/mysafepatch", label: "MySafePatch" },
-    { href: "/services/medical-appointments", label: "Medical Appointments" },
-    { href: "/services/wellness-visits", label: "Wellness Visits" },
-    { href: "/services/fall-prevention", label: "Fall Prevention" },
-    { href: "/services/assisted-living", label: "Assisted Living" },
 ];
 
 const corporateLinks = [
@@ -97,13 +95,15 @@ const locationNavConfig: Record<
     },
 };
 
+// Menu Options for Location Pages
 const locationServiceSlugs = [
-    { slug: "hourly-personal-care", label: "Hourly & Personal Care" },
-    { slug: "live-in-care", label: "Live-In Care" },
+    { slug: "specialized-care", label: "Specialized Care" },
+    { slug: "live-in-care", label: "24 Hour Care" },
     { slug: "memory-dementia-care", label: "Memory & Dementia Care" },
-    { slug: "post-hospital-care", label: "Post Hospital Care" },
+    { slug: "Covered-care", label: "Covered Care" },
     { slug: "companion-care", label: "Companion Care" },
     { slug: "respite-care", label: "Respite Care" },
+    { slug: "mysafepatch", label: "MySafePatch" },
 ];
  
 

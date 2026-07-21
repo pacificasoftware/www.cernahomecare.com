@@ -2,14 +2,20 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { locations } from "@/lib/locations";
-import { locationServices } from "@/lib/locationServices";
-import LocationMiniContactForm from "@/components/LocationMiniContactForm";
+import HomeConsultationForm from "@/components/HomeConsultationForm";
+ 
 import FloridaCoverageSelector from "@/components/FloridaCoverageSelector";
 
 type Props = {
     params: Promise<{
         locationSlug: string;
     }>;
+};
+
+type HomeConsultationFormProps = {
+    locationSlug?: string;
+    locationName?: string;
+    locationState?: string;
 };
 
 export default async function LocationPage({ params }: Props) {
@@ -25,145 +31,174 @@ export default async function LocationPage({ params }: Props) {
 
     return (
         <main className="bg-white">
-            {/* Compact top section */}
-            <section className="bg-[#d9f1f7] px-6 py-12 md:py-16">
-                <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-                    <div>
-                        <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                            Cerna Homecare {location.name}
-                        </p>
+        
+            {/* Corporate-style localized hero */}
+            <section>
+                <div
+                    style={{
+                        position: "relative",
+                        height: "680px",
+                        width: "100%",
+                    }}
+                >
+                    <Image
+                        src="/assets/cerna-homecareV2.png"
+                        alt="Cerna — caring for seniors"
+                        fill
+                        priority
+                        sizes="100vw"
+                        quality={100}
+                        style={{
+                            objectFit: "cover",
+                            objectPosition: "center 65%",
+                        }}
+                    /> 
+                   
+                    <div className="absolute inset-0 bg-black/[0.08]" />
 
-                        <h1 className="text-4xl font-extrabold tracking-tight text-[#00456B] md:text-6xl">
-                            Home Care Services in {location.name}
-                        </h1>
-
-                        <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-700">
-                            Cerna Homecare helps families in {location.name} with compassionate,
-                            personalized in-home care. Explore our care services, request a free
-                            consultation, or call our local team today.
-                        </p>
-
-                        <div className="mt-8 flex flex-wrap gap-4">
-                            <a
-                                href={primaryPhoneHref}
-                                className="rounded-full bg-[#DD8500] px-6 py-3 font-bold text-white shadow-sm transition hover:bg-[#c67600]"
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pt-[16rem] text-center md:pt-[20rem]">
+                        <div className="max-w-5xl">
+                            <h1
+                                className="text-2xl font-extralight uppercase tracking-[0.06em] text-white md:text-4xl lg:text-5xl"
+                                style={{
+                                    textShadow: "0 2px 10px rgba(0,0,0,0.40)",
+                                }}
                             >
-                                Call {primaryPhoneNumber}
-                            </a>
+                                THE HOME CARE JOURNEY
+                            </h1>
 
-                            <a
-                                href="#free-consultation"
-                                className="rounded-full border border-[#00456B] px-6 py-3 font-bold text-[#00456B] transition hover:bg-[#00456B] hover:text-white"
+                            <p
+                                className="mt-3 text-sm font-light tracking-[0.02em] text-white md:text-lg lg:text-xl"
+                                style={{
+                                    textShadow: "0 2px 10px rgba(0,0,0,0.40)",
+                                }}
                             >
-                                Free Consultation
-                            </a>
+                                Providing Home Care Services for Over 20 Years
+                            </p>
                         </div>
                     </div>
+                </div>
+            </section>
 
-                    <div className="relative h-[220px] overflow-hidden rounded-[36px] bg-white shadow-xl md:h-[300px]">
-                        <Image
-                            src={location.heroImage}
-                            alt={`Cerna Homecare ${location.name}`}
-                            fill
-                            priority
-                            sizes="(max-width: 768px) 100vw, 560px"
-                            className="object-cover"
-                            quality={100}
-                        />
+            {/* Localized consultation form and care information */}
+            <section
+                id="free-consultation"
+                className="relative py-12 md:py-14"
+                style={{
+                    backgroundImage:
+                        'url("/assets/hands_blueV2-300x300.webp")',
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                }}
+            >
+                <div className="absolute inset-0 bg-slate-900/45" />
+
+                <div className="relative mx-auto grid max-w-7xl gap-8 px-6 md:gap-10 md:px-8 lg:grid-cols-[minmax(520px,560px)_minmax(520px,560px)] lg:justify-center lg:gap-40 lg:px-10">
+                    {/* Consultation form */}
+                    <div className="rounded-[28px] bg-gradient-to-br from-sky-700 to-slate-900 p-6 text-white shadow-sm md:p-8">
+                        <div className="mb-5">
+                            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
+                                We are here to help
+                            </p>
+
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+                                Request a free consultation
+                            </h2>
+
+                            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">
+                                Please feel free to contact our {location.name} team anytime at{" "}
+                                <a
+                                    href={primaryPhoneHref}
+                                    className="font-semibold text-orange-300 underline decoration-orange-200 underline-offset-4 transition hover:text-orange-200"
+                                >
+                                    {primaryPhoneNumber}
+                                </a>
+                                . We’ll help you understand the next best step.
+                            </p>
+                        </div>
+
+                        <HomeConsultationForm locationSlug={locationSlug} />
+                    </div> 
+
+                    {/* Compassionate care information */}
+                    <div className="flex items-center">
+                        <div className="overflow-hidden rounded-[28px] bg-white shadow-xl ring-1 ring-slate-200">
+                            <div className="relative h-[220px] w-full md:h-[280px] md:w-[560px]">
+                                <Image
+                                    src="/assets/caregiver-helping-elderly-patient-hero.png"
+                                    alt={`Cerna Homecare caregiver helping a senior in ${location.name}`}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 560px"
+                                    className="object-cover"
+                                    quality={100}
+                                />
+                            </div>
+
+                            <div className="p-5 md:p-6">
+                                <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
+                                    Peace of Mind at Home
+                                </p>
+
+                                <h2 className="mt-3 text-2xl font-bold leading-tight text-[#00456B] md:text-3xl">
+                                    Compassionate care for the people who matter most
+                                </h2>
+
+                                <p className="mt-4 text-sm leading-7 text-slate-600">
+                                    Choosing home care can feel overwhelming. Our{" "}
+                                    {location.name} team helps families navigate the
+                                    process with compassion, clear communication, and
+                                    dependable support tailored to each individual
+                                    situation.
+                                </p>
+
+                                <p className="mt-3 text-sm leading-7 text-slate-600">
+                                    Whether your loved one needs companionship, daily
+                                    assistance, or more involved care, Cerna Homecare is
+                                    here to provide comfort, dignity, and peace of mind
+                                    at home.
+                                </p>
+
+                                <div className="mt-5 flex justify-center">
+                                    <Link
+                                        href={`/${locationSlug}/getting-started`}
+                                        className="inline-flex rounded-full bg-[#DD8500] px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#c67600]"
+                                    >
+                                        Request a Free Consultation
+                                    </Link> 
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Service tiles */}
-            <section className="bg-white px-6 py-16">
-                <div className="mx-auto max-w-7xl">
-                    <div className="mx-auto max-w-4xl text-center">
-                        <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                            Here is how we can help
+            {/* Localized phone consultation banner */}
+            <section className="bg-white py-12 md:py-16">
+                <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
+                    <div className="relative overflow-hidden rounded-[28px] border border-sky-100 bg-gradient-to-r from-sky-50 via-white to-sky-100 px-6 pb-10 pt-14 text-center shadow-sm md:px-12 md:pb-12 md:pt-16">
+                        <div className="absolute left-0 top-0 h-full w-2 bg-sky-600" />
+                        <div className="absolute right-0 top-0 h-full w-2 bg-sky-600" />
+
+                        <p className="mt-6 text-base font-semibold uppercase tracking-[0.28em] text-sky-700 md:text-lg">
+                            Free In-Home Consultation
                         </p>
 
-                        <h2 className="text-4xl font-extrabold text-[#00456B]">
-                            In-home care services in {location.name}
-                        </h2>
-
-                        <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-700">
-                            Choose the type of care that best fits your family. Each service has
-                            a dedicated page with more details for families in {location.name}.
-                        </p>
-                    </div>
-
-                    <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {Object.entries(locationServices).map(([serviceSlug, service]) => (
-                            <Link
-                                key={serviceSlug}
-                                href={`/${location.slug}/${serviceSlug}`}
-                                className="group overflow-hidden rounded-[28px] bg-white shadow-md ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+                            Call us at{" "}
+                            <a
+                                href={primaryPhoneHref}
+                                className="text-sky-700 underline decoration-sky-300 underline-offset-4 transition hover:text-sky-800"
                             >
-                                <div className="relative h-48 overflow-hidden bg-slate-100">
-                                    <Image
-                                        src={service.image}
-                                        alt={`${service.title} in ${location.name}`}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        className="object-cover transition duration-500 group-hover:scale-105"
-                                        quality={100}
-                                    />
-                                </div>
-
-                                <div className="p-6">
-                                    <h3 className="text-2xl font-extrabold text-[#00456B]">
-                                        {service.title}
-                                    </h3>
-
-                                    <p className="mt-3 text-base leading-7 text-slate-600">
-                                        {service.shortDescription}
-                                    </p>
-
-                                    <span className="mt-5 inline-flex font-bold text-[#DD8500]">
-                                        Learn more →
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Free consultation */}
-            <section id="free-consultation" className="bg-slate-50 px-6 py-16">
-                <div className="mx-auto grid max-w-7xl items-start gap-12 lg:grid-cols-[0.95fr_1.05fr]">
-                    <div>
-                        <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                            Free Consultation
-                        </p>
-
-                        <h2 className="text-4xl font-extrabold text-[#00456B]">
-                            Get your free {location.name} care consultation today
+                                {primaryPhoneNumber}
+                            </a>{" "}
+                            for a FREE In-Home Consultation!
                         </h2>
 
-                        <p className="mt-6 text-lg leading-8 text-slate-700">
-                            Tell us about your family’s needs and our local Cerna Homecare team
-                            will help you understand your options.
-                        </p>
-
-                        <h3 className="mt-8 text-3xl font-extrabold text-[#00456B]">
-                            Call:{" "}
-                            <a href={primaryPhoneHref} className="hover:text-[#DD8500]">
-                                {primaryPhoneNumber}
-                            </a>
-                        </h3>
-                    </div>
-
-                    <div className="rounded-[32px] bg-white p-8 shadow-xl ring-1 ring-slate-200">
-                   <LocationMiniContactForm
-                        locationName={location.name}
-                        locationState={location.state}
-                        serviceTitle="Home Care"
-                        locationSlug={locationSlug}
-                    />
+                        <div className="mx-auto mt-8 h-px w-32 bg-sky-300" />
                     </div>
                 </div>
-            </section>
+            </section> 
 
             {/* Location image */}
             <section className="bg-white px-6 py-16">

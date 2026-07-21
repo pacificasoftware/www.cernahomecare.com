@@ -160,13 +160,18 @@ export default function CernaHomePage() {
     return (
 
         <div className="flex min-h-screen flex-col">
-            <main className="flex-1 bg-white text-slate-900">
-
+            <main className="flex-1 bg-white text-slate-900"> 
 
                 <section>
-                    <div style={{ position: "relative", height: "820px", width: "100%" }}>
+                    <div
+                        style={{
+                            position: "relative",
+                            height: "680px",
+                            width: "100%",
+                        }}
+                    >
                         <Image
-                            src="/assets/cerna-homecare.jpg"
+                            src="/assets/cerna-homecareV2.png"
                             alt="Cerna — caring for seniors"
                             fill
                             priority
@@ -174,7 +179,7 @@ export default function CernaHomePage() {
                             quality={100}
                             style={{
                                 objectFit: "cover",
-                                objectPosition: "center top"
+                                objectPosition: "center 65%",
                             }}
                         />
 
@@ -186,15 +191,9 @@ export default function CernaHomePage() {
                             ★ Become a Franchishee
                         </Link>
 
-                        <div
-                            style={{
-                                position: "absolute",
-                                inset: 0,
-                                background: "rgba(0, 0, 0, 0.08)",
-                            }}
-                        />
+                        <div className="absolute inset-0 bg-black/[0.08]" />
 
-                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pt-[22rem] text-center md:pt-[27rem]">
+                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pt-[16rem] text-center md:pt-[20rem]">
                             <div className="max-w-5xl">
                                 <h1
                                     className="text-2xl font-extralight uppercase tracking-[0.06em] text-white md:text-4xl lg:text-5xl"
@@ -215,7 +214,6 @@ export default function CernaHomePage() {
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </section>
 
@@ -342,7 +340,7 @@ export default function CernaHomePage() {
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
                         <div className="mx-auto max-w-3xl text-center">
                             <h2 className="text-5xl font-semibold tracking-tight text-slate-900 md:text-6xl">
-                              OUR SERVICES
+                            What We Do
                             </h2>
                             <p className="mt-5 text-lg leading-8 text-slate-600">
                                 Flexible support for everyday living
@@ -530,7 +528,7 @@ export default function CernaHomePage() {
                             >
                                 Get Started Now
                             </Link>
-                        </div>
+                        </div>s
                     </div>
                 </section> 
 
