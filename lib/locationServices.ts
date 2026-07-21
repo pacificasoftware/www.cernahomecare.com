@@ -64,7 +64,7 @@ export const locationServices = {
         title: "Covered Care",
         shortDescription:
             "Short-term home support after surgery, hospitalization, rehab, or a health setback.",
-        image: "/assets/Covered-care.webp",
+        image: "/assets/covered-care.webp",
         seoTitle: "Covered Home Care",
         heroTitle: "Care After Hospital Discharge",
         intro:

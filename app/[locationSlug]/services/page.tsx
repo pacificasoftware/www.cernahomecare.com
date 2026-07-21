@@ -159,13 +159,13 @@ const services = [
             "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
         icon: "🌿",
     },
-    {
-        title: "MySafePatch",
-        slug: "mysafepatch",
-        icon: "/assets/icons/MySafePatch.webp",
-        description:
-            "Personal safety technology that helps support independence with emergency assistance, fall detection, and added peace of mind.",
-    },
+    //{
+    //    title: "MySafePatch",
+    //    slug: "mysafepatch",
+    //    icon: "/assets/icons/MySafePatch.webp",
+    //    description:
+    //        "Personal safety technology that helps support independence with emergency assistance, fall detection, and added peace of mind.",
+    //},
 ];
 
 type PageProps = {
