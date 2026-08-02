@@ -31,26 +31,29 @@ export default function AboutUsPage() {
             <section className="about-hero">
                 <div className="about-hero-container">
                     <div className="about-hero-grid">
-                        <div className="about-hero-image-wrap">
-                            <div className="about-hero-image-frame">
-                                <Image
-                                    src="/assets/hands.png"
-                                    alt="Cerna staff"
-                                    fill
-                                    priority
-                                    quality={100}
-                                    className="about-hero-image"
-                                />
-                            </div>
+                        <div className="about-hero-image-container">
+                            <img
+                                src="/assets/hands.png"
+                                alt="Cerna staff" 
+                                className="about-hero-image-plain"
+                            />
                         </div>
 
                         <div className="about-hero-card-wrap">
                             <div className="about-hero-card">
-                                <h1 className="about-hero-title">Our Company and Values</h1>
+                                  <h1 className="about-hero-title">Our Company and Values</h1>
 
-                                <p className="about-hero-text">
-                                 We enjoy our work and feel blessed to be caring for such a precious diminishing asset - our seniors
-                                </p>
+                                <blockquote>
+                                    <p className="about-hero-text">
+                                        “We enjoy our work and feel blessed to be caring for such a precious,
+                                        diminishing asset — our seniors.”
+                                    </p>
+
+                                    <footer className="about-hero-author">
+                                        <span>Nick Payzant</span>
+                                        <span className="about-hero-role">Founder &amp; CEO</span>
+                                    </footer>
+                                </blockquote>
 
                                 <div className="about-hero-buttons">
                                     <div className="about-hero-button-wrap">

@@ -13,27 +13,52 @@ export const serviceCards: ServiceCard[] = [
         description:
             "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
         image: "/assets/specialized-care.webp",
+        features: [
+            "Memory Care",
+            "Medicare Program for Dementia",
+            "Cognitive Stimulation",
+            "Stroke and Brain Injury Care",
+            "Behavior Management",
+            "Healthy Lifestyle Modification",
+            "Hospice Care Support",
+        ],
     },
+    //{
+    //    title: "24 Hour Care",
+    //    slug: "live-in-care",
+    //    description:
+    //        "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
+    //    image: "/assets/respite-care.webp",
+    //}, 
     {
-        title: "24 Hour Care",
-        slug: "live-in-care",
-        description:
-            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
-        image: "/assets/respite-care.webp",
-    },
-    {
-        title: "Memory & Dementia Care",
+        title: "Memory Care",
         slug: "memory-dementia-care",
         description:
-            "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
+            "Cerna specializes in cognitive impairments from Alzheimer’s, Parkinson’s, stroke, and other neurological disorders.",
         image: "/assets/group.png",
+        features: [
+            "Manage Behavior Changes",
+            "Redirection and Trigger Management",
+            "UTI Prevention",
+            "Cognitive Stimulation",
+            "Diet and Lifestyle Changes",
+            "Secure Care for Wandering",
+            "Medicare Dementia Program",
+        ],
     },
     {
         title: "Covered Care",
         slug: "covered-care",
         description:
-            "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
+            "At Cerna, we get your care covered through a variety of programs that may be available.",
         image: "/assets/caretaker_with_lady.png",
+        features: [
+            "Medicare (for Dementia)",
+            "VA Contracted",
+            "Long Term Care Insurance",
+            "Specialty Insurance Plans",
+            "Workers Compensation",
+        ],
     },
     {
         title: "Companion Care",
@@ -41,13 +66,38 @@ export const serviceCards: ServiceCard[] = [
         description:
             "Friendly support, conversation, errands, light activities, appointments, meal support, and help reducing isolation.",
         image: "/assets/man_with_caretaker.png",
+        features: [
+            "Bathing and Grooming",
+            "Light Housekeeping and Sanitizing",
+            "Diet Planning, Meal Prep and Grocery Shopping",
+            "Exercise and Continuation of Physical Therapy",
+            "Medication Reminders",
+            "Transfers, Errands, Projects and More",
+            "Post Surgery Recovery",
+        ],
     },
+    //{
+    //    title: "Respite Care",
+    //    slug: "respite-care",
+    //    description:
+    //        "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
+    //    image: "/assets/lady_on_couch.png",
+    //},
     {
-        title: "Respite Care",
-        slug: "respite-care",
+        title: "Care Management",
+        slug: "care-management",
         description:
-            "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
+            "With Cerna’s Care Management program, managing the complexities of healthcare today is no longer a burden, so you can focus on quality of life.",
         image: "/assets/lady_on_couch.png",
+        features: [
+            "Patient Advocacy",
+            "Manage Living Arrangements",
+            "Coordinate and Facilitate Healthcare Services",
+            "Monitor and Coordinate Doctors, Medications, Supplies & Equipment",
+            "Diet Plan Coordination",
+            "Appointment Scheduling",
+            "Cognitive Activity Plans and Exercise",
+        ],
     },
     {
         title: "Transportation",
