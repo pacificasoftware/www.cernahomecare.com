@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";  
 import HomeConsultationForm from "@/components/HomeConsultationForm";
+import ServiceCardsSection from "../components/ServiceCardsSection";
+import DutiesProvidedSection from "../components/DutiesProvidedSection";
 
 const services = [
     {
@@ -75,6 +77,60 @@ const services = [
         icon: "/assets/icons/Pets.webp",
         description:
             "Light support with pet care routines so clients can continue enjoying the companionship of their animals.",
+    },
+];
+
+// Addd     image: "/assets/hands.png",  under choose the right level of support section for each service category.
+
+const serviceCategories = [
+    {
+        title: "Specialized Care",
+        slug: "specialized-care",
+        description:
+            "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
+        image: "/assets/specialized-care.webp",
+    },
+    {
+        title: "24 Hour Care",
+        slug: "24hr-care",
+        description:
+            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
+        image: "/assets/respite-care.webp",
+    },
+    {
+        title: "Memory & Dementia Care",
+        slug: "memory-dementia-care",
+        description:
+            "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
+        image: "/assets/group.png",
+    },
+    {
+        title: "Covered Care",
+        slug: "covered-care",
+        description:
+            "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
+        image: "/assets/caretaker_with_lady.png",
+    },
+    {
+        title: "Companion Care",
+        slug: "companion-care",
+        description:
+            "Friendly support, conversation, errands, light activities, appointments, meal support, and help reducing isolation.",
+        image: "/assets/man_with_caretaker.png",
+    },
+    {
+        title: "Respite Care",
+        slug: "respite-care",
+        description:
+            "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
+        image: "/assets/lady_on_couch.png",
+    },
+    {
+        title: "Transportation",
+        slug: "transportation",
+        description:
+            "We assist with all of your transportation needs, which includes a caregiver so your loved one is not simply picked up and dropped off.",
+        image: "/assets/caretakers.png",
     },
 ];
 
@@ -336,67 +392,11 @@ export default function CernaHomePage() {
                 </section>
                 <div className={styles.fullWidthDivider} />
 
-                <section className="py-20 md:py-24">
-                    <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
-                        <div className="mx-auto max-w-3xl text-center">
-                            <h2 className="text-5xl font-semibold tracking-tight text-slate-900 md:text-6xl">
-                            What We Do
-                            </h2>
-                            <p className="mt-5 text-lg leading-8 text-slate-600">
-                                Flexible support for everyday living
-                            </p>
-                        </div>
-
-                        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {services.map(({ title, icon, description }) => (
-                                <div
-                                    key={title}
-                                    className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-                                >
-                                    <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#D9F1F7]" />
-
-                                    <div className="relative mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#00456B] shadow-md">
-                                        <Image
-                                            src={icon}
-                                            alt={`${title} icon`}
-                                            width={38}
-                                            height={38}
-                                            className="object-contain brightness-0 invert"
-                                        />
-                                    </div>
-
-                                    <h3 className="relative text-xl font-bold text-[#00456B]">
-                                        {title}
-                                    </h3>
-
-                                    <p className="relative mt-3 text-sm leading-7 text-slate-600">
-                                        {description}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="mt-10 flex flex-wrap justify-center gap-4">
-                            <Link
-                                href="/downloads/fall-prevention-guide.pdf"
-                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white no-underline transition hover:opacity-90"
-                                style={{ backgroundColor: "#DD8500" }}
-                            >
-                                Free Fall Prevention Guide
-                            </Link>
-
-                            <Link
-                                href="/downloads/nutrition-guide.pdf"
-                                className="inline-flex min-w-[260px] items-center justify-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white no-underline transition hover:opacity-90"
-                                style={{ backgroundColor: "#DD8500" }}
-                                target="_blank"
-                            >
-                                Free Nutrition Guide
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-
+                {/*Our Services*/} 
+                <ServiceCardsSection basePath="/services" /> 
+               
+                {/*Duties Provided*/}
+                {/*<DutiesProvidedSection />*/} 
 
                 <section className="relative overflow-hidden py-20 md:py-24" >
                     <Image

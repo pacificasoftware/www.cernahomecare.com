@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styles from "./Navbar.module.css"; 
+import styles from "./Navbar.module.css";
 
 const corporateServiceLinks = [
     { href: "/services/specialized-care", label: "Specialized Care" },
@@ -105,7 +105,7 @@ const locationServiceSlugs = [
     { slug: "respite-care", label: "Respite Care" },
     { slug: "mysafepatch", label: "MySafePatch" },
 ];
- 
+
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -125,7 +125,12 @@ export default function Navbar() {
     };
 
     const isActive = (href: string) => {
-        if (href === "/") return pathname === "/";
+        // Corporate home and each location home should only be active
+        // when the current pathname exactly matches the home URL.
+        if (href === "/" || (isLocationPage && href === basePath)) {
+            return pathname === href;
+        }
+
         return pathname === href || pathname.startsWith(`${href}/`);
     };
 
@@ -154,7 +159,8 @@ export default function Navbar() {
         : corporateServiceLinks;
 
     const isServicesActive = isLocationPage
-        ? locationServiceSlugs.some(
+        ? pathname === `${basePath}/services` ||
+        locationServiceSlugs.some(
             (service) => pathname === `${basePath}/${service.slug}`
         )
         : pathname === "/services" || pathname.startsWith("/services/");

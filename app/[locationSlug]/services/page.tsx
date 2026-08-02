@@ -1,5 +1,6 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
+import ServiceCardsSection from "../../../components/ServiceCardsSection";
 
 const franchisees: Record<
     string,
@@ -122,50 +123,65 @@ const services = [
         slug: "specialized-care",
         description:
             "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
-        icon: "🧡",
+        image: "/assets/specialized-care.webp",
     },
     {
         title: "24 Hour Care",
         slug: "24hr-care",
         description:
             "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
-        icon: "🏡",
+        image: "/assets/respite-care.webp",
     },
     {
         title: "Memory & Dementia Care",
         slug: "memory-dementia-care",
         description:
             "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
-        icon: "🧠",
+        image: "/assets/group.png",
     },
     {
         title: "Covered Care",
         slug: "covered-care",
         description:
             "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
-        icon: "⚕️",
+        image: "/assets/caretaker_with_lady.png",
     },
     {
         title: "Companion Care",
         slug: "companion-care",
         description:
             "Friendly support, conversation, errands, light activities, appointments, meal support, and help reducing isolation.",
-        icon: "🤝",
+        image: "/assets/man_with_caretaker.png",
     },
     {
         title: "Respite Care",
         slug: "respite-care",
         description:
             "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
-        icon: "🌿",
+        image: "/assets/lady_on_couch.png",
     },
-    //{
-    //    title: "MySafePatch",
-    //    slug: "mysafepatch",
-    //    icon: "/assets/icons/MySafePatch.webp",
-    //    description:
-    //        "Personal safety technology that helps support independence with emergency assistance, fall detection, and added peace of mind.",
-    //},
+    {
+        title: "Transportation",
+        slug: "transportation",
+        description:
+            "We assist with all of your transportation needs, which includes a caregiver so your loved one is not simply picked up and dropped off.",
+        image: "/assets/caretakers.png",
+    },
+];
+
+const dutiesProvided = [
+    { name: "Companionship", icon: "/assets/icons/Companionship.webp" },
+    { name: "Appointments", icon: "/assets/icons/Appointments.webp" },
+    { name: "Bathing", icon: "/assets/icons/Bathing.webp" },
+    { name: "Cooking", icon: "/assets/icons/Cooking.webp" },
+    { name: "Dressing", icon: "/assets/icons/Dressing.webp" },
+    { name: "Errands", icon: "/assets/icons/Errands.webp" },
+    { name: "Exercise", icon: "/assets/icons/Exersize.webp" },
+    { name: "Grooming", icon: "/assets/icons/Grooming.webp" },
+    { name: "Laundry", icon: "/assets/icons/Laundry.webp" },
+    { name: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
+    { name: "Mobility", icon: "/assets/icons/Mobility.webp" },
+    { name: "Pets", icon: "/assets/icons/Pets.webp" },
 ];
 
 type PageProps = {
@@ -256,58 +272,54 @@ export default async function LocalServicesPage({ params }: PageProps) {
                 </div>
             </section>
 
-            <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-                <div className="mx-auto max-w-3xl text-center">
-                    <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                        Our Local Services
+            {/*Our Services*/}
+            <ServiceCardsSection basePath={`/${locationSlug}`} /> 
+
+            {/*Duties Provided*/}
+            <section className="mx-auto max-w-[1400px] px-6 py-16 md:px-10 lg:px-12 lg:py-20">
+                <div className="max-w-3xl">
+                    <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#1f73d8]">
+                        Our Care Services
                     </p>
-
-                    <h2 className="text-3xl font-bold tracking-tight text-[#00456B] md:text-4xl">
-                        Choose the Right Level of Support
+                    <h2 className="mt-3 text-4xl font-extrabold text-[#00456B]">
+                        Duties Provided
                     </h2>
-
-                    <p className="mt-4 leading-8 text-slate-600">
-                        Every family’s situation is different. Our local team can help you
-                        understand your options and create a care plan that fits your loved
-                        one’s needs.
+                    <p className="mt-5 text-lg leading-8 text-slate-600">
+                        We provide compassionate, personalized support to help clients stay
+                        safe, comfortable, and independent at home.
                     </p>
                 </div>
 
-                <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {services.map((service) => (
-                        <Link
-                            key={service.slug}
-                            href={`/${locationSlug}/${service.slug}`}
-                            className="group rounded-[32px] bg-white p-8 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    {dutiesProvided.map((duty) => (
+                        <div
+                            key={duty.name}
+                            className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
                         >
-                            <div className="mb-6 flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-[#d9f1f7] text-3xl transition group-hover:bg-[#DD8500]/15">
-                                {service.icon.startsWith("/") ? (
-                                    <Image
-                                        src={service.icon}
-                                        alt={`${service.title} icon`}
-                                        width={40}
-                                        height={40}
-                                        className="object-contain"
-                                    />
-                                ) : (
-                                    service.icon
-                                )}
+                            <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#D9F1F7]" />
+
+                            <div className="relative mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#00456B] shadow-md">
+                                <Image
+                                    src={duty.icon}
+                                    alt={`${duty.name} icon`}
+                                    width={38}
+                                    height={38}
+                                    className="object-contain brightness-0 invert"
+                                />
                             </div>
 
-                            <h3 className="text-2xl font-bold text-[#00456B] transition group-hover:text-[#DD8500]">
-                                {service.title}
+                            <h3 className="relative text-xl font-bold text-[#00456B]">
+                                {duty.name}
                             </h3>
 
-                            <p className="mt-4 leading-7 text-slate-600">
-                                {service.description}
+                            <p className="relative mt-3 text-sm leading-7 text-slate-600">
+                                Professional, attentive support tailored to each client’s daily needs
+                                and comfort.
                             </p>
-
-                            <span className="mt-6 inline-flex font-bold text-[#DD8500]">
-                                Learn More →
-                            </span>
-                        </Link>
+                        </div>
                     ))}
                 </div>
+
             </section>
 
             <section className="bg-white px-6 py-20 lg:px-8">

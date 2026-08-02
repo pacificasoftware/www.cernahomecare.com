@@ -28,7 +28,7 @@ export const locationServices = {
         title: "24 Hour Care",
         shortDescription:
             "Around-the-clock support for families who need a consistent caregiver presence in the home.",
-        image: "/assets/live-in.webp",
+        image: "/assets/respite-care.webp",
         seoTitle: "Live-In Home Care Services",
         heroTitle: "24 Hour Care for Families",
         intro:
@@ -110,6 +110,28 @@ export const locationServices = {
                 heading: "Backup care when families need it",
                 body:
                     "Whether you need a few hours, a few days, or recurring support, respite care can help reduce caregiver stress.",
+            },
+        ],
+    },
+    transportation: {
+        title: "Transportation",
+        shortDescription:
+            "Transportation support that includes a caregiver so your loved one is accompanied throughout the trip.",
+        image: "/assets/caretakers.png",
+        seoTitle: "Senior Transportation Services",
+        heroTitle: "Transportation with Caregiver Support",
+        intro:
+            "Cerna Homecare assists with transportation needs while providing a caregiver to accompany and support your loved one throughout the journey.",
+        sections: [
+            {
+                heading: "More than pickup and drop-off",
+                body:
+                    "We assist with all of your transportation needs, which includes a caregiver so your loved one is not simply picked up and dropped off.",
+            },
+            {
+                heading: "Support throughout the appointment or errand",
+                body:
+                    "A caregiver can help your loved one prepare, safely enter and exit the vehicle, attend appointments, run errands, and return home comfortably.",
             },
         ],
     },

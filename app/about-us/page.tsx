@@ -34,7 +34,7 @@ export default function AboutUsPage() {
                         <div className="about-hero-image-wrap">
                             <div className="about-hero-image-frame">
                                 <Image
-                                    src="/assets/cerna-staff.webp"
+                                    src="/assets/hands.png"
                                     alt="Cerna staff"
                                     fill
                                     priority
@@ -49,13 +49,7 @@ export default function AboutUsPage() {
                                 <h1 className="about-hero-title">Our Company and Values</h1>
 
                                 <p className="about-hero-text">
-                                    Cerna Homecare was founded in 2009 by Founder and CEO Nick Payzant
-                                    on the principle that supportive care must be flexible, high quality and
-                                    customized to the needs of the client. Our care is designed to be helping
-                                    people become more independent and add to quality of life. Our elderly
-                                    are a precious and diminishing asset, they deserve the very best and
-                                    Cerna is built on providing that level of care. We build custom tailored
-                                    care plans designed with the whole family in mind.
+                                 We enjoy our work and feel blessed to be caring for such a precious diminishing asset - our seniors
                                 </p>
 
                                 <div className="about-hero-buttons">

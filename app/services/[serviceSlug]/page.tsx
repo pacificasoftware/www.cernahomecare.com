@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { locationServices } from "@/lib/locationServices";
@@ -33,6 +33,7 @@ export function generateStaticParams() {
 
 export default async function CorporateServicePage({ params }: Props) {
     const { serviceSlug } = await params;
+
 
     const service =
         locationServices[serviceSlug as keyof typeof locationServices];
