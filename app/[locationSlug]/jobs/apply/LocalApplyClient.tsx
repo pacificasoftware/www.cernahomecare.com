@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 
-type Franchisee = {
-    franchiseeId: number;
+type location = {
+    locationId: number;
     slug: string;
     name: string;
     city: string;
@@ -15,7 +15,7 @@ type Franchisee = {
 };
 
 type Props = {
-    franchisee: Franchisee;
+    location: location;
 };
 
 type SendEmailResponse = {
@@ -41,13 +41,13 @@ function formatPhone(value: string) {
 }
 
 export default function LocalApplyClient({
-    franchisee,
+    location,
 }: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const locationName = [franchisee.city, franchisee.state]
+    const locationName = [location.city, location.state]
         .filter(Boolean)
         .join(", ");
 
@@ -116,27 +116,27 @@ export default function LocalApplyClient({
             email,
             zipCode,
 
-            franchiseeId: franchisee.franchiseeId,
-            franchiseeName: franchisee.name,
+            locationId: location.locationId,
+            locationName: location.name,
 
-            locationSlug: franchisee.slug,
-            locationCity: franchisee.city,
-            locationState: franchisee.state,
-            locationZipCode: franchisee.jobsZip ?? "",
+            locationSlug: location.slug,
+            locationCity: location.city,
+            locationState: location.state,
+            locationZipCode: location.jobsZip ?? "",
 
-            subject: `Cerna Home Care Job Application - ${franchisee.name}`,
+            subject: `Cerna Home Care Job Application - ${location.name}`,
 
             message: [
-                `New job application for ${franchisee.name}.`,
+                `New job application for ${location.name}.`,
                 "",
                 `Applicant: ${firstName} ${lastName}`,
                 `Phone: ${phone}`,
                 `Email: ${email}`,
                 `Applicant ZIP Code: ${zipCode}`,
-                `Franchisee: ${franchisee.name}`,
-                `Franchisee ID: ${franchisee.franchiseeId}`,
+                `location: ${location.name}`,
+                `location ID: ${location.locationId}`,
                 `Location: ${locationName || "Not provided"}`,
-                `Location Slug: ${franchisee.slug}`,
+                `Location Slug: ${location.slug}`,
             ].join("\n"),
 
             company: "",
@@ -180,7 +180,7 @@ export default function LocalApplyClient({
             form.reset();
 
             setSuccessMessage(
-                `Thank you! Your information has been sent to ${franchisee.name}.`
+                `Thank you! Your information has been sent to ${location.name}.`
             );
         } catch (error) {
             console.error(
@@ -210,11 +210,11 @@ export default function LocalApplyClient({
                     <div className="mx-auto mt-2 h-1 w-20 rounded-full bg-[#DD8500]" />
 
                     <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
-                        Careers with {franchisee.name}
+                        Careers with {location.name}
                     </h1>
 
                     <p className="mx-auto mt-3 max-w-3xl text-base leading-7 text-slate-700">
-                        {franchisee.name} is hiring compassionate
+                        {location.name} is hiring compassionate
                         caregivers who want to make a meaningful
                         difference for seniors and families
                         {locationName
@@ -249,20 +249,20 @@ export default function LocalApplyClient({
                         >
                             <input
                                 type="hidden"
-                                name="franchiseeId"
-                                value={franchisee.franchiseeId}
+                                name="locationId"
+                                value={location.locationId}
                             />
 
                             <input
                                 type="hidden"
-                                name="franchiseeName"
-                                value={franchisee.name}
+                                name="locationName"
+                                value={location.name}
                             />
 
                             <input
                                 type="hidden"
                                 name="locationSlug"
-                                value={franchisee.slug}
+                                value={location.slug}
                             />
 
                             <label className="grid gap-1.5">
@@ -388,7 +388,7 @@ export default function LocalApplyClient({
                         <div className="relative h-[260px] w-full">
                             <Image
                                 src="/assets/love-work-400x269.webp"
-                                alt={`Caregiver team at ${franchisee.name}`}
+                                alt={`Caregiver team at ${location.name}`}
                                 fill
                                 sizes="(max-width: 1024px) 100vw, 50vw"
                                 className="object-cover"
@@ -407,12 +407,12 @@ export default function LocalApplyClient({
                             </h2>
 
                             <p className="mt-5 text-lg leading-8 text-slate-700">
-                                {franchisee.name} is always looking
+                                {location.name} is always looking
                                 for caring, dependable people who
                                 want to provide excellent support to
                                 clients and families
-                                {franchisee.city
-                                    ? ` throughout ${franchisee.city} and nearby communities`
+                                {location.city
+                                    ? ` throughout ${location.city} and nearby communities`
                                     : ""}.
                             </p>
 
@@ -453,18 +453,18 @@ export default function LocalApplyClient({
                                             leadership, and
                                             opportunities to grow your
                                             caregiving career with{" "}
-                                            {franchisee.name}.
+                                            {location.name}.
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
-                            {franchisee.phone ? (
+                            {location.phone ? (
                                 <a
-                                    href={franchisee.phoneHref}
+                                    href={location.phoneHref}
                                     className="mt-8 inline-flex rounded-lg bg-[#00456B] px-6 py-4 text-sm font-extrabold text-white transition hover:bg-[#003a5a]"
                                 >
-                                    Call {franchisee.phone}
+                                    Call {location.phone}
                                 </a>
                             ) : null}
                         </div>

@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 type CareersApplicationFormProps = {
-    franchiseeId: number;
+    locationId: number;
     jobId: number;
     appliedZipCode?: string | null;
     locationSlug: string;
     jobTitle?: string | null;
-    franchiseeName?: string | null;
+    locationName?: string | null;
     jobCity?: string | null;
     jobState?: string | null;
     distanceMiles?: number | null;
@@ -31,12 +31,12 @@ function formatPhone(value: string) {
     )}`;
 } 
 export default function CareersApplicationForm({
-    franchiseeId,
+    locationId,
     jobId,
     appliedZipCode,
     locationSlug,
     jobTitle,
-    franchiseeName,
+    locationName,
     jobCity,
     jobState,
     distanceMiles,
@@ -63,9 +63,9 @@ export default function CareersApplicationForm({
                     </p>
                 ) : null}
 
-                {franchiseeName ? (
+                {locationName ? (
                     <p className="mt-1 text-sm font-semibold text-slate-500">
-                        {franchiseeName}
+                        {locationName}
                     </p>
                 ) : null}
             </section>
@@ -83,7 +83,7 @@ export default function CareersApplicationForm({
 
                         <p className="mt-2 text-sm font-semibold text-slate-600">
                             {[
-                                franchiseeName,
+                                locationName,
                                 [jobCity, jobState].filter(Boolean).join(", "),
                                 distanceMiles !== null && distanceMiles !== undefined
                                     ? `${distanceMiles.toFixed(1)} miles away`
@@ -218,8 +218,8 @@ export default function CareersApplicationForm({
                 >
                     <input
                         type="hidden"
-                        name="FranchiseeId"
-                        value={franchiseeId}
+                        name="locationId"
+                        value={locationId}
                     />
 
                     <input

@@ -7,11 +7,11 @@ import styles from "./Navbar.module.css";
 
 const corporateServiceLinks = [
     { href: "/services/specialized-care", label: "Specialized Care" },
-    { href: "/services/live-in-care", label: "24 Hour Care" },
-    { href: "/services/memory-dementia-care", label: "Memory & Dementia Care" },
-    { href: "/services/Covered-care", label: "Covered Care" },
+    { href: "/services/memory-care", label: "Memory Care" },
+    { href: "/services/covered-care", label: "Covered Care" },  
     { href: "/services/companion-care", label: "Companion Care" },
-    { href: "/services/respite-care", label: "Respite Care" },
+    { href: "/services/care-management", label: "Care Management" },
+    { href: "/services/transportation", label: "Transportation" },
     { href: "/services/mysafepatch", label: "MySafePatch" },
 ];
 
@@ -93,19 +93,18 @@ const locationNavConfig: Record<
         phoneHref: "tel:18137766099",
         showCareers: true,
     },
-};
+}; 
 
 // Menu Options for Location Pages
 const locationServiceSlugs = [
-    { slug: "specialized-care", label: "Specialized Care" },
-    { slug: "live-in-care", label: "24 Hour Care" },
-    { slug: "memory-dementia-care", label: "Memory & Dementia Care" },
-    { slug: "Covered-care", label: "Covered Care" },
+    { slug: "specialized-care", label: "Specialized Care" }, 
+    { slug: "memory-care", label: "Memory Care" },
+    { slug: "covered-care", label: "Covered Care" }, 
     { slug: "companion-care", label: "Companion Care" },
-    { slug: "respite-care", label: "Respite Care" },
+    { slug: "care-management", label: "Care Management" },
+    { slug: "transportation", label: "Transportation" },
     { slug: "mysafepatch", label: "MySafePatch" },
-];
-
+]; 
 
 export default function Navbar() {
     const pathname = usePathname();

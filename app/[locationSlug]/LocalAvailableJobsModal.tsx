@@ -6,11 +6,11 @@ import { useState } from "react";
 
 type LocalJob = {
     jobId: number;
-    franchiseeId: number;
-    franchiseeName: string;
-    franchiseeCity: string;
-    franchiseeState: string;
-    franchiseeZipCode: string;
+    locationId: number;
+    locationName: string;
+    locationCity: string;
+    locationState: string;
+    locationZipCode: string;
     jobTitle: string;
     jobType?: string | null;
     shiftType?: string | null;
@@ -24,8 +24,8 @@ type LocalJob = {
 };
 
 type Props = {
-    franchiseeId: number;
-    franchiseeName: string;
+    locationId: number;
+    locationName: string;
     city: string;
     state: string;
     jobsZip?: string | null;
@@ -33,8 +33,8 @@ type Props = {
 };
 
 export default function LocalAvailableJobsModal({
-    franchiseeId,
-    franchiseeName,
+    locationId,
+    locationName,
     city,
     state,
     jobsZip,
@@ -83,7 +83,7 @@ export default function LocalAvailableJobsModal({
             }
 
             if (!response.ok) {
-                setErrorMessage(`No open jobs were found for ${franchiseeName} right now.`);
+                setErrorMessage(`No open jobs were found for ${locationName} right now.`);
                 return;
             }
 
@@ -107,11 +107,11 @@ export default function LocalAvailableJobsModal({
 
             const normalizedJobs = rawJobs.map((job) => ({
                 jobId: job.jobId ?? job.JobId,
-                franchiseeId: job.franchiseeId ?? job.FranchiseeId,
-                franchiseeName: job.franchiseeName ?? job.FranchiseeName,
-                franchiseeCity: job.franchiseeCity ?? job.FranchiseeCity,
-                franchiseeState: job.franchiseeState ?? job.FranchiseeState,
-                franchiseeZipCode: job.franchiseeZipCode ?? job.FranchiseeZipCode,
+                locationId: job.locationId ?? job.locationId,
+                locationName: job.locationName ?? job.locationName,
+                locationCity: job.locationCity ?? job.locationCity,
+                locationState: job.locationState ?? job.locationState,
+                locationZipCode: job.locationZipCode ?? job.locationZipCode,
 
                 jobTitle: job.jobTitle ?? job.JobTitle,
                 jobType: job.jobType ?? job.JobType,
@@ -127,7 +127,7 @@ export default function LocalAvailableJobsModal({
 
 
             const filteredJobs = normalizedJobs
-                .filter((job) => Number(job.franchiseeId) === Number(franchiseeId))
+                .filter((job) => Number(job.locationId) === Number(locationId))
                 .sort((a, b) => {
                     const sortA = a.sortOrder ?? 999;
                     const sortB = b.sortOrder ?? 999;
@@ -138,7 +138,7 @@ export default function LocalAvailableJobsModal({
                 });
 
             if (filteredJobs.length === 0) {
-                setErrorMessage(`No open jobs were found for ${franchiseeName} right now.`);
+                setErrorMessage(`No open jobs were found for ${locationName} right now.`);
                 return;
             }
 
@@ -190,7 +190,7 @@ export default function LocalAvailableJobsModal({
                                 </h1>
 
                                 <p className="mx-auto mt-3 max-w-3xl text-base leading-7 text-slate-700">
-                                    View current caregiver opportunities for {franchiseeName}.
+                                    View current caregiver opportunities for {locationName}.
                                 </p>
                             </div>
                         </section>
@@ -210,7 +210,7 @@ export default function LocalAvailableJobsModal({
 
                                     <p className="mt-3 text-base leading-7 text-white/85">
                                         Select one of the available positions below to begin your
-                                        application with {franchiseeName}.
+                                        application with {locationName}.
                                     </p>
 
                                     {isLoading && (
@@ -352,7 +352,7 @@ export default function LocalAvailableJobsModal({
                                         </h2>
 
                                         <p className="mt-5 text-lg leading-8 text-slate-700">
-                                            {franchiseeName} is hiring compassionate caregivers who
+                                            {locationName} is hiring compassionate caregivers who
                                             want to make a meaningful difference for seniors and
                                             families in {city}.
                                         </p>

@@ -204,7 +204,7 @@ export default function LocalGettingStartedContactPage({ params }: Props) {
             ].join("\n"),
 
             company: "",
-            franchiseeId: null,
+            locationId: null,
             locationSlug,
         };
 

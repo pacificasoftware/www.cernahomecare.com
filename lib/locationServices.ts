@@ -25,25 +25,25 @@ export const locationServices = {
     },
 
     "live-in-care": {
-        title: "24 Hour Care",
+        title: "Covered Care",
         shortDescription:
             "Around-the-clock support for families who need a consistent caregiver presence in the home.",
         image: "/assets/respite-care.webp",
         seoTitle: "Live-In Home Care Services",
-        heroTitle: "24 Hour Care for Families",
+        heroTitle: "Covered Care for Families",
         intro:
-            "24 Hour Care can provide peace of mind for families who want their loved one supported at home instead of moving into a facility.",
+            "Covered Care can provide peace of mind for families who want their loved one supported at home instead of moving into a facility.",
         sections: [
             {
                 heading: "Consistent care in the home",
                 body:
-                    "24 Hour Care helps provide continuity, companionship, and assistance with daily needs while allowing clients to remain in familiar surroundings.",
+                    "Covered Care helps provide continuity, companionship, and assistance with daily needs while allowing clients to remain in familiar surroundings.",
             },
         ],
     },
 
-    "memory-dementia-care": {
-        title: "Memory & Dementia Care",
+    "memory-care": {
+        title: "Memory Care",
         shortDescription:
             "Specialized support for Alzheimer’s, dementia, memory loss, confusion, and changing care needs.",
         image: "/assets/memory2.webp",
@@ -60,7 +60,7 @@ export const locationServices = {
         ],
     },
 
-    "Covered-care": {
+    "covered-care": {
         title: "Covered Care",
         shortDescription:
             "Short-term home support after surgery, hospitalization, rehab, or a health setback.",
@@ -96,13 +96,13 @@ export const locationServices = {
         ],
     },
 
-    "respite-care": {
-        title: "Respite Care",
+    "care-management": {
+        title: "Care Management",
         shortDescription:
             "Temporary relief for family caregivers who need rest, travel coverage, or backup support.",
         image: "/assets/caregiver-helping-elderly-patient-hero.png",
-        seoTitle: "Respite Care Services",
-        heroTitle: "Respite Care for Family Caregivers",
+        seoTitle: "Care Management Services",
+        heroTitle: "Care Managment for Family Caregivers",
         intro:
             "Respite care gives family caregivers time to rest while knowing their loved one is being supported at home.",
         sections: [
@@ -113,7 +113,7 @@ export const locationServices = {
             },
         ],
     },
-    transportation: {
+    "transportation": {
         title: "Transportation",
         shortDescription:
             "Transportation support that includes a caregiver so your loved one is accompanied throughout the trip.",

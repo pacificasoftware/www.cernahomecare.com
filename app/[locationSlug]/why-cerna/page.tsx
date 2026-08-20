@@ -1,7 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 
-const franchisees: Record<
+const locations: Record<
     string,
     {
         name: string;
@@ -163,9 +163,9 @@ type PageProps = {
 
 export default async function LocalWhyCernaPage({ params }: PageProps) {
     const { locationSlug } = await params;
-    const franchisee = franchisees[locationSlug];
+    const location = locations[locationSlug];
 
-    if (!franchisee) {
+    if (!location) {
         return (
             <main className="px-6 py-20">
                 <h1 className="text-3xl font-bold text-[#00456B]">
@@ -197,17 +197,17 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
                 <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 lg:px-8">
                     <div>
                         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#DD8500]">
-                            Why Cerna {franchisee.areaName}
+                            Why Cerna {location.areaName}
                         </p>
 
                         <h1 className="text-4xl font-bold tracking-tight text-[#00456B] md:text-5xl">
                             A Better Home Care Experience for Families in{" "}
-                            {franchisee.areaName}
+                            {location.areaName}
                         </h1>
 
                         <p className="mt-6 text-lg leading-8 text-slate-700">
                             Choosing care for a loved one is a big decision. At{" "}
-                            {franchisee.name}, we combine compassionate local support with
+                            {location.name}, we combine compassionate local support with
                             Cerna’s commitment to dependable, personalized, and professional
                             in-home care.
                         </p>
@@ -221,18 +221,18 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
                             </Link>
 
                             <a
-                                href={franchisee.phoneHref}
+                                href={location.phoneHref}
                                 className="rounded-full bg-white px-7 py-3 text-sm font-bold text-[#00456B] shadow-sm ring-1 ring-slate-200 transition hover:text-[#DD8500]"
                             >
-                                Call {franchisee.phone}
+                                Call {location.phone}
                             </a>
                         </div>
                     </div>
 
                     <div className="relative mx-auto h-[320px] w-full max-w-[560px] overflow-hidden rounded-[46px] bg-white shadow-xl md:h-[420px]">
                         <Image
-                            src={franchisee.image}
-                            alt={`${franchisee.name} office`}
+                            src={location.image}
+                            alt={`${location.name} office`}
                             fill
                             priority
                             sizes="(max-width: 768px) 100vw, 560px"
@@ -301,7 +301,7 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
                         </p>
 
                         <p className="mt-4 leading-8 text-white/85">
-                            Our {franchisee.areaName} team starts by understanding your
+                            Our {location.areaName} team starts by understanding your
                             loved one’s routine, personality, health concerns, home
                             environment, and family priorities. From there, we help recommend
                             a practical care plan.
@@ -317,13 +317,13 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
 
                     <div className="rounded-[36px] bg-slate-50 p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
                         <h3 className="text-2xl font-bold text-[#00456B]">
-                            Services Available in {franchisee.areaName}
+                            Services Available in {location.areaName}
                         </h3>
 
                         <ul className="mt-6 space-y-4 leading-7 text-slate-700">
                             <li>✓ Specialized Care</li>
-                            <li>✓ 24 Hour Care</li>
-                            <li>✓ Memory & Dementia Care</li>
+                            <li>✓ Covered Care</li>
+                            <li>✓ Memory Care</li>
                             <li>✓ Covered Care</li>
                             <li>✓ Companion Care</li>
                             <li>✓ Respite Care</li>
@@ -390,7 +390,7 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
             <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
                 <div className="rounded-[40px] bg-gradient-to-br from-[#e8f7fb] to-white p-8 text-center shadow-xl ring-1 ring-slate-200 md:p-14">
                     <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                        Cerna Home Care {franchisee.areaName}
+                        Cerna Home Care {location.areaName}
                     </p>
 
                     <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold tracking-tight text-[#00456B] md:text-4xl">
@@ -398,16 +398,16 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
                     </h2>
 
                     <p className="mx-auto mt-5 max-w-2xl leading-8 text-slate-600">
-                        Contact {franchisee.name} to discuss your family’s situation and
+                        Contact {location.name} to discuss your family’s situation and
                         learn how our local team can help.
                     </p>
 
                     <div className="mt-8 flex flex-wrap justify-center gap-4">
                         <a
-                            href={franchisee.phoneHref}
+                            href={location.phoneHref}
                             className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white transition hover:bg-[#c67600]"
                         >
-                            Call {franchisee.phone}
+                            Call {location.phone}
                         </a>
 
                         <Link
@@ -419,7 +419,7 @@ export default async function LocalWhyCernaPage({ params }: PageProps) {
                     </div>
 
                     <p className="mt-6 text-sm text-slate-500">
-                        {franchisee.address}
+                        {location.address}
                     </p>
                 </div>
             </section>

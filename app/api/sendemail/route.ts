@@ -22,7 +22,7 @@ function isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function parseFranchiseeId(
+function parselocationId(
     value: unknown
 ): number | null {
     if (
@@ -215,9 +215,9 @@ export async function POST(req: Request) {
             );
         }
 
-        const franchiseeId =
-            parseFranchiseeId(
-                body.franchiseeId
+        const locationId =
+            parselocationId(
+                body.locationId
             );
 
         let locationSlug =
@@ -226,7 +226,7 @@ export async function POST(req: Request) {
             );
 
         if (
-            !franchiseeId &&
+            !locationId &&
             !locationSlug
         ) {
             locationSlug =
@@ -248,7 +248,7 @@ export async function POST(req: Request) {
             "General Contact";
 
         const locationIdForMessage =
-            franchiseeId?.toString() ||
+            locationId?.toString() ||
             "Not supplied";
 
         const locationSlugForMessage =
@@ -323,7 +323,7 @@ export async function POST(req: Request) {
             subject,
             message,
             purpose,
-            franchiseeId,
+            locationId,
             locationSlug:
                 locationSlug || null,
         };
@@ -333,7 +333,7 @@ export async function POST(req: Request) {
             {
                 backendUrl,
                 purpose,
-                franchiseeId,
+                locationId,
                 locationSlug,
             }
         );
@@ -374,7 +374,7 @@ export async function POST(req: Request) {
                     status:
                         apiResponse.status,
                     responseText,
-                    franchiseeId,
+                    locationId,
                     locationSlug,
                     purpose,
                 }
@@ -412,7 +412,7 @@ export async function POST(req: Request) {
             message:
                 "Email sent successfully.",
             location: {
-                franchiseeId,
+                locationId,
                 locationSlug,
             },
         });

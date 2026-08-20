@@ -1,8 +1,8 @@
 import Link from "next/link";
 import LocalJobsClientV2 from "./LocalJobsClientV2";
 
-type Franchisee = {
-    franchiseeId: number;
+type location = {
+    locationId: number;
     slug: string;
     name: string;
     city: string;
@@ -18,9 +18,9 @@ type PageProps = {
     }>;
 };
 
-async function getFranchisee(
+async function getlocation(
     locationSlug: string
-): Promise<Franchisee | null> {
+): Promise<location | null> {
     const apiBaseUrl =
         process.env.API_BASE_URL ||
         process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -31,7 +31,7 @@ async function getFranchisee(
             `${apiBaseUrl.replace(
                 /\/$/,
                 ""
-            )}/api/public/franchisees/${encodeURIComponent(locationSlug)}`,
+            )}/api/public/locations/${encodeURIComponent(locationSlug)}`,
             {
                 method: "GET",
                 headers: {
@@ -45,9 +45,9 @@ async function getFranchisee(
             return null;
         }
 
-        return (await response.json()) as Franchisee;
+        return (await response.json()) as location;
     } catch (error) {
-        console.error("Franchisee lookup failed:", error);
+        console.error("location lookup failed:", error);
         return null;
     }
 }
@@ -55,9 +55,9 @@ async function getFranchisee(
 export default async function LocalJobsPage({ params }: PageProps) {
     const { locationSlug } = await params;
 
-    const franchisee = await getFranchisee(locationSlug);
+    const location = await getlocation(locationSlug);
 
-    if (!franchisee) {
+    if (!location) {
         return (
             <main className="px-6 py-20">
                 <h1 className="text-3xl font-black text-[#00456B]">
@@ -81,7 +81,7 @@ export default async function LocalJobsPage({ params }: PageProps) {
 
     return (
         <LocalJobsClientV2
-            franchisee={franchisee}
+            location={location}
             locationSlug={locationSlug}
         />
     );

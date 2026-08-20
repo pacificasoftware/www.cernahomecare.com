@@ -6,7 +6,7 @@ REM Cerna Home Care Website - PRODUCTION Deploy
 REM ==========================================
 
 REM Local project folder
-set "SRC=C:\SourceCode\CERNA\www.cernahomecare.com"
+set "SRC=C:\SourceCode\CERNA_HEALTH_CARE\CERNA_HOME_CARE\www.cernahomecare.com>"
 
 REM Server connection
 set "SERVER=198.71.51.74"

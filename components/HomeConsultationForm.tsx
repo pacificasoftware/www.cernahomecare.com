@@ -4,7 +4,7 @@ import { useState } from "react";
 
 type HomeConsultationFormProps = {
     locationSlug?: string | null;
-    franchiseeId?: number | null;
+    locationId?: number | null;
 };
 
 function clean(value: unknown) {
@@ -13,7 +13,7 @@ function clean(value: unknown) {
 
 export default function HomeConsultationForm({
     locationSlug = null,
-    franchiseeId = null,
+    locationId = null,
 }: HomeConsultationFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -70,7 +70,7 @@ export default function HomeConsultationForm({
                     .join("\n"),
 
                 company: "",
-               franchiseeId,
+               locationId,
                 locationSlug,
             };
 

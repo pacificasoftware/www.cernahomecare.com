@@ -19,76 +19,78 @@ type HomeConsultationFormProps = {
     locationState?: string;
 };
 
-const services = [
-    { name: "Companionship", icon: "/assets/icons/Companionship.webp" },
-    { name: "Appointments", icon: "/assets/icons/Appointments.webp" },
-    { name: "Bathing", icon: "/assets/icons/Bathing.webp" },
-    { name: "Cooking", icon: "/assets/icons/Cooking.webp" },
-    { name: "Dressing", icon: "/assets/icons/Dressing.webp" },
-    { name: "Errands", icon: "/assets/icons/Errands.webp" },
-    { name: "Exercise", icon: "/assets/icons/Exersize.webp" },
-    { name: "Grooming", icon: "/assets/icons/Grooming.webp" },
-    { name: "Laundry", icon: "/assets/icons/Laundry.webp" },
-    { name: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
-    { name: "Mobility", icon: "/assets/icons/Mobility.webp" },
-    { name: "Pets", icon: "/assets/icons/Pets.webp" },
-    { name: "Showering", icon: "/assets/icons/Shoering.webp" },
-    { name: "Toileting", icon: "/assets/icons/Toileting.webp" },
-    { name: "Transfering", icon: "/assets/icons/Transfering.webp" },
-    { name: "Transportation", icon: "/assets/icons/Transportation.webp" },
-];
+//const services = [
+//    { name: "Companionship", icon: "/assets/icons/Companionship.webp" },
+//    { name: "Appointments", icon: "/assets/icons/Appointments.webp" },
+//    { name: "Bathing", icon: "/assets/icons/Bathing.webp" },
+//    { name: "Cooking", icon: "/assets/icons/Cooking.webp" },
+//    { name: "Dressing", icon: "/assets/icons/Dressing.webp" },
+//    { name: "Errands", icon: "/assets/icons/Errands.webp" },
+//    { name: "Exercise", icon: "/assets/icons/Exersize.webp" },
+//    { name: "Grooming", icon: "/assets/icons/Grooming.webp" },
+//    { name: "Laundry", icon: "/assets/icons/Laundry.webp" },
+//    { name: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
+//    { name: "Mobility", icon: "/assets/icons/Mobility.webp" },
+//    { name: "Pets", icon: "/assets/icons/Pets.webp" },
+//    { name: "Showering", icon: "/assets/icons/Shoering.webp" },
+//    { name: "Toileting", icon: "/assets/icons/Toileting.webp" },
+//    { name: "Transfering", icon: "/assets/icons/Transfering.webp" },
+//    { name: "Transportation", icon: "/assets/icons/Transportation.webp" },
+//];
 
-const serviceCategories = [
-    {
-        title: "Specialized Care",
-        slug: "specialized-care",
-        description:
-            "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
-        image: "/assets/specialized-care.webp",
-    },
-    {
-        title: "24 Hour Care",
-        slug: "24hr-care",
-        description:
-            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
-        image: "/assets/respite-care.webp",
-    },
-    {
-        title: "Memory & Dementia Care",
-        slug: "memory-dementia-care",
-        description:
-            "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
-        image: "/assets/group.png",
-    },
-    {
-        title: "Covered Care",
-        slug: "covered-care",
-        description:
-            "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
-        image: "/assets/caretaker_with_lady.png",
-    },
-    {
-        title: "Companion Care",
-        slug: "companion-care",
-        description:
-            "Friendly support, conversation, errands, light activities, appointments, meal support, and help reducing isolation.",
-        image: "/assets/man_with_caretaker.png",
-    },
-    {
-        title: "Respite Care",
-        slug: "respite-care",
-        description:
-            "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
-        image: "/assets/lady_on_couch.png",
-    },
-    {
-        title: "Transportation",
-        slug: "transportation",
-        description:
-            "We assist with all of your transportation needs, which includes a caregiver so your loved one is not simply picked up and dropped off.",
-        image: "/assets/caretakers.png",
-    },
-];
+//const serviceCategories = [
+//    {
+//        title: "Specialized Care",
+//        slug: "specialized-care",
+//        description:
+//            "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
+//        image: "/assets/specialized-care.webp",
+//    },
+//    {
+//        title: "Covered Care",
+//        slug: "24hr-care",
+//        description:
+//            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
+//        image: "/assets/respite-care.webp",
+//    },
+//    {
+//        title: "Memory & Dementia Care",
+//        slug: "memory-dementia-care",
+//        description:
+//            "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
+//        image: "/assets/group.png",
+//    },
+//    {
+//        title: "Covered Care",
+//        slug: "covered-care",
+//        description:
+//            "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
+//        image: "/assets/caretaker_with_lady.png",
+//    },
+//    {
+//        title: "Companion Care",
+//        slug: "companion-care",
+//        description:
+//            "Friendly support, conversation, errands, light activities, appointments, meal support, and help reducing isolation.",
+//        image: "/assets/man_with_caretaker.png",
+//    },
+//    {
+//        title: "Respite Care",
+//        slug: "respite-care",
+//        description:
+//            "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
+//        image: "/assets/lady_on_couch.png",
+//    },
+//    {
+//        title: "Transportation",
+//        slug: "transportation",
+//        description:
+//            "We assist with all of your transportation needs, which includes a caregiver so your loved one is not simply picked up and dropped off.",
+//        image: "/assets/caretakers.png",
+//    },
+//];
+
+
 export default async function LocationPage({ params }: Props) {
     const { locationSlug } = await params;
     const location = locations[locationSlug as keyof typeof locations];

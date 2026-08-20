@@ -7,7 +7,7 @@ type Props = {
     locationState?: string;
     serviceTitle?: string;
     locationSlug: string;
-    franchiseeId?: number | null;
+    locationId?: number | null;
 };
 
 function clean(value: unknown) {
@@ -19,7 +19,7 @@ export default function LocationMiniContactForm({
     locationState = "",
     serviceTitle = "Home Care",
     locationSlug,
-    franchiseeId = null,
+    locationId = null,
 }: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -75,7 +75,7 @@ export default function LocationMiniContactForm({
 
                 company: clean(formData.get("company")),
 
-                franchiseeId: franchiseeId ?? null,
+                locationId: locationId ?? null,
                 locationSlug,
             };
 

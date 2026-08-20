@@ -89,7 +89,7 @@ const steps = [
     {
         number: "1",
         title: "Enter your ZIP",
-        text: "Find openings at the franchise near you",
+        text: "Find openings at the location near you",
     },
     {
         number: "2",
@@ -182,7 +182,7 @@ export default function CareersPage() {
 
     const [jobsLoading, setJobsLoading] = useState(false);
     const [jobsError, setJobsError] = useState("");
-    const [jobGroups, setJobGroups] = useState<FranchiseeJobGroup[]>([]);
+    const [jobGroups, setJobGroups] = useState<locationJobGroup[]>([]);
 
     async function loadJobsNearZip() {
         if (zipCode.length !== 5) {
@@ -279,11 +279,11 @@ export default function CareersPage() {
 
             const jobs = rawJobs.map((job) => ({
                 jobId: job.jobId ?? job.JobId,
-                franchiseeId: job.franchiseeId ?? job.FranchiseeId,
-                franchiseeName: job.franchiseeName ?? job.FranchiseeName,
-                franchiseeCity: job.franchiseeCity ?? job.FranchiseeCity,
-                franchiseeState: job.franchiseeState ?? job.FranchiseeState,
-                franchiseeZipCode: job.franchiseeZipCode ?? job.FranchiseeZipCode,
+                locationId: job.locationId ?? job.locationId,
+                locationName: job.locationName ?? job.locationName,
+                locationCity: job.locationCity ?? job.locationCity,
+                locationState: job.locationState ?? job.locationState,
+                locationZipCode: job.locationZipCode ?? job.locationZipCode,
 
                 jobTitle: job.jobTitle ?? job.JobTitle,
                 jobType: job.jobType ?? job.JobType,
@@ -308,15 +308,15 @@ export default function CareersPage() {
                 return;
             } 
           
-            const grouped = jobs.reduce<Record<number, FranchiseeJobGroup>>(
+            const grouped = jobs.reduce<Record<number, locationJobGroup>>(
                 (acc, job) => {
-                    if (!acc[job.franchiseeId]) {
-                        acc[job.franchiseeId] = {
-                            franchiseeId: job.franchiseeId,
-                            franchiseeName: job.franchiseeName,
-                            franchiseeCity: job.franchiseeCity,
-                            franchiseeState: job.franchiseeState,
-                            franchiseeZipCode: job.franchiseeZipCode,
+                    if (!acc[job.locationId]) {
+                        acc[job.locationId] = {
+                            locationId: job.locationId,
+                            locationName: job.locationName,
+                            locationCity: job.locationCity,
+                            locationState: job.locationState,
+                            locationZipCode: job.locationZipCode,
                             distanceMiles: job.distanceMiles,
                             latitude: job.latitude,
                             longitude: job.longitude,
@@ -324,7 +324,7 @@ export default function CareersPage() {
                         };
                     }
 
-                    acc[job.franchiseeId].jobs.push(job);
+                    acc[job.locationId].jobs.push(job);
                     return acc;
                 },
                 {}
@@ -344,11 +344,11 @@ export default function CareersPage() {
 
     type PublicJob = {
         jobId: number;
-        franchiseeId: number;
-        franchiseeName: string;
-        franchiseeCity: string;
-        franchiseeState: string;
-        franchiseeZipCode: string;
+        locationId: number;
+        locationName: string;
+        locationCity: string;
+        locationState: string;
+        locationZipCode: string;
 
         jobTitle: string;
         jobType?: string | null;
@@ -365,12 +365,12 @@ export default function CareersPage() {
         longitude?: number | null;
     };
 
-    type FranchiseeJobGroup = {
-        franchiseeId: number;
-        franchiseeName: string;
-        franchiseeCity: string;
-        franchiseeState: string;
-        franchiseeZipCode: string;
+    type locationJobGroup = {
+        locationId: number;
+        locationName: string;
+        locationCity: string;
+        locationState: string;
+        locationZipCode: string;
         distanceMiles?: number | null;
         latitude?: number | null;
         longitude?: number | null;
@@ -985,7 +985,7 @@ export default function CareersPage() {
                                     <div className="mt-6 grid gap-5">
                                         {jobGroups.map((group) => (
                                             <div
-                                                key={group.franchiseeId}
+                                                key={group.locationId}
                                                 className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
                                             >
                                                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -999,11 +999,11 @@ export default function CareersPage() {
                                                         {/*            target="_blank"*/}
                                                         {/*            rel="noreferrer"*/}
                                                         {/*            className="block shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-200 shadow-sm transition hover:opacity-90"*/}
-                                                        {/*            aria-label={`Open map for ${group.franchiseeName}`}*/}
+                                                        {/*            aria-label={`Open map for ${group.locationName}`}*/}
                                                         {/*        >*/}
                                                         {/*            <img*/}
                                                         {/*                src={getGoogleMapImageUrl(group.latitude, group.longitude)}*/}
-                                                        {/*                alt={`Map for ${group.franchiseeName}`}*/}
+                                                        {/*                alt={`Map for ${group.locationName}`}*/}
                                                         {/*                className="h-24 w-24 object-cover"*/}
                                                         {/*            />*/}
                                                         {/*        </a>*/}
@@ -1011,12 +1011,12 @@ export default function CareersPage() {
 
                                                         <div>
                                                             <h3 className="text-xl font-black text-[#00456B]">
-                                                                {group.franchiseeName}
+                                                                {group.locationName}
                                                             </h3>
 
                                                             <p className="mt-1 text-sm font-semibold text-slate-500">
-                                                                {group.franchiseeCity}, {group.franchiseeState}{" "}
-                                                                {group.franchiseeZipCode}
+                                                                {group.locationCity}, {group.locationState}{" "}
+                                                                {group.locationZipCode}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -1131,7 +1131,7 @@ export default function CareersPage() {
 
                                                     {selectedPopupJob && (
                                                         <p className="mt-1 text-sm font-semibold text-slate-500">
-                                                            {selectedPopupJob.franchiseeName}
+                                                            {selectedPopupJob.locationName}
                                                             {selectedPopupJob.distanceMiles !== null &&
                                                                 selectedPopupJob.distanceMiles !== undefined && (
                                                                     <>
@@ -1185,9 +1185,9 @@ export default function CareersPage() {
                                     </h3>
 
                                     <p className="mt-1 text-sm font-semibold text-white/90">
-                                        {selectedPopupJob.franchiseeName} •{" "}
-                                        {selectedPopupJob.franchiseeCity},{" "}
-                                        {selectedPopupJob.franchiseeState}
+                                        {selectedPopupJob.locationName} •{" "}
+                                        {selectedPopupJob.locationCity},{" "}
+                                        {selectedPopupJob.locationState}
 
                                         {selectedPopupJob.distanceMiles !== null &&
                                             selectedPopupJob.distanceMiles !== undefined && (
@@ -1209,8 +1209,8 @@ export default function CareersPage() {
                                         const formData = new FormData(form);
 
                                         formData.append(
-                                            "FranchiseeId",
-                                            String(selectedPopupJob.franchiseeId)
+                                            "locationId",
+                                            String(selectedPopupJob.locationId)
                                         );
                                         formData.append("JobId", String(selectedPopupJob.jobId));
                                         formData.append("AppliedZipCode", zipCode);
@@ -1304,8 +1304,8 @@ export default function CareersPage() {
                                 >
                                     <input
                                         type="hidden"
-                                        name="FranchiseeId"
-                                        value={selectedPopupJob.franchiseeId}
+                                        name="locationId"
+                                        value={selectedPopupJob.locationId}
                                     />
 
                                     <input

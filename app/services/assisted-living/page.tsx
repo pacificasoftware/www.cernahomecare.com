@@ -11,7 +11,7 @@ const careOptions = [
     "Assisted Living",
     "Residential Care Homes",
     "Memory Care",
-    "Respite Care",
+    "Covered Care",
     "Skilled Nursing",
     "Senior Housing",
 ];

@@ -230,7 +230,7 @@
 }
 
 .storySection,
-.franchiseSection,
+.locationSection,
 .careSection {
     padding: 4rem 2rem;
 }
@@ -248,14 +248,14 @@
 }
 
 .storySection p,
-.franchiseSection p,
+.locationSection p,
 .careSection p {
     line-height: 1.4;
     margin-bottom: 1rem;
 }
 
-.franchiseSection h2,
-.franchiseSection h3 {
+.locationSection h2,
+.locationSection h3 {
     font-size: 32px;
     font-weight: 700;
     color: #004870;
@@ -263,30 +263,30 @@
     margin-bottom: 1rem;
 }
 
-.franchiseSection {
+.locationSection {
     padding: 4rem 2rem;
     text-align: center;
 }
 
-    .franchiseSection p {
+    .locationSection p {
         line-height: 1.4;
         margin: 0 auto 1rem;
         max-width: 900px;
     }
 
-    .franchiseSection h2,
-    .franchiseSection h3 {
+    .locationSection h2,
+    .locationSection h3 {
         text-align: center;
     }
 
-    .franchiseSection ul {
+    .locationSection ul {
         display: inline-block;
         text-align: left;
         margin: 0 auto 1.5rem;
         padding-left: 1.5rem;
     }
 
-    .franchiseSection li {
+    .locationSection li {
         margin-bottom: 0.5rem;
     }
 

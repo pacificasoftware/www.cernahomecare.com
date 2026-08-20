@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 type RouteContext = {
     params: Promise<{
-        franchiseeId: string;
+        locationId: string;
     }>;
 };
 
@@ -12,12 +12,12 @@ export async function GET(
     request: Request,
     context: RouteContext
 ) {
-    const { franchiseeId } = await context.params;
-    const parsedId = Number(franchiseeId);
+    const { locationId } = await context.params;
+    const parsedId = Number(locationId);
 
     if (!Number.isInteger(parsedId) || parsedId <= 0) {
         return NextResponse.json(
-            { message: "Invalid franchiseeId." },
+            { message: "Invalid locationId." },
             { status: 400 }
         );
     }
@@ -29,7 +29,7 @@ export async function GET(
 
     const apiUrl =
         `${apiBaseUrl.replace(/\/$/, "")}` +
-        `/api/public/jobs/active/franchisee/${parsedId}`;
+        `/api/public/jobs/active/location/${parsedId}`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -44,7 +44,7 @@ export async function GET(
 
         if (!response.ok) {
             console.error(
-                "Franchisee jobs API failed:",
+                "location jobs API failed:",
                 response.status,
                 apiUrl,
                 body
@@ -60,10 +60,10 @@ export async function GET(
             },
         });
     } catch (error) {
-        console.error("Franchisee jobs proxy failed:", error);
+        console.error("location jobs proxy failed:", error);
 
         return NextResponse.json(
-            { message: "Unable to load franchisee jobs." },
+            { message: "Unable to load location jobs." },
             { status: 500 }
         );
     }

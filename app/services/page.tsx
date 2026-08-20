@@ -31,26 +31,19 @@ const serviceCategories = [
         image: "/assets/specialized-care.webp",
     },
     {
-        title: "24 Hour Care",
-        slug: "24hr-care",
-        description:
-            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
-        image: "/assets/respite-care.webp",
-    },
-    {
-        title: "Memory & Dementia Care",
-        slug: "memory-dementia-care",
+        title: "Memory Care",
+        slug: "memory-care",
         description:
             "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
         image: "/assets/group.png",
     },
     {
         title: "Covered Care",
-        slug: "covered-care",
+        slug: "24hr-care",
         description:
-            "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
-        image: "/assets/caretaker_with_lady.png",
-    },
+            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
+        image: "/assets/respite-care.webp",
+    }, 
     {
         title: "Companion Care",
         slug: "companion-care",
@@ -59,8 +52,8 @@ const serviceCategories = [
         image: "/assets/man_with_caretaker.png",
     },
     {
-        title: "Respite Care",
-        slug: "respite-care",
+        title: "Care Management",
+        slug: "care-management",
         description:
             "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
         image: "/assets/lady_on_couch.png",

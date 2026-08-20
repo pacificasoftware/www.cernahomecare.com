@@ -2,7 +2,7 @@
 import Link from "next/link";
 import LocalContactForm from "./LocalContactForm";
 
-const franchisees: Record<
+const locations: Record<
     string,
     {
         name: string;
@@ -188,9 +188,9 @@ type PageProps = {
 
 export default async function LocalContactUsPage({ params }: PageProps) {
     const { locationSlug } = await params;
-    const franchisee = franchisees[locationSlug];
+    const location = locations[locationSlug];
 
-    if (!franchisee) {
+    if (!location) {
         return (
             <main className="px-6 py-20">
                 <h1 className="text-3xl font-bold text-[#00456B]">
@@ -222,7 +222,7 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                 <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 lg:px-8">
                     <div>
                         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#DD8500]">
-                            Contact {franchisee.areaName}
+                            Contact {location.areaName}
                         </p>
 
                         <h1 className="text-4xl font-bold tracking-tight text-[#00456B] md:text-5xl">
@@ -231,21 +231,21 @@ export default async function LocalContactUsPage({ params }: PageProps) {
 
                         <p className="mt-6 text-lg leading-8 text-slate-700">
                             Whether you are exploring care for yourself, a parent, or a
-                            loved one, {franchisee.name} is here to help. Contact our local
+                            loved one, {location.name} is here to help. Contact our local
                             team to discuss care options, availability, and the right level
                             of support for your family.
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-4">
                             <a
-                                href={franchisee.phoneHref}
+                                href={location.phoneHref}
                                 className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#c67600]"
                             >
-                                Call {franchisee.phone}
+                                Call {location.phone}
                             </a>
 
                             <a
-                                href={`mailto:${franchisee.email}?subject=Care Inquiry - ${franchisee.areaName}`}
+                                href={`mailto:${location.email}?subject=Care Inquiry - ${location.areaName}`}
                                 className="rounded-full bg-white px-7 py-3 text-sm font-bold text-[#00456B] shadow-sm ring-1 ring-slate-200 transition hover:text-[#DD8500]"
                             >
                                 Email Our Team
@@ -255,8 +255,8 @@ export default async function LocalContactUsPage({ params }: PageProps) {
 
                     <div className="relative mx-auto h-[320px] w-full max-w-[560px] overflow-hidden rounded-[46px] bg-white shadow-xl md:h-[420px]">
                         <Image
-                            src={franchisee.image}
-                            alt={`${franchisee.name} office`}
+                            src={location.image}
+                            alt={`${location.name} office`}
                             fill
                             priority
                             sizes="(max-width: 768px) 100vw, 560px"
@@ -279,14 +279,14 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                         </h2>
 
                         <p className="mt-3 text-slate-600">
-                            Speak directly with our local {franchisee.areaName} care team.
+                            Speak directly with our local {location.areaName} care team.
                         </p>
 
                         <a
-                            href={franchisee.phoneHref}
+                            href={location.phoneHref}
                             className="mt-5 inline-block font-bold text-[#DD8500]"
                         >
-                            {franchisee.phone}
+                            {location.phone}
                         </a>
                     </div>
 
@@ -304,10 +304,10 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                         </p>
 
                         <a
-                            href={`mailto:${franchisee.email}?subject=Care Inquiry - ${franchisee.areaName}`}
+                            href={`mailto:${location.email}?subject=Care Inquiry - ${location.areaName}`}
                             className="mt-5 inline-block break-all font-bold text-[#DD8500]"
                         >
-                            {franchisee.email}
+                            {location.email}
                         </a>
                     </div>
 
@@ -321,12 +321,12 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                         </h2>
 
                         <p className="mt-3 leading-7 text-slate-600">
-                            {franchisee.address}
+                            {location.address}
                         </p>
 
                         <a
                             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                                franchisee.mapQuery
+                                location.mapQuery
                             )}`}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -350,15 +350,15 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                         </h2>
 
                         <p className="mt-4 leading-7 text-slate-600">
-                            Complete the form below and our local {franchisee.areaName} team
+                            Complete the form below and our local {location.areaName} team
                             will contact you to learn more about your care needs.
                         </p>
 
                            <LocalContactForm
                         locationSlug={locationSlug}
-                        locationName={franchisee.name}
-                        locationAreaName={franchisee.areaName}
-                        locationState={franchisee.state}
+                        locationName={location.name}
+                        locationAreaName={location.areaName}
+                        locationState={location.state}
                     />
 
                     </div>
@@ -374,16 +374,16 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                             </h2>
 
                             <div className="mt-6 space-y-3 text-white/85">
-                                {franchisee.officeHours.map((hour) => (
+                                {location.officeHours.map((hour) => (
                                     <p key={hour}>{hour}</p>
                                 ))}
                             </div>
 
                             <a
-                                href={franchisee.phoneHref}
+                                href={location.phoneHref}
                                 className="mt-8 inline-flex rounded-full bg-[#DD8500] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#c67600]"
                             >
-                                Call {franchisee.phone}
+                                Call {location.phone}
                             </a>
                         </div>
 
@@ -394,7 +394,7 @@ export default async function LocalContactUsPage({ params }: PageProps) {
 
                             <p className="mt-3 leading-7 text-slate-600">
                                 Explore care options available through{" "}
-                                {franchisee.name}.
+                                {location.name}.
                             </p>
 
                             <div className="mt-6 grid gap-3">
@@ -406,25 +406,20 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                                 </Link>
 
                                 <Link
+                                    href={`/${locationSlug}/memory-care`}
+                                    className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
+                                >
+                                    Memory Care
+                                </Link>
+
+                                <Link
                                     href={`/${locationSlug}/live-in-care`}
                                     className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
                                 >
-                                    24 Hour Care
-                                </Link>
-
-                                <Link
-                                    href={`/${locationSlug}/memory-dementia-care`}
-                                    className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
-                                >
-                                    Memory & Dementia Care
-                                </Link>
-
-                                <Link
-                                    href={`/${locationSlug}/Covered-care`}
-                                    className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
-                                >
                                     Covered Care
-                                </Link>
+                                </Link> 
+
+                              
 
                                 <Link
                                     href={`/${locationSlug}/companion-care`}
@@ -434,10 +429,17 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                                 </Link>
 
                                 <Link
-                                    href={`/${locationSlug}/respite-care`}
+                                    href={`/${locationSlug}/care-management`}
                                     className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
                                 >
-                                    Respite Care
+                                    Care Management
+                                </Link>
+
+                                <Link
+                                    href={`/${locationSlug}/transportation`}
+                                    className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"
+                                >
+                                    Transportation
                                 </Link>
                             </div>
                         </div>
@@ -454,16 +456,16 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                             </p>
 
                             <h2 className="text-3xl font-bold text-[#00456B]">
-                                {franchisee.areaName} Office
+                                {location.areaName} Office
                             </h2>
 
                             <p className="mt-4 leading-7 text-slate-600">
-                                {franchisee.address}
+                                {location.address}
                             </p>
 
                             <a
                                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                                    franchisee.mapQuery
+                                    location.mapQuery
                                 )}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -475,8 +477,8 @@ export default async function LocalContactUsPage({ params }: PageProps) {
 
                         <div className="relative min-h-[320px] bg-slate-100">
                             <Image
-                                src={franchisee.image}
-                                alt={`${franchisee.name} office location`}
+                                src={location.image}
+                                alt={`${location.name} office location`}
                                 fill
                                 sizes="(max-width: 1024px) 100vw, 50vw"
                                 className="object-cover"

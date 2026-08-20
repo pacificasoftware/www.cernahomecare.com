@@ -79,7 +79,7 @@ function SocialIcon({
 }
 
 type FooterLocation = {
-    franchiseeName?: string | null;
+    locationName?: string | null;
     phone?: string | null;
     email?: string | null;
     city?: string | null;

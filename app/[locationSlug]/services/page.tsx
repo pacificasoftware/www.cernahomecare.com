@@ -3,7 +3,7 @@ import Link from "next/link";
 import ServiceCardsSection from "../../../components/ServiceCardsSection";
 import DutiesProvidedSection from "../../../components/DutiesProvidedSection";
 
-const franchisees: Record<
+const locations: Record<
     string,
     {
         name: string;
@@ -116,74 +116,7 @@ const franchisees: Record<
         address: "3812 W Linebaugh Ave, Suite 108, Tampa, FL 33618",
         image: "/assets/tampa.jpg",
     },
-};
-
-const services = [
-    {
-        title: "Specialized Care",
-        slug: "specialized-care",
-        description:
-            "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
-        image: "/assets/specialized-care.webp",
-    },
-    {
-        title: "24 Hour Care",
-        slug: "24hr-care",
-        description:
-            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
-        image: "/assets/respite-care.webp",
-    },
-    {
-        title: "Memory & Dementia Care",
-        slug: "memory-dementia-care",
-        description:
-            "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
-        image: "/assets/group.png",
-    },
-    {
-        title: "Covered Care",
-        slug: "covered-care",
-        description:
-            "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
-        image: "/assets/caretaker_with_lady.png",
-    },
-    {
-        title: "Companion Care",
-        slug: "companion-care",
-        description:
-            "Friendly support, conversation, errands, light activities, appointments, meal support, and help reducing isolation.",
-        image: "/assets/man_with_caretaker.png",
-    },
-    {
-        title: "Respite Care",
-        slug: "respite-care",
-        description:
-            "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
-        image: "/assets/lady_on_couch.png",
-    },
-    {
-        title: "Transportation",
-        slug: "transportation",
-        description:
-            "We assist with all of your transportation needs, which includes a caregiver so your loved one is not simply picked up and dropped off.",
-        image: "/assets/caretakers.png",
-    },
-];
-
-const dutiesProvided = [
-    { name: "Companionship", icon: "/assets/icons/Companionship.webp" },
-    { name: "Appointments", icon: "/assets/icons/Appointments.webp" },
-    { name: "Bathing", icon: "/assets/icons/Bathing.webp" },
-    { name: "Cooking", icon: "/assets/icons/Cooking.webp" },
-    { name: "Dressing", icon: "/assets/icons/Dressing.webp" },
-    { name: "Errands", icon: "/assets/icons/Errands.webp" },
-    { name: "Exercise", icon: "/assets/icons/Exersize.webp" },
-    { name: "Grooming", icon: "/assets/icons/Grooming.webp" },
-    { name: "Laundry", icon: "/assets/icons/Laundry.webp" },
-    { name: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
-    { name: "Mobility", icon: "/assets/icons/Mobility.webp" },
-    { name: "Pets", icon: "/assets/icons/Pets.webp" },
-];
+}; 
 
 type PageProps = {
     params: Promise<{
@@ -193,9 +126,9 @@ type PageProps = {
 
 export default async function LocalServicesPage({ params }: PageProps) {
     const { locationSlug } = await params;
-    const franchisee = franchisees[locationSlug];
+    const location = locations[locationSlug];
 
-    if (!franchisee) {
+    if (!location) {
         return (
             <main className="px-6 py-20">
                 <h1 className="text-3xl font-bold text-[#00456B]">
@@ -227,7 +160,7 @@ export default async function LocalServicesPage({ params }: PageProps) {
                 <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 lg:px-8">
                     <div>
                         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#DD8500]">
-                            Services in {franchisee.areaName}
+                            Services in {location.areaName}
                         </p>
 
                         <h1 className="text-4xl font-bold tracking-tight text-[#00456B] md:text-5xl">
@@ -235,8 +168,8 @@ export default async function LocalServicesPage({ params }: PageProps) {
                         </h1>
 
                         <p className="mt-6 text-lg leading-8 text-slate-700">
-                            {franchisee.name} provides personalized in-home care services
-                            for seniors and families throughout {franchisee.areaName}. From
+                            {location.name} provides personalized in-home care services
+                            for seniors and families throughout {location.areaName}. From
                             hourly care to memory support, Covered care, companion
                             care, and respite care, our team helps clients remain safe,
                             comfortable, and independent at home.
@@ -251,18 +184,18 @@ export default async function LocalServicesPage({ params }: PageProps) {
                             </Link>
 
                             <a
-                                href={franchisee.phoneHref}
+                                href={location.phoneHref}
                                 className="rounded-full bg-white px-7 py-3 text-sm font-bold text-[#00456B] shadow-sm ring-1 ring-slate-200 transition hover:text-[#DD8500]"
                             >
-                                Call {franchisee.phone}
+                                Call {location.phone}
                             </a>
                         </div>
                     </div>
 
                     <div className="relative mx-auto h-[320px] w-full max-w-[560px] overflow-hidden rounded-[46px] bg-white shadow-xl md:h-[420px]">
                         <Image
-                            src={franchisee.image}
-                            alt={`${franchisee.name} office`}
+                            src={location.image}
+                            alt={`${location.name} office`}
                             fill
                             priority
                             sizes="(max-width: 768px) 100vw, 560px"
@@ -278,8 +211,8 @@ export default async function LocalServicesPage({ params }: PageProps) {
 
             {/*Duties Provided*/}
             <DutiesProvidedSection
-                eyebrow={`Care Services in ${franchisee.areaName}`}
-                description={`Our ${franchisee.areaName} caregivers provide attentive support tailored to each client’s daily needs and comfort.`}
+                eyebrow={`Care Services in ${location.areaName}`}
+                description={`Our ${location.areaName} caregivers provide attentive support tailored to each client’s daily needs and comfort.`}
             />
 
             <section className="bg-white px-6 py-20 lg:px-8">
@@ -295,17 +228,17 @@ export default async function LocalServicesPage({ params }: PageProps) {
 
                         <p className="mt-5 leading-8 text-white/85">
                             Many families are unsure where to start. That is completely
-                            normal. Our {franchisee.areaName} team can talk through your
+                            normal. Our {location.areaName} team can talk through your
                             situation, explain available options, and help recommend the
                             right level of care.
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-4">
                             <a
-                                href={franchisee.phoneHref}
+                                href={location.phoneHref}
                                 className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white transition hover:bg-[#c67600]"
                             >
-                                Call {franchisee.phone}
+                                Call {location.phone}
                             </a>
 
                             <Link
@@ -324,7 +257,7 @@ export default async function LocalServicesPage({ params }: PageProps) {
 
                         <ul className="mt-6 space-y-4 leading-7 text-slate-700">
                             <li>✓ Care plans tailored to each client and family</li>
-                            <li>✓ Local team support in {franchisee.areaName}</li>
+                            <li>✓ Local team support in {location.areaName}</li>
                             <li>✓ Help with personal care, companionship, and safety</li>
                             <li>✓ Support after hospital stays or changes in condition</li>
                             <li>✓ Flexible care options for short-term or ongoing needs</li>
@@ -337,7 +270,7 @@ export default async function LocalServicesPage({ params }: PageProps) {
             <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
                 <div className="rounded-[40px] bg-gradient-to-br from-[#e8f7fb] to-white p-8 text-center shadow-xl ring-1 ring-slate-200 md:p-14">
                     <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                        {franchisee.areaName} Care Team
+                        {location.areaName} Care Team
                     </p>
 
                     <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold tracking-tight text-[#00456B] md:text-4xl">
@@ -345,16 +278,16 @@ export default async function LocalServicesPage({ params }: PageProps) {
                     </h2>
 
                     <p className="mx-auto mt-5 max-w-2xl leading-8 text-slate-600">
-                        Contact {franchisee.name} to discuss your family’s care needs and
+                        Contact {location.name} to discuss your family’s care needs and
                         learn how we can help.
                     </p>
 
                     <div className="mt-8 flex flex-wrap justify-center gap-4">
                         <a
-                            href={franchisee.phoneHref}
+                            href={location.phoneHref}
                             className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white transition hover:bg-[#c67600]"
                         >
-                            Call {franchisee.phone}
+                            Call {location.phone}
                         </a>
 
                         <Link
@@ -366,7 +299,7 @@ export default async function LocalServicesPage({ params }: PageProps) {
                     </div>
 
                     <p className="mt-6 text-sm text-slate-500">
-                        {franchisee.address}
+                        {location.address}
                     </p>
                 </div>
             </section>

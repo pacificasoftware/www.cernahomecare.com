@@ -24,7 +24,7 @@ export const serviceCards: ServiceCard[] = [
         ],
     },
     //{
-    //    title: "24 Hour Care",
+    //    title: "Covered Care",
     //    slug: "live-in-care",
     //    description:
     //        "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
@@ -32,7 +32,7 @@ export const serviceCards: ServiceCard[] = [
     //}, 
     {
         title: "Memory Care",
-        slug: "memory-dementia-care",
+        slug: "memory-care",
         description:
             "Cerna specializes in cognitive impairments from Alzheimer’s, Parkinson’s, stroke, and other neurological disorders.",
         image: "/assets/group.png",
@@ -75,14 +75,7 @@ export const serviceCards: ServiceCard[] = [
             "Transfers, Errands, Projects and More",
             "Post Surgery Recovery",
         ],
-    },
-    //{
-    //    title: "Respite Care",
-    //    slug: "respite-care",
-    //    description:
-    //        "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
-    //    image: "/assets/lady_on_couch.png",
-    //},
+    }, 
     {
         title: "Care Management",
         slug: "care-management",

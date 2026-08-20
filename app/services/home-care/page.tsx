@@ -8,17 +8,18 @@ const careTypes = [
         desc: "Care provided up to 16 hours per day with a dedicated caregiver always present.",
     },
     {
-        title: "Hourly Care",
-        desc: "Flexible scheduling from as little as 4 hours up to full-day care.",
-    },
-    {
-        title: "24 Hour Care",
-        desc: "Continuous support with rotating caregivers covering both day and night shifts.",
-    },
-    {
         title: "Memory Care",
         desc: "Specialized care for Alzheimer’s and dementia with trained caregivers.",
     },
+    {
+        title: "Covered Care",
+        desc: "Continuous support with rotating caregivers covering both day and night shifts.",
+    }, 
+
+    {
+        title: "Hourly Care",
+        desc: "Flexible scheduling from as little as 4 hours up to full-day care.",
+    },  
     {
         title: "Cognitive Care",
         desc: "Help with appointments, errands, and daily mental engagement activities.",

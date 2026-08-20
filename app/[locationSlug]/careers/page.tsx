@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 
-type Franchisee = {
-    franchiseeId: number;
+type location = {
+    locationId: number;
     slug: string;
     name: string;
     city: string;
@@ -17,7 +17,7 @@ type PageProps = {
     }>;
 };
 
-async function getFranchisee(locationSlug: string): Promise<Franchisee | null> {
+async function getlocation(locationSlug: string): Promise<location | null> {
     const apiBaseUrl =
         process.env.API_BASE_URL ||
         process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -28,7 +28,7 @@ async function getFranchisee(locationSlug: string): Promise<Franchisee | null> {
             `${apiBaseUrl.replace(
                 /\/$/,
                 ""
-            )}/api/public/franchisees/${encodeURIComponent(locationSlug)}`,
+            )}/api/public/locations/${encodeURIComponent(locationSlug)}`,
             {
                 method: "GET",
                 headers: {
@@ -42,7 +42,7 @@ async function getFranchisee(locationSlug: string): Promise<Franchisee | null> {
             return null;
         }
 
-        return (await response.json()) as Franchisee;
+        return (await response.json()) as location;
     } catch {
         return null;
     }
@@ -51,9 +51,9 @@ async function getFranchisee(locationSlug: string): Promise<Franchisee | null> {
 export default async function LocalCareersPage({ params }: PageProps) {
     const { locationSlug } = await params;
 
-    const franchisee = await getFranchisee(locationSlug);
+    const location = await getlocation(locationSlug);
 
-    if (!franchisee) {
+    if (!location) {
         return (
             <main className="px-6 py-20">
                 <h1 className="text-3xl font-bold text-[#00456B]">
@@ -86,11 +86,11 @@ export default async function LocalCareersPage({ params }: PageProps) {
                 </p>
 
                 <h1 className="mx-auto max-w-4xl text-4xl font-extrabold tracking-tight text-[#00456B] md:text-5xl">
-                    Caregiver Careers in {franchisee.city}, {franchisee.state}
+                    Caregiver Careers in {location.city}, {location.state}
                 </h1>
 
                 <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-700">
-                    Join {franchisee.name} and make a meaningful difference helping seniors
+                    Join {location.name} and make a meaningful difference helping seniors
                     remain safe, comfortable, and independent at home.
                 </p>
 
@@ -103,10 +103,10 @@ export default async function LocalCareersPage({ params }: PageProps) {
                     </Link>
 
                     <a
-                        href={franchisee.phoneHref}
+                        href={location.phoneHref}
                         className="rounded-full bg-white px-8 py-4 text-sm font-extrabold text-[#00456B] shadow-sm ring-1 ring-slate-200 transition hover:text-[#DD8500]"
                     >
-                        Call {franchisee.phone}
+                        Call {location.phone}
                     </a>
                 </div>
             </section>
@@ -142,7 +142,7 @@ export default async function LocalCareersPage({ params }: PageProps) {
 
                         <p className="mt-4 text-base leading-7 text-slate-700">
                             Work with a local Cerna team that understands the needs of families in{" "}
-                            {franchisee.city}.
+                            {location.city}.
                         </p>
                     </div>
                 </div>

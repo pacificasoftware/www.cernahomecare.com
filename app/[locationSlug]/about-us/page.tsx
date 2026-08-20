@@ -1,7 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 
-const franchisees: Record<
+const locations: Record<
     string,
     {
         name: string;
@@ -124,9 +124,9 @@ type PageProps = {
 
 export default async function LocalAboutUsPage({ params }: PageProps) {
     const { locationSlug } = await params;
-    const franchisee = franchisees[locationSlug];
+    const location = locations[locationSlug];
 
-    if (!franchisee) {
+    if (!location) {
         return (
             <main className="px-6 py-20">
                 <h1 className="text-3xl font-bold text-[#00456B]">
@@ -158,7 +158,7 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                 <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 lg:px-8">
                     <div>
                         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#DD8500]">
-                            About {franchisee.areaName}
+                            About {location.areaName}
                         </p>
 
                         <h1 className="text-4xl font-bold tracking-tight text-[#00456B] md:text-5xl">
@@ -166,9 +166,9 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                         </h1>
 
                         <p className="mt-6 text-lg leading-8 text-slate-700">
-                            At {franchisee.name}, we provide compassionate, reliable,
+                            At {location.name}, we provide compassionate, reliable,
                             and professional in-home care for families throughout{" "}
-                            {franchisee.areaName}. Our mission is to help seniors remain
+                            {location.areaName}. Our mission is to help seniors remain
                             safe, comfortable, and independent at home while giving families
                             peace of mind.
                         </p>
@@ -182,18 +182,18 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                             </Link>
 
                             <a
-                                href={franchisee.phoneHref}
+                                href={location.phoneHref}
                                 className="rounded-full bg-white px-7 py-3 text-sm font-bold text-[#00456B] shadow-sm ring-1 ring-slate-200 transition hover:text-[#DD8500]"
                             >
-                                Call {franchisee.phone}
+                                Call {location.phone}
                             </a>
                         </div>
                     </div>
 
                     <div className="relative mx-auto h-[320px] w-full max-w-[560px] overflow-hidden rounded-[46px] bg-white shadow-xl md:h-[420px]">
                         <Image
-                            src={franchisee.image}
-                            alt={`${franchisee.name} office`}
+                            src={location.image}
+                            alt={`${location.name} office`}
                             fill
                             priority
                             sizes="(max-width: 768px) 100vw, 560px"
@@ -222,7 +222,7 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                             Local Support
                         </h2>
                         <p className="mt-3 leading-7 text-slate-600">
-                            Our {franchisee.areaName} team understands the local community
+                            Our {location.areaName} team understands the local community
                             and works closely with families to create care plans that fit
                             each client’s needs.
                         </p>
@@ -233,7 +233,7 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                             Personalized Plans
                         </h2>
                         <p className="mt-3 leading-7 text-slate-600">
-                            From hourly personal care to 24 Hour Care, memory support,
+                            From hourly personal care to Covered Care, memory support,
                             companion care, respite care, and Covered care, we tailor
                             our services around each family.
                         </p>
@@ -269,16 +269,16 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
 
                     <div className="rounded-[36px] bg-[#f8fbfc] p-8 shadow-sm ring-1 ring-slate-200">
                         <h3 className="text-2xl font-bold text-[#00456B]">
-                            Services Available in {franchisee.areaName}
+                            Services Available in {location.areaName}
                         </h3>
 
                         <ul className="mt-6 space-y-4 text-slate-700">
                             <li>✓ Specialized Care</li>
-                            <li>✓ 24 Hour Care</li>
-                            <li>✓ Memory & Dementia Care</li>
-                            <li>✓ Covered Care</li>
+                            <li>✓ Memory Care</li>
+                            <li>✓ Covered Care</li> 
                             <li>✓ Companion Care</li>
-                            <li>✓ Respite Care</li>
+                            <li>✓ Care Management</li>
+                            <li>✓ Transportation</li>
                         </ul>
 
                         <Link
@@ -294,7 +294,7 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
             <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
                 <div className="rounded-[40px] bg-gradient-to-br from-[#00456B] to-[#0070a8] p-8 text-center text-white shadow-xl md:p-14">
                     <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#F5B041]">
-                        {franchisee.areaName} Home Care
+                        {location.areaName} Home Care
                     </p>
 
                     <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold tracking-tight md:text-4xl">
@@ -308,10 +308,10 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
 
                     <div className="mt-8 flex flex-wrap justify-center gap-4">
                         <a
-                            href={franchisee.phoneHref}
+                            href={location.phoneHref}
                             className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white transition hover:bg-[#c67600]"
                         >
-                            Call {franchisee.phone}
+                            Call {location.phone}
                         </a>
 
                         <Link
@@ -323,7 +323,7 @@ export default async function LocalAboutUsPage({ params }: PageProps) {
                     </div>
 
                     <p className="mt-6 text-sm text-white/75">
-                        {franchisee.address}
+                        {location.address}
                     </p>
                 </div>
             </section>

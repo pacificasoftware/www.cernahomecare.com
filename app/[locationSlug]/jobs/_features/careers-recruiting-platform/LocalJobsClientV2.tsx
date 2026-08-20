@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type Franchisee = {
-    franchiseeId: number;
+type location = {
+    locationId: number;
     slug: string;
     name: string;
     city: string;
@@ -16,11 +16,11 @@ type Franchisee = {
 
 type PublicJob = {
     jobId: number;
-    franchiseeId: number;
-    franchiseeName: string;
-    franchiseeCity: string;
-    franchiseeState: string;
-    franchiseeZipCode: string;
+    locationId: number;
+    locationName: string;
+    locationCity: string;
+    locationState: string;
+    locationZipCode: string;
 
     jobTitle: string;
     jobType?: string | null;
@@ -38,7 +38,7 @@ type PublicJob = {
 };
 
 type Props = {
-    franchisee: Franchisee;
+    location: Location;
     locationSlug: string;
 };
 
@@ -77,7 +77,7 @@ function formatLocationName(slug: string) {
 }
 
 export default function LocalJobsClient({
-    franchisee,
+    location,
     locationSlug,
 }: Props) {
     const [jobs, setJobs] = useState<PublicJob[]>([]);
@@ -98,9 +98,9 @@ export default function LocalJobsClient({
                     "https://api.cernahomecare.com"
                 ).replace(/\/$/, "");
 
-                const url = `${apiBaseUrl}/api/public/jobs/active/franchisee/${franchisee.franchiseeId}`;
+                const url = `${apiBaseUrl}/api/public/jobs/active/location/${location.locationId}`;
 
-                console.log("Loading franchisee jobs from:", url);
+                console.log("Loading location jobs from:", url);
 
                 const response = await fetch(url, {
                     method: "GET",
@@ -112,7 +112,7 @@ export default function LocalJobsClient({
 
                 const responseText = await response.text();
 
-                console.log("Franchisee jobs response:", {
+                console.log("Location jobs response:", {
                     status: response.status,
                     body: responseText,
                 });
@@ -136,7 +136,7 @@ export default function LocalJobsClient({
                     throw new Error(
                         result?.statusMessage ||
                         result?.message ||
-                        `Unable to load franchisee jobs. Status: ${response.status}`
+                        `Unable to load location jobs. Status: ${response.status}`
                     );
                 }
 
@@ -151,29 +151,29 @@ export default function LocalJobsClient({
                 const normalizedJobs = rawJobs.map((item: any) => ({
                     jobId: Number(item.jobId ?? item.JobId),
 
-                    franchiseeId: Number(
-                        item.franchiseeId ?? item.FranchiseeId
+                    locationId: Number(
+                        item.locationId ?? item.locationId
                     ),
 
-                    franchiseeName:
-                        item.franchiseeName ??
-                        item.FranchiseeName ??
-                        franchisee.name,
+                    locationName:
+                        item.locationName ??
+                        item.locationName ??
+                        location.name,
 
-                    franchiseeCity:
-                        item.franchiseeCity ??
-                        item.FranchiseeCity ??
-                        franchisee.city,
+                    locationCity:
+                        item.locationCity ??
+                        item.locationCity ??
+                        location.city,
 
-                    franchiseeState:
-                        item.franchiseeState ??
-                        item.FranchiseeState ??
-                        franchisee.state,
+                    locationState:
+                        item.locationState ??
+                        item.locationState ??
+                        location.state,
 
-                    franchiseeZipCode:
-                        item.franchiseeZipCode ??
-                        item.FranchiseeZipCode ??
-                        franchisee.jobsZip ??
+                    locationZipCode:
+                        item.locationZipCode ??
+                        item.locationZipCode ??
+                        location.jobsZip ??
                         null,
 
                     jobTitle:
@@ -199,17 +199,17 @@ export default function LocalJobsClient({
                     city:
                         item.city ??
                         item.City ??
-                        franchisee.city,
+                        location.city,
 
                     state:
                         item.state ??
                         item.State ??
-                        franchisee.state,
+                        location.state,
 
                     zipCode:
                         item.zipCode ??
                         item.ZipCode ??
-                        franchisee.jobsZip ??
+                        location.jobsZip ??
                         null,
 
                     payRange:
@@ -242,7 +242,7 @@ export default function LocalJobsClient({
                     setJobs(normalizedJobs);
                 }
             } catch (error) {
-                console.error("Unable to load franchisee jobs:", error);
+                console.error("Unable to load location jobs:", error);
 
                 if (!isCancelled) {
                     setJobs([]);
@@ -250,7 +250,7 @@ export default function LocalJobsClient({
                     setErrorMessage(
                         error instanceof Error
                             ? error.message
-                            : "Unable to load franchisee jobs."
+                            : "Unable to load location jobs."
                     );
                 }
             } finally {
@@ -266,11 +266,11 @@ export default function LocalJobsClient({
             isCancelled = true;
         };
     }, [
-        franchisee.franchiseeId,
-        franchisee.jobsZip,
-        franchisee.name,
-        franchisee.city,
-        franchisee.state,
+        location.locationId,
+        location.jobsZip,
+        location.name,
+        location.city,
+        location.state,
     ]);
 
     return (
@@ -320,7 +320,7 @@ export default function LocalJobsClient({
 
                             <p className="mt-2 text-slate-600">
                                 There are no active positions currently listed
-                                for {franchisee.name}.
+                                for {location.name}.
                             </p>
                         </div>
                     )}
@@ -332,13 +332,13 @@ export default function LocalJobsClient({
                             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                                 <div>
                                     <h2 className="text-2xl font-black text-[#00456B]">
-                                        {franchisee.name}
+                                        {location.name}
                                     </h2>
 
                                     <p className="mt-1 text-sm font-semibold text-slate-500">
-                                        {franchisee.city},{" "}
-                                        {franchisee.state}{" "}
-                                        {franchisee.jobsZip}
+                                        {location.city},{" "}
+                                        {location.state}{" "}
+                                        {location.jobsZip}
                                     </p>
                                 </div>
 

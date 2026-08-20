@@ -1,10 +1,14 @@
 ﻿import Link from "next/link";
-import LocalApplyClient from "./apply/LocalApplyClient";
-import V2JobsPage from "./_features/careers-recruiting-platform/V2JobsPage";
+import LocalApplyClient from "./LocalApplyClient";
+import V2ApplyPage from "../_features/careers-recruiting-platform/V2ApplyPage";
 
 type PageProps = {
     params: Promise<{
         locationSlug: string;
+    }>;
+
+    searchParams: Promise<{
+        jobId?: string;
     }>;
 };
 
@@ -30,13 +34,8 @@ function getApiBaseUrl() {
 
 /*
 |--------------------------------------------------------------------------
-| Get existing location
+| Get Location
 |--------------------------------------------------------------------------
-|
-| We are still using the existing public location endpoint for now.
-| locationId and LocationId currently match because we preserved the IDs
-| when the Locations table was created.
-|
 */
 
 async function getlocation(
@@ -122,7 +121,10 @@ async function getlocation(
                 null,
         };
     } catch (error) {
-        console.error("Location lookup failed:", error);
+        console.error(
+            "Location lookup failed:",
+            error
+        );
 
         return null;
     }
@@ -131,22 +133,16 @@ async function getlocation(
 
 /*
 |--------------------------------------------------------------------------
-| Check Careers Recruiting Platform feature
+| Check Recruiting Platform Feature
 |--------------------------------------------------------------------------
-|
-| IMPORTANT:
-| This runs on the SERVER so CERNA_API_KEY is never exposed
-| to the browser.
-|
-| If anything goes wrong, return FALSE and show the existing page.
-|
 */
 
 async function hasCareersRecruitingPlatform(
     locationId: number
 ): Promise<boolean> {
     try {
-        const apiKey = process.env.CERNA_API_KEY; 
+        const apiKey =
+            process.env.CERNA_API_KEY;
 
         if (!apiKey) {
             console.error(
@@ -163,10 +159,12 @@ async function hasCareersRecruitingPlatform(
 
         const response = await fetch(url, {
             method: "GET",
+
             headers: {
                 Accept: "application/json",
                 "X-API-KEY": apiKey,
             },
+
             cache: "no-store",
         });
 
@@ -186,7 +184,8 @@ async function hasCareersRecruitingPlatform(
             return false;
         }
 
-        const result = await response.json();
+        const result =
+            await response.json();
 
         return (
             result.careersRecruitingPlatform === true
@@ -204,20 +203,26 @@ async function hasCareersRecruitingPlatform(
 
 /*
 |--------------------------------------------------------------------------
-| Jobs Page
+| Apply Page
 |--------------------------------------------------------------------------
 */
 
-export default async function LocalJobsPage({
+export default async function LocalApplyPage({
     params,
+    searchParams,
 }: PageProps) {
-    const { locationSlug } = await params;
-
-    console.log("### JOBS PAGE HIT ###");
-    console.log("locationSlug:", locationSlug);
+    const { locationSlug } =
+        await params;
 
     const location =
         await getlocation(locationSlug);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Location not found
+    |--------------------------------------------------------------------------
+    */
 
     if (!location) {
         return (
@@ -253,7 +258,7 @@ export default async function LocalJobsPage({
     | Feature check
     |--------------------------------------------------------------------------
     |
-    | The old locationId is currently identical to the new LocationId.
+    | Current locationId matches new LocationId.
     |
     */
 
@@ -265,16 +270,20 @@ export default async function LocalJobsPage({
 
     /*
     |--------------------------------------------------------------------------
-    | NEW V2 Recruiting Platform
+    | V2 APPLY
     |--------------------------------------------------------------------------
+    |
+    | Only enabled locations enter the recruiting platform.
+    |
     */
 
     if (recruitingPlatformEnabled) {
         return (
-            <V2JobsPage
+            <V2ApplyPage
                 params={Promise.resolve({
                     locationSlug,
                 })}
+                searchParams={searchParams}
             />
         );
     }
@@ -282,11 +291,8 @@ export default async function LocalJobsPage({
 
     /*
     |--------------------------------------------------------------------------
-    | EXISTING LIVE PAGE
+    | EXISTING APPLY PAGE
     |--------------------------------------------------------------------------
-    |
-    | Feature OFF or API problem = existing page.
-    |
     */
 
     return (

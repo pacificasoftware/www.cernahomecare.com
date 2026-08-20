@@ -120,7 +120,7 @@ export default function WhyCernaPage() {
 
                             <p className="why-training-text">
                                 Another very important part of providing care for family members with Alzheimer’s,
-                                Memory or Dementia needs, Cognitive, Nursing or 24 Hour Care is insuring that the
+                                Memory or Dementia needs, Cognitive, Nursing or Covered Care is insuring that the
                                 Care Professional is Licensed, Bonded and Trained in every aspect of the needs your
                                 loved one may require.
                             </p>

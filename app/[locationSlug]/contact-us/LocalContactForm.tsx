@@ -83,7 +83,7 @@ export default function LocalContactForm({
 
                 company,
 
-             franchiseeId: null,
+             locationId: null,
              locationSlug,
             };
 
@@ -223,7 +223,7 @@ export default function LocalContactForm({
                         Select an option
                     </option>
                     <option value="Specialized Care">Specialized Care</option>
-                    <option value="24 Hour Care">24 Hour Care</option>
+                    <option value="Covered Care">Covered Care</option>
                     <option value="Memory & Dementia Care">Memory & Dementia Care</option>
                     <option value="Covered Care">Covered Care</option>
                     <option value="Companion Care">Companion Care</option>

@@ -199,7 +199,7 @@ export default function GettingStartedContactPage() {
 
             // Corporate requests default to Orange County
             // inside the existing API route.
-            franchiseeId: null,
+            locationId: null,
             locationSlug: null,
         };
 
