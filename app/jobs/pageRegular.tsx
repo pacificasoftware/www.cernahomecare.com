@@ -94,8 +94,7 @@ export default function JobsPage() {
                                         formData.get("zipCode") || ""
                                     ).trim(),
                                     subject: "Cerna Home Care Job Application!",
-                                    message:
-                                        "New job application from the Cerna Home Care careers page.",
+                                    message: "I am looking for a caregiver job opportunity with Cerna Home Care. Please contact me with more information. Thank you!",                                         
                                     company: "",
                                 };
 

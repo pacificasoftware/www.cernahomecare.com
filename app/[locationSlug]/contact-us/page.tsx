@@ -122,9 +122,9 @@ const locations: Record<
         phone: "(972) 330-2005",
         phoneHref: "tel:19723302005",
         email: "info@cernahomecare.com",
-        address: "101 E Park Blvd Suite 771, Plano, TX 75074",
+        address: "101 E Park Blvd Suite 721, Plano, TX 75074",
         image: "/assets/101-E-Park-Blvd-Plano-TX.jpg",
-        mapQuery: "101 E Park Blvd Suite 771, Plano, TX 75074",
+        mapQuery: "101 E Park Blvd Suite 721, Plano, TX 75074",
         officeHours: [
             "Monday – Saturday: 6:00am to 9:00pm",
             "Sunday: 9:00am to 4:00pm",

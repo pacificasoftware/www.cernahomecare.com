@@ -3,24 +3,38 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type location = {
-    locationId: number;
-    slug: string;
-    name: string;
-    city: string;
-    state: string;
-    phone: string;
-    phoneHref: string;
+type Location = {
+    locationId?: number;
+    LocationId?: number;
+    id?: number;
+    Id?: number;
+
+    locationName?: string;
+    LocationName?: string;
+    name?: string;
+    Name?: string;
+
+    slug?: string;
+    locationSlug?: string;
+
+    city?: string | null;
+    City?: string | null;
+    state?: string | null;
+    State?: string | null;
     jobsZip?: string | null;
+    JobsZip?: string | null;
+
+    isActive?: boolean;
+    IsActive?: boolean;
 };
 
 type PublicJob = {
     jobId: number;
     locationId: number;
     locationName: string;
-    locationCity: string;
-    locationState: string;
-    locationZipCode: string;
+    locationCity?: string | null;
+    locationState?: string | null;
+    locationZipCode?: string | null;
 
     jobTitle: string;
     jobType?: string | null;
@@ -93,12 +107,17 @@ export default function LocalJobsClient({
                 setIsLoading(true);
                 setErrorMessage("");
 
-                const apiBaseUrl = (
-                    process.env.NEXT_PUBLIC_API_BASE_URL ||
-                    "https://api.cernahomecare.com"
-                ).replace(/\/$/, "");
+                const locationId =
+                    location.locationId ??
+                    location.LocationId ??
+                    location.id ??
+                    location.Id;
 
-                const url = `${apiBaseUrl}/api/public/jobs/active/location/${location.locationId}`;
+                if (!locationId) {
+                    throw new Error("Location ID is missing.");
+                }
+
+                const url = `/api/public/jobs/active/location/${locationId}`;
 
                 console.log("Loading location jobs from:", url);
 
@@ -152,28 +171,37 @@ export default function LocalJobsClient({
                     jobId: Number(item.jobId ?? item.JobId),
 
                     locationId: Number(
-                        item.locationId ?? item.locationId
+                        item.locationId ?? item.LocationId
                     ),
 
                     locationName:
                         item.locationName ??
-                        item.locationName ??
-                        location.name,
+                        item.LocationName ??
+                        location.locationName ??
+                        location.LocationName ??
+                        location.name ??
+                        location.Name ??
+                        formatLocationName(locationSlug),
 
                     locationCity:
                         item.locationCity ??
-                        item.locationCity ??
-                        location.city,
+                        item.LocationCity ??
+                        location.city ??
+                        location.City ??
+                        null,
 
                     locationState:
                         item.locationState ??
-                        item.locationState ??
-                        location.state,
+                        item.LocationState ??
+                        location.state ??
+                        location.State ??
+                        null,
 
                     locationZipCode:
                         item.locationZipCode ??
-                        item.locationZipCode ??
+                        item.LocationZipCode ??
                         location.jobsZip ??
+                        location.JobsZip ??
                         null,
 
                     jobTitle:
@@ -199,17 +227,22 @@ export default function LocalJobsClient({
                     city:
                         item.city ??
                         item.City ??
-                        location.city,
+                        location.city ??
+                        location.City ??
+                        null,
 
                     state:
                         item.state ??
                         item.State ??
-                        location.state,
+                        location.state ??
+                        location.State ??
+                        null,
 
                     zipCode:
                         item.zipCode ??
                         item.ZipCode ??
                         location.jobsZip ??
+                        location.JobsZip ??
                         null,
 
                     payRange:
@@ -267,16 +300,26 @@ export default function LocalJobsClient({
         };
     }, [
         location.locationId,
+        location.LocationId,
+        location.id,
+        location.Id,
         location.jobsZip,
+        location.JobsZip,
+        location.locationName,
+        location.LocationName,
         location.name,
+        location.Name,
         location.city,
+        location.City,
         location.state,
+        location.State,
+        locationSlug,
     ]);
 
     return (
         <main className="min-h-screen bg-white px-4 py-8 sm:px-6 lg:px-8">
             <div className="mx-auto w-full max-w-6xl">
-                <div> 
+                <div>
 
                     <h1 className="text-3xl font-black tracking-tight text-[#00456B] sm:text-4xl">
                         {formatLocationName(locationSlug)} Jobs
@@ -320,7 +363,11 @@ export default function LocalJobsClient({
 
                             <p className="mt-2 text-slate-600">
                                 There are no active positions currently listed
-                                for {location.name}.
+                                for {location.locationName ??
+                                    location.LocationName ??
+                                    location.name ??
+                                    location.Name ??
+                                    formatLocationName(locationSlug)}.
                             </p>
                         </div>
                     )}
@@ -332,13 +379,17 @@ export default function LocalJobsClient({
                             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                                 <div>
                                     <h2 className="text-2xl font-black text-[#00456B]">
-                                        {location.name}
+                                        {location.locationName ??
+                                            location.LocationName ??
+                                            location.name ??
+                                            location.Name ??
+                                            formatLocationName(locationSlug)}
                                     </h2>
 
                                     <p className="mt-1 text-sm font-semibold text-slate-500">
-                                        {location.city},{" "}
-                                        {location.state}{" "}
-                                        {location.jobsZip}
+                                        {location.city ?? location.City},{" "}
+                                        {location.state ?? location.State}{" "}
+                                        {location.jobsZip ?? location.JobsZip}
                                     </p>
                                 </div>
 
@@ -368,8 +419,8 @@ export default function LocalJobsClient({
                                                 setSelectedJob(job)
                                             }
                                             className={`rounded-2xl border p-4 text-left shadow-sm transition ${isSelected
-                                                    ? "border-[#DD8500] bg-[#00456B] text-white ring-2 ring-[#DD8500]"
-                                                    : "border-slate-200 bg-white text-slate-900 hover:border-[#00456B]/40"
+                                                ? "border-[#DD8500] bg-[#00456B] text-white ring-2 ring-[#DD8500]"
+                                                : "border-slate-200 bg-white text-slate-900 hover:border-[#00456B]/40"
                                                 }`}
                                         >
                                             <div className="flex gap-4">
@@ -398,8 +449,8 @@ export default function LocalJobsClient({
 
                                                     <p
                                                         className={`mt-1 text-sm font-bold ${isSelected
-                                                                ? "text-white/90"
-                                                                : "text-slate-600"
+                                                            ? "text-white/90"
+                                                            : "text-slate-600"
                                                             }`}
                                                     >
                                                         {[
@@ -435,8 +486,8 @@ export default function LocalJobsClient({
                                                         job.payRange) && (
                                                             <p
                                                                 className={`mt-2 text-sm font-bold ${isSelected
-                                                                        ? "text-white"
-                                                                        : "text-[#00456B]"
+                                                                    ? "text-white"
+                                                                    : "text-[#00456B]"
                                                                     }`}
                                                             >
                                                                 {[
@@ -452,8 +503,8 @@ export default function LocalJobsClient({
                                                     {job.jobDescription && (
                                                         <p
                                                             className={`mt-3 text-sm leading-6 ${isSelected
-                                                                    ? "text-white/85"
-                                                                    : "text-slate-600"
+                                                                ? "text-white/85"
+                                                                : "text-slate-600"
                                                                 }`}
                                                         >
                                                             {
@@ -503,8 +554,8 @@ export default function LocalJobsClient({
                                 }
                             }}
                             className={`inline-flex justify-center rounded-lg px-6 py-3 text-sm font-black text-white transition ${selectedJob
-                                    ? "bg-[#00456B] hover:bg-[#003a5a]"
-                                    : "cursor-not-allowed bg-[#87A9BA]"
+                                ? "bg-[#00456B] hover:bg-[#003a5a]"
+                                : "cursor-not-allowed bg-[#87A9BA]"
                                 }`}
                         >
                             Apply to Selected Position

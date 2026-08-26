@@ -83,7 +83,7 @@ const locations: Record<
         areaName: "Dallas",
         phone: "(972) 330-2005",
         phoneHref: "tel:19723302005",
-        address: "101 E Park Blvd Suite 771, Plano, TX 75074",
+        address: "101 E Park Blvd Suite 721, Plano, TX 75074",
         image: "/assets/101-E-Park-Blvd-Plano-TX.jpg",
     },
     "las-vegas": {

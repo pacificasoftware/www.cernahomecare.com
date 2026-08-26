@@ -279,11 +279,11 @@ export default function CareersPage() {
 
             const jobs = rawJobs.map((job) => ({
                 jobId: job.jobId ?? job.JobId,
-                locationId: job.locationId ?? job.locationId,
-                locationName: job.locationName ?? job.locationName,
-                locationCity: job.locationCity ?? job.locationCity,
-                locationState: job.locationState ?? job.locationState,
-                locationZipCode: job.locationZipCode ?? job.locationZipCode,
+                locationId: job.locationId ?? job.LocationId,
+                locationName: job.locationName ?? job.LocationName,
+                locationCity: job.locationCity ?? job.LocationCity,
+                locationState: job.locationState ?? job.LocationState,
+                locationZipCode: job.locationZipCode ?? job.LocationZipCode,
 
                 jobTitle: job.jobTitle ?? job.JobTitle,
                 jobType: job.jobType ?? job.JobType,
@@ -1371,40 +1371,78 @@ export default function CareersPage() {
                                         />
                                     </label>
 
-                                    <div className="grid gap-2">
-                                        <span className="text-sm font-bold text-slate-700">
-                                            Do you currently have a HCA Per ID?
-                                        </span>
-
-                                        <div className="grid max-w-xs grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
-                                            <label className="cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="HasHcaPerId"
-                                                    value="YES"
-                                                    defaultChecked
-                                                    className="peer sr-only"
-                                                />
-
-                                                <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
-                                                    YES
+                                    {["CA", "CALIFORNIA"].includes(
+                                        (selectedPopupJob.locationState ?? "").trim().toUpperCase()
+                                    ) && (
+                                            <div className="grid gap-2">
+                                                <span className="text-sm font-bold text-slate-700">
+                                                    Do you currently have a HCA Per ID?
                                                 </span>
-                                            </label>
 
-                                            <label className="cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="HasHcaPerId"
-                                                    value="NO"
-                                                    className="peer sr-only"
-                                                />
+                                                <div className="grid max-w-xs grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+                                                    <label className="cursor-pointer">
+                                                        <input
+                                                            type="radio"
+                                                            name="HasHcaPerId"
+                                                            value="YES"
+                                                            defaultChecked
+                                                            className="peer sr-only"
+                                                        />
 
-                                                <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
-                                                    NO
+                                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                                            YES
+                                                        </span>
+                                                    </label>
+
+                                                    <label className="cursor-pointer">
+                                                        <input
+                                                            type="radio"
+                                                            name="HasHcaPerId"
+                                                            value="NO"
+                                                            className="peer sr-only"
+                                                        />
+
+                                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                                            NO
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        )}
+                                            <div className="grid gap-2">
+                                                <span className="text-sm font-bold text-slate-700">
+                                                    Do you currently have a HCA Per ID?
                                                 </span>
-                                            </label>
-                                        </div>
-                                    </div>
+
+                                                <div className="grid max-w-xs grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+                                                    <label className="cursor-pointer">
+                                                        <input
+                                                            type="radio"
+                                                            name="HasHcaPerId"
+                                                            value="YES"
+                                                            defaultChecked
+                                                            className="peer sr-only"
+                                                        />
+
+                                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                                            YES
+                                                        </span>
+                                                    </label>
+
+                                                    <label className="cursor-pointer">
+                                                        <input
+                                                            type="radio"
+                                                            name="HasHcaPerId"
+                                                            value="NO"
+                                                            className="peer sr-only"
+                                                        />
+
+                                                        <span className="flex items-center justify-center rounded-lg px-4 py-3 text-sm font-extrabold text-[#00456B] transition peer-checked:bg-[#00456B] peer-checked:text-white">
+                                                            NO
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div> 
 
                                     <label className="grid gap-1 text-sm font-bold text-slate-700">
                                         <span>How did you hear about us?</span>

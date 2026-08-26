@@ -33,88 +33,133 @@ export default function HomeConsultationForm({
         return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ) => {
         e.preventDefault();
 
         const form = e.currentTarget;
         const formData = new FormData(form);
 
         const fullName = clean(formData.get("name"));
-        const nameParts = fullName.split(" ").filter(Boolean);
+        const phone = clean(formData.get("phone"));
+        const email = clean(formData.get("email"));
+        const selectedPurpose = clean(
+            formData.get("purpose")
+        );
+        const submittedMessage = clean(
+            formData.get("message")
+        );
 
-        const selectedPurpose = clean(formData.get("purpose"));
+        const nameParts = fullName
+            .split(/\s+/)
+            .filter(Boolean);
 
-       const payload = {
-                purpose: "contact",
-                inquiryType: selectedPurpose,
+        /*
+        |--------------------------------------------------------------------------
+        | Validate actual form values BEFORE creating fallback values
+        |--------------------------------------------------------------------------
+        */
 
-                name: fullName,
-                firstName: nameParts[0] || fullName,
-                lastName:
-                    nameParts.slice(1).join(" ") || "N/A",
+        if (
+            !fullName ||
+            !phone ||
+            !email ||
+            !selectedPurpose ||
+            !submittedMessage
+        ) {
+            setIsError(true);
+            setStatusMessage(
+                "Please complete all required fields."
+            );
+            return;
+        }
 
-                email: clean(formData.get("email")),
-                phone: clean(formData.get("phone")),
+        const firstName =
+            nameParts[0] || fullName;
 
-                zipCode: "Not provided",
+        const lastName =
+            nameParts.slice(1).join(" ") || "N/A";
 
-                subject: "Home Page Consultation Request",
+        const payload = {
+            purpose: "contact",
 
-                message: [
-                    `Inquiry Type: ${selectedPurpose}`,
-                    "",
-                    clean(formData.get("message")) ||
-                        "Home page consultation request.",
-                ]
-                    .filter(Boolean)
-                    .join("\n"),
+            inquiryType: selectedPurpose,
 
-                company: "",
-               locationId,
-                locationSlug,
-            };
+            name: fullName,
+            firstName,
+            lastName,
 
-            if (
-                !payload.firstName ||
-                !payload.lastName ||
-                !payload.email ||
-                !payload.phone ||
-                !selectedPurpose ||
-                !payload.message
-            ) {
-                setIsError(true);
-                setStatusMessage(
-                    "Please complete all required fields."
-                );
-                return;
-            }
+            email,
+            phone,
 
-            setIsSubmitting(true);
-            setIsError(false);
-            setStatusMessage("");
+            /*
+             * Contact inquiries do not require a ZIP.
+             * /api/sendemail will normalize this to
+             * "Not provided".
+             */
+            zipCode: "",
+
+            subject:
+                "Home Page Consultation Request",
+
+            message: [
+                `Inquiry Type: ${selectedPurpose}`,
+                "",
+                submittedMessage,
+            ].join("\n"),
+
+            company: "",
+
+            locationId,
+            locationSlug,
+        };
+
+        setIsSubmitting(true);
+        setIsError(false);
+        setStatusMessage("");
 
         try {
-            const response = await fetch("/api/sendemail", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
+            const response = await fetch(
+                "/api/sendemail",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
 
             const raw = await response.text();
 
             let result: any = null;
 
             try {
-                result = raw ? JSON.parse(raw) : null;
+                result = raw
+                    ? JSON.parse(raw)
+                    : null;
             } catch {
                 result = null;
-            }
+            } 
 
             if (!response.ok) {
+                console.log(
+                    "Home consultation email failed:",
+                    {
+                        status: response.status,
+                        response: result,
+                        raw,
+                    }
+                );
+
                 setIsError(true);
 
                 const cleanMessage =
-                    result && typeof result === "object" && "message" in result
+                    result &&
+                        typeof result === "object" &&
+                        typeof result.message === "string"
                         ? result.message
                         : "We could not send your message right now. Please try again later or call us directly.";
 
@@ -123,11 +168,23 @@ export default function HomeConsultationForm({
             }
 
             setIsError(false);
-            setStatusMessage("Thank you. We received your request and will be in touch shortly.");
+
+            setStatusMessage(
+                "Thank you. We received your request and will be in touch shortly."
+            );
+
             form.reset();
-        } catch {
+        } catch (error) {
+            console.error(
+                "Home consultation request failed:",
+                error
+            );
+
             setIsError(true);
-            setStatusMessage("Sorry, we could not send your message right now.");
+
+            setStatusMessage(
+                "Sorry, we could not send your message right now."
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -139,6 +196,7 @@ export default function HomeConsultationForm({
                 <input
                     name="name"
                     type="text"
+                    required
                     placeholder="Name"
                     className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
                 />
@@ -148,6 +206,7 @@ export default function HomeConsultationForm({
                 <input
                     name="phone"
                     type="tel"
+                    required
                     placeholder="Phone"
                     maxLength={14}
                     onChange={(e) => {
@@ -179,6 +238,7 @@ export default function HomeConsultationForm({
             <div className="mb-5">
                 <input
                     name="email"
+                    required
                     type="email"
                     placeholder="Email"
                     className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"
@@ -188,6 +248,7 @@ export default function HomeConsultationForm({
             <div className="mb-5">
                 <textarea
                     name="message"
+                    required
                     rows={4}
                     placeholder="Your message"
                     className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-300 focus:border-sky-300"

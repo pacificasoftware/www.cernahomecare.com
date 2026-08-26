@@ -6,7 +6,7 @@ REM Cerna Home Care Website - PRODUCTION Deploy
 REM ==========================================
 
 REM Local project folder
-set "SRC=C:\SourceCode\CERNA_HEALTH_CARE\CERNA_HOME_CARE\www.cernahomecare.com>"
+set "SRC=C:\SourceCode\CERNA_HEALTH_CARE\CERNA_HOME_CARE\www.cernahomecare.com"
 
 REM Server connection
 set "SERVER=198.71.51.74"
@@ -24,9 +24,12 @@ set "HEALTH_URL=https://www.cernahomecare.com"
 REM Deployment package
 set "PACKAGE=%SRC%\deploy-web-production.zip"
 
-REM Upload to the Administrator SSH home folder first.
-REM Do not use a C:\ path directly in the SCP destination.
+REM Short staging path prevents Windows long-path problems
+set "STAGING=C:\CernaDeployTemp"
+
+REM Upload to Administrator SSH home folder first
 set "REMOTE_UPLOAD=deploy-web-production.zip"
+
 
 echo.
 echo ==========================================
@@ -39,6 +42,7 @@ echo Service:      %SERVICE%
 echo Port:         %PORT%
 echo Env File:     %ENVFILE%
 echo Health URL:   %HEALTH_URL%
+echo Staging:      %STAGING%
 echo ==========================================
 echo.
 
@@ -58,6 +62,11 @@ echo.
 echo Starting production deployment...
 echo.
 
+
+REM ==========================================
+REM Open source directory
+REM ==========================================
+
 cd /d "%SRC%"
 
 if errorlevel 1 (
@@ -65,6 +74,7 @@ if errorlevel 1 (
     echo %SRC%
     exit /b 1
 )
+
 
 REM ==========================================
 REM Validate required files
@@ -79,6 +89,7 @@ if not exist "%SSH_KEY%" (
     exit /b 1
 )
 
+
 echo.
 echo Checking environment file...
 
@@ -88,14 +99,16 @@ if not exist "%SRC%\%ENVFILE%" (
     exit /b 1
 )
 
+
 echo.
 echo Checking web.config...
 
 if not exist "%SRC%\web.config" (
     echo ERROR: web.config not found:
-    echo %SRC%\web.config%
+    echo %SRC%\web.config
     exit /b 1
 )
+
 
 echo.
 echo Checking package.json...
@@ -106,8 +119,9 @@ if not exist "%SRC%\package.json" (
     exit /b 1
 )
 
+
 REM ==========================================
-REM Install and build
+REM Install dependencies
 REM ==========================================
 
 echo.
@@ -120,10 +134,20 @@ if errorlevel 1 (
     exit /b 1
 )
 
+
+REM ==========================================
+REM Stop local Node processes
+REM ==========================================
+
 echo.
 echo Stopping local Node processes that may lock .next...
 
 taskkill /F /IM node.exe >nul 2>&1
+
+
+REM ==========================================
+REM Remove old Next.js build
+REM ==========================================
 
 echo.
 echo Removing old local build...
@@ -138,6 +162,11 @@ if exist "%SRC%\.next" (
     exit /b 1
 )
 
+
+REM ==========================================
+REM Build production application
+REM ==========================================
+
 echo.
 echo Building production Next.js application...
 
@@ -147,6 +176,11 @@ if errorlevel 1 (
     echo ERROR: Production build failed.
     exit /b 1
 )
+
+
+REM ==========================================
+REM Verify standalone output
+REM ==========================================
 
 echo.
 echo Checking standalone output...
@@ -159,8 +193,9 @@ if not exist "%SRC%\.next\standalone\server.js" (
     exit /b 1
 )
 
+
 REM ==========================================
-REM Create deployment package
+REM Remove old deployment files
 REM ==========================================
 
 echo.
@@ -170,25 +205,211 @@ if exist "%PACKAGE%" (
     del /f /q "%PACKAGE%"
 )
 
-if exist "%SRC%\deploy-package" (
-    rmdir /s /q "%SRC%\deploy-package"
+if exist "%STAGING%" (
+    rmdir /s /q "%STAGING%"
 )
 
-echo.
-echo Creating production deployment package...
-
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='Stop'; $source='%SRC%'; $deployFolder=Join-Path $source 'deploy-package'; $package='%PACKAGE%'; if (Test-Path $deployFolder) { Remove-Item $deployFolder -Recurse -Force }; [void](New-Item -ItemType Directory -Path $deployFolder -Force); Copy-Item (Join-Path $source '.next\standalone\*') $deployFolder -Recurse -Force; $staticFolder=Join-Path $deployFolder '.next\static'; [void](New-Item -ItemType Directory -Path $staticFolder -Force); Copy-Item (Join-Path $source '.next\static\*') $staticFolder -Recurse -Force; $publicFolder=Join-Path $source 'public'; if (Test-Path $publicFolder) { Copy-Item $publicFolder (Join-Path $deployFolder 'public') -Recurse -Force }; Copy-Item (Join-Path $source 'web.config') (Join-Path $deployFolder 'web.config') -Force; Copy-Item (Join-Path $source '%ENVFILE%') (Join-Path $deployFolder '.env.production') -Force; Compress-Archive -Path (Join-Path $deployFolder '*') -DestinationPath $package -Force; Remove-Item $deployFolder -Recurse -Force"
-
-if errorlevel 1 (
-    echo ERROR: Failed to create deployment package.
+if exist "%STAGING%" (
+    echo ERROR: Could not remove old staging folder:
+    echo %STAGING%
     exit /b 1
 )
+
+
+REM ==========================================
+REM Create short staging directory
+REM ==========================================
+
+echo.
+echo Creating deployment staging folder...
+echo %STAGING%
+
+mkdir "%STAGING%"
+
+if errorlevel 1 (
+    echo ERROR: Could not create staging folder:
+    echo %STAGING%
+    exit /b 1
+)
+
+
+REM ==========================================
+REM Copy standalone Next.js application
+REM ==========================================
+
+echo.
+echo Copying standalone application...
+
+robocopy "%SRC%\.next\standalone" "%STAGING%" /E /R:2 /W:1 /NFL /NDL /NJH /NJS /NP
+
+if errorlevel 8 (
+    echo ERROR: Failed to copy standalone application.
+
+    if exist "%STAGING%" (
+        rmdir /s /q "%STAGING%"
+    )
+
+    exit /b 1
+)
+
+
+REM ==========================================
+REM Copy Next.js static files
+REM ==========================================
+
+echo.
+echo Copying Next.js static files...
+
+if not exist "%STAGING%\.next\static" (
+    mkdir "%STAGING%\.next\static"
+)
+
+robocopy "%SRC%\.next\static" "%STAGING%\.next\static" /E /R:2 /W:1 /NFL /NDL /NJH /NJS /NP
+
+if errorlevel 8 (
+    echo ERROR: Failed to copy Next.js static files.
+
+    if exist "%STAGING%" (
+        rmdir /s /q "%STAGING%"
+    )
+
+    exit /b 1
+)
+
+
+REM ==========================================
+REM Copy public folder
+REM ==========================================
+
+if exist "%SRC%\public" (
+
+    echo.
+    echo Copying public folder...
+
+    robocopy "%SRC%\public" "%STAGING%\public" /E /R:2 /W:1 /NFL /NDL /NJH /NJS /NP
+
+    if errorlevel 8 (
+        echo ERROR: Failed to copy public folder.
+
+        if exist "%STAGING%" (
+            rmdir /s /q "%STAGING%"
+        )
+
+        exit /b 1
+    )
+)
+
+
+REM ==========================================
+REM Copy web.config
+REM ==========================================
+
+echo.
+echo Copying web.config...
+
+copy /Y "%SRC%\web.config" "%STAGING%\web.config" >nul
+
+if errorlevel 1 (
+    echo ERROR: Failed to copy web.config.
+
+    if exist "%STAGING%" (
+        rmdir /s /q "%STAGING%"
+    )
+
+    exit /b 1
+)
+
+
+REM ==========================================
+REM Copy production environment file
+REM ==========================================
+
+echo.
+echo Copying production environment file...
+
+copy /Y "%SRC%\%ENVFILE%" "%STAGING%\.env.production" >nul
+
+if errorlevel 1 (
+    echo ERROR: Failed to copy %ENVFILE%.
+
+    if exist "%STAGING%" (
+        rmdir /s /q "%STAGING%"
+    )
+
+    exit /b 1
+)
+
+
+REM ==========================================
+REM Verify staged files
+REM ==========================================
+
+echo.
+echo Verifying staged deployment...
+
+if not exist "%STAGING%\server.js" (
+    echo ERROR: server.js is missing from staging folder.
+    exit /b 1
+)
+
+if not exist "%STAGING%\web.config" (
+    echo ERROR: web.config is missing from staging folder.
+    exit /b 1
+)
+
+if not exist "%STAGING%\.env.production" (
+    echo ERROR: .env.production is missing from staging folder.
+    exit /b 1
+)
+
+
+REM ==========================================
+REM Create deployment ZIP
+REM ==========================================
+
+echo.
+echo Compressing production deployment package...
+
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+"$ErrorActionPreference='Stop'; Compress-Archive -Path '%STAGING%\*' -DestinationPath '%PACKAGE%' -Force"
+
+if errorlevel 1 (
+    echo ERROR: Failed to create deployment ZIP.
+
+    if exist "%STAGING%" (
+        rmdir /s /q "%STAGING%"
+    )
+
+    exit /b 1
+)
+
+
+REM ==========================================
+REM Remove temporary staging folder
+REM ==========================================
+
+echo.
+echo Cleaning temporary staging folder...
+
+if exist "%STAGING%" (
+    rmdir /s /q "%STAGING%"
+)
+
+
+REM ==========================================
+REM Verify ZIP
+REM ==========================================
 
 if not exist "%PACKAGE%" (
     echo ERROR: Deployment ZIP was not created:
     echo %PACKAGE%
     exit /b 1
 )
+
+echo.
+echo Deployment package successfully created:
+echo %PACKAGE%
+
 
 REM ==========================================
 REM Stop production service
@@ -204,8 +425,9 @@ if errorlevel 1 (
     exit /b 1
 )
 
+
 REM ==========================================
-REM Upload package
+REM Upload deployment package
 REM ==========================================
 
 echo.
@@ -218,8 +440,11 @@ if errorlevel 1 (
     exit /b 1
 )
 
+
 REM ==========================================
-REM Reset production folder, expand and restart
+REM Reset production folder
+REM Expand ZIP
+REM Restart service
 REM ==========================================
 
 echo.
@@ -232,8 +457,9 @@ if errorlevel 1 (
     exit /b 1
 )
 
+
 REM ==========================================
-REM Remove local package
+REM Remove local deployment ZIP
 REM ==========================================
 
 echo.
@@ -243,6 +469,7 @@ if exist "%PACKAGE%" (
     del /f /q "%PACKAGE%"
 )
 
+
 REM ==========================================
 REM Production health check
 REM ==========================================
@@ -251,7 +478,8 @@ echo.
 echo Checking production website...
 echo URL: %HEALTH_URL%
 
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='Stop'; $url='%HEALTH_URL%'; $success=$false; for ($attempt=1; $attempt -le 5; $attempt++) { try { Write-Host ('Health check attempt ' + $attempt + ' of 5...'); $response=Invoke-WebRequest $url -UseBasicParsing -TimeoutSec 30; Write-Host ('HTTP Status: ' + $response.StatusCode); if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 400) { $success=$true; break } } catch { Write-Host ('Health check failed: ' + $_.Exception.Message) }; Start-Sleep -Seconds 8 }; if (-not $success) { exit 1 }"
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+"$ErrorActionPreference='Stop'; $url='%HEALTH_URL%'; $success=$false; for ($attempt=1; $attempt -le 5; $attempt++) { try { Write-Host ('Health check attempt ' + $attempt + ' of 5...'); $response=Invoke-WebRequest $url -UseBasicParsing -TimeoutSec 30; Write-Host ('HTTP Status: ' + $response.StatusCode); if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 400) { $success=$true; break } } catch { Write-Host ('Health check failed: ' + $_.Exception.Message) }; Start-Sleep -Seconds 8 }; if (-not $success) { exit 1 }"
 
 if errorlevel 1 (
     echo.
@@ -268,6 +496,11 @@ if errorlevel 1 (
     echo.
     exit /b 1
 )
+
+
+REM ==========================================
+REM Complete
+REM ==========================================
 
 echo.
 echo ==========================================

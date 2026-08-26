@@ -127,7 +127,7 @@ export const locations: Record<string, LocationData> = {
         name: "Dallas",
         state: "TX",
         heroImage: "/assets/8180_rafael_rivera.png",
-        addressLine1: "101 E Park Blvd Suite 771",
+        addressLine1: "101 E Park Blvd Suite 721",
         addressLine2: "Plano, TX 75074",
         phone: "(972) 330-2005",
         phoneHref: "tel:19723302005",

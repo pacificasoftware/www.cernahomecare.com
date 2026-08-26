@@ -126,18 +126,7 @@ export default function LocalApplyClient({
 
             subject: `Cerna Home Care Job Application - ${location.name}`,
 
-            message: [
-                `New job application for ${location.name}.`,
-                "",
-                `Applicant: ${firstName} ${lastName}`,
-                `Phone: ${phone}`,
-                `Email: ${email}`,
-                `Applicant ZIP Code: ${zipCode}`,
-                `location: ${location.name}`,
-                `location ID: ${location.locationId}`,
-                `Location: ${locationName || "Not provided"}`,
-                `Location Slug: ${location.slug}`,
-            ].join("\n"),
+            message: "I am looking for a caregiver job opportunity with Cerna Home Care. Please contact me with more information. Thank you!",                                         
 
             company: "",
         };

@@ -74,7 +74,7 @@ const locations = [
         state: "TX",
         title: "Dallas, TX",
         slug: "dallas",
-        address: "101 E Park Blvd Suite 771, Plano, TX 75074",
+        address: "101 E Park Blvd Suite 721, Plano, TX 75074",
         phone: "(972) 330-2005",
         image: "/assets/101-E-Park-Blvd-Plano-TX.jpg",
     },
