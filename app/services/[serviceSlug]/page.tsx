@@ -3,6 +3,48 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { locationServices } from "@/lib/locationServices";
 
+import {
+    Brain,
+    BadgeCheck,
+    ShieldCheck,
+    HeartHandshake,
+    Briefcase,
+    Lightbulb,
+    Activity,
+    HeartPulse,
+    ShowerHead,
+    Sparkles,
+    ShoppingCart,
+    Dumbbell,
+    Pill,
+    Car,
+    House,
+    Stethoscope,
+    Apple,
+    CalendarDays,
+} from "lucide-react";
+
+const serviceIcons = {
+    Brain,
+    BadgeCheck,
+    ShieldCheck,
+    HeartHandshake,
+    Briefcase,
+    Lightbulb,
+    Activity,
+    HeartPulse,
+    ShowerHead,
+    Sparkles,
+    ShoppingCart,
+    Dumbbell,
+    Pill,
+    Car,
+    House,
+    Stethoscope,
+    Apple,
+    CalendarDays,
+};
+
 type Props = {
     params: Promise<{
         serviceSlug: string;
@@ -34,7 +76,6 @@ export function generateStaticParams() {
 export default async function CorporateServicePage({ params }: Props) {
     const { serviceSlug } = await params;
 
-
     const service =
         locationServices[serviceSlug as keyof typeof locationServices];
 
@@ -44,6 +85,7 @@ export default async function CorporateServicePage({ params }: Props) {
 
     return (
         <main className="bg-white">
+            {/* HERO */}
             <section className="bg-[#d9f1f7] px-6 py-12 md:py-16">
                 <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-2">
                     <div>
@@ -89,14 +131,195 @@ export default async function CorporateServicePage({ params }: Props) {
                 </div>
             </section>
 
+            {/* SERVICE CONTENT */}
             <section className="px-6 py-16">
                 <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_380px]">
                     <div>
                         <h2 className="text-3xl font-extrabold text-[#00456B] md:text-4xl">
-                            Professional {service.title}
+                             {service.title}
                         </h2>
+                        {/* COVERED CARE PROGRAM CARDS */}
+                        {"coveredPrograms" in service && (
+                            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                                {service.coveredPrograms.map((program) => {
+                                    const Icon =
+                                        serviceIcons[
+                                        program.icon as keyof typeof serviceIcons
+                                        ];
 
-                        <div className="mt-8 space-y-10">
+                                    return (
+                                        <div
+                                            key={program.title}
+                                            className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                                        >
+                                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf5f8]">
+                                                <Icon
+                                                    className="h-6 w-6 text-[#00456B]"
+                                                    strokeWidth={1.8}
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <h3 className="text-lg font-extrabold text-[#00456B]">
+                                                    {program.title}
+                                                </h3>
+
+                                                <p className="mt-1 text-sm leading-6 text-slate-600">
+                                                    {program.subtitle}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        {/* SPECIALIZED CARE PROGRAM CARDS */}
+                        {"specializedPrograms" in service && (
+                            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                                {service.specializedPrograms.map((program) => {
+                                    const Icon =
+                                        serviceIcons[
+                                        program.icon as keyof typeof serviceIcons
+                                        ];
+
+                                    return (
+                                        <div
+                                            key={program.title}
+                                            className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                                        >
+                                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf5f8]">
+                                                <Icon
+                                                    className="h-6 w-6 text-[#00456B]"
+                                                    strokeWidth={1.8}
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <h3 className="text-lg font-extrabold text-[#00456B]">
+                                                    {program.title}
+                                                </h3>
+
+                                                <p className="mt-1 text-sm leading-6 text-slate-600">
+                                                    {program.subtitle}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        {/* MEMORY CARE PROGRAM CARDS */}
+                        {"memoryPrograms" in service && (
+                            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                                {service.memoryPrograms.map((program) => {
+                                    const Icon =
+                                        serviceIcons[
+                                        program.icon as keyof typeof serviceIcons
+                                        ];
+
+                                    return (
+                                        <div
+                                            key={program.title}
+                                            className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                                        >
+                                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf5f8]">
+                                                <Icon
+                                                    className="h-6 w-6 text-[#00456B]"
+                                                    strokeWidth={1.8}
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <h3 className="text-lg font-extrabold text-[#00456B]">
+                                                    {program.title}
+                                                </h3>
+
+                                                <p className="mt-1 text-sm leading-6 text-slate-600">
+                                                    {program.subtitle}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        {/* COMPANION CARE PROGRAM CARDS */}
+                        {"companionPrograms" in service && (
+                            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                                {service.companionPrograms.map((program) => {
+                                    const Icon =
+                                        serviceIcons[
+                                        program.icon as keyof typeof serviceIcons
+                                        ];
+
+                                    return (
+                                        <div
+                                            key={program.title}
+                                            className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                                        >
+                                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf5f8]">
+                                                <Icon
+                                                    className="h-6 w-6 text-[#00456B]"
+                                                    strokeWidth={1.8}
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <h3 className="text-lg font-extrabold text-[#00456B]">
+                                                    {program.title}
+                                                </h3>
+
+                                                <p className="mt-1 text-sm leading-6 text-slate-600">
+                                                    {program.subtitle}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        {/* CARE MANAGEMENT PROGRAM CARDS */}
+                        {"careManagementPrograms" in service && (
+                            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                                {service.careManagementPrograms.map((program) => {
+                                    const Icon =
+                                        serviceIcons[
+                                        program.icon as keyof typeof serviceIcons
+                                        ];
+
+                                    return (
+                                        <div
+                                            key={program.title}
+                                            className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                                        >
+                                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf5f8]">
+                                                <Icon
+                                                    className="h-6 w-6 text-[#00456B]"
+                                                    strokeWidth={1.8}
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <h3 className="text-lg font-extrabold text-[#00456B]">
+                                                    {program.title}
+                                                </h3>
+
+                                                <p className="mt-1 text-sm leading-6 text-slate-600">
+                                                    {program.subtitle}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        {/* STANDARD SERVICE SECTIONS */}
+                        <div className="mt-10 space-y-10">
                             {service.sections.map((section) => (
                                 <div key={section.heading}>
                                     <h3 className="text-2xl font-extrabold text-[#00456B]">
@@ -130,6 +353,7 @@ export default async function CorporateServicePage({ params }: Props) {
                         </div>
                     </div>
 
+                    {/* SIDEBAR */}
                     <aside className="h-fit rounded-[32px] bg-white p-8 shadow-xl ring-1 ring-slate-200">
                         <h2 className="text-2xl font-extrabold text-[#00456B]">
                             Find your local Cerna team
@@ -151,6 +375,7 @@ export default async function CorporateServicePage({ params }: Props) {
                 </div>
             </section>
 
+            {/* MORE SERVICES */}
             <section className="bg-slate-50 px-6 py-16">
                 <div className="mx-auto max-w-7xl">
                     <h2 className="text-center text-3xl font-extrabold text-[#00456B]">

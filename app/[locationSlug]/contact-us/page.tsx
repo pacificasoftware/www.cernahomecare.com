@@ -419,8 +419,6 @@ export default async function LocalContactUsPage({ params }: PageProps) {
                                     Covered Care
                                 </Link> 
 
-                              
-
                                 <Link
                                     href={`/${locationSlug}/companion-care`}
                                     className="rounded-2xl bg-white px-4 py-3 font-semibold text-[#00456B] shadow-sm ring-1 ring-slate-200 hover:text-[#DD8500]"

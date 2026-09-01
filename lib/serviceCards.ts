@@ -22,14 +22,7 @@ export const serviceCards: ServiceCard[] = [
             "Healthy Lifestyle Modification",
             "Hospice Care Support",
         ],
-    },
-    //{
-    //    title: "Covered Care",
-    //    slug: "live-in-care",
-    //    description:
-    //        "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
-    //    image: "/assets/respite-care.webp",
-    //}, 
+    }, 
     {
         title: "Memory Care",
         slug: "memory-care",
