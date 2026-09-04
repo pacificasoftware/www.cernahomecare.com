@@ -1,8 +1,7 @@
 ﻿"use client";
-
-import React, { useState, use } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
-import { locations } from "@/lib/locations";
+import { getLocationBySlug } from "@/lib/locations";
 import "../../getting-started/getting-started.css";
 
 type Props = {
@@ -27,13 +26,72 @@ export default function LocalGettingStartedPage({ params }: Props) {
     const router = useRouter();
     const { locationSlug } = use(params);
 
-    const location = locations[locationSlug as keyof typeof locations];
+    const [location, setLocation] = useState<Awaited<
+        ReturnType<typeof getLocationBySlug>
+    >>(null);
+
+    const [locationLoading, setLocationLoading] = useState(true);
 
     const [form, setForm] = useState<FormState>(initialForm);
     const [pageError, setPageError] = useState<string | null>(null);
 
+    useEffect(() => {
+        let cancelled = false;
+
+        async function loadLocation() {
+            try {
+                setLocationLoading(true);
+
+                const result = await getLocationBySlug(locationSlug);
+
+                if (!cancelled) {
+                    setLocation(result);
+                }
+            } catch (error) {
+                console.error("Failed to load location:", error);
+
+                if (!cancelled) {
+                    setLocation(null);
+                }
+            } finally {
+                if (!cancelled) {
+                    setLocationLoading(false);
+                }
+            }
+        }
+
+        loadLocation();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [locationSlug]);
+
+    if (locationLoading) {
+        return (
+            <section className="getting-started-section">
+                <div className="getting-started-container">
+                    <p>Loading your local Cerna Home Care office...</p>
+                </div>
+            </section>
+        );
+    }
+
     if (!location) {
-        return null;
+        return (
+            <section className="getting-started-section">
+                <div className="getting-started-container">
+                    <h1>Location Not Found</h1>
+
+                    <button
+                        type="button"
+                        onClick={() => router.push("/locations")}
+                    >
+                        View All Locations
+                    </button>
+                </div>
+            </section>
+        );
     }
 
     const primaryPhoneHref =

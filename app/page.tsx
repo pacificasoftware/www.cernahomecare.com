@@ -1,9 +1,12 @@
 ﻿import styles from "./home.module.css";
 import Image from "next/image";
-import Link from "next/link";  
+import Link from "next/link";
+
 import HomeConsultationForm from "@/components/HomeConsultationForm";
 import ServiceCardsSection from "../components/ServiceCardsSection";
 import DutiesProvidedSection from "../components/DutiesProvidedSection";
+
+import { getLocationBySlug } from "@/lib/locations";
 
 const services = [
     {
@@ -80,8 +83,6 @@ const services = [
     },
 ];
 
- 
-
 const carePlanItems = [
     "Companionship",
     "Appointments",
@@ -133,7 +134,7 @@ const steps = [
         body: "Courteous & Punctual",
     },
 ];
- 
+
 function SectionHeading({
     eyebrow,
     title,
@@ -146,25 +147,56 @@ function SectionHeading({
     return (
         <div className="mx-auto max-w-3xl text-center">
             {eyebrow ? (
-                <p className="mb-3 text-base md:text-lg font-semibold uppercase tracking-[0.24em] ...">
+                <p className="mb-3 text-base font-semibold uppercase tracking-[0.24em] md:text-lg">
                     {eyebrow}
                 </p>
             ) : null}
+
             <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
                 {title}
             </h2>
+
             {description ? (
-                <p className="mt-5 text-lg leading-8 text-white/80">{description}</p>
+                <p className="mt-5 text-lg leading-8 text-white/80">
+                    {description}
+                </p>
             ) : null}
         </div>
     );
 }
 
-export default function CernaHomePage() {
-    return (
+export default async function CernaHomePage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    |
+    | Corporate/HQ is the Orange County location.
+    |
+    | The public homepage prefers the toll-free phone number, then falls
+    | back to the Orange County local number if one is not available.
+    |
+    */
 
+    const corporateLocation =
+        await getLocationBySlug("orange-county");
+
+    const corporatePhoneHref =
+        corporateLocation?.tollFreePhoneHref ??
+        corporateLocation?.phoneHref ??
+        "tel:18775776782";
+
+    const corporatePhoneNumber =
+        corporateLocation?.tollFreePhone ??
+        corporateLocation?.phone ??
+        "(877) 577-6782";
+
+    return (
         <div className="flex min-h-screen flex-col">
-            <main className="flex-1 bg-white text-slate-900"> 
+            <main className="flex-1 bg-white text-slate-900">
+                {/* ========================================================= */}
+                {/* HERO */}
+                {/* ========================================================= */}
 
                 <section>
                     <div
@@ -202,7 +234,8 @@ export default function CernaHomePage() {
                                 <h1
                                     className="text-2xl font-extralight uppercase tracking-[0.06em] text-white md:text-4xl lg:text-5xl"
                                     style={{
-                                        textShadow: "0 2px 10px rgba(0,0,0,0.40)",
+                                        textShadow:
+                                            "0 2px 10px rgba(0,0,0,0.40)",
                                     }}
                                 >
                                     THE HOME CARE JOURNEY
@@ -211,7 +244,8 @@ export default function CernaHomePage() {
                                 <p
                                     className="mt-3 text-sm font-light tracking-[0.02em] text-white md:text-lg lg:text-xl"
                                     style={{
-                                        textShadow: "0 2px 10px rgba(0,0,0,0.40)",
+                                        textShadow:
+                                            "0 2px 10px rgba(0,0,0,0.40)",
                                     }}
                                 >
                                     Providing Home Care Services for Over 20 Years
@@ -221,10 +255,15 @@ export default function CernaHomePage() {
                     </div>
                 </section>
 
+                {/* ========================================================= */}
+                {/* CONSULTATION */}
+                {/* ========================================================= */}
+
                 <section
                     className="relative py-12 md:py-14"
                     style={{
-                        backgroundImage: 'url("/assets/hands_blueV2-300x300.webp")',
+                        backgroundImage:
+                            'url("/assets/hands_blueV2-300x300.webp")',
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
@@ -246,16 +285,16 @@ export default function CernaHomePage() {
                                 <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">
                                     Please feel free to contact us anytime at{" "}
                                     <a
-                                        href="tel:18775776782"
+                                        href={corporatePhoneHref}
                                         className="font-semibold text-orange-300 underline decoration-orange-200 underline-offset-4 transition hover:text-orange-200"
                                     >
-                                        (877) 577-6782
+                                        {corporatePhoneNumber}
                                     </a>
                                     . We’ll help you understand the next best step.
                                 </p>
                             </div>
 
-                       <HomeConsultationForm />
+                            <HomeConsultationForm />
                         </div>
 
                         <div className="flex items-center">
@@ -277,19 +316,24 @@ export default function CernaHomePage() {
                                     </p>
 
                                     <h2 className="mt-3 text-2xl font-bold leading-tight text-[#00456B] md:text-3xl">
-                                        Compassionate care for the people who matter most
+                                        Compassionate care for the people who
+                                        matter most
                                     </h2>
 
                                     <p className="mt-4 text-sm leading-7 text-slate-600">
-                                        Choosing home care can feel overwhelming. Our team helps families
-                                        navigate the process with compassion, clear communication, and
-                                        dependable support tailored to each individual situation.
+                                        Choosing home care can feel overwhelming.
+                                        Our team helps families navigate the
+                                        process with compassion, clear
+                                        communication, and dependable support
+                                        tailored to each individual situation.
                                     </p>
 
                                     <p className="mt-3 text-sm leading-7 text-slate-600">
-                                        Whether your loved one needs companionship, daily assistance, or
-                                        more involved care, Cerna Homecare is here to help provide comfort,
-                                        dignity, and peace of mind at home.
+                                        Whether your loved one needs companionship,
+                                        daily assistance, or more involved care,
+                                        Cerna Homecare is here to help provide
+                                        comfort, dignity, and peace of mind at
+                                        home.
                                     </p>
 
                                     <div className="mt-5 flex justify-center">
@@ -308,9 +352,13 @@ export default function CernaHomePage() {
 
                 <div className={styles.fullWidthDivider} />
 
+                {/* ========================================================= */}
+                {/* PHONE CONSULTATION BANNER */}
+                {/* ========================================================= */}
+
                 <section className="bg-white py-12 md:py-16">
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
-                   <div className="relative overflow-hidden rounded-[28px] border border-sky-100 bg-gradient-to-r from-sky-50 via-white to-sky-100 px-6 pt-14 pb-10 text-center shadow-sm md:px-12 md:pt-16 md:pb-12">
+                        <div className="relative overflow-hidden rounded-[28px] border border-sky-100 bg-gradient-to-r from-sky-50 via-white to-sky-100 px-6 pb-10 pt-14 text-center shadow-sm md:px-12 md:pb-12 md:pt-16">
                             <div className="absolute left-0 top-0 h-full w-2 bg-sky-600" />
                             <div className="absolute right-0 top-0 h-full w-2 bg-sky-600" />
 
@@ -321,36 +369,36 @@ export default function CernaHomePage() {
                             <h3 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
                                 Call us at{" "}
                                 <a
-                                    href="tel:18775776782"
+                                    href={corporatePhoneHref}
                                     className="text-sky-700 underline decoration-sky-300 underline-offset-4 hover:text-sky-800"
                                 >
-                                    (877) 577-6782
+                                    {corporatePhoneNumber}
                                 </a>{" "}
                                 for a FREE In-Home Consultation!
                             </h3>
 
                             <div className="mx-auto mt-1 h-px w-32 bg-sky-300" />
-
-                            {/*<p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-slate-600 md:text-xl">*/}
-                            {/*    Our team is here to answer your questions, understand your needs,*/}
-                            {/*    and help you take the next step with confidence.*/}
-                            {/*</p>*/}
                         </div>
                     </div>
                 </section>
+
                 <div className={styles.fullWidthDivider} />
 
-                {/*Our Services*/} 
-                <ServiceCardsSection basePath="/services" /> 
-               
-                {/*Duties Provided*/}
-                {/*<DutiesProvidedSection />*/} 
+                {/* ========================================================= */}
+                {/* SERVICES */}
+                {/* ========================================================= */}
 
-                <section className="relative overflow-hidden py-20 md:py-24" >
+                <ServiceCardsSection basePath="/services" />
+
+                {/* ========================================================= */}
+                {/* TESTIMONIALS */}
+                {/* ========================================================= */}
+
+                <section className="relative overflow-hidden py-20 md:py-24">
                     <Image
-                        src="/assets/cerna-reviews.jpg" 
+                        src="/assets/cerna-reviews.jpg"
                         alt="Cerna reviews background"
-                        fill                                               
+                        fill
                         sizes="100vw"
                         className="object-contain object-top"
                     />
@@ -371,7 +419,9 @@ export default function CernaHomePage() {
                                 >
                                     <div
                                         className="mb-5 text-3xl leading-none"
-                                        style={{ color: "#DD8500" }}
+                                        style={{
+                                            color: "#DD8500",
+                                        }}
                                     >
                                         ★★★★★
                                     </div>
@@ -391,7 +441,7 @@ export default function CernaHomePage() {
                             ))}
                         </div>
 
-                        <div className="mt-14 mb-24 flex justify-center">
+                        <div className="mb-24 mt-14 flex justify-center">
                             <div className="flex flex-col items-center">
                                 <h3 className="mb-3 text-center text-sm font-semibold text-slate-800">
                                     Watch Our Client Story
@@ -407,12 +457,16 @@ export default function CernaHomePage() {
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
                                         className="block rounded-2xl"
-                                    ></iframe>
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                {/* ========================================================= */}
+                {/* THREE EASY STEPS */}
+                {/* ========================================================= */}
 
                 <section className="bg-slate-900 py-20 text-white md:py-24">
                     <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-10">
@@ -451,13 +505,19 @@ export default function CernaHomePage() {
 
                                         <p className="mt-3 text-base leading-8 text-slate-600">
                                             {step.body}
+
                                             {index === 0 && (
-                                                <> 
+                                                <>
+                                                    {" "}
                                                     <a
-                                                        href="tel:18775776782"
+                                                        href={
+                                                            corporatePhoneHref
+                                                        }
                                                         className="font-semibold text-sky-700 underline decoration-sky-300 underline-offset-4 transition hover:text-sky-800"
                                                     >
-                                                        (877) 577-6782
+                                                        {
+                                                            corporatePhoneNumber
+                                                        }
                                                     </a>
                                                     .
                                                 </>
@@ -472,14 +532,15 @@ export default function CernaHomePage() {
                             <Link
                                 href="/getting-started"
                                 className="inline-flex items-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white transition hover:opacity-90"
-                                style={{ backgroundColor: "#DD8500" }}
+                                style={{
+                                    backgroundColor: "#DD8500",
+                                }}
                             >
                                 Get Started Now
                             </Link>
-                        </div>s
+                        </div>
                     </div>
-                </section> 
-
+                </section>
             </main>
         </div>
     );

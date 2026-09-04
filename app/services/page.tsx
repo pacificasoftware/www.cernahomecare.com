@@ -103,6 +103,7 @@ export default function ServicesPage() {
                                 src="/assets/cerna-services.png"
                                 alt="Cerna Home Care services"
                                 fill
+                                sizes="(min-width: 768px) 340px, 240px"
                                 className="object-cover"
                                 priority
                             />

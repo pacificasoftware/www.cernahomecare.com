@@ -4,11 +4,23 @@
     href: string;
 };
 
+export type LocationState = {
+    code: string;
+    name: string;
+};
+
 export type LocationData = {
+    locationId: number;
+
     slug: string;
     name: string;
+
+    city: string;
     state: string;
+    zipCode: string;
+
     heroImage: string;
+
     addressLine1: string;
     addressLine2: string;
 
@@ -16,175 +28,513 @@ export type LocationData = {
     phoneHref: string;
     phones?: LocationPhone[];
 
+    tollFreePhone?: string | null;
+    tollFreePhoneHref?: string | null;
+
     email: string;
+    careersEmail?: string | null;
+
+    jobsZip?: string | null;
+
+    latitude?: number | null;
+    longitude?: number | null;
+
     mapUrl: string;
+
     coverageTitle: string;
     coverageAreas: string[];
+
+    pageTitle?: string | null;
+    metaDescription?: string | null;
+    shortDescription?: string | null;
+
+    sortOrder?: number | null;
+
+    updatedUtc?: string | null;
 };
 
-export const locations: Record<string, LocationData> = {
-    "orange-county": {
-        slug: "orange-county",
-        name: "Orange County",
-        state: "CA",
-        heroImage: "/assets/cernaoffice.png",
-        addressLine1: "2151 Michelson Dr",
-        addressLine2: "Irvine, CA 92612",
-        phone: "(949) 298-3200",
-        phoneHref: "tel:19492983200",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=2151+Michelson+Dr+Irvine+CA+92612",
-        coverageTitle: "ORANGE COUNTY COVERAGE AREAS",
-        coverageAreas: [
-            "Aliso Viejo", "Anaheim", "Brea", "Buena Park", "Costa Mesa",
-            "Cypress", "Dana Point", "Fountain Valley", "Fullerton",
-            "Garden Grove", "Huntington Beach", "Irvine", "La Habra",
-            "La Palma", "Laguna Beach", "Laguna Hills", "Laguna Niguel",
-            "Laguna Woods", "Lake Forest", "Los Alamitos", "Mission Viejo",
-            "Newport Beach", "Orange", "Placentia", "Rancho Santa Margarita",
-            "San Clemente", "San Juan Capistrano", "Santa Ana", "Seal Beach",
-            "Stanton", "Tustin", "Villa Park", "Westminster", "Yorba Linda",
-        ],
-    },
+export function getPreferredLocationPhone(
+    location: LocationData | null | undefined
+): {
+    label: string;
+    href: string;
+} | null {
+    if (!location) {
+        return null;
+    }
 
-    "southlake": {
-        slug: "southlake",
-        name: "Southlake",
-        state: "TX",
-        heroImage: "/assets/1560-E-Southlake-Blvd-Southlake-TX-Building-Photo-1-Large.jpg",
-        addressLine1: "1560 E Southlake Blvd",
-        addressLine2: "Southlake, TX 76092",
-        phone: "(682) 324-9800",
-        phoneHref: "tel:16823249800",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=1560+E+Southlake+Blvd+Southlake+TX+76092",
-        coverageTitle: "SOUTHLAKE COVERAGE AREAS",
-        coverageAreas: ["Southlake", "Grapevine", "Colleyville", "Keller", "Westlake", "Trophy Club"],
-    },
+    /*
+     * Rule:
+     * 1. Toll-free number first
+     * 2. Regular phone if toll-free is blank
+     */
 
-    "south-bay": {
-        slug: "south-bay",
-        name: "South Bay",
-        state: "CA",
-        heroImage: "/assets/3780-Kilroy-Airport-Way.jpg",
-        addressLine1: "3780 Kilroy Airport Way",
-        addressLine2: "Long Beach, CA 90806",
-        phone: "(562) 242-1830",
-        phoneHref: "tel:15622421830",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=3780+Kilroy+Airport+Way+Long+Beach+CA+90806",
-        coverageTitle: "SOUTH BAY COVERAGE AREAS",
-        coverageAreas: ["Long Beach", "Torrance", "Redondo Beach", "Manhattan Beach", "Hermosa Beach", "Palos Verdes"],
-    },
+    const tollFreePhone =
+        location.tollFreePhone?.trim();
 
-    "marin-county": {
-        slug: "marin-county",
-        name: "Marin County",
-        state: "CA",
-        heroImage: "/assets/700-Larkspur-Landing.jpg",
-        addressLine1: "700 Larkspur Landing Circle",
-        addressLine2: "Larkspur, CA 94939",
-        phone: "(415) 799-2628",
-        phoneHref: "tel:14157992628",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=700+Larkspur+Landing+Circle+Larkspur+CA+94939",
-        coverageTitle: "MARIN COUNTY COVERAGE AREAS",
-        coverageAreas: ["Larkspur", "San Rafael", "Mill Valley", "Novato", "Sausalito", "Tiburon"],
-    },
+    if (tollFreePhone) {
+        return {
+            label: tollFreePhone,
+            href:
+                location.tollFreePhoneHref?.trim() ||
+                `tel:${tollFreePhone.replace(/[^\d+]/g, "")}`,
+        };
+    }
 
-    "san-diego": {
-        slug: "san-diego",
-        name: "San Diego",
-        state: "CA",
-        heroImage: "/assets/12526-High-Bluff-Dr.jpg",
-        addressLine1: "12526 High Bluff Drive",
-        addressLine2: "San Diego, CA 92130",
-        phone: "(877) 577-6782",
-        phoneHref: "tel:18775776782",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=12526+High+Bluff+Drive+San+Diego+CA+92130",
-        coverageTitle: "SAN DIEGO COVERAGE AREAS",
-        coverageAreas: ["San Diego", "Del Mar", "La Jolla", "Encinitas", "Carlsbad", "Solana Beach"],
-    },
+    const phone =
+        location.phone?.trim();
 
-    "pasadena": {
-        slug: "pasadena",
-        name: "Pasadena",
-        state: "CA",
-        heroImage: "/assets/1055 E Colorado Blvd.jpg",
-        addressLine1: "1055 E Colorado Blvd., 5th Floor",
-        addressLine2: "Pasadena, CA 91106",
-        phone: "(818) 839-5602",
-        phoneHref: "tel:18188395602",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=1055+E+Colorado+Blvd+5th+Floor+Pasadena+CA+91106",
-        coverageTitle: "PASADENA COVERAGE AREAS",
-        coverageAreas: ["Pasadena", "Altadena", "Arcadia", "San Marino", "South Pasadena", "Sierra Madre"],
-    },
+    if (phone) {
+        return {
+            label: phone,
+            href:
+                location.phoneHref?.trim() ||
+                `tel:${phone.replace(/[^\d+]/g, "")}`,
+        };
+    }
 
-    "dallas": {
-        slug: "dallas",
-        name: "Dallas",
-        state: "TX",
-        heroImage: "/assets/8180_rafael_rivera.png",
-        addressLine1: "101 E Park Blvd Suite 721",
-        addressLine2: "Plano, TX 75074",
-        phone: "(972) 330-2005",
-        phoneHref: "tel:19723302005",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=101+E+Park+Blvd+Suite+771+Plano+TX+75074",
-        coverageTitle: "DALLAS COVERAGE AREAS",
-        coverageAreas: ["Dallas", "Plano", "Frisco", "Richardson", "Allen", "McKinney"],
-    },
+    return null;
+}
 
-    "las-vegas": {
-        slug: "las-vegas",
-        name: "Las Vegas",
-        state: "NV",
-        heroImage: "/assets/8180_rafael_rivera.png",
-        addressLine1: "8180 Rafael Rivera Way #305",
-        addressLine2: "Las Vegas, NV 89113",
-        phone: "(702) 673-1900",
-        phoneHref: "tel:17026731900",
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=8180+Rafael+Rivera+Way+305+Las+Vegas+NV+89113",
-        coverageTitle: "LAS VEGAS COVERAGE AREAS",
-        coverageAreas: ["Las Vegas", "Henderson", "Summerlin", "Spring Valley", "Enterprise", "Paradise"],
-    },
-    "orlando": {
-        slug: "orlando",
-        name: "Orlando",
-        state: "FL",
-        heroImage: "/assets/orlando.jpg",
-        addressLine1: "1741 Ocoee Apopka Rd,Suite 119",
-        addressLine2: "Apopka, FL 32703",
-        phone: "(407) 495-4344",
-        phoneHref: "tel:14074954344",
-        phones: [
-            { label: "Local", number: "(407) 495-4344", href: "tel:14074954344" },
-            { label: "Toll Free", number: "(877) 897-7372", href: "tel:18778977372" },
-        ],
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=1741%20Ocoee%20Apopka%20Rd%2C%20Suite%20119%2C%20Apopka%2C%20FL%2032703",
-        coverageTitle: "ORLANDO COVERAGE AREAS",
-        coverageAreas: [],
-    },
-    "tampa": {
-        slug: "tampa",
-        name: "Tampa",
-        state: "FL",
-        heroImage: "/assets/tampa.jpg",
-        addressLine1: "3812 W Linebaugh Ave,Suite 108",
-        addressLine2: "Tampa, FL 33618",
-        phone: "(813) 776-6099",
-        phoneHref: "tel:18137766099",
-        phones: [
-            { label: "Local", number: "(813) 776-6099", href: "tel:18137766099" },
-            { label: "Toll Free", number: "(877) 897-7773", href: "tel:18778977773" },
-        ],
-        email: "info@cernahc.com",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=3812%20W%20Linebaugh%20Ave%2C%20Suite%20108%2C%20Tampa%2C%20FL%2033618",
-        coverageTitle: "TAMPA COVERAGE AREAS",
-        coverageAreas: [],
-    },
+/*
+|--------------------------------------------------------------------------
+| API DTO
+|--------------------------------------------------------------------------
+|
+| This matches PublicLocationDto from the ASP.NET API.
+|
+*/
+
+type PublicLocationDto = {
+    locationId: number;
+
+    slug: string;
+    name: string;
+
+    city: string;
+    state: string;
+    zipCode: string;
+
+    address1: string;
+    address2?: string | null;
+
+    phone: string;
+    phoneHref: string;
+
+    tollFreePhone?: string | null;
+    tollFreePhoneHref?: string | null;
+
+    email?: string | null;
+    careersEmail?: string | null;
+
+    jobsZip?: string | null;
+
+    latitude?: number | null;
+    longitude?: number | null;
+
+    heroImageUrl?: string | null;
+
+    coverageTitle?: string | null;
+    coverageAreas?: string | null;
+
+    pageTitle?: string | null;
+    metaDescription?: string | null;
+    shortDescription?: string | null;
+
+    sortOrder?: number | null;
+
+    updatedUtc?: string | null;
 };
+
+const ADMIN_ASSET_BASE_URL =
+    process.env.NEXT_PUBLIC_ADMIN_ASSET_BASE_URL ??
+    "https://admin.cernahomecare.com";
+
+function resolveHeroImageUrl(
+    heroImageUrl?: string | null,
+    updatedUtc?: string | null
+) {
+    if (!heroImageUrl) {
+        return "/assets/cernaoffice.png";
+    }
+
+    let imageUrl = heroImageUrl;
+
+    if (
+        !heroImageUrl.startsWith("http://") &&
+        !heroImageUrl.startsWith("https://")
+    ) {
+        if (heroImageUrl.startsWith("/assets/")) {
+            imageUrl =
+                `${ADMIN_ASSET_BASE_URL}${heroImageUrl}`;
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Image Cache Version
+    |--------------------------------------------------------------------------
+    |
+    | Prefer UpdatedUtc from the database.
+    |
+    | Older location records currently have UpdatedUtc = null,
+    | so use the current timestamp as a temporary fallback.
+    |
+    */
+
+    const version =
+        updatedUtc
+            ? encodeURIComponent(updatedUtc)
+            : Date.now().toString();
+
+    const separator =
+        imageUrl.includes("?")
+            ? "&"
+            : "?";
+
+    return `${imageUrl}${separator}v=${version}`;
+}
+
+/*
+|--------------------------------------------------------------------------
+| API URL
+|--------------------------------------------------------------------------
+*/
+ 
+
+const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL ??
+    "https://api.cernahomecare.com";
+
+/*
+|--------------------------------------------------------------------------
+| Display Name
+|--------------------------------------------------------------------------
+|
+| Your database currently has values such as:
+|
+| Cerna Orange County
+| Cerna Southlake
+| Cerna South Bay
+| Las Vegas
+|
+| Existing pages expect:
+|
+| Orange County
+| Southlake
+| South Bay
+| Las Vegas
+|
+*/
+
+function getDisplayName(name: string): string {
+    return name
+        .replace(/^Cerna Home Care\s+/i, "")
+        .replace(/^Cerna\s+/i, "")
+        .trim();
+}
+
+/*
+|--------------------------------------------------------------------------
+| Coverage Areas
+|--------------------------------------------------------------------------
+|
+| Standard locations:
+| ["Irvine","Tustin",...]
+|
+| Florida locations use the county structure, so those continue to be
+| handled by FloridaCoverageSelector.
+|
+*/
+
+function parseCoverageAreas(
+    value?: string | null
+): string[] {
+    if (!value) {
+        return [];
+    }
+
+    try {
+        const parsed = JSON.parse(value);
+
+        if (
+            Array.isArray(parsed) &&
+            parsed.every(
+                (item) => typeof item === "string"
+            )
+        ) {
+            return parsed;
+        }
+
+        return [];
+    } catch {
+        console.error(
+            "Invalid CoverageAreas JSON:",
+            value
+        );
+
+        return [];
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Normalize API Location
+|--------------------------------------------------------------------------
+|
+| Converts the API DTO into the same LocationData shape your existing
+| location pages already use.
+|
+*/
+
+function normalizeLocation(
+    item: PublicLocationDto
+): LocationData {
+    const displayName =
+        getDisplayName(item.name);
+
+    const phones: LocationPhone[] = [];
+
+    if (item.phone && item.phoneHref) {
+        phones.push({
+            label: "Local",
+            number: item.phone,
+            href: item.phoneHref,
+        });
+    }
+
+    if (
+        item.tollFreePhone &&
+        item.tollFreePhoneHref
+    ) {
+        phones.push({
+            label: "Toll Free",
+            number: item.tollFreePhone,
+            href: item.tollFreePhoneHref,
+        });
+    }
+
+    const addressLine2 = [
+        item.city,
+        item.state,
+    ]
+        .filter(Boolean)
+        .join(", ") +
+        (item.zipCode
+            ? ` ${item.zipCode}`
+            : "");
+
+    const fullAddress = [
+        item.address1,
+        item.address2,
+        item.city,
+        item.state,
+        item.zipCode,
+    ]
+        .filter(Boolean)
+        .join(", ");
+
+    return {
+        locationId: item.locationId,
+
+        slug: item.slug,
+
+        name: displayName,
+
+        city: item.city,
+        state: item.state,
+        zipCode: item.zipCode,
+
+        heroImage:
+            resolveHeroImageUrl(
+                item.heroImageUrl,
+                item.updatedUtc
+            ),
+
+        addressLine1:
+            item.address2
+                ? `${item.address1}, ${item.address2}`
+                : item.address1,
+
+        addressLine2,
+
+        phone: item.phone,
+        phoneHref: item.phoneHref,
+
+        phones:
+            phones.length > 0
+                ? phones
+                : undefined,
+
+        tollFreePhone:
+            item.tollFreePhone,
+
+        tollFreePhoneHref:
+            item.tollFreePhoneHref,
+
+        email:
+            item.email ?? "",
+
+        careersEmail:
+            item.careersEmail,
+
+        jobsZip:
+            item.jobsZip,
+
+        latitude:
+            item.latitude,
+
+        longitude:
+            item.longitude,
+
+        mapUrl:
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(fullAddress),
+
+        coverageTitle:
+            item.coverageTitle ??
+            `${displayName.toUpperCase()} COVERAGE AREAS`,
+
+        coverageAreas:
+            parseCoverageAreas(
+                item.coverageAreas
+            ),
+
+        pageTitle:
+            item.pageTitle,
+
+        metaDescription:
+            item.metaDescription,
+
+        shortDescription:
+            item.shortDescription,
+
+        sortOrder:
+            item.sortOrder,
+
+        updatedUtc: item.updatedUtc,
+    };
+}
+
+/*
+|--------------------------------------------------------------------------
+| Get All Locations
+|--------------------------------------------------------------------------
+*/
+
+export async function getLocations():
+    Promise<LocationData[]> {
+
+    const response = await fetch(
+        `${API_BASE_URL}/api/public/locations`,
+        {
+            cache: "no-store",
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            `Failed to load locations. Status: ${response.status}`
+        );
+    }
+
+    const data =
+        (await response.json()) as PublicLocationDto[];
+
+    return data
+        .map(normalizeLocation)
+        .sort(
+            (a, b) =>
+                (a.sortOrder ?? 999) -
+                (b.sortOrder ?? 999)
+        );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Get Unique Location States
+|--------------------------------------------------------------------------
+|
+| Returns only states that currently have active/published Cerna locations.
+|
+| Example:
+| [
+|   { code: "CA", name: "California" },
+|   { code: "FL", name: "Florida" }
+| ]
+|
+*/
+
+export async function getLocationStates():
+    Promise<LocationState[]> {
+
+    const response = await fetch(
+        `${API_BASE_URL}/api/public/locations/states`,
+        {
+            cache: "no-store",
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            `Failed to load location states. Status: ${response.status}`
+        );
+    }
+
+    const data =
+        (await response.json()) as LocationState[];
+
+    return data
+        .filter(
+            (state) =>
+                state.code &&
+                state.name
+        )
+        .map((state) => ({
+            code:
+                state.code
+                    .trim()
+                    .toUpperCase(),
+
+            name:
+                state.name.trim(),
+        }))
+        .sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Get Location By Slug
+|--------------------------------------------------------------------------
+*/
+
+export async function getLocationBySlug(
+    slug: string
+): Promise<LocationData | null> {
+
+    const response = await fetch(
+        `${API_BASE_URL}/api/public/locations/${encodeURIComponent(
+            slug
+        )}`,
+        {
+            cache: "no-store",
+        }
+    );
+
+    if (response.status === 404) {
+        return null;
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            `Failed to load location "${slug}". Status: ${response.status}`
+        );
+    }
+
+    const data =
+        (await response.json()) as PublicLocationDto;
+
+    return normalizeLocation(data);
+}

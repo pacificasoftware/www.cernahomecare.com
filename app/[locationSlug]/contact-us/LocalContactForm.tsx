@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 type LocalContactFormProps = {
+    locationId?: number | null;
     locationSlug: string;
     locationName: string;
     locationAreaName: string;
@@ -25,8 +26,10 @@ function formatPhoneNumber(value: string) {
     }
 
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-} 
+}
+
 export default function LocalContactForm({
+    locationId,
     locationSlug,
     locationName,
     locationAreaName,
@@ -36,93 +39,147 @@ export default function LocalContactForm({
     const [statusMessage, setStatusMessage] = useState("");
     const [isError, setIsError] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ) => {
         e.preventDefault();
 
         const form = e.currentTarget;
         const formData = new FormData(form);
 
-        const firstName = clean(formData.get("firstName"));
-        const lastName = clean(formData.get("lastName"));
-        const phone = clean(formData.get("phone"));
-        const email = clean(formData.get("email"));
-        const careType = clean(formData.get("careType"));
-        const messageText = clean(formData.get("message"));
-        const company = clean(formData.get("company"));
+        const firstName = clean(
+            formData.get("firstName")
+        );
 
-        if (!firstName || !lastName || !phone || !email) {
+        const lastName = clean(
+            formData.get("lastName")
+        );
+
+        const phone = clean(
+            formData.get("phone")
+        );
+
+        const email = clean(
+            formData.get("email")
+        );
+
+        const careType = clean(
+            formData.get("careType")
+        );
+
+        const messageText = clean(
+            formData.get("message")
+        );
+
+        const company = clean(
+            formData.get("company")
+        );
+
+        if (
+            !firstName ||
+            !lastName ||
+            !phone ||
+            !email
+        ) {
             setIsError(true);
-            setStatusMessage("Please complete all required fields.");
+            setStatusMessage(
+                "Please complete all required fields."
+            );
             return;
         }
 
-      const payload = {
-                purpose: "services",
-                inquiryType: careType || "General Contact",
+        const payload = {
+            purpose: "services",
 
-                firstName,
-                lastName,
-                phone,
-                email,
+            inquiryType:
+                careType || "General Contact",
 
-                zipCode: "Not provided",
+            firstName,
+            lastName,
+            phone,
+            email,
 
-                subject:
-                    `Care Inquiry - ${locationAreaName}`,
+            zipCode: "Not provided",
 
-                message: `
-                    New Local Contact Inquiry
+            subject:
+                `Care Inquiry - ${locationAreaName}`,
 
-                    Location: ${locationName}
-                    Area: ${locationAreaName}, ${locationState}
-                    Care Type: ${careType || "Not selected"}
+            message: `
+New Local Contact Inquiry
 
-                    Message:
-                    ${messageText || "Contact form inquiry"}
-                `.trim(),
+Location: ${locationName}
+Area: ${locationAreaName}, ${locationState}
+Care Type: ${careType || "Not selected"}
 
-                company,
+Message:
+${messageText || "Contact form inquiry"}
+            `.trim(),
 
-             locationId: null,
-             locationSlug,
-            };
+            company,
+
+            locationId:
+                locationId ?? null,
+
+            locationSlug,
+        };
 
         setIsSubmitting(true);
         setIsError(false);
         setStatusMessage("");
 
         try {
-            const response = await fetch("/api/sendemail", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
+            const response = await fetch(
+                "/api/sendemail",
+                {
+                    method: "POST",
 
-            const raw = await response.text();
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                    },
+
+                    body: JSON.stringify(
+                        payload
+                    ),
+                }
+            );
+
+            const raw =
+                await response.text();
 
             let result: any = null;
+
             try {
-                result = raw ? JSON.parse(raw) : null;
+                result = raw
+                    ? JSON.parse(raw)
+                    : null;
             } catch {
-                result = { message: raw };
+                result = {
+                    message: raw,
+                };
             }
 
             if (!response.ok) {
                 setIsError(true);
+
                 setStatusMessage(
                     result?.message ||
                     "We could not send your message right now. Please try again later or call us directly."
                 );
+
                 return;
             }
 
             setIsError(false);
-            setStatusMessage("Thank you. A member of our team will be in touch shortly.");
+
+            setStatusMessage(
+                "Thank you. A member of our team will be in touch shortly."
+            );
+
             form.reset();
         } catch (error: any) {
             setIsError(true);
+
             setStatusMessage(
                 error?.message ||
                 "We could not send your message right now. Please try again later or call us directly."
@@ -133,7 +190,15 @@ export default function LocalContactForm({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="mt-8 grid gap-5" noValidate>
+        <form
+            onSubmit={handleSubmit}
+            className="mt-8 grid gap-5"
+            noValidate
+        >
+            {/* ============================================== */}
+            {/* NAME */}
+            {/* ============================================== */}
+
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
                     <label
@@ -142,6 +207,7 @@ export default function LocalContactForm({
                     >
                         First Name
                     </label>
+
                     <input
                         id="firstName"
                         name="firstName"
@@ -158,6 +224,7 @@ export default function LocalContactForm({
                     >
                         Last Name
                     </label>
+
                     <input
                         id="lastName"
                         name="lastName"
@@ -168,6 +235,10 @@ export default function LocalContactForm({
                 </div>
             </div>
 
+            {/* ============================================== */}
+            {/* PHONE / EMAIL */}
+            {/* ============================================== */}
+
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
                     <label
@@ -176,6 +247,7 @@ export default function LocalContactForm({
                     >
                         Phone
                     </label>
+
                     <input
                         id="phone"
                         name="phone"
@@ -183,7 +255,11 @@ export default function LocalContactForm({
                         required
                         maxLength={14}
                         onChange={(e) => {
-                            e.currentTarget.value = formatPhoneNumber(e.currentTarget.value);
+                            e.currentTarget.value =
+                                formatPhoneNumber(
+                                    e.currentTarget
+                                        .value
+                                );
                         }}
                         className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
                     />
@@ -196,6 +272,7 @@ export default function LocalContactForm({
                     >
                         Email
                     </label>
+
                     <input
                         id="email"
                         name="email"
@@ -206,6 +283,10 @@ export default function LocalContactForm({
                 </div>
             </div>
 
+            {/* ============================================== */}
+            {/* CARE TYPE */}
+            {/* ============================================== */}
+
             <div>
                 <label
                     htmlFor="careType"
@@ -213,24 +294,50 @@ export default function LocalContactForm({
                 >
                     Type of Care Needed
                 </label>
+
                 <select
                     id="careType"
                     name="careType"
                     defaultValue=""
                     className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
                 >
-                    <option value="" disabled>
+                    <option
+                        value=""
+                        disabled
+                    >
                         Select an option
                     </option>
-                    <option value="Specialized Care">Specialized Care</option>
-                    <option value="Covered Care">Covered Care</option>
-                    <option value="Memory & Dementia Care">Memory & Dementia Care</option>
-                    <option value="Covered Care">Covered Care</option>
-                    <option value="Companion Care">Companion Care</option>
-                    <option value="Respite Care">Respite Care</option>
-                    <option value="MySafePatch">MySafePatch</option>
+
+                    <option value="Specialized Care">
+                        Specialized Care
+                    </option>
+
+                    <option value="Covered Care">
+                        Covered Care
+                    </option>
+
+                    <option value="Memory & Dementia Care">
+                        Memory &amp; Dementia
+                        Care
+                    </option>
+
+                    <option value="Companion Care">
+                        Companion Care
+                    </option>
+
+                    <option value="Respite Care">
+                        Respite Care
+                    </option>
+
+                    <option value="MySafePatch">
+                        MySafePatch
+                    </option>
                 </select>
             </div>
+
+            {/* ============================================== */}
+            {/* MESSAGE */}
+            {/* ============================================== */}
 
             <div>
                 <label
@@ -239,6 +346,7 @@ export default function LocalContactForm({
                 >
                     How Can We Help?
                 </label>
+
                 <textarea
                     id="message"
                     name="message"
@@ -246,6 +354,10 @@ export default function LocalContactForm({
                     className="w-full resize-none rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#DD8500] focus:ring-2 focus:ring-[#DD8500]/20"
                 />
             </div>
+
+            {/* ============================================== */}
+            {/* HONEYPOT */}
+            {/* ============================================== */}
 
             <input
                 type="text"
@@ -255,17 +367,29 @@ export default function LocalContactForm({
                 className="hidden"
             />
 
+            {/* ============================================== */}
+            {/* SUBMIT */}
+            {/* ============================================== */}
+
             <button
                 type="submit"
                 disabled={isSubmitting}
                 className="rounded-full bg-[#DD8500] px-7 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#c67600] disabled:opacity-60"
             >
-                {isSubmitting ? "Submitting..." : "Submit Request"}
+                {isSubmitting
+                    ? "Submitting..."
+                    : "Submit Request"}
             </button>
+
+            {/* ============================================== */}
+            {/* STATUS */}
+            {/* ============================================== */}
 
             {statusMessage ? (
                 <p
-                    className={`text-center text-sm font-semibold ${isError ? "text-red-700" : "text-green-700"
+                    className={`text-center text-sm font-semibold ${isError
+                            ? "text-red-700"
+                            : "text-green-700"
                         }`}
                 >
                     {statusMessage}

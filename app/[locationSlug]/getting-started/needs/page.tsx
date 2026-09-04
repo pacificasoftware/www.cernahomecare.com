@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
-import { locations } from "@/lib/locations";
+import { getLocationBySlug } from "@/lib/locations";
 import "../../../getting-started/getting-started.css";
 
 type Props = {
@@ -25,7 +25,48 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
     const router = useRouter();
     const { locationSlug } = use(params);
 
-    const location = locations[locationSlug as keyof typeof locations];
+    const [location, setLocation] = useState<Awaited<
+        ReturnType<typeof getLocationBySlug>
+    >>(null);
+
+    const [locationLoading, setLocationLoading] =
+        useState(true);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        async function loadLocation() {
+            try {
+                setLocationLoading(true);
+
+                const result =
+                    await getLocationBySlug(locationSlug);
+
+                if (!cancelled) {
+                    setLocation(result);
+                }
+            } catch (error) {
+                console.error(
+                    "Failed to load location:",
+                    error
+                );
+
+                if (!cancelled) {
+                    setLocation(null);
+                }
+            } finally {
+                if (!cancelled) {
+                    setLocationLoading(false);
+                }
+            }
+        }
+
+        loadLocation();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [locationSlug]);
 
     const [form, setForm] = useState<FormState>(initialForm);
 
@@ -46,9 +87,44 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
             );
         }
     }, [locationSlug]);
+    if (locationLoading) {
+        return (
+            <section className="getting-started-section">
+                <div className="getting-started-container">
+                    <p className="getting-started-subcopy">
+                        Loading your local Cerna Home Care office...
+                    </p>
+                </div>
+            </section>
+        );
+    }
 
     if (!location) {
-        return null;
+        return (
+            <section className="getting-started-section">
+                <div className="getting-started-container">
+                    <h1 className="getting-started-card-title">
+                        Location Not Found
+                    </h1>
+
+                    <p className="getting-started-subcopy">
+                        We could not find this Cerna Home Care location.
+                    </p>
+
+                    <div className="getting-started-button-wrap">
+                        <button
+                            type="button"
+                            className="getting-started-button"
+                            onClick={() =>
+                                router.push("/locations")
+                            }
+                        >
+                            View All Locations
+                        </button>
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     const primaryPhoneHref =

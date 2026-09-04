@@ -1,7 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { locations } from "@/lib/locations";
+import { getLocationBySlug } from "@/lib/locations";
 import HomeConsultationForm from "@/components/HomeConsultationForm";
  
 import FloridaCoverageSelector from "@/components/FloridaCoverageSelector";
@@ -93,7 +93,8 @@ type HomeConsultationFormProps = {
 
 export default async function LocationPage({ params }: Props) {
     const { locationSlug } = await params;
-    const location = locations[locationSlug as keyof typeof locations];
+    const location =
+        await getLocationBySlug(locationSlug);
 
     if (!location) {
         notFound();

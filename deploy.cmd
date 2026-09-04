@@ -10,7 +10,7 @@ set "SRC=C:\SourceCode\CERNA_HEALTH_CARE\CERNA_HOME_CARE\www.cernahomecare.com"
 
 REM Server connection
 set "SERVER=198.71.51.74"
-set "SSH_PORT=2222"
+set "SSH_PORT=22"
 set "SSH_USER=Administrator"
 set "SSH_KEY=%USERPROFILE%\.ssh\cerna_deploy_key"
 

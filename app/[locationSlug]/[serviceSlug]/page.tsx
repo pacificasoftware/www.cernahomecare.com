@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { locations } from "@/lib/locations";
+import { getLocationBySlug } from "@/lib/locations";
 import { locationServices } from "@/lib/locationServices";
 import LocationMiniContactForm from "@/components/LocationMiniContactForm";
 
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props) {
     const { locationSlug, serviceSlug } = await params;
 
     const location =
-        locations[locationSlug as keyof typeof locations];
+        await getLocationBySlug(locationSlug);
 
     const service =
         locationServices[
@@ -76,11 +76,14 @@ export async function generateMetadata({ params }: Props) {
     };
 }
 
-export default async function LocationServicePage({ params }: Props) {
-    const { locationSlug, serviceSlug } = await params;
+export default async function LocationServicePage({
+    params,
+}: Props) {
+    const { locationSlug, serviceSlug } =
+        await params;
 
     const location =
-        locations[locationSlug as keyof typeof locations];
+        await getLocationBySlug(locationSlug);
 
     const service =
         locationServices[
@@ -92,10 +95,12 @@ export default async function LocationServicePage({ params }: Props) {
     }
 
     const primaryPhoneHref =
-        location.phones?.[0]?.href ?? location.phoneHref;
+        location.phones?.[0]?.href ??
+        location.phoneHref;
 
     const primaryPhoneNumber =
-        location.phones?.[0]?.number ?? location.phone;
+        location.phones?.[0]?.number ??
+        location.phone;
 
     return (
         <main className="bg-white">
