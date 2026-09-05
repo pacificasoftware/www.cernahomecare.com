@@ -38,10 +38,30 @@ const reviewOptions = [
 ];
 
 export default async function WriteAReviewPage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    |
+    | Corporate contact information comes from
+    | the Orange County database record.
+    |
+    */
+
     const location =
         await getLocationBySlug(
             CORPORATE_LOCATION_SLUG
         );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phone
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    */
 
     const tollFreePhone =
         location
@@ -80,6 +100,10 @@ export default async function WriteAReviewPage() {
 
     return (
         <main className="bg-slate-50">
+            {/* ============================================================= */}
+            {/* HERO */}
+            {/* ============================================================= */}
+
             <section className="bg-[#00456B] px-6 py-20 text-white">
                 <div className="mx-auto max-w-5xl text-center">
                     <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
@@ -97,6 +121,10 @@ export default async function WriteAReviewPage() {
                     </p>
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* REVIEW OPTIONS */}
+            {/* ============================================================= */}
 
             <section className="px-6 py-16">
                 <div className="mx-auto max-w-6xl">
@@ -116,7 +144,9 @@ export default async function WriteAReviewPage() {
                         {reviewOptions.map(
                             (item) => (
                                 <div
-                                    key={item.name}
+                                    key={
+                                        item.name
+                                    }
                                     className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
                                 >
                                     <div className="mb-6 flex h-16 items-center">
@@ -124,30 +154,44 @@ export default async function WriteAReviewPage() {
                                             className={`text-5xl font-black tracking-tight ${item.logoClass}`}
                                             aria-label={`${item.name} logo`}
                                         >
-                                            {item.logo}
+                                            {
+                                                item.logo
+                                            }
                                         </div>
                                     </div>
 
                                     <h3 className="text-2xl font-extrabold text-[#00456B]">
-                                        {item.name}
+                                        {
+                                            item.name
+                                        }
                                     </h3>
 
                                     <p className="mt-4 min-h-[96px] text-base leading-7 text-slate-600">
-                                        {item.description}
+                                        {
+                                            item.description
+                                        }
                                     </p>
 
                                     <a
-                                        href={item.href}
+                                        href={
+                                            item.href
+                                        }
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="mt-6 inline-flex rounded-full bg-[#DD8500] px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#c67600]"
                                     >
-                                        {item.button}
+                                        {
+                                            item.button
+                                        }
                                     </a>
                                 </div>
                             )
                         )}
                     </div>
+
+                    {/* ===================================================== */}
+                    {/* CONTACT CTA */}
+                    {/* ===================================================== */}
 
                     <div className="mt-14 rounded-[32px] bg-[#00456B] p-8 text-center text-white shadow-xl md:p-12">
                         <h2 className="text-3xl font-extrabold">
@@ -162,10 +206,15 @@ export default async function WriteAReviewPage() {
                         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
                             {phoneLabel ? (
                                 <a
-                                    href={phoneHref}
+                                    href={
+                                        phoneHref
+                                    }
                                     className="rounded-full bg-[#DD8500] px-8 py-4 text-lg font-extrabold text-white transition hover:opacity-90"
                                 >
-                                    Call {phoneLabel}
+                                    Call{" "}
+                                    {
+                                        phoneLabel
+                                    }
                                 </a>
                             ) : null}
 
@@ -182,6 +231,12 @@ export default async function WriteAReviewPage() {
         </main>
     );
 }
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
 
 function makePhoneHref(
     phone: string

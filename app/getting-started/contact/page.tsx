@@ -1,522 +1,352 @@
-﻿"use client";
+﻿import Link from "next/link";
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import "../getting-started.css";
+import {
+    getLocationBySlug,
+} from "@/lib/locations";
 
-type Step1State = {
-    fullName: string;
-    zipCode: string;
-    careFor: string;
-};
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
 
-type Step2State = {
-    condition: string;
-    careNeeds: string;
-};
+const supportOptions = [
+    {
+        title: "Long-Term Care Insurance",
+        text: "Some private health insurance plans and life insurance policies may offer coverage for home care services. Long-term care insurance is specifically designed for home care, assisted living, and related support.",
+    },
+    {
+        title: "VA Homemaker & Home Health Aide Program",
+        text: "This VA program provides eligible veterans with in-home assistance for personal care and household support, helping them maintain independence and quality of life.",
+    },
+    {
+        title: "VA Aid & Attendance",
+        text: "Aid and Attendance is a pension benefit for qualifying veterans or surviving spouses who need assistance with daily activities or ongoing care.",
+    },
+    {
+        title: "Medicaid",
+        text: "Medicaid may cover in-home care for low-income individuals, especially those needing long-term care. Eligibility and coverage vary by state.",
+    },
+    {
+        title: "Reverse Mortgages",
+        text: "For homeowners age 62 or older, a reverse mortgage may allow access to home equity to help pay for care while remaining in the home.",
+    },
+];
 
-type ContactFormState = {
-    email: string;
-    phone: string;
-    preferredContact: string;
-    consent: boolean;
-};
+const eligibilityItems = [
+    "Eligible veteran enrolled in the VA healthcare system",
+    "Clinical need shown through a geriatric evaluation",
+    "Need for help with daily living tasks such as bathing, dressing, meals, or mobility",
+    "Possible eligibility for veterans with cognitive impairment or multiple ADL dependencies",
+];
 
-const initialStep1: Step1State = {
-    fullName: "",
-    zipCode: "",
-    careFor: "",
-};
+export default async function VaFinancialSupportPage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    |
+    | Corporate pages use the Orange County database record.
+    |
+    */
 
-const initialStep2: Step2State = {
-    condition: "",
-    careNeeds: "",
-};
-
-const initialContactForm: ContactFormState = {
-    email: "",
-    phone: "",
-    preferredContact: "",
-    consent: false,
-};
-
-function clean(value: unknown) {
-    return String(value ?? "").trim();
-}
-
-function formatPhoneNumber(value: string) {
-    const digits = value.replace(/\D/g, "").slice(0, 10);
-
-    if (digits.length <= 3) {
-        return digits;
-    }
-
-    if (digits.length <= 6) {
-        return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-    }
-
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-}
-
-export default function GettingStartedContactPage() {
-    const router = useRouter();
-
-    const [step1, setStep1] = useState<Step1State>(initialStep1);
-    const [step2, setStep2] = useState<Step2State>(initialStep2);
-    const [form, setForm] =
-        useState<ContactFormState>(initialContactForm);
-
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isComplete, setIsComplete] = useState(false);
-    const [pageError, setPageError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const savedStep1 = sessionStorage.getItem(
-            "gettingStarted:corporate:step1"
+    const location =
+        await getLocationBySlug(
+            CORPORATE_LOCATION_SLUG
         );
 
-        const savedStep2 = sessionStorage.getItem(
-            "gettingStarted:corporate:step2"
-        );
+    /*
+    |--------------------------------------------------------------------------
+    | Phone Selection
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    | NO PHONE NUMBERS ARE HARDCODED.
+    |
+    */
 
-        if (savedStep1) {
-            try {
-                setStep1(JSON.parse(savedStep1));
-            } catch {
-                sessionStorage.removeItem(
-                    "gettingStarted:corporate:step1"
-                );
-            }
-        }
+    const tollFreePhone =
+        location?.tollFreePhone?.trim() ??
+        "";
 
-        if (savedStep2) {
-            try {
-                setStep2(JSON.parse(savedStep2));
-            } catch {
-                sessionStorage.removeItem(
-                    "gettingStarted:corporate:step2"
-                );
-            }
-        }
-    }, []);
+    const regularPhone =
+        location?.phone?.trim() ??
+        "";
 
-    function handleChange(
-        e: React.ChangeEvent<HTMLInputElement>
-    ) {
-        const { name, value, type, checked } = e.target;
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
 
-        setForm((previous) => ({
-            ...previous,
-            [name]: type === "checkbox" ? checked : value,
-        }));
-    }
-
-    function validateForm() {
-        if (!form.email.trim()) {
-            return "Email is required.";
-        }
-
-        if (
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-                form.email.trim()
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
             )
-        ) {
-            return "Please enter a valid email address.";
-        }
-
-        if (!form.phone.trim()) {
-            return "Phone number is required.";
-        }
-
-        const phoneDigits = form.phone.replace(/\D/g, "");
-
-        if (phoneDigits.length !== 10) {
-            return "Please enter a valid 10-digit phone number.";
-        }
-
-        if (!form.consent) {
-            return "Please confirm that Cerna Home Care may contact you.";
-        }
-
-        return null;
-    }
-
-    async function handleSubmit(
-        e: React.FormEvent<HTMLFormElement>
-    ) {
-        e.preventDefault();
-        setPageError(null);
-
-        const validationError = validateForm();
-
-        if (validationError) {
-            setPageError(validationError);
-            return;
-        }
-
-        const fullName = clean(step1.fullName);
-        const nameParts = fullName.split(" ").filter(Boolean);
-
-        const firstName =
-            nameParts[0] || fullName || "Website";
-
-        const lastName =
-            nameParts.slice(1).join(" ") || "Visitor";
-
-        const payload = {
-            purpose: "contact",
-            inquiryType: "Getting Started Consultation",
-
-            name: fullName,
-            firstName,
-            lastName,
-
-            email: clean(form.email),
-            phone: clean(form.phone),
-            zipCode:
-                clean(step1.zipCode) || "Not provided",
-
-            subject: "Getting Started Consultation Request",
-
-            message: [
-                "Corporate Getting Started Consultation",
-                "",
-                `Full Name: ${fullName || "Not provided"}`,
-                `ZIP Code: ${clean(step1.zipCode) || "Not provided"
-                }`,
-                `Care For: ${clean(step1.careFor) || "Not provided"
-                }`,
-                `Condition: ${clean(step2.condition) || "Not provided"
-                }`,
-                `Care Goals / Needs: ${clean(step2.careNeeds) || "Not provided"
-                }`,
-                `Preferred Contact Method: ${clean(form.preferredContact) ||
-                "Not specified"
-                }`,
-            ].join("\n"),
-
-            company: "",
-
-            // Corporate requests default to Orange County
-            // inside the existing API route.
-            locationId: null,
-            locationSlug: null,
-        };
-
-        setIsSubmitting(true);
-
-        try {
-            const response = await fetch("/api/sendemail", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            const raw = await response.text();
-
-            let result: any = null;
-
-            try {
-                result = raw ? JSON.parse(raw) : null;
-            } catch {
-                result = null;
-            }
-
-            if (!response.ok) {
-                const errorMessage =
-                    result &&
-                        typeof result === "object" &&
-                        typeof result.message === "string"
-                        ? result.message
-                        : "We could not send your request. Please try again or call us directly.";
-
-                setPageError(errorMessage);
-                return;
-            }
-
-            sessionStorage.removeItem(
-                "gettingStarted:corporate:step1"
-            );
-
-            sessionStorage.removeItem(
-                "gettingStarted:corporate:step2"
-            );
-
-            setIsComplete(true);
-        } catch {
-            setPageError(
-                "Sorry, we could not send your request right now. Please try again or call us directly."
-            );
-        } finally {
-            setIsSubmitting(false);
-        }
-    }
-
-    if (isComplete) {
-        return (
-            <section className="getting-started-section">
-                <div className="getting-started-bg">
-                    <div className="getting-started-blob-left" />
-                    <div className="getting-started-blob-right" />
-                </div>
-
-                <div className="getting-started-container">
-                    <div className="getting-started-card">
-                        <p className="getting-started-step">
-                            Request Received
-                        </p>
-
-                        <h1 className="getting-started-card-title">
-                            Thank you for contacting Cerna Home Care
-                        </h1>
-
-                        <div className="getting-started-progress">
-                            <div
-                                className="getting-started-progress-bar"
-                                style={{ width: "100%" }}
-                            />
-                        </div>
-
-                        <p className="getting-started-subcopy">
-                            Your consultation request has been received.
-                            Someone from our team will contact you shortly.
-                        </p>
-
-                        <p className="getting-started-subcopy">
-                            For immediate assistance, call{" "}
-                            <a
-                                href="tel:18775776782"
-                                className="getting-started-phone"
-                            >
-                                1 (877) 577-6782
-                            </a>
-                        </p>
-
-                        <div className="getting-started-button-wrap">
-                            <button
-                                type="button"
-                                className="getting-started-button"
-                                onClick={() => router.push("/")}
-                            >
-                                Return to Home
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
 
     return (
-        <section className="getting-started-section">
-            <div className="getting-started-bg">
-                <div className="getting-started-blob-left" />
-                <div className="getting-started-blob-right" />
-            </div>
+        <main className="bg-slate-50">
+            {/* ============================================================= */}
+            {/* HERO */}
+            {/* ============================================================= */}
 
-            <div className="getting-started-container">
-                <div className="getting-started-grid">
-                    <div className="getting-started-left">
-                        <p className="getting-started-eyebrow">
-                            Getting Started
-                        </p>
+            <section className="bg-[#00456B] px-6 py-20 text-white">
+                <div className="mx-auto max-w-5xl text-center">
+                    <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
+                        Cerna Home Care
+                    </p>
 
-                        <h1 className="getting-started-title">
-                            How can we contact you?
-                        </h1>
+                    <h1 className="text-5xl font-extrabold text-white md:text-6xl">
+                        VA & Financial Support
+                    </h1>
 
-                        <p className="getting-started-subtitle">
-                            Complete the final step and our team will
-                            contact you to discuss your care needs.
-                        </p>
+                    <p className="mx-auto mt-6 max-w-3xl text-xl leading-8 text-white/90">
+                        Learn about common ways families may pay for home care,
+                        including private funds, long-term care insurance, VA programs,
+                        Medicaid, and reverse mortgage options.
+                    </p>
 
-                        <div className="getting-started-callout">
-                            <p className="getting-started-callout-text">
-                                Need help now? Contact us for your
-                                complimentary in-home consultation:
+                    {phoneLabel ? (
+                        <a
+                            href={phoneHref}
+                            className="mt-8 inline-flex rounded-full bg-[#DD8500] px-8 py-4 text-lg font-extrabold text-white shadow-lg transition hover:opacity-90"
+                        >
+                            Call {phoneLabel}
+                        </a>
+                    ) : null}
+                </div>
+            </section>
+
+            {/* ============================================================= */}
+            {/* SUPPORT OPTIONS */}
+            {/* ============================================================= */}
+
+            <section className="px-6 py-16">
+                <div className="mx-auto max-w-7xl">
+                    <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
+                        <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm md:p-10">
+                            <h2 className="text-4xl font-extrabold text-[#00456B]">
+                                How Do I Pay for Home Care?
+                            </h2>
+
+                            <p className="mt-6 text-lg leading-8 text-slate-700">
+                                Paying for home care services can involve a mix of
+                                private funds, insurance such as long-term care policies,
+                                and government assistance such as VA programs, Homemaker
+                                and Home Health Aide services, Aid & Attendance, Medicaid,
+                                or other financial options.
                             </p>
 
-                            <a
-                                href="tel:18775776782"
-                                className="getting-started-phone"
-                            >
-                                1 (877) 577-6782
-                            </a>
+                            <div className="mt-10 grid gap-5 md:grid-cols-2">
+                                {supportOptions.map(
+                                    (item) => (
+                                        <div
+                                            key={
+                                                item.title
+                                            }
+                                            className="rounded-2xl border border-slate-200 bg-slate-50 p-6"
+                                        >
+                                            <h3 className="text-xl font-extrabold text-[#00456B]">
+                                                {
+                                                    item.title
+                                                }
+                                            </h3>
+
+                                            <p className="mt-3 text-base leading-7 text-slate-600">
+                                                {
+                                                    item.text
+                                                }
+                                            </p>
+                                        </div>
+                                    )
+                                )}
+                            </div>
                         </div>
+
+                        {/* ================================================= */}
+                        {/* HELP SIDEBAR */}
+                        {/* ================================================= */}
+
+                        <aside className="rounded-[32px] bg-[#00456B] p-8 text-white shadow-xl">
+                            <h2 className="text-3xl font-extrabold">
+                                Need help understanding options?
+                            </h2>
+
+                            <p className="mt-4 text-lg leading-8 text-white/85">
+                                Cerna Home Care can help families understand what
+                                questions to ask and which programs may be worth exploring.
+                            </p>
+
+                            <div className="mt-8 space-y-4">
+                                {phoneLabel ? (
+                                    <a
+                                        href={
+                                            phoneHref
+                                        }
+                                        className="block rounded-full bg-[#DD8500] px-6 py-4 text-center text-lg font-extrabold text-white transition hover:opacity-90"
+                                    >
+                                        Call Now
+                                    </a>
+                                ) : null}
+
+                                <Link
+                                    href="/contact-us"
+                                    className="block rounded-full bg-white px-6 py-4 text-center text-lg font-extrabold text-[#00456B] transition hover:opacity-90"
+                                >
+                                    Contact Us
+                                </Link>
+                            </div>
+                        </aside>
                     </div>
 
-                    <div className="getting-started-card">
-                        <div className="getting-started-card-header">
-                            <div>
-                                <p className="getting-started-step">
-                                    Step 3 of 3 - Contact
-                                </p>
+                    {/* ===================================================== */}
+                    {/* VA HOMEMAKER PROGRAM */}
+                    {/* ===================================================== */}
 
-                                <h2 className="getting-started-card-title">
-                                    Tell us how to reach you
-                                </h2>
-                            </div>
+                    <section className="mt-12 rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm md:p-10">
+                        <h2 className="text-3xl font-extrabold text-[#00456B]">
+                            VA Homemaker & Home Health Aide Program
+                        </h2>
 
-                            <div className="getting-started-progress-pill">
-                                66%
-                            </div>
-                        </div>
-
-                        <p className="getting-started-required">
-                            <span>*</span> indicates required fields
+                        <p className="mt-6 text-lg leading-8 text-slate-700">
+                            The VA Homemaker and Home Health Aide Program provides
+                            eligible veterans with assistance in their homes with
+                            personal care and household support. This program helps
+                            veterans who need support with daily living tasks maintain
+                            independence and quality of life.
                         </p>
 
-                        <div className="getting-started-progress">
-                            <div
-                                className="getting-started-progress-bar"
-                                style={{ width: "66%" }}
-                            />
+                        <h3 className="mt-8 text-2xl font-extrabold text-[#00456B]">
+                            Common Eligibility Considerations
+                        </h3>
+
+                        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+                            {eligibilityItems.map(
+                                (item) => (
+                                    <li
+                                        key={
+                                            item
+                                        }
+                                        className="rounded-2xl bg-slate-50 p-5 text-base font-semibold leading-7 text-slate-700"
+                                    >
+                                        {
+                                            item
+                                        }
+                                    </li>
+                                )
+                            )}
+                        </ul>
+                    </section>
+
+                    {/* ===================================================== */}
+                    {/* FINANCIAL PROGRAM DETAILS */}
+                    {/* ===================================================== */}
+
+                    <section className="mt-12 grid gap-8 lg:grid-cols-2">
+                        <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
+                            <h2 className="text-3xl font-extrabold text-[#00456B]">
+                                VA Aid & Attendance
+                            </h2>
+
+                            <p className="mt-6 text-lg leading-8 text-slate-700">
+                                VA Aid and Attendance is a pension benefit. Veterans may
+                                need qualifying service history, honorable discharge, and
+                                financial eligibility. A service-related disability is not
+                                always required.
+                            </p>
+
+                            <p className="mt-6 text-lg leading-8 text-slate-700">
+                                Unreimbursed medical expenses may help reduce countable
+                                income for eligibility purposes. These can include
+                                insurance premiums, medications, assisted living costs,
+                                nursing home fees, and in-home care expenses.
+                            </p>
                         </div>
 
-                        <form
-                            className="getting-started-form"
-                            onSubmit={handleSubmit}
-                            noValidate
-                        >
-                            <div className="getting-started-field">
-                                <label
-                                    className="getting-started-label"
-                                    htmlFor="email"
+                        <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
+                            <h2 className="text-3xl font-extrabold text-[#00456B]">
+                                Medicaid & Reverse Mortgages
+                            </h2>
+
+                            <p className="mt-6 text-lg leading-8 text-slate-700">
+                                Medicaid may help cover in-home care for qualifying
+                                individuals, though programs vary by state.
+                            </p>
+
+                            <p className="mt-6 text-lg leading-8 text-slate-700">
+                                A reverse mortgage may be an option for homeowners age 62
+                                or older who have sufficient equity and want to access
+                                funds to help pay for care while remaining in their home.
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* ===================================================== */}
+                    {/* FINAL CTA */}
+                    {/* ===================================================== */}
+
+                    <section className="mt-14 rounded-[32px] bg-[#00456B] p-8 text-center text-white shadow-xl md:p-12">
+                        <h2 className="text-3xl font-extrabold">
+                            Have questions about paying for care?
+                        </h2>
+
+                        <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-white/85">
+                            Contact Cerna Home Care and we can help point you in the
+                            right direction.
+                        </p>
+
+                        <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+                            {phoneLabel ? (
+                                <a
+                                    href={
+                                        phoneHref
+                                    }
+                                    className="rounded-full bg-[#DD8500] px-8 py-4 text-lg font-extrabold text-white transition hover:opacity-90"
                                 >
-                                    Email Address <span>*</span>
-                                </label>
-
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    placeholder="Email Address"
-                                    className="getting-started-input"
-                                    value={form.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-                            <div className="getting-started-field">
-                                <label
-                                    className="getting-started-label"
-                                    htmlFor="phone"
-                                >
-                                    Phone Number <span>*</span>
-                                </label>
-
-                                <input
-                                    id="phone"
-                                    name="phone"
-                                    type="tel"
-                                    placeholder="Phone Number"
-                                    maxLength={14}
-                                    className="getting-started-input"
-                                    value={form.phone}
-                                    onChange={(e) => {
-                                        e.target.value =
-                                            formatPhoneNumber(
-                                                e.target.value
-                                            );
-
-                                        handleChange(e);
-                                    }}
-                                />
-                            </div>
-
-                            <div className="getting-started-field">
-                                <div className="getting-started-legend">
-                                    What is your preferred contact method?
-                                </div>
-
-                                <div className="getting-started-radio-group">
-                                    {["Phone", "Email", "Either"].map(
-                                        (option) => (
-                                            <label
-                                                key={option}
-                                                className="getting-started-radio-card"
-                                            >
-                                                <input
-                                                    type="radio"
-                                                    name="preferredContact"
-                                                    value={option}
-                                                    checked={
-                                                        form.preferredContact ===
-                                                        option
-                                                    }
-                                                    onChange={handleChange}
-                                                />
-
-                                                <span>{option}</span>
-                                            </label>
-                                        )
-                                    )}
-                                </div>
-
-                                <p className="getting-started-optional">
-                                    (this field is optional)
-                                </p>
-                            </div>
-
-                            <div className="getting-started-field">
-                                <label className="getting-started-consent">
-                                    <input
-                                        type="checkbox"
-                                        name="consent"
-                                        checked={form.consent}
-                                        onChange={handleChange}
-                                    />
-
-                                    <span>
-                                        I agree that Cerna Home Care may
-                                        contact me by phone or email regarding
-                                        this consultation request.{" "}
-                                        <strong>*</strong>
-                                    </span>
-                                </label>
-                            </div>
-
-                            {pageError ? (
-                                <p
-                                    style={{
-                                        color: "#dc2626",
-                                        marginTop: "12px",
-                                    }}
-                                >
-                                    {pageError}
-                                </p>
+                                    Call {
+                                        phoneLabel
+                                    }
+                                </a>
                             ) : null}
 
-                            <div className="getting-started-actions">
-                                <button
-                                    type="button"
-                                    disabled={isSubmitting}
-                                    className="getting-started-button getting-started-button-secondary"
-                                    onClick={() =>
-                                        router.push(
-                                            "/getting-started/needs"
-                                        )
-                                    }
-                                >
-                                    Previous
-                                </button>
-
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="getting-started-button"
-                                >
-                                    {isSubmitting
-                                        ? "Submitting..."
-                                        : "Submit Request"}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                            <Link
+                                href="/contact-us"
+                                className="rounded-full bg-white px-8 py-4 text-lg font-extrabold text-[#00456B] transition hover:opacity-90"
+                            >
+                                Contact Us
+                            </Link>
+                        </div>
+                    </section>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

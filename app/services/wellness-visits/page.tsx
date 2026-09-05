@@ -1,10 +1,17 @@
 ﻿import Link from "next/link";
 
+import {
+    getLocationBySlug,
+} from "@/lib/locations";
+
 export const metadata = {
     title: "Personalized Services & Wellness Visits | Cerna Home Care",
     description:
         "Cerna Home Care provides personalized wellness visits, care coordination, advocacy, family coaching, and ongoing support for seniors and families.",
 };
+
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
 
 const visitServices = [
     "Assessment and monitoring",
@@ -19,9 +26,69 @@ const visitServices = [
     "Safety, security, and risk monitoring",
 ];
 
-export default function PersonalizedServicesPage() {
+export default async function PersonalizedServicesPage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    */
+
+    const location =
+        await getLocationBySlug(
+            CORPORATE_LOCATION_SLUG
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phone
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    */
+
+    const tollFreePhone =
+        location
+            ?.tollFreePhone
+            ?.trim() || "";
+
+    const regularPhone =
+        location
+            ?.phone
+            ?.trim() || "";
+
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
+
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
+
     return (
         <main className="bg-white">
+            {/* ============================================================= */}
+            {/* HERO */}
+            {/* ============================================================= */}
+
             <section className="relative overflow-hidden bg-[#00456B]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_35%),linear-gradient(135deg,#00456B_0%,#00385a_55%,#005f8f_100%)]" />
 
@@ -35,10 +102,12 @@ export default function PersonalizedServicesPage() {
                             d="M0,90 C220,145 360,40 590,95 C795,145 985,30 1440,45 L1440,220 L0,220 Z"
                             fill="rgba(255,255,255,0.38)"
                         />
+
                         <path
                             d="M0,120 C240,55 420,155 650,120 C900,82 1080,5 1440,85 L1440,220 L0,220 Z"
                             fill="rgba(255,255,255,0.55)"
                         />
+
                         <path
                             d="M0,155 C220,80 410,150 650,160 C920,172 1050,90 1440,110 L1440,220 L0,220 Z"
                             fill="#ffffff"
@@ -51,6 +120,7 @@ export default function PersonalizedServicesPage() {
                         <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-[#DD8500]">
                             Personalized Care & Wellness
                         </p>
+
                         <div className="mt-3 h-1 w-20 rounded-full bg-[#DD8500]" />
 
                         <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
@@ -66,11 +136,16 @@ export default function PersonalizedServicesPage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* ABOUT VISITS */}
+            {/* ============================================================= */}
+
             <section className="mx-auto grid max-w-7xl gap-12 px-6 pb-16 pt-8 sm:px-8 lg:grid-cols-[1fr_0.95fr] lg:px-10 lg:pb-20">
                 <div>
                     <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
                         About Visits
                     </p>
+
                     <div className="mt-3 h-1 w-12 rounded-full bg-[#DD8500]" />
 
                     <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-[#00456B] sm:text-4xl">
@@ -101,12 +176,19 @@ export default function PersonalizedServicesPage() {
                             Request a Consultation
                         </Link>
 
-                        <a
-                            href="tel:18775776782"
-                            className="inline-flex rounded-lg border-2 border-[#00456B] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#00456B] transition hover:bg-[#00456B] hover:text-white"
-                        >
-                            Call (877) 577-6782
-                        </a>
+                        {phoneLabel ? (
+                            <a
+                                href={
+                                    phoneHref
+                                }
+                                className="inline-flex rounded-lg border-2 border-[#00456B] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#00456B] transition hover:bg-[#00456B] hover:text-white"
+                            >
+                                Call{" "}
+                                {
+                                    phoneLabel
+                                }
+                            </a>
+                        ) : null}
                     </div>
                 </div>
 
@@ -118,6 +200,7 @@ export default function PersonalizedServicesPage() {
                     <h3 className="text-2xl font-extrabold text-[#00456B]">
                         A collaborative care process
                     </h3>
+
                     <div className="mt-3 h-1 w-10 rounded-full bg-[#DD8500]" />
 
                     <p className="mt-6 text-lg leading-8 text-slate-700">
@@ -129,32 +212,44 @@ export default function PersonalizedServicesPage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* SERVICES */}
+            {/* ============================================================= */}
+
             <section className="bg-slate-50">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
                     <div className="max-w-3xl">
                         <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
                             Things We Do During a Visit
                         </p>
+
                         <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
                             Practical support for daily wellness
                         </h2>
                     </div>
 
                     <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                        {visitServices.map((item) => (
-                            <div
-                                key={item}
-                                className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
-                            >
-                                <div className="mb-4 h-2 w-10 rounded-full bg-[#DD8500]" />
-                                <p className="text-base font-semibold leading-7 text-slate-800">
-                                    {item}
-                                </p>
-                            </div>
-                        ))}
+                        {visitServices.map(
+                            (item) => (
+                                <div
+                                    key={item}
+                                    className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
+                                >
+                                    <div className="mb-4 h-2 w-10 rounded-full bg-[#DD8500]" />
+
+                                    <p className="text-base font-semibold leading-7 text-slate-800">
+                                        {item}
+                                    </p>
+                                </div>
+                            )
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* ADDITIONAL SUPPORT */}
+            {/* ============================================================= */}
 
             <section className="bg-white">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
@@ -163,6 +258,7 @@ export default function PersonalizedServicesPage() {
                             <h3 className="text-2xl font-extrabold">
                                 Dietary and condition-specific support
                             </h3>
+
                             <p className="mt-5 text-lg leading-8 text-white/90">
                                 Special dietary needs for conditions like diabetes,
                                 hypertension, or heart disease can be managed through
@@ -175,6 +271,7 @@ export default function PersonalizedServicesPage() {
                             <h3 className="text-2xl font-extrabold text-[#00456B]">
                                 Family communication and advocacy
                             </h3>
+
                             <p className="mt-5 text-lg leading-8 text-slate-700">
                                 We help keep family members and professionals informed
                                 about changing needs, safety concerns, care options, and
@@ -185,12 +282,17 @@ export default function PersonalizedServicesPage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* FINAL CTA */}
+            {/* ============================================================= */}
+
             <section className="bg-slate-50 px-6 pb-20 sm:px-8 lg:px-10">
                 <div className="mx-auto flex max-w-7xl flex-col gap-8 rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                         <h2 className="text-3xl font-extrabold tracking-tight text-[#00456B]">
                             Personalized care starts with a conversation
                         </h2>
+
                         <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
                             Whether your loved one needs wellness monitoring, care
                             coordination, family coaching, or help navigating next steps,
@@ -208,4 +310,19 @@ export default function PersonalizedServicesPage() {
             </section>
         </main>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

@@ -1,7 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {
+    useEffect,
+    useState,
+} from "react";
+
 import { useRouter } from "next/navigation";
+
+import {
+    getLocationBySlug,
+    type LocationData,
+} from "@/lib/locations";
+
 import "../getting-started.css";
 
 type FormState = {
@@ -14,21 +24,160 @@ const initialForm: FormState = {
     careNeeds: "",
 };
 
-export default function GettingStartedNeedsPage() {
-    const router = useRouter();
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
 
-    const [form, setForm] = useState<FormState>(initialForm);
-    const [pageError, setPageError] = useState<string | null>(null);
+export default function GettingStartedNeedsPage() {
+    const router =
+        useRouter();
+
+    const [form, setForm] =
+        useState<FormState>(
+            initialForm
+        );
+
+    const [
+        pageError,
+        setPageError,
+    ] =
+        useState<string | null>(
+            null
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    |
+    | This is the corporate Getting Started flow,
+    | so contact information comes from the
+    | Orange County database record.
+    |
+    */
+
+    const [
+        location,
+        setLocation,
+    ] =
+        useState<LocationData | null>(
+            null
+        );
+
+    useEffect(() => {
+        let cancelled = false;
+
+        async function loadCorporateLocation() {
+            try {
+                const result =
+                    await getLocationBySlug(
+                        CORPORATE_LOCATION_SLUG
+                    );
+
+                if (!cancelled) {
+                    setLocation(result);
+                }
+            } catch (error) {
+                console.error(
+                    "Getting Started failed to load corporate location:",
+                    error
+                );
+
+                if (!cancelled) {
+                    setLocation(null);
+                }
+            }
+        }
+
+        loadCorporateLocation();
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phone Selection
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    | No Cerna phone numbers are hard-coded.
+    |
+    */
+
+    const tollFreePhone =
+        location
+            ?.tollFreePhone
+            ?.trim() ?? "";
+
+    const regularPhone =
+        location
+            ?.phone
+            ?.trim() ?? "";
+
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
+
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
+
+    /*
+    |--------------------------------------------------------------------------
+    | Form Change
+    |--------------------------------------------------------------------------
+    */
 
     function handleChange(
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        e: React.ChangeEvent<
+            HTMLInputElement |
+            HTMLTextAreaElement
+        >
     ) {
-        const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
+        const {
+            name,
+            value,
+        } = e.target;
+
+        setForm(
+            (prev) => ({
+                ...prev,
+                [name]: value,
+            })
+        );
     }
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    /*
+    |--------------------------------------------------------------------------
+    | Submit
+    |--------------------------------------------------------------------------
+    */
+
+    function handleSubmit(
+        e: React.FormEvent<HTMLFormElement>
+    ) {
         e.preventDefault();
+
         setPageError(null);
 
         sessionStorage.setItem(
@@ -36,7 +185,9 @@ export default function GettingStartedNeedsPage() {
             JSON.stringify(form)
         );
 
-        router.push("/getting-started/contact");
+        router.push(
+            "/getting-started/contact"
+        );
     }
 
     return (
@@ -49,7 +200,9 @@ export default function GettingStartedNeedsPage() {
             <div className="getting-started-container">
                 <div className="getting-started-grid">
                     <div className="getting-started-left">
-                        <p className="getting-started-eyebrow">Getting Started</p>
+                        <p className="getting-started-eyebrow">
+                            Getting Started
+                        </p>
 
                         <h1 className="getting-started-title">
                             What are your primary care goals?
@@ -64,36 +217,58 @@ export default function GettingStartedNeedsPage() {
                                 Contact us now for your complimentary in-home consultation:
                             </p>
 
-                            <a href="tel:18775776782" className="getting-started-phone">
-                                1 (877) 577-6782
-                            </a>
+                            {phoneLabel ? (
+                                <a
+                                    href={
+                                        phoneHref
+                                    }
+                                    className="getting-started-phone"
+                                >
+                                    {
+                                        phoneLabel
+                                    }
+                                </a>
+                            ) : null}
                         </div>
                     </div>
 
                     <div className="getting-started-card">
                         <div className="getting-started-card-header">
                             <div>
-                                <p className="getting-started-step">Step 2 of 3 - Needs</p>
+                                <p className="getting-started-step">
+                                    Step 2 of 3 - Needs
+                                </p>
+
                                 <h2 className="getting-started-card-title">
                                     Let us learn more about the care needed
                                 </h2>
                             </div>
 
-                            <div className="getting-started-progress-pill">33%</div>
+                            <div className="getting-started-progress-pill">
+                                33%
+                            </div>
                         </div>
 
                         <p className="getting-started-required">
-                            <span>*</span> indicates required fields
+                            <span>*</span>{" "}
+                            indicates required fields
                         </p>
 
                         <div className="getting-started-progress">
                             <div
                                 className="getting-started-progress-bar"
-                                style={{ width: "33%" }}
+                                style={{
+                                    width: "33%",
+                                }}
                             />
                         </div>
 
-                        <form className="getting-started-form" onSubmit={handleSubmit}>
+                        <form
+                            className="getting-started-form"
+                            onSubmit={
+                                handleSubmit
+                            }
+                        >
                             <div className="getting-started-field">
                                 <div className="getting-started-legend">
                                     What is your loved ones condition?
@@ -105,10 +280,18 @@ export default function GettingStartedNeedsPage() {
                                             type="radio"
                                             name="condition"
                                             value="General Aging"
-                                            checked={form.condition === "General Aging"}
-                                            onChange={handleChange}
+                                            checked={
+                                                form.condition ===
+                                                "General Aging"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
                                         />
-                                        <span>General Aging</span>
+
+                                        <span>
+                                            General Aging
+                                        </span>
                                     </label>
 
                                     <label className="getting-started-radio-card">
@@ -116,10 +299,18 @@ export default function GettingStartedNeedsPage() {
                                             type="radio"
                                             name="condition"
                                             value="Memory Loss"
-                                            checked={form.condition === "Memory Loss"}
-                                            onChange={handleChange}
+                                            checked={
+                                                form.condition ===
+                                                "Memory Loss"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
                                         />
-                                        <span>Memory Loss</span>
+
+                                        <span>
+                                            Memory Loss
+                                        </span>
                                     </label>
 
                                     <label className="getting-started-radio-card">
@@ -127,10 +318,18 @@ export default function GettingStartedNeedsPage() {
                                             type="radio"
                                             name="condition"
                                             value="Post Surgery"
-                                            checked={form.condition === "Post Surgery"}
-                                            onChange={handleChange}
+                                            checked={
+                                                form.condition ===
+                                                "Post Surgery"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
                                         />
-                                        <span>Post Surgery</span>
+
+                                        <span>
+                                            Post Surgery
+                                        </span>
                                     </label>
 
                                     <label className="getting-started-radio-card">
@@ -138,10 +337,18 @@ export default function GettingStartedNeedsPage() {
                                             type="radio"
                                             name="condition"
                                             value="Neurological Condition"
-                                            checked={form.condition === "Neurological Condition"}
-                                            onChange={handleChange}
+                                            checked={
+                                                form.condition ===
+                                                "Neurological Condition"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
                                         />
-                                        <span>Neurological Condition</span>
+
+                                        <span>
+                                            Neurological Condition
+                                        </span>
                                     </label>
 
                                     <label className="getting-started-radio-card">
@@ -149,10 +356,18 @@ export default function GettingStartedNeedsPage() {
                                             type="radio"
                                             name="condition"
                                             value="Post Stroke"
-                                            checked={form.condition === "Post Stroke"}
-                                            onChange={handleChange}
+                                            checked={
+                                                form.condition ===
+                                                "Post Stroke"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
                                         />
-                                        <span>Post Stroke</span>
+
+                                        <span>
+                                            Post Stroke
+                                        </span>
                                     </label>
 
                                     <label className="getting-started-radio-card">
@@ -160,10 +375,18 @@ export default function GettingStartedNeedsPage() {
                                             type="radio"
                                             name="condition"
                                             value="Other"
-                                            checked={form.condition === "Other"}
-                                            onChange={handleChange}
+                                            checked={
+                                                form.condition ===
+                                                "Other"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
                                         />
-                                        <span>Other</span>
+
+                                        <span>
+                                            Other
+                                        </span>
                                     </label>
                                 </div>
 
@@ -173,31 +396,54 @@ export default function GettingStartedNeedsPage() {
                             </div>
 
                             <div className="getting-started-field">
-                                <label className="getting-started-label" htmlFor="careNeeds">
+                                <label
+                                    className="getting-started-label"
+                                    htmlFor="careNeeds"
+                                >
                                     Please describe any care goals, concerns or needs that you have...
                                 </label>
+
                                 <textarea
                                     id="careNeeds"
                                     name="careNeeds"
                                     rows={5}
                                     className="getting-started-input getting-started-textarea"
-                                    value={form.careNeeds}
-                                    onChange={handleChange}
+                                    value={
+                                        form.careNeeds
+                                    }
+                                    onChange={
+                                        handleChange
+                                    }
                                 />
+
                                 <p className="getting-started-optional">
                                     (this field is optional)
                                 </p>
                             </div>
 
                             {pageError ? (
-                                <p style={{ color: "red", marginTop: "12px" }}>{pageError}</p>
+                                <p
+                                    style={{
+                                        color: "red",
+                                        marginTop:
+                                            "12px",
+                                    }}
+                                >
+                                    {
+                                        pageError
+                                    }
+                                </p>
                             ) : null}
 
                             <div className="getting-started-actions">
                                 <button
                                     type="button"
                                     className="getting-started-button getting-started-button-secondary"
-                                    onClick={() => router.push("/getting-started")}
+                                    onClick={() =>
+                                        router.push(
+                                            "/getting-started"
+                                        )
+                                    }
                                 >
                                     Previous
                                 </button>
@@ -215,4 +461,19 @@ export default function GettingStartedNeedsPage() {
             </div>
         </section>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

@@ -325,6 +325,25 @@ export default function Footer() {
         "";
 
     /*
+|--------------------------------------------------------------------------
+| Location-Aware Footer Links
+|--------------------------------------------------------------------------
+*/
+
+    const footerBasePath =
+        location
+            ? `/${location.slug}`
+            : "";
+
+    const getFooterHref = (
+        path: string
+    ) => {
+        return footerBasePath
+            ? `${footerBasePath}${path}`
+            : path;
+    };
+
+    /*
     |--------------------------------------------------------------------------
     | Current Year
     |--------------------------------------------------------------------------
@@ -666,72 +685,65 @@ export default function Footer() {
                             <div>
                                 {[
                                     {
-                                        label:
-                                            "Website Terms",
-                                        href:
-                                            "/website-terms",
+                                        label: "Website Terms",
+                                        href: getFooterHref(
+                                            "/website-terms"
+                                        ),
                                     },
                                     {
-                                        label:
-                                            "Privacy Policy",
-                                        href:
-                                            "/privacy-policy",
+                                        label: "Privacy Policy",
+                                        href: getFooterHref(
+                                            "/privacy-policy"
+                                        ),
                                     },
+
+                                    /*
+                                     * Only show Locations on the corporate site.
+                                     *
+                                     * When location exists, the visitor is already
+                                     * inside a localized Cerna site.
+                                     */
+                                    ...(!location
+                                        ? [
+                                            {
+                                                label: "Locations",
+                                                href: "/locations",
+                                            },
+                                        ]
+                                        : []),
+
                                     {
-                                        label:
-                                            "Locations",
-                                        href:
-                                            "/locations",
+                                        label: "Write a Review",
+                                        href: getFooterHref(
+                                            "/write-a-review"
+                                        ),
                                     },
-                                    {
-                                        label:
-                                            "Write a Review",
-                                        href:
-                                            "/write-a-review",
-                                    },
-                                ].map(
-                                    (
-                                        item
-                                    ) => (
-                                        <Link
-                                            key={
-                                                item.label
-                                            }
-                                            href={
-                                                item.href
-                                            }
+                                ].map((item) => (
+                                    <Link
+                                        key={item.label}
+                                        href={item.href}
+                                        style={{
+                                            display: "block",
+                                            borderBottom:
+                                                "1px solid white",
+                                            padding: "12px 0",
+                                            fontSize: "18px",
+                                            color: "#D26E4B",
+                                            textDecoration: "none",
+                                        }}
+                                    >
+                                        <span
                                             style={{
-                                                display:
-                                                    "block",
-                                                borderBottom:
-                                                    "1px solid white",
-                                                padding:
-                                                    "12px 0",
-                                                fontSize:
-                                                    "18px",
-                                                color:
-                                                    "#D26E4B",
-                                                textDecoration:
-                                                    "none",
+                                                fontWeight: 700,
+                                                marginRight: "10px",
                                             }}
                                         >
-                                            <span
-                                                style={{
-                                                    fontWeight:
-                                                        700,
-                                                    marginRight:
-                                                        "10px",
-                                                }}
-                                            >
-                                                &gt;
-                                            </span>
+                                            &gt;
+                                        </span>
 
-                                            {
-                                                item.label
-                                            }
-                                        </Link>
-                                    )
-                                )}
+                                        {item.label}
+                                    </Link>
+                                ))}
                             </div>
                         </div>
 
@@ -740,92 +752,57 @@ export default function Footer() {
                         {/* ================================================= */}
 
                         <div>
-                            <h3
-                                style={{
-                                    color: "white",
-                                    fontSize:
-                                        "20px",
-                                    fontWeight:
-                                        700,
-                                    marginBottom:
-                                        "20px",
-                                    textTransform:
-                                        "uppercase",
-                                }}
-                            >
-                                Information
-                            </h3>
+                            {[
+                                {
+                                    label: "Downloads",
+                                    href: getFooterHref(
+                                        "/downloads"
+                                    ),
+                                },
+                                {
+                                    label: "Financial Support",
+                                    href: getFooterHref(
+                                        "/financial-support"
+                                    ),
+                                },
+                                {
+                                    label: "Insurance Information",
+                                    href: getFooterHref(
+                                        "/insurance-information"
+                                    ),
+                                },
+                                {
+                                    label: "Affiliations",
+                                    href: getFooterHref(
+                                        "/affiliations"
+                                    ),
+                                },
+                            ].map((item) => (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    style={{
+                                        display: "block",
+                                        borderBottom:
+                                            "1px solid white",
+                                        padding: "12px 0",
+                                        fontSize: "18px",
+                                        color: "#D26E4B",
+                                        textDecoration: "none",
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            fontWeight: 700,
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        &gt;
+                                    </span>
 
-                            <div>
-                                {[
-                                    {
-                                        label:
-                                            "Downloads",
-                                        href:
-                                            "/downloads",
-                                    },
-                                    {
-                                        label:
-                                            "Financial Support",
-                                        href:
-                                            "/financial-support",
-                                    },
-                                    {
-                                        label:
-                                            "Insurance Information",
-                                        href:
-                                            "/insurance-information",
-                                    },
-                                    {
-                                        label:
-                                            "Affiliations",
-                                        href:
-                                            "/affiliations",
-                                    },
-                                ].map(
-                                    (
-                                        item
-                                    ) => (
-                                        <Link
-                                            key={
-                                                item.label
-                                            }
-                                            href={
-                                                item.href
-                                            }
-                                            style={{
-                                                display:
-                                                    "block",
-                                                borderBottom:
-                                                    "1px solid white",
-                                                padding:
-                                                    "12px 0",
-                                                fontSize:
-                                                    "18px",
-                                                color:
-                                                    "#D26E4B",
-                                                textDecoration:
-                                                    "none",
-                                            }}
-                                        >
-                                            <span
-                                                style={{
-                                                    fontWeight:
-                                                        700,
-                                                    marginRight:
-                                                        "10px",
-                                                }}
-                                            >
-                                                &gt;
-                                            </span>
-
-                                            {
-                                                item.label
-                                            }
-                                        </Link>
-                                    )
-                                )}
-                            </div>
+                                    {item.label}
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </div>

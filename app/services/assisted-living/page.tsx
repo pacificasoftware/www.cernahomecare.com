@@ -1,20 +1,18 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 
+import {
+    getLocationBySlug,
+} from "@/lib/locations";
+
 export const metadata = {
     title: "Assisted Living & Senior Assistance | Cerna Home Care",
     description:
         "Cerna Home Care helps families navigate assisted living, senior housing, memory care, respite care, and senior assistance options.",
 };
 
-const careOptions = [
-    "Assisted Living",
-    "Residential Care Homes",
-    "Memory Care",
-    "Covered Care",
-    "Skilled Nursing",
-    "Senior Housing",
-];
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
 
 const advisorBenefits = [
     "Free assistance from a dedicated advisor",
@@ -45,9 +43,69 @@ const amenities = [
     "Massage therapy, beauty salon, movie theater, pets, and transportation",
 ];
 
-export default function AssistedLivingPage() {
+export default async function AssistedLivingPage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    */
+
+    const location =
+        await getLocationBySlug(
+            CORPORATE_LOCATION_SLUG
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phone
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    */
+
+    const tollFreePhone =
+        location
+            ?.tollFreePhone
+            ?.trim() || "";
+
+    const regularPhone =
+        location
+            ?.phone
+            ?.trim() || "";
+
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
+
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
+
     return (
         <main className="bg-white">
+            {/* ============================================================= */}
+            {/* HERO */}
+            {/* ============================================================= */}
+
             <section className="relative overflow-hidden bg-slate-50">
                 <div className="absolute right-0 top-0 hidden h-full w-1/3 bg-[#00456B] lg:block" />
 
@@ -56,6 +114,7 @@ export default function AssistedLivingPage() {
                         <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-[#DD8500]">
                             Assisted Living
                         </p>
+
                         <div className="mt-3 h-1 w-20 rounded-full bg-[#DD8500]" />
 
                         <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-[#00456B] sm:text-6xl">
@@ -77,12 +136,14 @@ export default function AssistedLivingPage() {
                                 Request Guidance
                             </Link>
 
-                            <a
-                                href="tel:18775776782"
-                                className="rounded-lg border-2 border-[#00456B] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#00456B] transition hover:bg-[#00456B] hover:text-white"
-                            >
-                                Call (877) 577-6782
-                            </a>
+                            {phoneLabel ? (
+                                <a
+                                    href={phoneHref}
+                                    className="rounded-lg border-2 border-[#00456B] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#00456B] transition hover:bg-[#00456B] hover:text-white"
+                                >
+                                    Call {phoneLabel}
+                                </a>
+                            ) : null}
                         </div>
                     </div>
 
@@ -103,21 +164,9 @@ export default function AssistedLivingPage() {
                 </div>
             </section>
 
-            {/*<section className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">*/}
-            {/*    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">*/}
-            {/*        {careOptions.map((item) => (*/}
-            {/*            <div*/}
-            {/*                key={item}*/}
-            {/*                className="rounded-2xl bg-slate-50 p-6 shadow-sm ring-1 ring-slate-200"*/}
-            {/*            >*/}
-            {/*                <div className="mb-4 h-2 w-10 rounded-full bg-[#DD8500]" />*/}
-            {/*                <p className="text-lg font-extrabold text-[#00456B]">*/}
-            {/*                    {item}*/}
-            {/*                </p>*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </div>*/}
-            {/*</section>*/}
+            {/* ============================================================= */}
+            {/* DEDICATED ADVISOR */}
+            {/* ============================================================= */}
 
             <section className="bg-slate-50">
                 <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
@@ -125,9 +174,11 @@ export default function AssistedLivingPage() {
                         <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
                             Dedicated Advisor
                         </p>
+
                         <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
                             Guidance from the first conversation
                         </h2>
+
                         <p className="mt-6 text-lg leading-8 text-slate-700">
                             Our advisor meets with you personally. Together, we determine
                             the most successful living environment based on your loved
@@ -137,16 +188,30 @@ export default function AssistedLivingPage() {
 
                     <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
                         <ul className="space-y-4 text-base leading-7 text-slate-700">
-                            {advisorBenefits.map((item) => (
-                                <li key={item} className="flex gap-3">
-                                    <span className="font-extrabold text-[#DD8500]">✓</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
+                            {advisorBenefits.map(
+                                (item) => (
+                                    <li
+                                        key={item}
+                                        className="flex gap-3"
+                                    >
+                                        <span className="font-extrabold text-[#DD8500]">
+                                            ✓
+                                        </span>
+
+                                        <span>
+                                            {item}
+                                        </span>
+                                    </li>
+                                )
+                            )}
                         </ul>
                     </div>
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* COMMUNITY CARE */}
+            {/* ============================================================= */}
 
             <section className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
                 <div className="rounded-[34px] bg-[#00456B] p-8 text-white shadow-xl sm:p-10 lg:p-12">
@@ -166,19 +231,25 @@ export default function AssistedLivingPage() {
                     </p>
 
                     <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        {communityServices.map((item) => (
-                            <div
-                                key={item}
-                                className="rounded-2xl bg-white/10 p-5 ring-1 ring-white/15"
-                            >
-                                <p className="text-sm font-bold leading-6 text-white">
-                                    {item}
-                                </p>
-                            </div>
-                        ))}
+                        {communityServices.map(
+                            (item) => (
+                                <div
+                                    key={item}
+                                    className="rounded-2xl bg-white/10 p-5 ring-1 ring-white/15"
+                                >
+                                    <p className="text-sm font-bold leading-6 text-white">
+                                        {item}
+                                    </p>
+                                </div>
+                            )
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* AMENITIES */}
+            {/* ============================================================= */}
 
             <section className="bg-slate-50">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
@@ -186,25 +257,32 @@ export default function AssistedLivingPage() {
                         <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
                             Luxury Amenities
                         </p>
+
                         <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
                             Comfort, activity, and daily enrichment
                         </h2>
                     </div>
 
                     <div className="mt-10 grid gap-5 lg:grid-cols-2">
-                        {amenities.map((item) => (
-                            <div
-                                key={item}
-                                className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
-                            >
-                                <p className="text-base font-semibold leading-7 text-slate-800">
-                                    {item}
-                                </p>
-                            </div>
-                        ))}
+                        {amenities.map(
+                            (item) => (
+                                <div
+                                    key={item}
+                                    className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
+                                >
+                                    <p className="text-base font-semibold leading-7 text-slate-800">
+                                        {item}
+                                    </p>
+                                </div>
+                            )
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* FINAL CTA */}
+            {/* ============================================================= */}
 
             <section className="bg-white px-6 py-16 sm:px-8 lg:px-10">
                 <div className="mx-auto flex max-w-7xl flex-col gap-8 rounded-3xl bg-slate-50 p-8 shadow-sm ring-1 ring-slate-200 lg:flex-row lg:items-center lg:justify-between">
@@ -212,6 +290,7 @@ export default function AssistedLivingPage() {
                         <h2 className="text-3xl font-extrabold tracking-tight text-[#00456B]">
                             Need help choosing the right senior living option?
                         </h2>
+
                         <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
                             Contact Cerna and see what the difference really means. We
                             don’t just talk the talk; we walk the walk, right beside you.
@@ -228,4 +307,19 @@ export default function AssistedLivingPage() {
             </section>
         </main>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

@@ -1,15 +1,82 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 
+import {
+    getLocationBySlug,
+} from "@/lib/locations";
+
 export const metadata = {
     title: "Transportation Services | Cerna Home Care",
     description:
         "Cerna Home Care provides dependable transportation support for seniors, individuals with disabilities, and families who need more than just a ride.",
 };
 
-export default function TransportationServicesPage() {
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
+
+export default async function TransportationServicesPage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    */
+
+    const location =
+        await getLocationBySlug(
+            CORPORATE_LOCATION_SLUG
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phone
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    */
+
+    const tollFreePhone =
+        location
+            ?.tollFreePhone
+            ?.trim() || "";
+
+    const regularPhone =
+        location
+            ?.phone
+            ?.trim() || "";
+
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
+
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
+
     return (
         <main className="bg-white">
+            {/* ============================================================= */}
+            {/* HERO */}
+            {/* ============================================================= */}
+
             <section className="relative overflow-hidden bg-[#00456B]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_35%),linear-gradient(135deg,#00456B_0%,#00385a_55%,#005f8f_100%)]" />
 
@@ -23,10 +90,12 @@ export default function TransportationServicesPage() {
                             d="M0,90 C220,145 360,40 590,95 C795,145 985,30 1440,45 L1440,220 L0,220 Z"
                             fill="rgba(255,255,255,0.38)"
                         />
+
                         <path
                             d="M0,120 C240,55 420,155 650,120 C900,82 1080,5 1440,85 L1440,220 L0,220 Z"
                             fill="rgba(255,255,255,0.55)"
                         />
+
                         <path
                             d="M0,155 C220,80 410,150 650,160 C920,172 1050,90 1440,110 L1440,220 L0,220 Z"
                             fill="#ffffff"
@@ -39,6 +108,7 @@ export default function TransportationServicesPage() {
                         <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-[#DD8500]">
                             Safe & Caring Transportation
                         </p>
+
                         <div className="mt-3 h-1 w-20 rounded-full bg-[#DD8500]" />
 
                         <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
@@ -54,11 +124,16 @@ export default function TransportationServicesPage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* TRANSPORTATION OVERVIEW */}
+            {/* ============================================================= */}
+
             <section className="mx-auto grid max-w-7xl gap-12 px-6 pb-16 pt-8 sm:px-8 lg:grid-cols-[1fr_0.95fr] lg:px-10 lg:pb-20">
                 <div>
                     <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
                         More Than Transportation
                     </p>
+
                     <div className="mt-3 h-1 w-12 rounded-full bg-[#DD8500]" />
 
                     <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-[#00456B] sm:text-4xl">
@@ -88,12 +163,14 @@ export default function TransportationServicesPage() {
                             Request Transportation Help
                         </Link>
 
-                        <a
-                            href="tel:18775776782"
-                            className="inline-flex rounded-lg border-2 border-[#00456B] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#00456B] transition hover:bg-[#00456B] hover:text-white"
-                        >
-                            Call (877) 577-6782
-                        </a>
+                        {phoneLabel ? (
+                            <a
+                                href={phoneHref}
+                                className="inline-flex rounded-lg border-2 border-[#00456B] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#00456B] transition hover:bg-[#00456B] hover:text-white"
+                            >
+                                Call {phoneLabel}
+                            </a>
+                        ) : null}
                     </div>
                 </div>
 
@@ -110,6 +187,10 @@ export default function TransportationServicesPage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* VEHICLE / SUPPORT */}
+            {/* ============================================================= */}
+
             <section className="bg-slate-50">
                 <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:px-10">
                     <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
@@ -120,6 +201,7 @@ export default function TransportationServicesPage() {
                         <h3 className="text-2xl font-extrabold text-[#00456B]">
                             Our vehicle may include
                         </h3>
+
                         <div className="mt-3 h-1 w-10 rounded-full bg-[#DD8500]" />
 
                         <ul className="mt-6 space-y-3 text-base leading-7 text-slate-700">
@@ -139,6 +221,7 @@ export default function TransportationServicesPage() {
                         <h3 className="text-2xl font-extrabold text-[#00456B]">
                             Transportation support for
                         </h3>
+
                         <div className="mt-3 h-1 w-10 rounded-full bg-[#DD8500]" />
 
                         <ul className="mt-6 grid gap-3 text-base leading-7 text-slate-700 sm:grid-cols-2">
@@ -155,6 +238,10 @@ export default function TransportationServicesPage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* FINAL CTA */}
+            {/* ============================================================= */}
+
             <section className="bg-slate-50 px-6 pb-20 sm:px-8 lg:px-10">
                 <div className="mx-auto flex max-w-7xl flex-col gap-8 rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex gap-6">
@@ -166,6 +253,7 @@ export default function TransportationServicesPage() {
                             <h2 className="text-3xl font-extrabold tracking-tight text-[#00456B]">
                                 Flexible transportation with a caring touch
                             </h2>
+
                             <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
                                 Whether your loved one needs help getting to an appointment,
                                 returning home safely, or making a stop for essentials, Cerna
@@ -185,4 +273,19 @@ export default function TransportationServicesPage() {
             </section>
         </main>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

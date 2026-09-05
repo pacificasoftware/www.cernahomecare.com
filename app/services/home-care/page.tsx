@@ -1,6 +1,14 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
+
+import {
+    getLocationBySlug,
+} from "@/lib/locations";
+
 import styles from "./HomeCarePage.module.css";
+
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
 
 const careTypes = [
     {
@@ -14,12 +22,11 @@ const careTypes = [
     {
         title: "Covered Care",
         desc: "Continuous support with rotating caregivers covering both day and night shifts.",
-    }, 
-
+    },
     {
         title: "Hourly Care",
         desc: "Flexible scheduling from as little as 4 hours up to full-day care.",
-    },  
+    },
     {
         title: "Cognitive Care",
         desc: "Help with appointments, errands, and daily mental engagement activities.",
@@ -34,13 +41,75 @@ const careTypes = [
     },
 ];
 
-export default function HomeCarePage() {
+export default async function HomeCarePage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    */
+
+    const location =
+        await getLocationBySlug(
+            CORPORATE_LOCATION_SLUG
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phone
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    */
+
+    const tollFreePhone =
+        location
+            ?.tollFreePhone
+            ?.trim() || "";
+
+    const regularPhone =
+        location
+            ?.phone
+            ?.trim() || "";
+
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
+
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
+
     return (
         <main className={styles.page}>
+            {/* ============================================================= */}
+            {/* HERO */}
+            {/* ============================================================= */}
+
             <section className={styles.heroSection}>
                 <div className={styles.heroContainer}>
                     <div className={styles.heroContent}>
-                        <h1 className={styles.heroTitle}>Specialized Care Services</h1>
+                        <h1 className={styles.heroTitle}>
+                            Specialized Care Services
+                        </h1>
 
                         <p className={styles.heroText}>
                             With Cerna In-Home Care Services, you are treated like family.
@@ -48,16 +117,23 @@ export default function HomeCarePage() {
                             we provide flexible solutions tailored to your needs.
                         </p>
 
-                        <div className={styles.heroActions}>
-                            <Link href="tel:8775776782" className={styles.primaryButton}>
-                                Call (877) 577-6782
-                            </Link>
-                        </div>
+                        {phoneLabel ? (
+                            <div className={styles.heroActions}>
+                                <a
+                                    href={phoneHref}
+                                    className={styles.primaryButton}
+                                >
+                                    Call {phoneLabel}
+                                </a>
+                            </div>
+                        ) : null}
                     </div>
-
-                 
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* CERNA BOX */}
+            {/* ============================================================= */}
 
             <section className={styles.cernaBoxSection}>
                 <Image
@@ -70,10 +146,16 @@ export default function HomeCarePage() {
                 />
             </section>
 
+            {/* ============================================================= */}
+            {/* FLEXIBLE CARE OPTIONS */}
+            {/* ============================================================= */}
 
             <section className={styles.servicesSection}>
                 <div className={styles.sectionIntro}>
-                    <h2 className={styles.sectionTitle}>Flexible Care Options</h2>
+                    <h2 className={styles.sectionTitle}>
+                        Flexible Care Options
+                    </h2>
+
                     <p className={styles.sectionText}>
                         We offer a wide range of care services designed to support comfort,
                         independence, and peace of mind.
@@ -81,19 +163,38 @@ export default function HomeCarePage() {
                 </div>
 
                 <div className={styles.cardsGrid}>
-                    {careTypes.map((item) => (
-                        <div key={item.title} className={styles.card}>
-                            <div className={styles.cardIcon}>✓</div>
-                            <h3 className={styles.cardTitle}>{item.title}</h3>
-                            <p className={styles.cardText}>{item.desc}</p>
-                        </div>
-                    ))}
+                    {careTypes.map(
+                        (item) => (
+                            <div
+                                key={item.title}
+                                className={styles.card}
+                            >
+                                <div className={styles.cardIcon}>
+                                    ✓
+                                </div>
+
+                                <h3 className={styles.cardTitle}>
+                                    {item.title}
+                                </h3>
+
+                                <p className={styles.cardText}>
+                                    {item.desc}
+                                </p>
+                            </div>
+                        )
+                    )}
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* TRUST */}
+            {/* ============================================================= */}
+
             <section className={styles.trustSection}>
                 <div className={styles.trustContainer}>
-                    <h2 className={styles.trustTitle}>Trusted &amp; Qualified Caregivers</h2>
+                    <h2 className={styles.trustTitle}>
+                        Trusted &amp; Qualified Caregivers
+                    </h2>
 
                     <p className={styles.trustText}>
                         All Cerna Care Aides have at least one year of experience, are
@@ -104,15 +205,25 @@ export default function HomeCarePage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* CTA */}
+            {/* ============================================================= */}
+
             <section className={styles.ctaSection}>
                 <div className={styles.ctaBox}>
-                    <h2 className={styles.ctaTitle}>Ready to get started?</h2>
+                    <h2 className={styles.ctaTitle}>
+                        Ready to get started?
+                    </h2>
+
                     <p className={styles.ctaText}>
                         Contact us today for a complimentary in-home consultation.
                     </p>
 
                     <div className={styles.ctaActions}>
-                        <Link href="/contact-us" className={styles.secondaryButton}>
+                        <Link
+                            href="/contact-us"
+                            className={styles.secondaryButton}
+                        >
                             Contact Us
                         </Link>
                     </div>
@@ -120,4 +231,19 @@ export default function HomeCarePage() {
             </section>
         </main>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

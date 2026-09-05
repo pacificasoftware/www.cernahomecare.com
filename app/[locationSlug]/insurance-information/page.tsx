@@ -43,10 +43,26 @@ const insurers = [
 ];
 
 export default async function InsuranceInformationPage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    */
+
     const location =
         await getLocationBySlug(
             CORPORATE_LOCATION_SLUG
         );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cerna Phone
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    */
 
     const tollFreePhone =
         location
@@ -85,6 +101,10 @@ export default async function InsuranceInformationPage() {
 
     return (
         <main className="bg-slate-50">
+            {/* ============================================================= */}
+            {/* HERO */}
+            {/* ============================================================= */}
+
             <section className="bg-[#00456B] px-6 py-20 text-white">
                 <div className="mx-auto max-w-5xl text-center">
                     <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
@@ -111,6 +131,10 @@ export default async function InsuranceInformationPage() {
                     ) : null}
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* INSURANCE PROVIDERS */}
+            {/* ============================================================= */}
 
             <section className="px-6 py-16">
                 <div className="mx-auto max-w-7xl">
@@ -152,6 +176,10 @@ export default async function InsuranceInformationPage() {
                         )}
                     </div>
 
+                    {/* ===================================================== */}
+                    {/* CONTACT CTA */}
+                    {/* ===================================================== */}
+
                     <div className="mt-14 rounded-[32px] bg-[#00456B] p-8 text-center text-white shadow-xl md:p-12">
                         <h2 className="text-3xl font-extrabold">
                             Need help understanding your coverage?
@@ -185,6 +213,12 @@ export default async function InsuranceInformationPage() {
         </main>
     );
 }
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
 
 function makePhoneHref(
     phone: string

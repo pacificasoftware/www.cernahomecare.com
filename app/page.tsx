@@ -179,17 +179,57 @@ export default async function CernaHomePage() {
     */
 
     const corporateLocation =
-        await getLocationBySlug("orange-county");
+        await getLocationBySlug(
+            "orange-county"
+        );
 
-    const corporatePhoneHref =
-        corporateLocation?.tollFreePhoneHref ??
-        corporateLocation?.phoneHref ??
-        "tel:18775776782";
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Phone
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    | 3. Nothing if both are blank
+    |
+    | No Cerna phone numbers are hard-coded.
+    |
+    */
+
+    const tollFreePhone =
+        corporateLocation
+            ?.tollFreePhone
+            ?.trim() || "";
+
+    const regularPhone =
+        corporateLocation
+            ?.phone
+            ?.trim() || "";
 
     const corporatePhoneNumber =
-        corporateLocation?.tollFreePhone ??
-        corporateLocation?.phone ??
-        "(877) 577-6782";
+        tollFreePhone ||
+        regularPhone;
+
+    const corporatePhoneHref =
+        tollFreePhone
+            ? (
+                corporateLocation
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    corporateLocation
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -215,7 +255,8 @@ export default async function CernaHomePage() {
                             quality={100}
                             style={{
                                 objectFit: "cover",
-                                objectPosition: "center 65%",
+                                objectPosition:
+                                    "center 65%",
                             }}
                         />
 
@@ -264,9 +305,12 @@ export default async function CernaHomePage() {
                     style={{
                         backgroundImage:
                             'url("/assets/hands_blueV2-300x300.webp")',
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
+                        backgroundSize:
+                            "cover",
+                        backgroundPosition:
+                            "center",
+                        backgroundRepeat:
+                            "no-repeat",
                     }}
                 >
                     <div className="absolute inset-0 bg-slate-900/45" />
@@ -283,14 +327,27 @@ export default async function CernaHomePage() {
                                 </h2>
 
                                 <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">
-                                    Please feel free to contact us anytime at{" "}
-                                    <a
-                                        href={corporatePhoneHref}
-                                        className="font-semibold text-orange-300 underline decoration-orange-200 underline-offset-4 transition hover:text-orange-200"
-                                    >
-                                        {corporatePhoneNumber}
-                                    </a>
-                                    . We’ll help you understand the next best step.
+                                    {corporatePhoneNumber ? (
+                                        <>
+                                            Please feel free to contact us anytime at{" "}
+                                            <a
+                                                href={
+                                                    corporatePhoneHref
+                                                }
+                                                className="font-semibold text-orange-300 underline decoration-orange-200 underline-offset-4 transition hover:text-orange-200"
+                                            >
+                                                {
+                                                    corporatePhoneNumber
+                                                }
+                                            </a>
+                                            . We’ll help you understand the next best step.
+                                        </>
+                                    ) : (
+                                        <>
+                                            Please feel free to contact us anytime. We’ll
+                                            help you understand the next best step.
+                                        </>
+                                    )}
                                 </p>
                             </div>
 
@@ -350,7 +407,11 @@ export default async function CernaHomePage() {
                     </div>
                 </section>
 
-                <div className={styles.fullWidthDivider} />
+                <div
+                    className={
+                        styles.fullWidthDivider
+                    }
+                />
 
                 {/* ========================================================= */}
                 {/* PHONE CONSULTATION BANNER */}
@@ -367,14 +428,26 @@ export default async function CernaHomePage() {
                             </p>
 
                             <h3 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
-                                Call us at{" "}
-                                <a
-                                    href={corporatePhoneHref}
-                                    className="text-sky-700 underline decoration-sky-300 underline-offset-4 hover:text-sky-800"
-                                >
-                                    {corporatePhoneNumber}
-                                </a>{" "}
-                                for a FREE In-Home Consultation!
+                                {corporatePhoneNumber ? (
+                                    <>
+                                        Call us at{" "}
+                                        <a
+                                            href={
+                                                corporatePhoneHref
+                                            }
+                                            className="text-sky-700 underline decoration-sky-300 underline-offset-4 hover:text-sky-800"
+                                        >
+                                            {
+                                                corporatePhoneNumber
+                                            }
+                                        </a>{" "}
+                                        for a FREE In-Home Consultation!
+                                    </>
+                                ) : (
+                                    <>
+                                        Contact us for a FREE In-Home Consultation!
+                                    </>
+                                )}
                             </h3>
 
                             <div className="mx-auto mt-1 h-px w-32 bg-sky-300" />
@@ -382,13 +455,19 @@ export default async function CernaHomePage() {
                     </div>
                 </section>
 
-                <div className={styles.fullWidthDivider} />
+                <div
+                    className={
+                        styles.fullWidthDivider
+                    }
+                />
 
                 {/* ========================================================= */}
                 {/* SERVICES */}
                 {/* ========================================================= */}
 
-                <ServiceCardsSection basePath="/services" />
+                <ServiceCardsSection
+                    basePath="/services"
+                />
 
                 {/* ========================================================= */}
                 {/* TESTIMONIALS */}
@@ -412,33 +491,44 @@ export default async function CernaHomePage() {
                         />
 
                         <div className="mt-14 grid gap-6 lg:grid-cols-3">
-                            {testimonials.map((item) => (
-                                <blockquote
-                                    key={item.name}
-                                    className="rounded-[28px] bg-white p-8 text-center shadow-sm ring-1 ring-slate-200"
-                                >
-                                    <div
-                                        className="mb-5 text-3xl leading-none"
-                                        style={{
-                                            color: "#DD8500",
-                                        }}
+                            {testimonials.map(
+                                (item) => (
+                                    <blockquote
+                                        key={
+                                            item.name
+                                        }
+                                        className="rounded-[28px] bg-white p-8 text-center shadow-sm ring-1 ring-slate-200"
                                     >
-                                        ★★★★★
-                                    </div>
+                                        <div
+                                            className="mb-5 text-3xl leading-none"
+                                            style={{
+                                                color:
+                                                    "#DD8500",
+                                            }}
+                                        >
+                                            ★★★★★
+                                        </div>
 
-                                    <h3 className="text-2xl font-medium text-sky-700">
-                                        {item.quoteTitle}
-                                    </h3>
+                                        <h3 className="text-2xl font-medium text-sky-700">
+                                            {
+                                                item.quoteTitle
+                                            }
+                                        </h3>
 
-                                    <p className="mt-6 text-lg italic leading-8 text-slate-500">
-                                        {item.body}
-                                    </p>
+                                        <p className="mt-6 text-lg italic leading-8 text-slate-500">
+                                            {
+                                                item.body
+                                            }
+                                        </p>
 
-                                    <footer className="mt-8 text-base font-semibold text-slate-500">
-                                        {item.name}
-                                    </footer>
-                                </blockquote>
-                            ))}
+                                        <footer className="mt-8 text-base font-semibold text-slate-500">
+                                            {
+                                                item.name
+                                            }
+                                        </footer>
+                                    </blockquote>
+                                )
+                            )}
                         </div>
 
                         <div className="mb-24 mt-14 flex justify-center">
@@ -477,55 +567,78 @@ export default async function CernaHomePage() {
                         />
 
                         <div className="mt-14 grid gap-6 lg:grid-cols-3">
-                            {steps.map((step, index) => {
-                                const stepImages = [
-                                    "/assets/1-2-150x150.webp",
-                                    "/assets/2-2-150x150.webp",
-                                    "/assets/3-2-150x150.webp",
-                                ];
+                            {steps.map(
+                                (
+                                    step,
+                                    index
+                                ) => {
+                                    const stepImages = [
+                                        "/assets/1-2-150x150.webp",
+                                        "/assets/2-2-150x150.webp",
+                                        "/assets/3-2-150x150.webp",
+                                    ];
 
-                                return (
-                                    <div
-                                        key={step.title}
-                                        className="rounded-[28px] bg-white p-8 text-center text-slate-900 shadow-xl shadow-slate-950/20"
-                                    >
-                                        <div className="mb-6 flex justify-center">
-                                            <img
-                                                src={stepImages[index]}
-                                                alt={`Step ${index + 1}`}
-                                                width={96}
-                                                height={96}
-                                                className="h-24 w-24 rounded-full object-cover"
-                                            />
+                                    return (
+                                        <div
+                                            key={
+                                                step.title
+                                            }
+                                            className="rounded-[28px] bg-white p-8 text-center text-slate-900 shadow-xl shadow-slate-950/20"
+                                        >
+                                            <div className="mb-6 flex justify-center">
+                                                <img
+                                                    src={
+                                                        stepImages[
+                                                        index
+                                                        ]
+                                                    }
+                                                    alt={`Step ${index +
+                                                        1
+                                                        }`}
+                                                    width={
+                                                        96
+                                                    }
+                                                    height={
+                                                        96
+                                                    }
+                                                    className="h-24 w-24 rounded-full object-cover"
+                                                />
+                                            </div>
+
+                                            <h3 className="text-2xl font-semibold">
+                                                {
+                                                    step.title
+                                                }
+                                            </h3>
+
+                                            <p className="mt-3 text-base leading-8 text-slate-600">
+                                                {
+                                                    step.body
+                                                }
+
+                                                {index ===
+                                                    0 &&
+                                                    corporatePhoneNumber ? (
+                                                    <>
+                                                        {" "}
+                                                        <a
+                                                            href={
+                                                                corporatePhoneHref
+                                                            }
+                                                            className="font-semibold text-sky-700 underline decoration-sky-300 underline-offset-4 transition hover:text-sky-800"
+                                                        >
+                                                            {
+                                                                corporatePhoneNumber
+                                                            }
+                                                        </a>
+                                                        .
+                                                    </>
+                                                ) : null}
+                                            </p>
                                         </div>
-
-                                        <h3 className="text-2xl font-semibold">
-                                            {step.title}
-                                        </h3>
-
-                                        <p className="mt-3 text-base leading-8 text-slate-600">
-                                            {step.body}
-
-                                            {index === 0 && (
-                                                <>
-                                                    {" "}
-                                                    <a
-                                                        href={
-                                                            corporatePhoneHref
-                                                        }
-                                                        className="font-semibold text-sky-700 underline decoration-sky-300 underline-offset-4 transition hover:text-sky-800"
-                                                    >
-                                                        {
-                                                            corporatePhoneNumber
-                                                        }
-                                                    </a>
-                                                    .
-                                                </>
-                                            )}
-                                        </p>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                }
+                            )}
                         </div>
 
                         <div className="mt-10 text-center">
@@ -533,7 +646,8 @@ export default async function CernaHomePage() {
                                 href="/getting-started"
                                 className="inline-flex items-center rounded-2xl px-6 py-3.5 text-base font-semibold text-white transition hover:opacity-90"
                                 style={{
-                                    backgroundColor: "#DD8500",
+                                    backgroundColor:
+                                        "#DD8500",
                                 }}
                             >
                                 Get Started Now
@@ -544,4 +658,19 @@ export default async function CernaHomePage() {
             </main>
         </div>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

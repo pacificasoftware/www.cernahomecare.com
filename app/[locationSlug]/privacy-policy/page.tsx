@@ -1,44 +1,53 @@
-﻿import "../website-terms/website-terms.css";
+﻿import { notFound } from "next/navigation";
 
 import {
     getLocationBySlug,
 } from "@/lib/locations";
 
-const CORPORATE_LOCATION_SLUG =
-    "orange-county";
+import "../../website-terms/website-terms.css";
 
-export default async function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage({
+    params,
+}: {
+    params: Promise<{
+        locationSlug: string;
+    }>;
+}) {
     /*
     |--------------------------------------------------------------------------
-    | Corporate Location
+    | Current Location
     |--------------------------------------------------------------------------
-    |
-    | Corporate contact information comes from
-    | the Orange County database record.
-    |
     */
+
+    const {
+        locationSlug,
+    } = await params;
 
     const location =
         await getLocationBySlug(
-            CORPORATE_LOCATION_SLUG
+            locationSlug
         );
+
+    if (!location) {
+        notFound();
+    }
 
     /*
     |--------------------------------------------------------------------------
     | Phone
     |--------------------------------------------------------------------------
     |
-    | 1. Toll-Free
+    | 1. Toll-Free Phone
     | 2. Regular Phone if Toll-Free is blank
     |
     */
 
     const tollFreePhone =
-        location?.tollFreePhone?.trim() ||
+        location.tollFreePhone?.trim() ||
         "";
 
     const regularPhone =
-        location?.phone?.trim() ||
+        location.phone?.trim() ||
         "";
 
     const phoneLabel =
@@ -49,7 +58,7 @@ export default async function PrivacyPolicyPage() {
         tollFreePhone
             ? (
                 location
-                    ?.tollFreePhoneHref
+                    .tollFreePhoneHref
                     ?.trim() ||
                 makePhoneHref(
                     tollFreePhone
@@ -58,7 +67,7 @@ export default async function PrivacyPolicyPage() {
             : regularPhone
                 ? (
                     location
-                        ?.phoneHref
+                        .phoneHref
                         ?.trim() ||
                     makePhoneHref(
                         regularPhone
@@ -73,7 +82,7 @@ export default async function PrivacyPolicyPage() {
     */
 
     const email =
-        location?.email?.trim() ||
+        location.email?.trim() ||
         "";
 
     return (
@@ -112,6 +121,7 @@ export default async function PrivacyPolicyPage() {
                         <li>Name</li>
                         <li>Email address</li>
                         <li>Telephone number</li>
+
                         <li>
                             Information submitted through website forms, written
                             forms, phone calls, or other communications
@@ -132,17 +142,23 @@ export default async function PrivacyPolicyPage() {
                     </p>
 
                     <ul>
-                        <li>Respond to your inquiries</li>
+                        <li>
+                            Respond to your inquiries
+                        </li>
+
                         <li>
                             Provide services or information you request
                         </li>
+
                         <li>
                             Communicate by phone, email, or SMS when you provide
                             consent
                         </li>
+
                         <li>
                             Improve our services and support operations
                         </li>
+
                         <li>
                             Comply with legal and regulatory obligations
                         </li>
@@ -173,9 +189,11 @@ export default async function PrivacyPolicyPage() {
                         <li>
                             Online website forms with explicit SMS opt-in wording
                         </li>
+
                         <li>
                             Written or paper forms with SMS opt-in language
                         </li>
+
                         <li>
                             Verbal or other documented consent methods
                         </li>
@@ -333,6 +351,12 @@ export default async function PrivacyPolicyPage() {
         </main>
     );
 }
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
 
 function makePhoneHref(
     phone: string

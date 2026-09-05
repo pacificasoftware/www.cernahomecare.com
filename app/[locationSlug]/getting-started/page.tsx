@@ -1,14 +1,18 @@
 ﻿"use client";
-import React, { useEffect, useState, use } from "react";
-import { useRouter } from "next/navigation";
-import { getLocationBySlug } from "@/lib/locations";
-import "../../getting-started/getting-started.css";
 
-type Props = {
-    params: Promise<{
-        locationSlug: string;
-    }>;
-};
+import React, {
+    useEffect,
+    useState,
+} from "react";
+
+import { useRouter } from "next/navigation";
+
+import {
+    getLocationBySlug,
+    type LocationData,
+} from "@/lib/locations";
+
+import "./getting-started.css";
 
 type FormState = {
     fullName: string;
@@ -22,126 +26,209 @@ const initialForm: FormState = {
     careFor: "",
 };
 
-export default function LocalGettingStartedPage({ params }: Props) {
-    const router = useRouter();
-    const { locationSlug } = use(params);
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
 
-    const [location, setLocation] = useState<Awaited<
-        ReturnType<typeof getLocationBySlug>
-    >>(null);
+export default function GettingStartedPage() {
+    const router =
+        useRouter();
 
-    const [locationLoading, setLocationLoading] = useState(true);
+    const [form, setForm] =
+        useState<FormState>(
+            initialForm
+        );
 
-    const [form, setForm] = useState<FormState>(initialForm);
-    const [pageError, setPageError] = useState<string | null>(null);
+    const [
+        pageError,
+        setPageError,
+    ] =
+        useState<string | null>(
+            null
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    |
+    | Corporate Getting Started pages use
+    | the Orange County database record.
+    |
+    */
+
+    const [
+        location,
+        setLocation,
+    ] =
+        useState<LocationData | null>(
+            null
+        );
 
     useEffect(() => {
         let cancelled = false;
 
-        async function loadLocation() {
+        async function loadCorporateLocation() {
             try {
-                setLocationLoading(true);
-
-                const result = await getLocationBySlug(locationSlug);
+                const result =
+                    await getLocationBySlug(
+                        CORPORATE_LOCATION_SLUG
+                    );
 
                 if (!cancelled) {
-                    setLocation(result);
+                    setLocation(
+                        result
+                    );
                 }
             } catch (error) {
-                console.error("Failed to load location:", error);
+                console.error(
+                    "Getting Started failed to load corporate location:",
+                    error
+                );
 
                 if (!cancelled) {
-                    setLocation(null);
-                }
-            } finally {
-                if (!cancelled) {
-                    setLocationLoading(false);
+                    setLocation(
+                        null
+                    );
                 }
             }
         }
 
-        loadLocation();
+        loadCorporateLocation();
 
         return () => {
             cancelled = true;
         };
-    }, [locationSlug]);
+    }, []);
 
-    if (locationLoading) {
-        return (
-            <section className="getting-started-section">
-                <div className="getting-started-container">
-                    <p>Loading your local Cerna Home Care office...</p>
-                </div>
-            </section>
+    /*
+    |--------------------------------------------------------------------------
+    | Phone Selection
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    | No Cerna phone numbers are hard-coded.
+    |
+    */
+
+    const tollFreePhone =
+        location
+            ?.tollFreePhone
+            ?.trim() ?? "";
+
+    const regularPhone =
+        location
+            ?.phone
+            ?.trim() ?? "";
+
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
+
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
+
+    /*
+    |--------------------------------------------------------------------------
+    | Form Change
+    |--------------------------------------------------------------------------
+    */
+
+    function handleChange(
+        e: React.ChangeEvent<HTMLInputElement>
+    ) {
+        const {
+            name,
+            value,
+        } = e.target;
+
+        setForm(
+            (prev) => ({
+                ...prev,
+                [name]: value,
+            })
         );
     }
 
-    if (!location) {
-        return (
-            <section className="getting-started-section">
-                <div className="getting-started-container">
-                    <h1>Location Not Found</h1>
-
-                    <button
-                        type="button"
-                        onClick={() => router.push("/locations")}
-                    >
-                        View All Locations
-                    </button>
-                </div>
-            </section>
-        );
-    }
-
-    const primaryPhoneHref =
-        location.phones?.[0]?.href ?? location.phoneHref;
-
-    const primaryPhoneNumber =
-        location.phones?.[0]?.number ?? location.phone;
-
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const { name, value } = e.target;
-
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Validation
+    |--------------------------------------------------------------------------
+    */
 
     function validateForm() {
-        if (!form.fullName.trim()) {
+        if (
+            !form.fullName.trim()
+        ) {
             return "Full Name is required.";
         }
 
-        if (!form.zipCode.trim()) {
+        if (
+            !form.zipCode.trim()
+        ) {
             return "ZIP Code is required.";
-        }
-
-        if (!/^\d{5}$/.test(form.zipCode.trim())) {
-            return "Please enter a valid 5-digit ZIP Code.";
         }
 
         return null;
     }
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    /*
+    |--------------------------------------------------------------------------
+    | Submit
+    |--------------------------------------------------------------------------
+    */
+
+    function handleSubmit(
+        e: React.FormEvent<HTMLFormElement>
+    ) {
         e.preventDefault();
-        setPageError(null);
 
-        const validationError = validateForm();
+        setPageError(
+            null
+        );
 
-        if (validationError) {
-            setPageError(validationError);
+        const validationError =
+            validateForm();
+
+        if (
+            validationError
+        ) {
+            setPageError(
+                validationError
+            );
+
             return;
         }
 
         sessionStorage.setItem(
-            `gettingStarted:${locationSlug}:step1`,
-            JSON.stringify(form)
+            "gettingStarted:corporate:step1",
+            JSON.stringify(
+                form
+            )
         );
 
-        router.push(`/${locationSlug}/getting-started/needs`);
+        router.push(
+            "/getting-started/needs"
+        );
     }
 
     return (
@@ -153,6 +240,10 @@ export default function LocalGettingStartedPage({ params }: Props) {
 
             <div className="getting-started-container">
                 <div className="getting-started-grid">
+                    {/* ===================================================== */}
+                    {/* LEFT SIDE */}
+                    {/* ===================================================== */}
+
                     <div className="getting-started-left">
                         <p className="getting-started-eyebrow">
                             Getting Started
@@ -163,24 +254,32 @@ export default function LocalGettingStartedPage({ params }: Props) {
                         </h1>
 
                         <p className="getting-started-subtitle">
-                            Cerna Home Care {location.name} is here to help you
-                            or a loved one today.
+                            Cerna Home Care is here to help you or a loved one today.
                         </p>
 
                         <div className="getting-started-callout">
                             <p className="getting-started-callout-text">
-                                Contact our {location.name} team now for your
-                                complimentary in-home consultation:
+                                Contact us now for your complimentary in-home consultation:
                             </p>
 
-                            <a
-                                href={primaryPhoneHref}
-                                className="getting-started-phone"
-                            >
-                                {primaryPhoneNumber}
-                            </a>
+                            {phoneLabel ? (
+                                <a
+                                    href={
+                                        phoneHref
+                                    }
+                                    className="getting-started-phone"
+                                >
+                                    {
+                                        phoneLabel
+                                    }
+                                </a>
+                            ) : null}
                         </div>
                     </div>
+
+                    {/* ===================================================== */}
+                    {/* FORM CARD */}
+                    {/* ===================================================== */}
 
                     <div className="getting-started-card">
                         <div className="getting-started-card-header">
@@ -200,7 +299,8 @@ export default function LocalGettingStartedPage({ params }: Props) {
                         </div>
 
                         <p className="getting-started-required">
-                            <span>*</span> indicates required fields
+                            <span>*</span>{" "}
+                            indicates required fields
                         </p>
 
                         <div className="getting-started-progress">
@@ -209,14 +309,21 @@ export default function LocalGettingStartedPage({ params }: Props) {
 
                         <form
                             className="getting-started-form"
-                            onSubmit={handleSubmit}
+                            onSubmit={
+                                handleSubmit
+                            }
                         >
+                            {/* ============================================= */}
+                            {/* FULL NAME */}
+                            {/* ============================================= */}
+
                             <div className="getting-started-field">
                                 <label
                                     className="getting-started-label"
                                     htmlFor="fullName"
                                 >
-                                    Your Full Name <span>*</span>
+                                    Your Full Name{" "}
+                                    <span>*</span>
                                 </label>
 
                                 <input
@@ -225,38 +332,46 @@ export default function LocalGettingStartedPage({ params }: Props) {
                                     type="text"
                                     placeholder="Full Name"
                                     className="getting-started-input"
-                                    value={form.fullName}
-                                    onChange={handleChange}
+                                    value={
+                                        form.fullName
+                                    }
+                                    onChange={
+                                        handleChange
+                                    }
                                 />
                             </div>
+
+                            {/* ============================================= */}
+                            {/* ZIP CODE */}
+                            {/* ============================================= */}
 
                             <div className="getting-started-field">
                                 <label
                                     className="getting-started-label"
                                     htmlFor="zipCode"
                                 >
-                                    What is the ZIP code of the person who
-                                    needs care? <span>*</span>
+                                    What is the zip code of the person who needs care?{" "}
+                                    <span>*</span>
                                 </label>
 
                                 <input
                                     id="zipCode"
                                     name="zipCode"
                                     type="text"
-                                    inputMode="numeric"
-                                    maxLength={5}
                                     placeholder="ZIP Code"
                                     className="getting-started-input"
-                                    value={form.zipCode}
-                                    onChange={(e) => {
-                                        e.target.value = e.target.value
-                                            .replace(/\D/g, "")
-                                            .slice(0, 5);
-
-                                        handleChange(e);
-                                    }}
+                                    value={
+                                        form.zipCode
+                                    }
+                                    onChange={
+                                        handleChange
+                                    }
                                 />
                             </div>
+
+                            {/* ============================================= */}
+                            {/* CARE FOR */}
+                            {/* ============================================= */}
 
                             <div className="getting-started-field">
                                 <div className="getting-started-legend">
@@ -264,29 +379,81 @@ export default function LocalGettingStartedPage({ params }: Props) {
                                 </div>
 
                                 <div className="getting-started-radio-group">
-                                    {[
-                                        "Myself",
-                                        "A family member",
-                                        "A friend / Associate",
-                                        "Other",
-                                    ].map((option) => (
-                                        <label
-                                            key={option}
-                                            className="getting-started-radio-card"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="careFor"
-                                                value={option}
-                                                checked={
-                                                    form.careFor === option
-                                                }
-                                                onChange={handleChange}
-                                            />
+                                    <label className="getting-started-radio-card">
+                                        <input
+                                            type="radio"
+                                            name="careFor"
+                                            value="Myself"
+                                            checked={
+                                                form.careFor ===
+                                                "Myself"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
+                                        />
 
-                                            <span>{option}</span>
-                                        </label>
-                                    ))}
+                                        <span>
+                                            Myself
+                                        </span>
+                                    </label>
+
+                                    <label className="getting-started-radio-card">
+                                        <input
+                                            type="radio"
+                                            name="careFor"
+                                            value="A family member"
+                                            checked={
+                                                form.careFor ===
+                                                "A family member"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
+                                        />
+
+                                        <span>
+                                            A family member
+                                        </span>
+                                    </label>
+
+                                    <label className="getting-started-radio-card">
+                                        <input
+                                            type="radio"
+                                            name="careFor"
+                                            value="A friend / Associate"
+                                            checked={
+                                                form.careFor ===
+                                                "A friend / Associate"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
+                                        />
+
+                                        <span>
+                                            A friend / Associate
+                                        </span>
+                                    </label>
+
+                                    <label className="getting-started-radio-card">
+                                        <input
+                                            type="radio"
+                                            name="careFor"
+                                            value="Other"
+                                            checked={
+                                                form.careFor ===
+                                                "Other"
+                                            }
+                                            onChange={
+                                                handleChange
+                                            }
+                                        />
+
+                                        <span>
+                                            Other
+                                        </span>
+                                    </label>
                                 </div>
 
                                 <p className="getting-started-optional">
@@ -294,16 +461,27 @@ export default function LocalGettingStartedPage({ params }: Props) {
                                 </p>
                             </div>
 
+                            {/* ============================================= */}
+                            {/* ERROR */}
+                            {/* ============================================= */}
+
                             {pageError ? (
                                 <p
                                     style={{
-                                        color: "#dc2626",
-                                        marginTop: "12px",
+                                        color: "red",
+                                        marginTop:
+                                            "12px",
                                     }}
                                 >
-                                    {pageError}
+                                    {
+                                        pageError
+                                    }
                                 </p>
                             ) : null}
+
+                            {/* ============================================= */}
+                            {/* CONTINUE */}
+                            {/* ============================================= */}
 
                             <div className="getting-started-button-wrap">
                                 <button
@@ -319,4 +497,19 @@ export default function LocalGettingStartedPage({ params }: Props) {
             </div>
         </section>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }

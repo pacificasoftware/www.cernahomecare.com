@@ -1,11 +1,18 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 
+import {
+    getLocationBySlug,
+} from "@/lib/locations";
+
 export const metadata = {
     title: "Careers | Cerna Home Care",
     description:
         "Apply now for Cerna Home Care jobs and view available caregiver and healthcare career opportunities.",
 };
+
+const CORPORATE_LOCATION_SLUG =
+    "orange-county";
 
 const celebrationImages = [
     {
@@ -22,23 +29,91 @@ const celebrationImages = [
     },
 ];
 
-export default function CareersPage() {
+export default async function CareersPage() {
+    /*
+    |--------------------------------------------------------------------------
+    | Corporate Location
+    |--------------------------------------------------------------------------
+    |
+    | Corporate Cerna pages use the Orange County database record.
+    |
+    */
+
+    const location =
+        await getLocationBySlug(
+            CORPORATE_LOCATION_SLUG
+        );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phone Selection
+    |--------------------------------------------------------------------------
+    |
+    | 1. Toll-Free Phone
+    | 2. Regular Phone if Toll-Free is blank
+    |
+    | NO PHONE NUMBERS ARE HARDCODED.
+    |
+    */
+
+    const tollFreePhone =
+        location?.tollFreePhone?.trim() ??
+        "";
+
+    const regularPhone =
+        location?.phone?.trim() ??
+        "";
+
+    const phoneLabel =
+        tollFreePhone ||
+        regularPhone;
+
+    const phoneHref =
+        tollFreePhone
+            ? (
+                location
+                    ?.tollFreePhoneHref
+                    ?.trim() ||
+                makePhoneHref(
+                    tollFreePhone
+                )
+            )
+            : regularPhone
+                ? (
+                    location
+                        ?.phoneHref
+                        ?.trim() ||
+                    makePhoneHref(
+                        regularPhone
+                    )
+                )
+                : "";
+
     return (
         <main className="bg-white">
+            {/* ============================================================= */}
+            {/* APPLY NOW */}
+            {/* ============================================================= */}
+
             <section className="bg-white">
                 <div className="mx-auto max-w-5xl px-6 py-12 text-center sm:px-8 lg:px-10">
                     <h1 className="text-4xl font-extrabold tracking-tight text-[#00456B] sm:text-5xl">
                         Apply Now!
                     </h1>
 
-                    <p className="mx-auto mt-6 max-w-2xl text-lg font-bold leading-8 text-blue-700">
-                        For more information or to get assistance with applying to Cerna Home Care
-                        please call us at{" "}
-                        <a href="tel:18775776782" className="underline underline-offset-4">
-                            1 (877) 577-6782
-                        </a>
-                        .
-                    </p>
+                    {phoneLabel ? (
+                        <p className="mx-auto mt-6 max-w-2xl text-lg font-bold leading-8 text-blue-700">
+                            For more information or to get assistance with applying to Cerna Home Care
+                            please call us at{" "}
+                            <a
+                                href={phoneHref}
+                                className="underline underline-offset-4"
+                            >
+                                {phoneLabel}
+                            </a>
+                            .
+                        </p>
+                    ) : null}
 
                     <p className="mt-6 text-lg uppercase tracking-wide text-slate-600">
                         Thank you for your interest in working with Cerna.
@@ -55,6 +130,10 @@ export default function CareersPage() {
                 </div>
             </section>
 
+            {/* ============================================================= */}
+            {/* CELEBRATIONS */}
+            {/* ============================================================= */}
+
             <section className="bg-[#236491]">
                 <div className="mx-auto max-w-7xl px-6 pb-20 pt-14 sm:px-8 lg:px-10">
                     <h2 className="text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
@@ -62,46 +141,70 @@ export default function CareersPage() {
                     </h2>
 
                     <div className="mt-12 grid gap-10 md:grid-cols-3">
-                        {celebrationImages.map((image) => (
-                            <div key={image.src} className="overflow-hidden">
-                                <div className="relative h-[250px] bg-slate-100">
-                                    <Image
-                                        src={image.src}
-                                        alt={image.alt}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 420px"
-                                        className="object-cover"
-                                        quality={100}
-                                    />
+                        {celebrationImages.map(
+                            (image) => (
+                                <div
+                                    key={
+                                        image.src
+                                    }
+                                    className="overflow-hidden"
+                                >
+                                    <div className="relative h-[250px] bg-slate-100">
+                                        <Image
+                                            src={
+                                                image.src
+                                            }
+                                            alt={
+                                                image.alt
+                                            }
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, 420px"
+                                            className="object-cover"
+                                            quality={
+                                                100
+                                            }
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* NEED HELP APPLYING */}
+            {/* ============================================================= */}
 
             <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10 lg:py-20">
                 <div>
                     <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#DD8500]">
                         Need Help Applying?
                     </p>
+
                     <div className="mt-3 h-1 w-12 rounded-full bg-[#DD8500]" />
 
                     <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-[#00456B] sm:text-4xl">
                         We’re here to help you get started
                     </h2>
 
-                    <p className="mt-6 text-lg leading-8 text-slate-700">
-                        For more information or assistance with applying to Cerna Home
-                        Care, please call us at{" "}
-                        <a
-                            href="tel:18775776782"
-                            className="font-extrabold text-[#00456B] underline decoration-[#DD8500] decoration-2 underline-offset-4"
-                        >
-                            1 (877) 577-6782
-                        </a>
-                        .
-                    </p>
+                    {phoneLabel ? (
+                        <p className="mt-6 text-lg leading-8 text-slate-700">
+                            For more information or assistance with applying to Cerna Home
+                            Care, please call us at{" "}
+                            <a
+                                href={
+                                    phoneHref
+                                }
+                                className="font-extrabold text-[#00456B] underline decoration-[#DD8500] decoration-2 underline-offset-4"
+                            >
+                                {
+                                    phoneLabel
+                                }
+                            </a>
+                            .
+                        </p>
+                    ) : null}
 
                     <p className="mt-5 text-lg font-extrabold uppercase tracking-wide text-slate-800">
                         Thank you for your interest in working with Cerna.
@@ -119,15 +222,33 @@ export default function CareersPage() {
                             "Supportive care-focused team environment",
                             "Opportunities for caregiver and healthcare roles",
                             "A company culture that values compassion and service",
-                        ].map((item) => (
-                            <div key={item} className="flex gap-3 text-slate-700">
-                                <span className="font-extrabold text-[#DD8500]">✓</span>
-                                <span>{item}</span>
-                            </div>
-                        ))}
+                        ].map(
+                            (item) => (
+                                <div
+                                    key={
+                                        item
+                                    }
+                                    className="flex gap-3 text-slate-700"
+                                >
+                                    <span className="font-extrabold text-[#DD8500]">
+                                        ✓
+                                    </span>
+
+                                    <span>
+                                        {
+                                            item
+                                        }
+                                    </span>
+                                </div>
+                            )
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* ============================================================= */}
+            {/* READY TO APPLY */}
+            {/* ============================================================= */}
 
             <section className="bg-white px-6 py-16 sm:px-8 lg:px-10">
                 <div className="mx-auto flex max-w-7xl flex-col gap-8 rounded-3xl bg-[#00456B] p-8 text-white shadow-xl lg:flex-row lg:items-center lg:justify-between">
@@ -135,6 +256,7 @@ export default function CareersPage() {
                         <h2 className="text-3xl font-extrabold tracking-tight">
                             Ready to apply?
                         </h2>
+
                         <p className="mt-4 max-w-3xl text-lg leading-8 text-white/90">
                             View available job listings or contact our team for help with
                             the application process.
@@ -151,4 +273,19 @@ export default function CareersPage() {
             </section>
         </main>
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Phone Href Helper
+|--------------------------------------------------------------------------
+*/
+
+function makePhoneHref(
+    phone: string
+) {
+    return `tel:${phone.replace(
+        /[^\d+]/g,
+        ""
+    )}`;
 }
