@@ -22,7 +22,7 @@ async function hasCareersRecruitingPlatform(
 
         if (!apiKey) {
             console.error(
-                "JOBS FEATURE FLAG: CERNA_API_KEY is missing."
+                "CERNA_API_KEY is missing."
             );
 
             return false;
