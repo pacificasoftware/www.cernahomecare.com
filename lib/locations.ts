@@ -4,6 +4,15 @@
     href: string;
 };
 
+export type CoverageGroup = {
+    county: string;
+    areas: string[];
+};
+
+export type CoverageAreas =
+    | string[]
+    | CoverageGroup[];
+
 export type LocationState = {
     code: string;
     name: string;
@@ -42,7 +51,7 @@ export type LocationData = {
     mapUrl: string;
 
     coverageTitle: string;
-    coverageAreas: string[];
+    coverageAreas: CoverageAreas;
 
     pageTitle?: string | null;
     metaDescription?: string | null;
@@ -95,6 +104,7 @@ export function getPreferredLocationPhone(
 
     return null;
 }
+
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +159,7 @@ type PublicLocationDto = {
 const ADMIN_ASSET_BASE_URL =
     process.env.NEXT_PUBLIC_ADMIN_ASSET_BASE_URL ??
     "https://admin.cernahomecare.com";
+
 
 function resolveHeroImageUrl(
     heroImageUrl?: string | null,
@@ -238,43 +249,37 @@ function getDisplayName(name: string): string {
 |--------------------------------------------------------------------------
 | Coverage Areas
 |--------------------------------------------------------------------------
-|
-| Standard locations:
-| ["Irvine","Tustin",...]
-|
-| Florida locations use the county structure, so those continue to be
-| handled by FloridaCoverageSelector.
+| 
 |
 */
 
 function parseCoverageAreas(
-    value?: string | null
-): string[] {
+    value: unknown
+): CoverageAreas {
     if (!value) {
         return [];
     }
 
-    try {
-        const parsed = JSON.parse(value);
+    let parsed: unknown = value;
 
-        if (
-            Array.isArray(parsed) &&
-            parsed.every(
-                (item) => typeof item === "string"
-            )
-        ) {
-            return parsed;
+    if (typeof value === "string") {
+        try {
+            parsed = JSON.parse(value);
+        } catch (error) {
+            console.error(
+                "Failed to parse CoverageAreas:",
+                error
+            );
+
+            return [];
         }
+    }
 
-        return [];
-    } catch {
-        console.error(
-            "Invalid CoverageAreas JSON:",
-            value
-        );
-
+    if (!Array.isArray(parsed)) {
         return [];
     }
+
+    return parsed as CoverageAreas;
 }
 
 /*
@@ -392,7 +397,7 @@ function normalizeLocation(
             encodeURIComponent(fullAddress),
 
         coverageTitle:
-            item.coverageTitle ??
+            item.coverageTitle?.trim() ||
             `${displayName.toUpperCase()} COVERAGE AREAS`,
 
         coverageAreas:
@@ -457,11 +462,7 @@ export async function getLocations():
 |
 | Returns only states that currently have active/published Cerna locations.
 |
-| Example:
-| [
-|   { code: "CA", name: "California" },
-|   { code: "FL", name: "Florida" }
-| ]
+ 
 |
 */
 

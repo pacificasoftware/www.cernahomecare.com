@@ -1,7 +1,9 @@
 import PageRegular from "./pageRegular";
 import V2JobsPage from "./pageV2";
 
-const CORPORATE_LOCATION_SLUG = "orange-county";
+export const dynamic = "force-dynamic";
+
+const CORPORATE_LOCATION_ID = 1;
 
 function getApiBaseUrl() {
     return (
@@ -11,68 +13,18 @@ function getApiBaseUrl() {
     ).replace(/\/$/, "");
 }
 
-type Location = {
-    locationId: number;
-    slug: string;
-};
-
-async function getCorporateLocation(): Promise<Location | null> {
-    try {
-        const apiKey = process.env.CERNA_API_KEY;
-
-        if (!apiKey) {
-            return null;
-        }
-
-        const url =
-            `${getApiBaseUrl()}` +
-            `/api/public/locations/${CORPORATE_LOCATION_SLUG}`;
-
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "X-API-KEY": apiKey,
-            },
-            cache: "no-store",
-        });
-
-        if (!response.ok) {
-            return null;
-        }
-
-        const result = await response.json();
-
-        const locationId = Number(
-            result.locationId ?? result.LocationId
-        );
-
-        if (
-            !Number.isInteger(locationId) ||
-            locationId <= 0
-        ) {
-            return null;
-        }
-
-        return {
-            locationId,
-            slug:
-                result.slug ??
-                result.Slug ??
-                CORPORATE_LOCATION_SLUG,
-        };
-    } catch {
-        return null;
-    }
-}
-
 async function hasCareersRecruitingPlatform(
     locationId: number
 ): Promise<boolean> {
     try {
-        const apiKey = process.env.CERNA_API_KEY;
+        const apiKey =
+            process.env.CERNA_API_KEY;
 
         if (!apiKey) {
+            console.error(
+                "JOBS FEATURE FLAG: CERNA_API_KEY is missing."
+            );
+
             return false;
         }
 
@@ -90,32 +42,53 @@ async function hasCareersRecruitingPlatform(
             cache: "no-store",
         });
 
+        const text =
+            await response.text();
+
+        console.log(
+            "JOBS FEATURE FLAG RESPONSE:",
+            response.status,
+            text
+        );
+
         if (!response.ok) {
+            console.error(
+                "JOBS FEATURE FLAG FAILED:",
+                response.status,
+                text
+            );
+
             return false;
         }
 
-        const result = await response.json();
+        const result =
+            text
+                ? JSON.parse(text)
+                : {};
 
-        return result.careersRecruitingPlatform === true;
-    } catch {
+        return (
+            result.careersRecruitingPlatform === true ||
+            result.CareersRecruitingPlatform === true
+        );
+    } catch (error) {
+        console.error(
+            "JOBS FEATURE FLAG ERROR:",
+            error
+        );
+
         return false;
     }
 }
 
 export default async function JobsPage() {
-    const corporateLocation =
-        await getCorporateLocation();
-
-    if (!corporateLocation) {
-        return <PageRegular />;
-    }
-
     const careersRecruitingPlatformEnabled =
         await hasCareersRecruitingPlatform(
-            corporateLocation.locationId
+            CORPORATE_LOCATION_ID
         );
 
-    if (careersRecruitingPlatformEnabled) {
+    if (
+        careersRecruitingPlatformEnabled
+    ) {
         return <V2JobsPage />;
     }
 

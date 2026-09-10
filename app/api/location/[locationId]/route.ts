@@ -21,7 +21,8 @@ export async function GET(
     try {
         const { locationId } = await params;
 
-        const parsedLocationId = Number(locationId);
+        const parsedLocationId =
+            Number(locationId);
 
         if (
             !Number.isInteger(parsedLocationId) ||
@@ -29,7 +30,8 @@ export async function GET(
         ) {
             return NextResponse.json(
                 {
-                    message: "Invalid locationId.",
+                    message:
+                        "Invalid locationId.",
                 },
                 {
                     status: 400,
@@ -37,14 +39,18 @@ export async function GET(
             );
         }
 
-        const apiKey = process.env.CERNA_API_KEY;
+        const apiKey =
+            process.env.CERNA_API_KEY;
 
         if (!apiKey) {
-            console.error("CERNA_API_KEY is missing");
+            console.error(
+                "CERNA_API_KEY is missing"
+            );
 
             return NextResponse.json(
                 {
-                    message: "Server configuration error.",
+                    message:
+                        "Server configuration error.",
                 },
                 {
                     status: 500,
@@ -54,18 +60,34 @@ export async function GET(
 
         const url =
             `${getApiBaseUrl()}` +
-            `/api/public/locations/${parsedLocationId}/jobs/active`;
+            `/api/public/jobs/active/location/` +
+            `${parsedLocationId}`;
 
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "X-API-KEY": apiKey,
-            },
-            cache: "no-store",
-        });
+        console.log(
+            "LOCATION JOBS API URL:",
+            url
+        );
 
-        const body = await response.text();
+        const response =
+            await fetch(url, {
+                method: "GET",
+                headers: {
+                    Accept:
+                        "application/json",
+                    "X-API-KEY":
+                        apiKey,
+                },
+                cache: "no-store",
+            });
+
+        const body =
+            await response.text();
+
+        console.log(
+            "LOCATION JOBS API RESPONSE:",
+            response.status,
+            body
+        );
 
         if (!response.ok) {
             console.error(
@@ -74,24 +96,35 @@ export async function GET(
                 body
             );
 
-            return new NextResponse(body, {
-                status: response.status,
-                headers: {
-                    "Content-Type":
-                        response.headers.get("Content-Type") ||
-                        "application/json",
-                },
-            });
+            return new NextResponse(
+                body,
+                {
+                    status:
+                        response.status,
+                    headers: {
+                        "Content-Type":
+                            response.headers.get(
+                                "Content-Type"
+                            ) ||
+                            "application/json",
+                    },
+                }
+            );
         }
 
-        return new NextResponse(body, {
-            status: 200,
-            headers: {
-                "Content-Type":
-                    response.headers.get("Content-Type") ||
-                    "application/json",
-            },
-        });
+        return new NextResponse(
+            body,
+            {
+                status: 200,
+                headers: {
+                    "Content-Type":
+                        response.headers.get(
+                            "Content-Type"
+                        ) ||
+                        "application/json",
+                },
+            }
+        );
     } catch (error) {
         console.error(
             "Unable to load location jobs:",
@@ -100,7 +133,8 @@ export async function GET(
 
         return NextResponse.json(
             {
-                message: "Unable to load location jobs.",
+                message:
+                    "Unable to load location jobs.",
             },
             {
                 status: 500,

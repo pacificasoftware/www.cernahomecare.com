@@ -2,9 +2,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocationBySlug } from "@/lib/locations";
-import HomeConsultationForm from "@/components/HomeConsultationForm";
- 
-import FloridaCoverageSelector from "@/components/FloridaCoverageSelector";
+import HomeConsultationForm from "@/components/HomeConsultationForm"; 
 import ServiceCardsSection from "../../components/ServiceCardsSection";
 
 type Props = {
@@ -17,79 +15,148 @@ type HomeConsultationFormProps = {
     locationSlug?: string;
     locationName?: string;
     locationState?: string;
-};
+}; 
 
-//const services = [
-//    { name: "Companionship", icon: "/assets/icons/Companionship.webp" },
-//    { name: "Appointments", icon: "/assets/icons/Appointments.webp" },
-//    { name: "Bathing", icon: "/assets/icons/Bathing.webp" },
-//    { name: "Cooking", icon: "/assets/icons/Cooking.webp" },
-//    { name: "Dressing", icon: "/assets/icons/Dressing.webp" },
-//    { name: "Errands", icon: "/assets/icons/Errands.webp" },
-//    { name: "Exercise", icon: "/assets/icons/Exersize.webp" },
-//    { name: "Grooming", icon: "/assets/icons/Grooming.webp" },
-//    { name: "Laundry", icon: "/assets/icons/Laundry.webp" },
-//    { name: "Medical Help", icon: "/assets/icons/Medical-Help.webp" },
-//    { name: "Mobility", icon: "/assets/icons/Mobility.webp" },
-//    { name: "Pets", icon: "/assets/icons/Pets.webp" },
-//    { name: "Showering", icon: "/assets/icons/Shoering.webp" },
-//    { name: "Toileting", icon: "/assets/icons/Toileting.webp" },
-//    { name: "Transfering", icon: "/assets/icons/Transfering.webp" },
-//    { name: "Transportation", icon: "/assets/icons/Transportation.webp" },
-//];
+function normalizeCoverageValue(
+    value: unknown
+): unknown[] {
+    if (Array.isArray(value)) {
+        return value;
+    }
 
-//const serviceCategories = [
-//    {
-//        title: "Specialized Care",
-//        slug: "specialized-care",
-//        description:
-//            "Flexible in-home support with bathing, dressing, grooming, meal preparation, mobility assistance, and daily routines.",
-//        image: "/assets/specialized-care.webp",
-//    },
-//    {
-//        title: "Covered Care",
-//        slug: "24hr-care",
-//        description:
-//            "More consistent care and companionship for clients who need extended support at home throughout the day and evening.",
-//        image: "/assets/respite-care.webp",
-//    },
-//    {
-//        title: "Memory & Dementia Care",
-//        slug: "memory-dementia-care",
-//        description:
-//            "Patient, compassionate support for clients living with Alzheimer’s, dementia, memory loss, or cognitive changes.",
-//        image: "/assets/group.png",
-//    },
-//    {
-//        title: "Covered Care",
-//        slug: "covered-care",
-//        description:
-//            "Help after a hospital stay, surgery, rehab discharge, or illness so clients can recover safely and comfortably at home.",
-//        image: "/assets/caretaker_with_lady.png",
-//    },
-//    {
-//        title: "Companion Care",
-//        slug: "companion-care",
-//        description:
-//            "Friendly support, conversation, errands, light activities, appointments, meal support, and help reducing isolation.",
-//        image: "/assets/man_with_caretaker.png",
-//    },
-//    {
-//        title: "Respite Care",
-//        slug: "respite-care",
-//        description:
-//            "Temporary relief for family caregivers who need time to rest, travel, work, or recharge while their loved one is cared for.",
-//        image: "/assets/lady_on_couch.png",
-//    },
-//    {
-//        title: "Transportation",
-//        slug: "transportation",
-//        description:
-//            "We assist with all of your transportation needs, which includes a caregiver so your loved one is not simply picked up and dropped off.",
-//        image: "/assets/caretakers.png",
-//    },
-//];
+    if (
+        typeof value !== "string" ||
+        !value.trim()
+    ) {
+        return [];
+    }
 
+    try {
+        const parsed = JSON.parse(value);
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+    } catch {
+        // Allows a plain single string value too
+        return [value];
+    }
+}
+
+function getCoverageGroupLabel(
+    item: Record<string, unknown>
+): string {
+    const possibleLabels = [
+        "county",
+        "category",
+        "title",
+        "label",
+        "name",
+    ];
+
+    for (const key of possibleLabels) {
+        const value = item[key];
+
+        if (
+            typeof value === "string" &&
+            value.trim()
+        ) {
+            return value;
+        }
+    }
+
+    return "Coverage Areas";
+}
+
+function CoverageAreaList({
+    value,
+}: {
+    value: unknown;
+}) {
+    const items =
+        normalizeCoverageValue(value);
+
+    const flatAreas = items.filter(
+        (item): item is string =>
+            typeof item === "string"
+    );
+
+    const groups = items.filter(
+        (
+            item
+        ): item is Record<string, unknown> =>
+            typeof item === "object" &&
+            item !== null &&
+            Array.isArray(
+                (
+                    item as Record<
+                        string,
+                        unknown
+                    >
+                ).areas
+            )
+    );
+
+    return (
+        <div className="space-y-10">
+
+            {/* Flat coverage areas */}
+            {flatAreas.length > 0 && (
+                <div className="grid gap-x-8 gap-y-2 text-[17px] leading-7 text-slate-700 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {flatAreas.map(
+                        (area) => (
+                            <div key={area}>
+                                {area}
+                            </div>
+                        )
+                    )}
+                </div>
+            )}
+
+            {/* Grouped / categorized coverage areas */}
+            {groups.map(
+                (group, index) => {
+                    const label =
+                        getCoverageGroupLabel(
+                            group
+                        );
+
+                    const childAreas =
+                        group.areas;
+
+                    return (
+                        <div
+                            key={`${label}-${index}`}
+                        >
+                            <h3 className="mb-4 text-xl font-extrabold text-[#00456B]">
+                                {label}
+                            </h3>
+
+                            {Array.isArray(
+                                childAreas
+                            ) &&
+                                childAreas.length >
+                                0 ? (
+                                <CoverageAreaList
+                                    value={
+                                        childAreas
+                                    }
+                                />
+                            ) : (
+                                <p className="text-slate-500">
+                                    Coverage areas
+                                    coming soon.
+                                </p>
+                            )}
+                        </div>
+                    );
+                }
+            )}
+
+        </div>
+    );
+
+}
 
 export default async function LocationPage({ params }: Props) {
     const { locationSlug } = await params;
@@ -372,28 +439,14 @@ export default async function LocationPage({ params }: Props) {
             <section className="bg-slate-50 px-6 py-16">
                 <div className="mx-auto max-w-7xl">
                     <aside className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
+
                         <h2 className="mb-6 text-2xl font-extrabold uppercase text-[#00456B]">
                             {location.coverageTitle}
                         </h2>
 
-                        {location.state === "FL" ? (
-                            <FloridaCoverageSelector locationSlug={location.slug} />
-                        ) : (
-                            <div className="grid gap-x-8 gap-y-2 text-[17px] leading-7 text-slate-700 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                                {location.coverageAreas.map((area) => (
-                                    <div key={area}>{area}</div>
-                                ))}
-                            </div>
-                        )}
-
-                        <p className="mt-8 text-base leading-7 text-slate-700">
-                            This office covers all of {location.name}, {location.state}. For a
-                            more comprehensive list of coverage{" "}
-                            <Link href="/locations" className="font-bold text-[#DD8500]">
-                                click here
-                            </Link>
-                            .
-                        </p>
+                        <CoverageAreaList
+                            value={location.coverageAreas}
+                        /> 
                     </aside>
                 </div>
             </section>

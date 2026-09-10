@@ -191,22 +191,17 @@ export default function LocationsClient({
                                     className="relative block h-56 overflow-hidden bg-slate-100"
                                 >
                                     <Image
-                                        src={
-                                            location.heroImage
-                                        }
+                                        src={location.heroImage}
                                         alt={`${location.name}, ${location.state} Cerna Homecare location`}
                                         fill
+                                        unoptimized
                                         sizes="(max-width: 768px) 100vw, 300px"
                                         className="object-cover transition duration-500 group-hover:scale-105"
-                                        quality={
-                                            100
-                                        }
+                                        quality={100}
                                     />
 
                                     <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#00456B] shadow">
-                                        {getStateName(
-                                            location.state
-                                        )}
+                                        {getStateName(location.state)}
                                     </div>
                                 </Link>
 

@@ -12,7 +12,7 @@ import {
     type LocationData,
 } from "@/lib/locations";
 
-import "./getting-started.css";
+import "../../getting-started/getting-started.css";
 
 type FormState = {
     fullName: string;
