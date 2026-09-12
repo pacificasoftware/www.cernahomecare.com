@@ -156,10 +156,9 @@ type PublicLocationDto = {
     updatedUtc?: string | null;
 };
 
-const ADMIN_ASSET_BASE_URL =
-    process.env.NEXT_PUBLIC_ADMIN_ASSET_BASE_URL ??
-    "https://admin.cernahomecare.com";
-
+const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL ??
+    "https://api.cernahomecare.com";
 
 function resolveHeroImageUrl(
     heroImageUrl?: string | null,
@@ -169,33 +168,71 @@ function resolveHeroImageUrl(
         return "/assets/cernaoffice.png";
     }
 
-    let imageUrl = heroImageUrl;
+    const url = heroImageUrl.trim();
 
+    if (!url) {
+        return "/assets/cernaoffice.png";
+    }
+
+    let imageUrl = url;
+
+    /*
+     * Full URLs can already be used directly.
+     */
     if (
-        !heroImageUrl.startsWith("http://") &&
-        !heroImageUrl.startsWith("https://")
+        url.startsWith("http://") ||
+        url.startsWith("https://")
     ) {
-        if (heroImageUrl.startsWith("/assets/")) {
-            imageUrl =
-                `${ADMIN_ASSET_BASE_URL}${heroImageUrl}`;
-        }
+        imageUrl = url;
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Image Cache Version
-    |--------------------------------------------------------------------------
-    |
-    | Prefer UpdatedUtc from the database.
-    |
-    | Older location records currently have UpdatedUtc = null,
-    | so use the current timestamp as a temporary fallback.
-    |
-    */
+     * New images are physically hosted by
+     * api.cernahomecare.com.
+     *
+     * Database:
+     * /uploads/locations/image.jpg
+     *
+     * Browser:
+     * https://api.cernahomecare.com/uploads/locations/image.jpg
+     */
+    else if (
+        url.startsWith(
+            "/uploads/locations/"
+        )
+    ) {
+        imageUrl =
+            `${API_BASE_URL}${url}`;
+    }
 
+    /*
+     * Legacy /assets/... images remain
+     * on www.cernahomecare.com.
+     *
+     * Since this code runs on the public site,
+     * leave the path relative.
+     */
+    else if (
+        url.startsWith("/assets/")
+    ) {
+        imageUrl = url;
+    }
+
+    /*
+     * Unknown relative paths stay relative.
+     */
+    else {
+        imageUrl = url;
+    }
+
+    /*
+     * Cache busting
+     */
     const version =
         updatedUtc
-            ? encodeURIComponent(updatedUtc)
+            ? encodeURIComponent(
+                updatedUtc
+            )
             : Date.now().toString();
 
     const separator =
@@ -204,18 +241,8 @@ function resolveHeroImageUrl(
             : "?";
 
     return `${imageUrl}${separator}v=${version}`;
-}
-
-/*
-|--------------------------------------------------------------------------
-| API URL
-|--------------------------------------------------------------------------
-*/
+}  
  
-
-const API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL ??
-    "https://api.cernahomecare.com";
 
 /*
 |--------------------------------------------------------------------------

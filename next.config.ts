@@ -4,11 +4,17 @@ const nextConfig = {
     images: {
         qualities: [75, 100],
 
+        localPatterns: [
+            {
+                pathname: "/assets/**",
+            },
+        ],
+
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "admin.cernahomecare.com",
-                pathname: "/assets/**",
+                hostname: "api.cernahomecare.com",
+                pathname: "/uploads/locations/**",
             },
         ],
     },
