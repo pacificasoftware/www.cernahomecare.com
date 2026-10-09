@@ -11,7 +11,7 @@ import { getLocationBySlug } from "@/lib/locations";
 const services = [
     {
         title: "Companionship",
-        icon: "/assets/icons/Companionship.webp",
+        icon: "../assets/icons/Companionship.webp",
         description:
             "Friendly support and meaningful conversation to help clients feel connected, engaged, and cared for at home.",
     },
