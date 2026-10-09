@@ -127,11 +127,17 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
         );
     }
 
-    const primaryPhoneHref =
-        location.phones?.[0]?.href ?? location.phoneHref;
-
+    // Prefer the local office number; use toll-free only if unavailable.
     const primaryPhoneNumber =
-        location.phones?.[0]?.number ?? location.phone;
+        location.phone?.trim() ||
+        location.tollFreePhone?.trim() ||
+        "";
+
+    const primaryPhoneHref = location.phone?.trim()
+        ? (location.phoneHref?.trim() || makePhoneHref(location.phone))
+        : location.tollFreePhone?.trim()
+            ? (location.tollFreePhoneHref?.trim() || makePhoneHref(location.tollFreePhone))
+            : "";
 
     function handleChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -184,12 +190,14 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
                                 complimentary in-home consultation:
                             </p>
 
-                            <a
-                                href={primaryPhoneHref}
-                                className="getting-started-phone"
-                            >
-                                {primaryPhoneNumber}
-                            </a>
+                            {primaryPhoneNumber && primaryPhoneHref ? (
+                                <a
+                                    href={primaryPhoneHref}
+                                    className="getting-started-phone"
+                                >
+                                    {primaryPhoneNumber}
+                                </a>
+                            ) : null}
                         </div>
                     </div>
 
@@ -312,4 +320,7 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
             </div>
         </section>
     );
+}
+function makePhoneHref(phone: string) {
+    return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }

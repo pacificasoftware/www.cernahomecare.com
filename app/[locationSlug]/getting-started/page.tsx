@@ -5,7 +5,7 @@ import React, {
     useState,
 } from "react";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import {
     getLocationBySlug,
@@ -26,12 +26,12 @@ const initialForm: FormState = {
     careFor: "",
 };
 
-const CORPORATE_LOCATION_SLUG =
-    "orange-county";
-
 export default function GettingStartedPage() {
     const router =
         useRouter();
+
+    const params = useParams<{ locationSlug: string }>();
+    const locationSlug = params?.locationSlug;
 
     const [form, setForm] =
         useState<FormState>(
@@ -48,11 +48,10 @@ export default function GettingStartedPage() {
 
     /*
     |--------------------------------------------------------------------------
-    | Corporate Location
+    | Location From Current URL
     |--------------------------------------------------------------------------
     |
-    | Corporate Getting Started pages use
-    | the Orange County database record.
+    | Each location page loads its own database record.
     |
     */
 
@@ -67,11 +66,16 @@ export default function GettingStartedPage() {
     useEffect(() => {
         let cancelled = false;
 
-        async function loadCorporateLocation() {
+        async function loadLocation() {
             try {
+                if (!locationSlug) {
+                    if (!cancelled) setLocation(null);
+                    return;
+                }
+
                 const result =
                     await getLocationBySlug(
-                        CORPORATE_LOCATION_SLUG
+                        locationSlug
                     );
 
                 if (!cancelled) {
@@ -81,7 +85,7 @@ export default function GettingStartedPage() {
                 }
             } catch (error) {
                 console.error(
-                    "Getting Started failed to load corporate location:",
+                    "Getting Started failed to load location:",
                     error
                 );
 
@@ -93,58 +97,33 @@ export default function GettingStartedPage() {
             }
         }
 
-        loadCorporateLocation();
+        loadLocation();
 
         return () => {
             cancelled = true;
         };
-    }, []);
+    }, [locationSlug]);
 
     /*
     |--------------------------------------------------------------------------
-    | Phone Selection
+    | Local Phone Selection
     |--------------------------------------------------------------------------
     |
-    | 1. Toll-Free Phone
-    | 2. Regular Phone if Toll-Free is blank
-    |
-    | No Cerna phone numbers are hard-coded.
+    | Use this location's regular phone and phoneHref first.
+    | Fallback to its toll-free number only if needed.
     |
     */
 
-    const tollFreePhone =
-        location
-            ?.tollFreePhone
-            ?.trim() ?? "";
-
-    const regularPhone =
-        location
-            ?.phone
-            ?.trim() ?? "";
-
     const phoneLabel =
-        tollFreePhone ||
-        regularPhone;
+        location?.phone?.trim() ||
+        location?.tollFreePhone?.trim() ||
+        "";
 
     const phoneHref =
-        tollFreePhone
-            ? (
-                location
-                    ?.tollFreePhoneHref
-                    ?.trim() ||
-                makePhoneHref(
-                    tollFreePhone
-                )
-            )
-            : regularPhone
-                ? (
-                    location
-                        ?.phoneHref
-                        ?.trim() ||
-                    makePhoneHref(
-                        regularPhone
-                    )
-                )
+        location?.phone?.trim()
+            ? (location.phoneHref?.trim() || makePhoneHref(location.phone))
+            : location?.tollFreePhone?.trim()
+                ? (location.tollFreePhoneHref?.trim() || makePhoneHref(location.tollFreePhone))
                 : "";
 
     /*
@@ -219,15 +198,20 @@ export default function GettingStartedPage() {
             return;
         }
 
+        if (!locationSlug) {
+            setPageError("Could not identify your local Cerna office.");
+            return;
+        }
+
         sessionStorage.setItem(
-            "gettingStarted:corporate:step1",
+            `gettingStarted:${locationSlug}:step1`,
             JSON.stringify(
                 form
             )
         );
 
         router.push(
-            "/getting-started/needs"
+            `/${locationSlug}/getting-started/needs`
         );
     }
 
