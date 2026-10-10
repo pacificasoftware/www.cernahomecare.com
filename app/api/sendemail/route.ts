@@ -194,20 +194,30 @@ export async function POST(req: Request) {
             );
         }
 
+        /*
+
+         /*
+        |--------------------------------------------------------------------------
+        | Career Inquiry and ZIP Validation
+        |--------------------------------------------------------------------------
+        | jobs      = Homepage job inquiry (no ZIP required)
+        | job_apply = Formal application (ZIP required)
+        |--------------------------------------------------------------------------
+        */
+
         const isCareerInquiry =
             purpose === "jobs" ||
             purpose === "job_apply";
 
         if (
-            isCareerInquiry &&
+            purpose === "job_apply" &&
             !/^\d{5}$/.test(zipCode)
         ) {
             return NextResponse.json(
                 {
                     success: false,
                     reason: "invalid_zip_code",
-                    message:
-                        "Please enter a valid 5-digit ZIP code.",
+                    message: "Please enter a valid 5-digit ZIP code.",
                 },
                 {
                     status: 400,

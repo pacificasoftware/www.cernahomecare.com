@@ -82,8 +82,7 @@ export default function HomeConsultationForm({
             nameParts.slice(1).join(" ") || "N/A";
 
         const payload = {
-            purpose: "contact",
-
+            purpose: selectedPurpose,
             inquiryType: selectedPurpose,
 
             name: fullName,
