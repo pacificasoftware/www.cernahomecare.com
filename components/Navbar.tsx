@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation"; 
 
 import {
     getLocationBySlug,
@@ -516,6 +516,21 @@ export default function Navbar() {
                 )
                 : "";
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hide Navbar on Google Ads Landing Page
+    |--------------------------------------------------------------------------
+    */
+
+    const isGuideLandingPage =
+        pathname === "/dementia" ||
+        pathname === "/dementia/";
+
+    if (isGuideLandingPage) {
+        return null;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Render
@@ -523,11 +538,8 @@ export default function Navbar() {
     */
 
     return (
-        <header
-            className={
-                styles.header
-            }
-        >
+        <header className={styles.header}>
+ 
             <div
                 className={
                     styles.navRow

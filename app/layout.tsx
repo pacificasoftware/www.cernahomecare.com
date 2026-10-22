@@ -1,8 +1,10 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { GoogleTagManager } from "@next/third-parties/google";
+import SiteLayoutVisibility from "@/components/SiteLayoutVisibility";
 
 export const metadata: Metadata = {
     title: "Cerna Home Care",
@@ -17,10 +19,23 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className="antialiased">
-                <Navbar />
+
+                {/* Hide navbar on GUIDE landing page */}
+                <SiteLayoutVisibility>
+                    <Navbar />
+                </SiteLayoutVisibility>
+
+                {/* Main page content */}
                 {children}
-                <GoogleTagManager gtmId="GTM-WPMD2QCJ" /> 
-                <Footer />
+
+                {/* Keep Google Tag Manager active on all pages */}
+                <GoogleTagManager gtmId="GTM-WPMD2QCJ" />
+
+                {/* Hide footer on GUIDE landing page */}
+                <SiteLayoutVisibility>
+                    <Footer />
+                </SiteLayoutVisibility>
+
             </body>
         </html>
     );

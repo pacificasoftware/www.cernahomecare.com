@@ -260,17 +260,18 @@ export default async function ContactUsPage() {
 
             {/* ============================================================= */}
             {/* CONTACT FORM */}
-            {/* ============================================================= */}
+            {/* ============================================================= */} 
+            <section className="bg-[#F4F4F4] px-4 pb-16 md:px-10 md:pb-24">
+                <div className="mx-auto w-[88%] max-w-[900px] md:w-full">
 
-            <section className="bg-[#F4F4F4] px-6 pb-16 md:px-10 md:pb-24">
-                <div className="mx-auto max-w-[900px]">
-                    <h2 className="mb-8 text-center text-4xl font-bold text-[#00456B] md:text-5xl">
+                    <h2 className="mb-8 text-center text-3xl font-bold text-[#00456B] md:text-5xl">
                         Ask A Question
                     </h2>
 
-                    <div className="rounded-[8px] bg-white p-8 shadow-sm md:p-10">
+                    <div className="rounded-[8px] bg-white p-4 shadow-sm sm:p-6 md:p-10">
                         <ContactForm />
                     </div>
+
                 </div>
             </section>
         </main>

@@ -20,9 +20,10 @@ export const locationServices = {
                 icon: "Brain",
             },
             {
-                title: "Medicare Program for Dementia",
-                subtitle: "Available for qualifying individuals",
+                title: "Medicare GUIDE Dementia Care",
+                subtitle: "Medicare-covered dementia support and respite care for eligible families",
                 icon: "BadgeCheck",
+                href: "/guide-dementia-care",
             },
             {
                 title: "Cognitive Stimulation",
@@ -125,9 +126,10 @@ export const locationServices = {
                 icon: "ShieldCheck",
             },
             {
-                title: "Medicare Dementia Program",
-                subtitle: "Available for qualifying individuals",
+                title: "Medicare GUIDE Dementia Care Program",
+                subtitle: "Care navigation, caregiver support, and respite benefits for eligible families",
                 icon: "BadgeCheck",
+                href: "/guide-dementia-care",
             },
         ], 
 

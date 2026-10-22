@@ -1,7 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { locationServices } from "@/lib/locationServices";
+import { locationServices } from "@/lib/locationServices"; 
 
 import {
     Brain,
@@ -210,6 +210,7 @@ export default async function CorporateServicePage({ params }: Props) {
                             </div>
                         )}
 
+
                         {/* MEMORY CARE PROGRAM CARDS */}
                         {"memoryPrograms" in service && (
                             <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -219,11 +220,14 @@ export default async function CorporateServicePage({ params }: Props) {
                                         program.icon as keyof typeof serviceIcons
                                         ];
 
-                                    return (
-                                        <div
-                                            key={program.title}
-                                            className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-                                        >
+                                    const href =
+                                        "href" in program &&
+                                            typeof program.href === "string"
+                                            ? program.href
+                                            : undefined;
+
+                                    const cardContent = (
+                                        <>
                                             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf5f8]">
                                                 <Icon
                                                     className="h-6 w-6 text-[#00456B]"
@@ -239,12 +243,39 @@ export default async function CorporateServicePage({ params }: Props) {
                                                 <p className="mt-1 text-sm leading-6 text-slate-600">
                                                     {program.subtitle}
                                                 </p>
+
+                                                {href && (
+                                                    <span className="mt-2 inline-block text-sm font-bold text-[#00456B] underline underline-offset-4">
+                                                        Learn More →
+                                                    </span>
+                                                )}
                                             </div>
+                                        </>
+                                    );
+
+                                    const cardClassName =
+                                        "flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm";
+
+                                    return href ? (
+                                        <Link
+                                            key={program.title}
+                                            href={href}
+                                            className={`${cardClassName} transition-all duration-200 hover:border-[#00456B] hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00456B]`}
+                                        >
+                                            {cardContent}
+                                        </Link>
+                                    ) : (
+                                        <div
+                                            key={program.title}
+                                            className={cardClassName}
+                                        >
+                                            {cardContent}
                                         </div>
                                     );
                                 })}
                             </div>
                         )}
+
 
                         {/* COMPANION CARE PROGRAM CARDS */}
                         {"companionPrograms" in service && (

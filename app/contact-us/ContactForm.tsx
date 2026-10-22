@@ -100,7 +100,11 @@ export default function ContactForm() {
     };
 
     return (
-        <form className="grid gap-5" onSubmit={handleSubmit} noValidate>
+        <form
+            className="contact-form-mobile grid min-w-0 gap-5"
+            onSubmit={handleSubmit}
+            noValidate
+        >
             <div className="grid gap-5 md:grid-cols-2">
                 <input
                     name="firstName"
