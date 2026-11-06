@@ -36,7 +36,7 @@ export default function GuideDementiaLandingPage() {
                             </div>
                         </div>
                         <div className="eyebrow">SPECIALIZED DEMENTIA CARE SUPPORT</div>
-                        <h1>Caring for someone with dementia shouldn&apos;t mean doing it alone.</h1>
+                        <h1>Caring for someone with DEMENTIA shouldn&apos;t mean doing it alone.</h1>
 
                         <div className="benefitList">
                             {benefits.map((benefit) => (
