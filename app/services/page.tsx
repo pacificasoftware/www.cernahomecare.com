@@ -106,7 +106,7 @@ export default async function ServicesPage() {
                         <div className="relative h-[240px] w-[240px] overflow-hidden rounded-full shadow-xl md:h-[340px] md:w-[340px]">
                             <Image
                                 src="/assets/cerna-services.png"
-                                alt="Cerna Home Care services"
+                                alt="Cerna Homecare services"
                                 fill
                                 sizes="(min-width: 768px) 340px, 240px"
                                 className="object-cover"
@@ -148,7 +148,7 @@ export default async function ServicesPage() {
 
                         <p className="mt-5 text-lg leading-8 text-slate-600">
                             From light daily assistance to more hands-on personal support,
-                            Cerna Home Care offers flexible services based on each client’s
+                            Cerna Homecare offers flexible services based on each client’s
                             needs, goals, and routine.
                         </p>
                     </div>
@@ -204,7 +204,7 @@ export default async function ServicesPage() {
 
                             <p className="mt-4 max-w-2xl text-lg leading-8 text-sky-50">
                                 We are here to help you find the right level of care for you
-                                or your loved one. Contact Cerna Home Care today for a
+                                or your loved one. Contact Cerna Homecare today for a
                                 complimentary in-home consultation.
                             </p>
                         </div>

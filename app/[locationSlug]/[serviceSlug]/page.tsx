@@ -401,7 +401,7 @@ export default async function LocationServicePage({
             <section className="bg-slate-50 px-6 py-16">
                 <div className="mx-auto max-w-7xl">
                     <h2 className="text-center text-3xl font-extrabold text-[#00456B]">
-                        More home care services in {location.name}
+                        More Homecare services in {location.name}
                     </h2>
 
                     <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -4,7 +4,7 @@ import Image from "next/image";
 import GuideLeadForm from "@/components/DementiaForm";
 
 export const metadata: Metadata = {
-    title: "Medicare GUIDE Dementia Support | Cerna Home Care",
+    title: "Medicare GUIDE Dementia Support | Cerna Homecare",
     description:
         "Discover dementia care navigation, 24/7 caregiver support, and respite benefits available to eligible families through the Medicare GUIDE program.",
     robots: { index: false, follow: true },
@@ -26,12 +26,12 @@ export default function GuideDementiaLandingPage() {
 
                 <section className="hero">
                     <div className="heroContent">
-                        <div className="heroLogo" aria-label="Cerna Home Care">
+                        <div className="heroLogo" aria-label="Cerna Homecare">
                             <div className="brand">
                                 <div className="brandMark" aria-hidden="true">C</div>
                                 <div className="brandText">
                                     <strong>CERNA</strong>
-                                    <span>HOME CARE</span>
+                                    <span>Homecare</span>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ export default function GuideDementiaLandingPage() {
                 </section>
 
                 <div className="bottomBar">
-                    <span>© {new Date().getFullYear()} Cerna Home Care</span>
+                    <span>© {new Date().getFullYear()} Cerna Homecare</span>
                     <span>GUIDE respite eligibility and annual limits are determined by CMS program rules.</span>
                 </div>
             </div>

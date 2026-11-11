@@ -2,7 +2,7 @@
 setlocal EnableExtensions EnableDelayedExpansion
 
 REM ==========================================
-REM Cerna Home Care Website - DEV Deploy
+REM Cerna Homecare Website - DEV Deploy
 REM ==========================================
 
 set "SRC=C:\SourceCode\CERNA_HEALTH_CARE\CERNA_HOME_CARE\www.cernahomecare.com"
@@ -33,7 +33,7 @@ set "SHORT_DRIVE=R:"
 
 echo.
 echo ==========================================
-echo Cerna Home Care Website - DEV Deploy
+echo Cerna Homecare Website - DEV Deploy
 echo ==========================================
 echo.
 echo Source:      %SRC%

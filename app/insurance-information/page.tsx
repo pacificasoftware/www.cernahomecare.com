@@ -88,7 +88,7 @@ export default async function InsuranceInformationPage() {
             <section className="bg-[#00456B] px-6 py-20 text-white">
                 <div className="mx-auto max-w-5xl text-center">
                     <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                        Cerna Home Care
+                        Cerna Homecare
                     </p>
 
                     <h1 className="text-5xl font-extrabold text-white md:text-6xl">
@@ -97,7 +97,7 @@ export default async function InsuranceInformationPage() {
 
                     <p className="mx-auto mt-6 max-w-3xl text-xl leading-8 text-white/90">
                         Contact your insurance company to find out if your family is
-                        covered for in-home care, or call one of our specialists and let
+                        covered for in-Homecare, or call one of our specialists and let
                         us do the work for you.
                     </p>
 
@@ -122,7 +122,7 @@ export default async function InsuranceInformationPage() {
                         <p className="mt-4 max-w-4xl text-lg leading-8 text-slate-600">
                             Below is a helpful list of insurance companies and contact
                             numbers. Coverage varies by policy, so we recommend calling
-                            the insurer directly or contacting Cerna Home Care for help
+                            the insurer directly or contacting Cerna Homecare for help
                             reviewing your options.
                         </p>
                     </div>
@@ -159,7 +159,7 @@ export default async function InsuranceInformationPage() {
 
                         <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-white/85">
                             Our team can help you understand what questions to ask your
-                            provider and how in-home care may fit into your family’s plan.
+                            provider and how in-Homecare may fit into your family’s plan.
                         </p>
 
                         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">

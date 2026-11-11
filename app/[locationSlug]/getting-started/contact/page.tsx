@@ -177,7 +177,7 @@ export default function LocalGettingStartedContactPage({
                     <div className="getting-started-card">
                         <p className="getting-started-subcopy">
                             Loading your local Cerna
-                            Home Care office...
+                            Homecare office...
                         </p>
                     </div>
                 </div>
@@ -196,7 +196,7 @@ export default function LocalGettingStartedContactPage({
 
                         <p className="getting-started-subcopy">
                             We could not find this Cerna
-                            Home Care location.
+                            Homecare location.
                         </p>
 
                         <div className="getting-started-button-wrap">
@@ -270,7 +270,7 @@ export default function LocalGettingStartedContactPage({
         }
 
         if (!form.consent) {
-            return "Please confirm that Cerna Home Care may contact you.";
+            return "Please confirm that Cerna Homecare may contact you.";
         }
 
         return null;
@@ -285,7 +285,7 @@ export default function LocalGettingStartedContactPage({
 
         if (!location) {
             setPageError(
-                "We could not load your Cerna Home Care location. Please refresh and try again."
+                "We could not load your Cerna Homecare location. Please refresh and try again."
             );
             return;
         }
@@ -487,7 +487,7 @@ export default function LocalGettingStartedContactPage({
 
                         <h1 className="getting-started-card-title">
                             Thank you for contacting
-                            Cerna Home Care
+                            Cerna Homecare
                         </h1>
 
                         <div className="getting-started-progress">
@@ -753,7 +753,7 @@ export default function LocalGettingStartedContactPage({
 
                                     <span>
                                         I agree that
-                                        Cerna Home Care
+                                        Cerna Homecare
                                         may contact me
                                         by phone or
                                         email regarding

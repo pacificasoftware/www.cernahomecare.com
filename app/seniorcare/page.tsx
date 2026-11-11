@@ -1,7 +1,7 @@
 ﻿"use client";
 
 /**
- * Cerna Home Care — minimal no-navigation Google Ads landing page
+ * Cerna Homecare — minimal no-navigation Google Ads landing page
  * Place in app/seniorcare/page.tsx (Next.js App Router + Tailwind CSS).
  * Replace HERO_IMAGE with a licensed Cerna caregiver photo before production.
  */
@@ -68,12 +68,12 @@ export default function SeniorCareLandingPage() {
                         </div>
                         <div className="absolute -bottom-4 right-2 rounded-2xl border border-white/80 bg-white/95 px-6 py-4 shadow-xl sm:bottom-6 sm:-left-10 sm:right-auto sm:px-7">
                             <p className="font-serif text-xl italic text-[#245A85]">Care that feels like family.</p>
-                            <p className="mt-1 text-xs uppercase tracking-[0.16em] text-[#5885A6]">Cerna Home Care</p>
+                            <p className="mt-1 text-xs uppercase tracking-[0.16em] text-[#5885A6]">Cerna Homecare</p>
                         </div>
                     </div>
                 </section>
                 <footer className="relative z-10 mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 border-t border-[#D6E2ED] px-6 py-5 text-xs text-[#6C8092] md:px-12 lg:px-20">
-                    <span>© {new Date().getFullYear()} Cerna Home Care</span>
+                    <span>© {new Date().getFullYear()} Cerna Homecare</span>
                     <a href="https://www.cernahomecare.com" className="hover:text-[#245A85]">cernahomecare.com</a>
                 </footer>
             </main>

@@ -85,7 +85,7 @@ export default function AboutUsPage() {
             <div className="about-info-left">
                 <h2 className="about-info-title">How To Get Started</h2>
 
-                <h3 className="about-info-subtitle">The Cerna Home Care way...</h3>
+                <h3 className="about-info-subtitle">The Cerna Homecare way...</h3>
 
                 <p className="about-info-text">
                     By calling one of our professionally trained Care Specialists you will be greeted

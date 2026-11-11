@@ -15,9 +15,9 @@ function clean(value: unknown) {
 }
 
 export default function LocationMiniContactForm({
-    locationName = "Cerna Home Care",
+    locationName = "Cerna Homecare",
     locationState = "",
-    serviceTitle = "Home Care",
+    serviceTitle = "Homecare",
     locationSlug,
     locationId = null,
 }: Props) {

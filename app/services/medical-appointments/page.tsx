@@ -6,9 +6,9 @@ import {
 } from "@/lib/locations";
 
 export const metadata = {
-    title: "Transportation Services | Cerna Home Care",
+    title: "Transportation Services | Cerna Homecare",
     description:
-        "Cerna Home Care provides dependable transportation support for seniors, individuals with disabilities, and families who need more than just a ride.",
+        "Cerna Homecare provides dependable transportation support for seniors, individuals with disabilities, and families who need more than just a ride.",
 };
 
 const CORPORATE_LOCATION_SLUG =
@@ -267,7 +267,7 @@ export default async function TransportationServicesPage() {
                         href="/contact-us"
                         className="inline-flex shrink-0 justify-center rounded-lg bg-[#00456B] px-8 py-4 text-sm font-extrabold uppercase tracking-wide text-white shadow-md transition hover:bg-[#003a5a]"
                     >
-                        Contact Cerna Home Care
+                        Contact Cerna Homecare
                     </Link>
                 </div>
             </section>

@@ -2,9 +2,9 @@
 import Link from "next/link";
 
 export const metadata = {
-    title: "Fall Prevention | Cerna Home Care",
+    title: "Fall Prevention | Cerna Homecare",
     description:
-        "Cerna Home Care helps seniors and families reduce fall risk through awareness, support, home safety strategies, and personalized care.",
+        "Cerna Homecare helps seniors and families reduce fall risk through awareness, support, home safety strategies, and personalized care.",
 };
 
 const riskFactors = [
@@ -190,7 +190,7 @@ export default function FallPreventionPage() {
                             href="/contact-us"
                             className="inline-flex rounded-lg bg-[#DD8500] px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-[#c87500]"
                         >
-                            Contact Cerna Home Care
+                            Contact Cerna Homecare
                         </Link>
                     </div>
                 </div>
@@ -203,7 +203,7 @@ export default function FallPreventionPage() {
                             Want help reducing fall risk at home?
                         </h2>
                         <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
-                            Cerna Home Care can help review safety concerns, support daily
+                            Cerna Homecare can help review safety concerns, support daily
                             routines, and provide caring assistance that helps your loved one
                             feel more secure.
                         </p>

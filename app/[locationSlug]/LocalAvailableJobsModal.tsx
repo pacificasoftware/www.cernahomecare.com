@@ -390,7 +390,7 @@ export default function LocalAvailableJobsModal({
                                                     <p className="mt-2 text-base leading-7 text-slate-700">
                                                         Flexible schedules, rewarding work, supportive
                                                         leadership, and opportunities to grow your
-                                                        caregiving career with Cerna Home Care.
+                                                        caregiving career with Cerna Homecare.
                                                     </p>
                                                 </div>
                                             </div>

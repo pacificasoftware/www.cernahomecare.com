@@ -412,7 +412,7 @@ export default function CareersApplicationForm({
 
                     <p className="max-w-4xl text-xs leading-5 text-slate-600">
                         By submitting this form I agree to be contacted by
-                        CERNA Home Care via call, email and text. To opt
+                        CERNA Homecare via call, email and text. To opt
                         out, you can reply &quot;stop&quot; at any time or
                         click the unsubscribe link in the emails. Message
                         and data rates may apply.

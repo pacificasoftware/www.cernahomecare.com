@@ -62,8 +62,8 @@ export async function generateMetadata({ params }: Props) {
     }
 
     return {
-        title: `${service.seoTitle} | Cerna Home Care`,
-        description: `${service.shortDescription} Learn more about ${service.title.toLowerCase()} services from Cerna Home Care.`,
+        title: `${service.seoTitle} | Cerna Homecare`,
+        description: `${service.shortDescription} Learn more about ${service.title.toLowerCase()} services from Cerna Homecare.`,
     };
 }
 
@@ -90,7 +90,7 @@ export default async function CorporateServicePage({ params }: Props) {
                 <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-2">
                     <div>
                         <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                            Cerna Home Care Services
+                            Cerna Homecare Services
                         </p>
 
                         <h1 className="text-4xl font-extrabold tracking-tight text-[#00456B] md:text-6xl">
@@ -121,7 +121,7 @@ export default async function CorporateServicePage({ params }: Props) {
                     <div className="relative h-[260px] overflow-hidden rounded-[36px] bg-white shadow-xl md:h-[360px]">
                         <Image
                             src={service.image}
-                            alt={`${service.title} services from Cerna Home Care`}
+                            alt={`${service.title} services from Cerna Homecare`}
                             fill
                             priority
                             sizes="(max-width: 768px) 100vw, 560px"
@@ -370,7 +370,7 @@ export default async function CorporateServicePage({ params }: Props) {
                             </h3>
 
                             <p className="mt-4 text-lg leading-8 text-slate-700">
-                                Contact Cerna Home Care to discuss your family&apos;s
+                                Contact Cerna Homecare to discuss your family&apos;s
                                 needs and learn whether{" "}
                                 {service.title.toLowerCase()} is the right fit.
                             </p>
@@ -379,7 +379,7 @@ export default async function CorporateServicePage({ params }: Props) {
                                 href="/contact-us"
                                 className="mt-6 inline-flex rounded-full bg-[#DD8500] px-6 py-3 font-bold text-white"
                             >
-                                Contact Cerna Home Care
+                                Contact Cerna Homecare
                             </Link>
                         </div>
                     </div>
@@ -392,7 +392,7 @@ export default async function CorporateServicePage({ params }: Props) {
 
                         <p className="mt-3 leading-7 text-slate-600">
                             Browse our locations to find care services and contact
-                            information for the Cerna Home Care office serving your
+                            information for the Cerna Homecare office serving your
                             area.
                         </p>
 
@@ -410,7 +410,7 @@ export default async function CorporateServicePage({ params }: Props) {
             <section className="bg-slate-50 px-6 py-16">
                 <div className="mx-auto max-w-7xl">
                     <h2 className="text-center text-3xl font-extrabold text-[#00456B]">
-                        More Home Care Services
+                        More Homecare Services
                     </h2>
 
                     <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

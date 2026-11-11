@@ -107,7 +107,7 @@ function postJson(
         request.on("timeout", () => {
             request.destroy(
                 new Error(
-                    "The Cerna Home Care API request timed out."
+                    "The Cerna Homecare API request timed out."
                 )
             );
         });
@@ -247,7 +247,7 @@ export async function POST(req: Request) {
             isCareerInquiry
                 ? "Career Inquiry"
                 : clean(body.subject) ||
-                  "Cerna Home Care Contact Inquiry";
+                  "Cerna Homecare Contact Inquiry";
 
         const submittedMessage =
             clean(body.message) ||
@@ -339,7 +339,7 @@ export async function POST(req: Request) {
         };
 
         console.log(
-            "Sending Cerna Home Care email request:",
+            "Sending Cerna Homecare email request:",
             {
                 backendUrl,
                 purpose,
@@ -378,7 +378,7 @@ export async function POST(req: Request) {
 
         if (!responseOk) {
             console.error(
-                "Cerna Home Care email request failed:",
+                "Cerna Homecare email request failed:",
                 {
                     url: backendUrl,
                     status:

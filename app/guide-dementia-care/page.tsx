@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-    title: "Medicare GUIDE Dementia Care | Cerna Home Care",
+    title: "Medicare GUIDE Dementia Care | Cerna Homecare",
     description:
         "Learn about Medicare GUIDE dementia support, care navigation, caregiver education, and respite services for eligible families.",
 };
@@ -76,7 +76,7 @@ export default function GuideDementiaCarePage() {
             <section className={styles.hero}>
                 <div className={styles.wrap}>
                     <p className={styles.eyebrow}>
-                        CERNA HOME CARE · MEDICARE GUIDE PROGRAM
+                        CERNA Homecare · MEDICARE GUIDE PROGRAM
                     </p>
 
                     <h1>

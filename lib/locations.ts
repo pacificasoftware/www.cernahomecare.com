@@ -267,7 +267,7 @@ function resolveHeroImageUrl(
 
 function getDisplayName(name: string): string {
     return name
-        .replace(/^Cerna Home Care\s+/i, "")
+        .replace(/^Cerna Homecare\s+/i, "")
         .replace(/^Cerna\s+/i, "")
         .trim();
 }

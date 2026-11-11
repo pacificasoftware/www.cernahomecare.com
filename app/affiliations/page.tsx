@@ -9,9 +9,9 @@ const affiliations = [
         url: "https://www.abhc.org",
     },
     {
-        name: "Home Care Association of America",
+        name: "Homecare Association of America",
         description:
-            "The Home Care Association of America is the industry’s leading trade association for providers of home care, which encompasses a broad range of services that supports seniors’ wellbeing and enables them to age in place.",
+            "The Homecare Association of America is the industry’s leading trade association for providers of Homecare, which encompasses a broad range of services that supports seniors’ wellbeing and enables them to age in place.",
         logo: "/assets/home-care-association.png",
         url: "https://www.hcaoa.org",
     },

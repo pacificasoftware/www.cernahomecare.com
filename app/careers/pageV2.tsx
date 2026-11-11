@@ -386,7 +386,7 @@ export default function CareersPage() {
                 <div className="absolute inset-y-0 right-[-90px] w-[78%]">
                     <Image
                         src="/assets/careers/duo.webp"
-                        alt="Cerna Home Care caregivers"
+                        alt="Cerna Homecare caregivers"
                         fill
                         priority
                         sizes="80vw"
@@ -421,7 +421,7 @@ export default function CareersPage() {
                             <span>
                                 Join the{" "}
                                 <span className="font-semibold text-white">
-                                    CERNA Home Care
+                                    CERNA Homecare
                                 </span>{" "}
                                 team and build a career rooted in compassion, purpose, and
                                 community.
@@ -528,7 +528,7 @@ export default function CareersPage() {
 
                             <p className="mt-5 text-lg leading-8 text-slate-700">
                                 Build a career that fits your life while making a real difference
-                                for others. As a Cerna Home Care caregiver, you’ll help seniors
+                                for others. As a Cerna Homecare caregiver, you’ll help seniors
                                 live safely and comfortably at home, forming real connections and
                                 bringing peace of mind to families.
                             </p>
@@ -1512,7 +1512,7 @@ export default function CareersPage() {
 
                                     <p className="max-w-4xl text-xs leading-5 text-slate-600">
                                         By submitting this form I agree to be contacted by CERNA
-                                        Home Care via call, email and text. To opt out, you can
+                                        Homecare via call, email and text. To opt out, you can
                                         reply “stop” at any time or click the unsubscribe link in
                                         the emails. Message and data rates may apply.
                                     </p>

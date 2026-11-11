@@ -209,7 +209,7 @@ export default function GettingStartedNeedsPage() {
                         </h1>
 
                         <p className="getting-started-subtitle">
-                            Cerna Home Care is here to help you or a loved one today.
+                            Cerna Homecare is here to help you or a loved one today.
                         </p>
 
                         <div className="getting-started-callout">

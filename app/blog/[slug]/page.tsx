@@ -121,7 +121,7 @@ export default async function BlogDetailPage({
                         Ready to learn more?
                     </h3>
                     <p className="mt-3 text-base leading-7 text-slate-700">
-                        Contact Cerna Home Care to learn how personalized support can help
+                        Contact Cerna Homecare to learn how personalized support can help
                         your family move forward with confidence.
                     </p>
                     <div className="mt-6">

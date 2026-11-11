@@ -10,9 +10,9 @@ import {
 } from "@/lib/locations";
 
 export const metadata = {
-    title: "Contact Us | Cerna Home Care",
+    title: "Contact Us | Cerna Homecare",
     description:
-        "Get in touch with Cerna Home Care. Contact sales, support, or ask a question through our contact form.",
+        "Get in touch with Cerna Homecare. Contact sales, support, or ask a question through our contact form.",
 };
 
 const CORPORATE_LOCATION_SLUG =
@@ -228,7 +228,7 @@ export default async function ContactUsPage() {
                         <InfoCard
                             icon="/assets/phone.png"
                             title="Talk to Sales"
-                            description="Interested in getting home care services? Speak to a representative now."
+                            description="Interested in getting Homecare services? Speak to a representative now."
                             buttonText={
                                 salesPhone
                             }

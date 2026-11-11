@@ -8,10 +8,10 @@ export const locationServices = {
         shortDescription:
             "Specialized in-home support for dementia, cognitive changes, stroke and brain injury recovery, behavior management, and hospice care.",
         image: "/assets/specialized-care.webp",
-        seoTitle: "Specialized Home Care Services",
+        seoTitle: "Specialized Homecare Services",
         heroTitle: "Specialized Care for Complex Needs",
         intro:
-            "Cerna Home Care provides specialized support for individuals with dementia, cognitive changes, neurological conditions, and other complex care needs. Our care plans are personalized to help clients remain safe, engaged, and comfortable at home.",
+            "Cerna Homecare provides specialized support for individuals with dementia, cognitive changes, neurological conditions, and other complex care needs. Our care plans are personalized to help clients remain safe, engaged, and comfortable at home.",
 
         specializedPrograms: [
             {
@@ -66,7 +66,7 @@ export const locationServices = {
         shortDescription:
             "Around-the-clock support for families who need a consistent caregiver presence in the home.",
         image: "/assets/respite-care.webp",
-        seoTitle: "Live-In Home Care Services",
+        seoTitle: "Live-In Homecare Services",
         heroTitle: "Live-In Care at Home",
         intro:
             "Live-in care provides families with a consistent caregiver presence and additional peace of mind while helping loved ones remain safely and comfortably at home.",
@@ -89,7 +89,7 @@ export const locationServices = {
         shortDescription:
             "Specialized support for Alzheimer’s, Parkinson’s, stroke, dementia, and other neurological and cognitive conditions.",
         image: "/assets/memory2.webp",
-        seoTitle: "Memory & Dementia Home Care",
+        seoTitle: "Memory & Dementia Homecare",
         heroTitle: "Specialized Memory & Dementia Care",
         intro:
             "Cerna specializes in supporting individuals with cognitive impairments related to Alzheimer’s, Parkinson’s, stroke, dementia, and other neurological disorders. Our personalized care approach focuses on safety, engagement, familiar routines, and quality of life.",
@@ -145,9 +145,9 @@ export const locationServices = {
     "covered-care": {
         title: "Covered Care",
         shortDescription:
-            "Explore programs that may help cover the cost of home care, including Medicare dementia programs, VA benefits, long-term care insurance, specialty insurance plans, and workers’ compensation.",
+            "Explore programs that may help cover the cost of Homecare, including Medicare dementia programs, VA benefits, long-term care insurance, specialty insurance plans, and workers’ compensation.",
         image: "/assets/covered-care.webp",
-        seoTitle: "Covered Home Care & Insurance Options",
+        seoTitle: "Covered Homecare & Insurance Options",
         heroTitle: "Helping You Get Your Care Covered",
         intro:
             "At Cerna Homecare, we help families explore a variety of programs and insurance options that may help cover the cost of care. Eligibility and benefits vary by program, policy, and individual circumstances.",
@@ -197,7 +197,7 @@ export const locationServices = {
         seoTitle: "Companion Care Services",
         heroTitle: "Companion Care & Daily Living Support",
         intro:
-            "Cerna Home Care provides personalized companion care designed to make everyday life safer, easier, and more comfortable. Our caregivers can assist with personal routines, household needs, meals, activities, errands, and recovery support while helping clients remain independent at home.",
+            "Cerna Homecare provides personalized companion care designed to make everyday life safer, easier, and more comfortable. Our caregivers can assist with personal routines, household needs, meals, activities, errands, and recovery support while helping clients remain independent at home.",
 
         companionPrograms: [
             {

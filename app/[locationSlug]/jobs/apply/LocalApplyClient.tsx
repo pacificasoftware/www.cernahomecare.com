@@ -124,9 +124,9 @@ export default function LocalApplyClient({
             locationState: location.state,
             locationZipCode: location.jobsZip ?? "",
 
-            subject: `Cerna Home Care Job Application - ${location.name}`,
+            subject: `Cerna Homecare Job Application - ${location.name}`,
 
-            message: "I am looking for a caregiver job opportunity with Cerna Home Care. Please contact me with more information. Thank you!",                                         
+            message: "I am looking for a caregiver job opportunity with Cerna Homecare. Please contact me with more information. Thank you!",                                         
 
             company: "",
         };

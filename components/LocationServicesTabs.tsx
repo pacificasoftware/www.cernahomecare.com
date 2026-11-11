@@ -13,9 +13,9 @@ const services = [
                 </h2>
 
                 <p className="mt-6 text-lg leading-8 text-slate-700">
-                    With Cerna In Home Care Services you are treated like family. Whether you
+                    With Cerna In Homecare Services you are treated like family. Whether you
                     need some help around the house for a few hours a day or care 24 hours per
-                    day every day, we have the right in home care services and programs for you
+                    day every day, we have the right in Homecare services and programs for you
                     or your loved one including:
                 </p>
 
@@ -46,7 +46,7 @@ const services = [
                 </h2>
 
                 <p className="mt-6 text-lg leading-8 text-slate-700">
-                    Live In Home Care is an option for families that need a care aid on
+                    Live In Homecare is an option for families that need a care aid on
                     site at all times, 24/7. The Caregiver actually lives in the home as
                     long as separate quarters exist for the them to sleep and have privacy.
                     The cost is much lower than having 24 hours of hourly/shift coverage
@@ -179,7 +179,7 @@ const services = [
 
                 <ul className="mt-6 list-disc space-y-4 pl-6 text-lg leading-8 text-slate-700">
                     <li>Special dietary needs for diabetes, hypertension or heart disease.</li>
-                    <li>Home care services planning and family support.</li>
+                    <li>Homecare services planning and family support.</li>
                     <li>Social, recreational, or cultural activities that enrich quality of life.</li>
                     <li>And so much more.</li>
                 </ul>

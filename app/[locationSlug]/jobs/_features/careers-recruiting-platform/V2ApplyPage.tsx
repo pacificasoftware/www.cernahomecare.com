@@ -236,7 +236,7 @@ export default async function V2ApplyPage({
                     </h1>
 
                     <p className="mt-4 text-slate-600">
-                        We could not find this Cerna Home Care location.
+                        We could not find this Cerna Homecare location.
                     </p>
                 </div>
             </main>

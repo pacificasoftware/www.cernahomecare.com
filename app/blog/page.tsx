@@ -38,7 +38,7 @@ export default async function BlogPage({
                             Cerna Blog
                         </h1>
                         <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-                            Explore articles on home care, franchising, senior support, and
+                            Explore articles on Homecare, franchising, senior support, and
                             the opportunities shaping the future of compassionate care.
                         </p>
                     </div>

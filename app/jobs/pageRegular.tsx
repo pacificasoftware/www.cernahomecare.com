@@ -39,7 +39,7 @@ export default function JobsPage() {
                     </h1>
 
                     <p className="mx-auto mt-3 max-w-3xl text-base leading-7 text-slate-700">
-                        Cerna Home Care is hiring compassionate caregivers who want to make
+                        Cerna Homecare is hiring compassionate caregivers who want to make
                         a meaningful difference for seniors and families.
                     </p>
                 </div>
@@ -93,8 +93,8 @@ export default function JobsPage() {
                                     zipCode: String(
                                         formData.get("zipCode") || ""
                                     ).trim(),
-                                    subject: "Cerna Home Care Job Application!",
-                                    message: "I am looking for a caregiver job opportunity with Cerna Home Care. Please contact me with more information. Thank you!",                                         
+                                    subject: "Cerna Homecare Job Application!",
+                                    message: "I am looking for a caregiver job opportunity with Cerna Homecare. Please contact me with more information. Thank you!",                                         
                                     company: "",
                                 };
 
@@ -296,7 +296,7 @@ export default function JobsPage() {
                                         <p className="mt-2 text-base leading-7 text-slate-700">
                                             Flexible schedules, rewarding work, supportive leadership,
                                             and opportunities to grow your caregiving career with
-                                            Cerna Home Care.
+                                            Cerna Homecare.
                                         </p>
                                     </div>
                                 </div>

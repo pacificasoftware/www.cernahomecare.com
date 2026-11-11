@@ -37,7 +37,7 @@ export default async function LocalContactUsPage({
 
                 <p className="mt-4 text-slate-600">
                     Please visit our main locations page
-                    to find a Cerna Home Care office near
+                    to find a Cerna Homecare office near
                     you.
                 </p>
 
@@ -58,7 +58,7 @@ export default async function LocalContactUsPage({
     const areaName = location.name;
 
     const locationBrandName =
-        `Cerna Home Care ${areaName}`;
+        `Cerna Homecare ${areaName}`;
 
     const fullAddress = [
         location.addressLine1,
@@ -90,7 +90,7 @@ export default async function LocalContactUsPage({
 
                         <h1 className="text-4xl font-bold tracking-tight text-[#00456B] md:text-5xl">
                             Speak with Your Local Cerna
-                            Home Care Team
+                            Homecare Team
                         </h1>
 
                         <p className="mt-6 text-lg leading-8 text-slate-700">

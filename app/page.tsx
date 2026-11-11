@@ -279,7 +279,7 @@ export default async function CernaHomePage() {
                                             "0 2px 10px rgba(0,0,0,0.40)",
                                     }}
                                 >
-                                    THE HOME CARE JOURNEY
+                                    THE Homecare JOURNEY
                                 </h1>
 
                                 <p
@@ -289,7 +289,7 @@ export default async function CernaHomePage() {
                                             "0 2px 10px rgba(0,0,0,0.40)",
                                     }}
                                 >
-                                    Providing Home Care Services for Over 20 Years
+                                    Providing Homecare Services for Over 20 Years
                                 </p>
                             </div>
                         </div>
@@ -378,7 +378,7 @@ export default async function CernaHomePage() {
                                     </h2>
 
                                     <p className="mt-4 text-sm leading-7 text-slate-600">
-                                        Choosing home care can feel overwhelming.
+                                        Choosing Homecare can feel overwhelming.
                                         Our team helps families navigate the
                                         process with compassion, clear
                                         communication, and dependable support

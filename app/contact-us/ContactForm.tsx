@@ -27,7 +27,7 @@ export default function ContactForm() {
             email: clean(formData.get("email")),
             phone: clean(formData.get("phone")),
             zipCode: "Not provided",
-            subject: clean(formData.get("subject")) || "Cerna Home Care Contact Form",
+            subject: clean(formData.get("subject")) || "Cerna Homecare Contact Form",
             message: clean(formData.get("message")) || "Contact form inquiry",
             company: clean(formData.get("company")),
             locationId: null,
@@ -85,7 +85,7 @@ export default function ContactForm() {
 
             setIsError(false);
             setStatusMessage(
-                "Thank you for contacting Cerna Home Care. We have received your message and a member of our team will be in touch shortly."
+                "Thank you for contacting Cerna Homecare. We have received your message and a member of our team will be in touch shortly."
             );
 
             form.reset();

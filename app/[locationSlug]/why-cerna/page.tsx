@@ -46,7 +46,7 @@ const benefits = [
     {
         title: "Cerna Standard of Care",
         description:
-            "Each local office is backed by Cerna’s broader home care experience, service standards, and commitment to quality care.",
+            "Each local office is backed by Cerna’s broader Homecare experience, service standards, and commitment to quality care.",
         icon: BadgeCheck,
     },
 ];
@@ -74,7 +74,7 @@ export default async function LocalWhyCernaPage({
 
                 <p className="mt-4 text-slate-600">
                     Please visit our main locations page
-                    to find a Cerna Home Care office near
+                    to find a Cerna Homecare office near
                     you.
                 </p>
 
@@ -95,7 +95,7 @@ export default async function LocalWhyCernaPage({
     const areaName = location.name;
 
     const locationBrandName =
-        `Cerna Home Care ${areaName}`;
+        `Cerna Homecare ${areaName}`;
 
     const primaryPhoneHref =
         location.phones?.[0]?.href ??
@@ -126,7 +126,7 @@ export default async function LocalWhyCernaPage({
                         </p>
 
                         <h1 className="text-4xl font-bold tracking-tight text-[#00456B] md:text-5xl">
-                            A Better Home Care Experience
+                            A Better Homecare Experience
                             for Families in {areaName}
                         </h1>
 
@@ -138,7 +138,7 @@ export default async function LocalWhyCernaPage({
                             support with Cerna&apos;s
                             commitment to dependable,
                             personalized, and professional
-                            in-home care.
+                            in-Homecare.
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-4">
@@ -183,7 +183,7 @@ export default async function LocalWhyCernaPage({
                     </p>
 
                     <h2 className="text-3xl font-bold tracking-tight text-[#00456B] md:text-4xl">
-                        Why Families Choose Cerna Home Care
+                        Why Families Choose Cerna Homecare
                     </h2>
 
                     <p className="mt-4 leading-8 text-slate-600">

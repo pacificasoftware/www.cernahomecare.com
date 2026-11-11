@@ -6,9 +6,9 @@ import {
 } from "@/lib/locations";
 
 export const metadata = {
-    title: "Careers | Cerna Home Care",
+    title: "Careers | Cerna Homecare",
     description:
-        "Apply now for Cerna Home Care jobs and view available caregiver and healthcare career opportunities.",
+        "Apply now for Cerna Homecare jobs and view available caregiver and healthcare career opportunities.",
 };
 
 const CORPORATE_LOCATION_SLUG =
@@ -17,15 +17,15 @@ const CORPORATE_LOCATION_SLUG =
 const celebrationImages = [
     {
         src: "/assets/love-work.webp",
-        alt: "Cerna Home Care team celebration",
+        alt: "Cerna Homecare team celebration",
     },
     {
         src: "/assets/love-works.webp",
-        alt: "Cerna Home Care careers celebration",
+        alt: "Cerna Homecare careers celebration",
     },
     {
         src: "/assets/cerna-crew.webp",
-        alt: "Cerna Home Care crew",
+        alt: "Cerna Homecare crew",
     },
 ];
 
@@ -103,7 +103,7 @@ export default async function CareersPage() {
 
                     {phoneLabel ? (
                         <p className="mx-auto mt-6 max-w-2xl text-lg font-bold leading-8 text-blue-700">
-                            For more information or to get assistance with applying to Cerna Home Care
+                            For more information or to get assistance with applying to Cerna Homecare
                             please call us at{" "}
                             <a
                                 href={phoneHref}

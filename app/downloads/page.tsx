@@ -35,7 +35,7 @@ export default function DownloadsPage() {
             <section className="bg-[#00456B] px-6 py-20 text-white">
                 <div className="mx-auto max-w-5xl text-center">
                     <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                        Cerna Home Care
+                        Cerna Homecare
                     </p>
 
                     <h1 className="text-5xl font-extrabold md:text-6xl">

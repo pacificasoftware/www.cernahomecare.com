@@ -5,9 +5,9 @@ import {
 } from "@/lib/locations";
 
 export const metadata = {
-    title: "Personalized Services & Wellness Visits | Cerna Home Care",
+    title: "Personalized Services & Wellness Visits | Cerna Homecare",
     description:
-        "Cerna Home Care provides personalized wellness visits, care coordination, advocacy, family coaching, and ongoing support for seniors and families.",
+        "Cerna Homecare provides personalized wellness visits, care coordination, advocacy, family coaching, and ongoing support for seniors and families.",
 };
 
 const CORPORATE_LOCATION_SLUG =
@@ -20,7 +20,7 @@ const visitServices = [
     "Family caregiver coaching",
     "Medication, exercise, and care instruction reminders",
     "Communication with family members and professionals",
-    "Home care service planning and monitoring",
+    "Homecare service planning and monitoring",
     "Housing and residential care guidance",
     "Social, recreational, and cultural activity support",
     "Safety, security, and risk monitoring",
@@ -156,7 +156,7 @@ export default async function PersonalizedServicesPage() {
                         <p>
                             We weren’t made on an assembly line. Every person is
                             different, and every care plan should reflect that. Cerna
-                            Home Care customizes wellness visits to the needs of each care
+                            Homecare customizes wellness visits to the needs of each care
                             recipient.
                         </p>
 
@@ -304,7 +304,7 @@ export default async function PersonalizedServicesPage() {
                         href="/contact-us"
                         className="inline-flex shrink-0 justify-center rounded-lg bg-[#00456B] px-8 py-4 text-sm font-extrabold uppercase tracking-wide text-white shadow-md transition hover:bg-[#003a5a]"
                     >
-                        Contact Cerna Home Care
+                        Contact Cerna Homecare
                     </Link>
                 </div>
             </section>

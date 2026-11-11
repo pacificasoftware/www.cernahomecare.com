@@ -10,8 +10,8 @@ import Footer from "../components/Footer";
 import SiteLayoutVisibility from "@/components/SiteLayoutVisibility";
 
 export const metadata: Metadata = {
-    title: "Cerna Home Care",
-    description: "Cerna Home Care website",
+    title: "Cerna Homecare",
+    description: "Cerna Homecare website",
 };
 
 export default function RootLayout({

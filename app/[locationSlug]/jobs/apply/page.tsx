@@ -94,7 +94,7 @@ async function getlocation(
                 result.Name ??
                 result.locationName ??
                 result.locationName ??
-                "Cerna Home Care",
+                "Cerna Homecare",
 
             city:
                 result.city ??
@@ -237,7 +237,7 @@ export default async function LocalApplyPage({
                     </h1>
 
                     <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-                        We could not find the Cerna Home Care
+                        We could not find the Cerna Homecare
                         location you requested.
                     </p>
 

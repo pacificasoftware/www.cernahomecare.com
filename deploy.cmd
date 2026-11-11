@@ -2,7 +2,7 @@
 setlocal EnableExtensions EnableDelayedExpansion
 
 REM ==========================================
-REM Cerna Home Care Website - PRODUCTION Deploy
+REM Cerna Homecare Website - PRODUCTION Deploy
 REM ==========================================
 
 REM Local project folder
@@ -33,7 +33,7 @@ set "REMOTE_UPLOAD=deploy-web-production.zip"
 
 echo.
 echo ==========================================
-echo Cerna Home Care Website
+echo Cerna Homecare Website
 echo PRODUCTION DEPLOYMENT
 echo ==========================================
 echo Source:       %SRC%

@@ -59,11 +59,11 @@ export async function generateMetadata({
     const { location, area } = await loadPageData(params);
 
     const title =
-        `Senior Home Care in ${area.name} | Cerna Home Care`;
+        `Senior Homecare in ${area.name} | Cerna Homecare`;
 
     const description =
         `Explore in-home senior care services in ${area.name}. ` +
-        `Cerna Home Care ${location.name} provides personalized ` +
+        `Cerna Homecare ${location.name} provides personalized ` +
         `care options for local families.`;
 
     const canonical =
@@ -105,16 +105,16 @@ export default async function CoverageAreaPage({
             <section className="bg-[#d9f1f7] px-6 py-20">
                 <div className="mx-auto max-w-7xl">
                     <p className="font-semibold uppercase tracking-widest text-[#DD8500]">
-                        Cerna Home Care {location.name}
+                        Cerna Homecare {location.name}
                     </p>
 
                     <h1 className="mt-4 text-4xl font-bold text-[#00456B] md:text-5xl">
-                        Senior Home Care Services in {area.name}
+                        Senior Homecare Services in {area.name}
                     </h1>
 
                     <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-700">
                         Looking for compassionate in-home senior care
-                        in {area.name}? Cerna Home Care {location.name}
+                        in {area.name}? Cerna Homecare {location.name}
                         helps families explore personalized care options
                         that support comfort, safety, and independence.
                     </p>
@@ -142,7 +142,7 @@ export default async function CoverageAreaPage({
             {/* SERVICES */}
             <section className="mx-auto max-w-7xl px-6 py-20">
                 <h2 className="text-3xl font-bold text-[#00456B]">
-                    In-Home Care Options in {area.name}
+                    In-Homecare Options in {area.name}
                 </h2>
 
                 <p className="mt-5 max-w-3xl leading-8 text-slate-700">
@@ -175,7 +175,7 @@ export default async function CoverageAreaPage({
                                     href={`/${location.slug}/areas/${item.slug}`}
                                     className="rounded-xl border border-slate-200 p-5 font-semibold text-[#00456B] hover:border-[#DD8500]"
                                 >
-                                    Home Care in {item.name}
+                                    Homecare in {item.name}
                                 </Link>
                             ))}
                         </div>
@@ -186,11 +186,11 @@ export default async function CoverageAreaPage({
             {/* CTA */}
             <section className="px-6 py-20 text-center">
                 <h2 className="text-3xl font-bold text-[#00456B]">
-                    Need Home Care in {area.name}?
+                    Need Homecare in {area.name}?
                 </h2>
 
                 <p className="mx-auto mt-4 max-w-2xl text-slate-600">
-                    Contact Cerna Home Care {location.name}
+                    Contact Cerna Homecare {location.name}
                     to discuss your family's needs and
                     available care options.
                 </p>

@@ -6,9 +6,9 @@ import {
 } from "@/lib/locations";
 
 export const metadata = {
-    title: "Assisted Living & Senior Assistance | Cerna Home Care",
+    title: "Assisted Living & Senior Assistance | Cerna Homecare",
     description:
-        "Cerna Home Care helps families navigate assisted living, senior housing, memory care, respite care, and senior assistance options.",
+        "Cerna Homecare helps families navigate assisted living, senior housing, memory care, respite care, and senior assistance options.",
 };
 
 const CORPORATE_LOCATION_SLUG =

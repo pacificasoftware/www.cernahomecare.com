@@ -26,7 +26,7 @@ export default async function LocalAboutUsPage({
 
                 <p className="mt-4 text-slate-600">
                     Please visit our main locations page
-                    to find a Cerna Home Care office near
+                    to find a Cerna Homecare office near
                     you.
                 </p>
 
@@ -67,15 +67,15 @@ export default async function LocalAboutUsPage({
                         </p>
 
                         <h1 className="text-4xl font-bold tracking-tight text-[#00456B] md:text-5xl">
-                            Local Home Care with the Cerna
+                            Local Homecare with the Cerna
                             Standard of Excellence
                         </h1>
 
                         <p className="mt-6 text-lg leading-8 text-slate-700">
-                            At Cerna Home Care {areaName},
+                            At Cerna Homecare {areaName},
                             we provide compassionate,
                             reliable, and professional
-                            in-home care for families
+                            in-Homecare for families
                             throughout {areaName}. Our
                             mission is to help seniors
                             remain safe, comfortable, and
@@ -105,7 +105,7 @@ export default async function LocalAboutUsPage({
                     <div className="relative mx-auto h-[320px] w-full max-w-[560px] overflow-hidden rounded-[46px] bg-white shadow-xl md:h-[420px]">
                         <Image
                             src={location.heroImage}
-                            alt={`Cerna Home Care ${areaName} office`}
+                            alt={`Cerna Homecare ${areaName} office`}
                             fill
                             priority
                             sizes="(max-width: 768px) 100vw, 560px"
@@ -242,7 +242,7 @@ export default async function LocalAboutUsPage({
             <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
                 <div className="rounded-[40px] bg-gradient-to-br from-[#00456B] to-[#0070a8] p-8 text-center text-white shadow-xl md:p-14">
                     <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#F5B041]">
-                        {areaName} Home Care
+                        {areaName} Homecare
                     </p>
 
                     <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold tracking-tight md:text-4xl">

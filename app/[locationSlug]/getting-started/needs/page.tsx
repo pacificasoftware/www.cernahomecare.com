@@ -92,7 +92,7 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
             <section className="getting-started-section">
                 <div className="getting-started-container">
                     <p className="getting-started-subcopy">
-                        Loading your local Cerna Home Care office...
+                        Loading your local Cerna Homecare office...
                     </p>
                 </div>
             </section>
@@ -108,7 +108,7 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
                     </h1>
 
                     <p className="getting-started-subcopy">
-                        We could not find this Cerna Home Care location.
+                        We could not find this Cerna Homecare location.
                     </p>
 
                     <div className="getting-started-button-wrap">
@@ -180,7 +180,7 @@ export default function LocalGettingStartedNeedsPage({ params }: Props) {
                         </h1>
 
                         <p className="getting-started-subtitle">
-                            Cerna Home Care {location.name} is here to help you
+                            Cerna Homecare {location.name} is here to help you
                             or a loved one today.
                         </p>
 

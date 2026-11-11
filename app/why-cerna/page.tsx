@@ -14,7 +14,7 @@ export default function WhyCernaPage() {
                         <div className="why-hero-image-wrap">
                             <Image
                                 src="/assets/cernaoffice.png"  
-                                alt="Cerna Home Care building"
+                                alt="Cerna Homecare building"
                                 width={420}
                                 height={260} 
                             />
@@ -23,11 +23,11 @@ export default function WhyCernaPage() {
                         {/* Right Content */}
                         <div className="why-hero-content">
                             <h1 className="why-hero-title">
-                                Why Cerna Home Care
+                                Why Cerna Homecare
                             </h1>
 
                             <p className="why-hero-text">
-                                An Irvine-based home care and nursing services company that specializes
+                                An Irvine-based Homecare and nursing services company that specializes
                                 in care and support services for the elderly. Cerna has found that
                                 enlisting a caregiver not only reduces stress among the family but also
                                 significantly improves the life of the care recipient.
@@ -88,12 +88,12 @@ export default function WhyCernaPage() {
                         </div>
 
                         <div className="why-training-content">
-                            <h2 className="why-training-title">Cerna Home Care – Training</h2>
+                            <h2 className="why-training-title">Cerna Homecare – Training</h2>
 
                             <p className="why-training-text">
                                 At Cerna Homecare we are constantly training and keeping our Care Providers at
                                 the highest level of knowledge and industry standards. You never know what may
-                                arise in an In Home Care scenario so it makes sense to be as prepared as possible
+                                arise in an In Homecare scenario so it makes sense to be as prepared as possible
                                 and capable of handling any and every situation.
                             </p>
 
@@ -116,7 +116,7 @@ export default function WhyCernaPage() {
                         </div>
 
                         <div className="why-training-content">
-                            <h2 className="why-training-title">Cerna Home Care – In The Office</h2>
+                            <h2 className="why-training-title">Cerna Homecare – In The Office</h2>
 
                             <p className="why-training-text">
                                 Another very important part of providing care for family members with Alzheimer’s,

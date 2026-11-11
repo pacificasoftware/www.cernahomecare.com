@@ -560,7 +560,7 @@ export default function Navbar() {
                 >
                     <img
                         src="/assets/cerna-caring-seniors.webp"
-                        alt="Cerna Home Care"
+                        alt="Cerna Homecare"
                         className={
                             styles.logo
                         }

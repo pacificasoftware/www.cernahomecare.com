@@ -251,8 +251,8 @@ export default function Footer() {
 
     const footerTitle =
         location
-            ? `Cerna Home Care ${location.name}`
-            : "Cerna Home Care";
+            ? `Cerna Homecare ${location.name}`
+            : "Cerna Homecare";
 
     /*
     |--------------------------------------------------------------------------
@@ -836,7 +836,7 @@ export default function Footer() {
                 <div className="mx-auto max-w-7xl px-6 py-8 text-center">
                     <p className="text-base md:text-[18px]">
                         © {currentYear} Cerna
-                        Home Care | Industry
+                        Homecare | Industry
                         leading care services
                         provided by highly
                         trained Care Givers.

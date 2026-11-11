@@ -10,7 +10,7 @@ const CORPORATE_LOCATION_SLUG =
 const supportOptions = [
     {
         title: "Long-Term Care Insurance",
-        text: "Some private health insurance plans and life insurance policies may offer coverage for home care services. Long-term care insurance is specifically designed for home care, assisted living, and related support.",
+        text: "Some private health insurance plans and life insurance policies may offer coverage for Homecare services. Long-term care insurance is specifically designed for Homecare, assisted living, and related support.",
     },
     {
         title: "VA Homemaker & Home Health Aide Program",
@@ -22,7 +22,7 @@ const supportOptions = [
     },
     {
         title: "Medicaid",
-        text: "Medicaid may cover in-home care for low-income individuals, especially those needing long-term care. Eligibility and coverage vary by state.",
+        text: "Medicaid may cover in-Homecare for low-income individuals, especially those needing long-term care. Eligibility and coverage vary by state.",
     },
     {
         title: "Reverse Mortgages",
@@ -106,7 +106,7 @@ export default async function VaFinancialSupportPage() {
             <section className="bg-[#00456B] px-6 py-20 text-white">
                 <div className="mx-auto max-w-5xl text-center">
                     <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#DD8500]">
-                        Cerna Home Care
+                        Cerna Homecare
                     </p>
 
                     <h1 className="text-5xl font-extrabold text-white md:text-6xl">
@@ -114,7 +114,7 @@ export default async function VaFinancialSupportPage() {
                     </h1>
 
                     <p className="mx-auto mt-6 max-w-3xl text-xl leading-8 text-white/90">
-                        Learn about common ways families may pay for home care,
+                        Learn about common ways families may pay for Homecare,
                         including private funds, long-term care insurance, VA programs,
                         Medicaid, and reverse mortgage options.
                     </p>
@@ -139,11 +139,11 @@ export default async function VaFinancialSupportPage() {
                     <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
                         <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm md:p-10">
                             <h2 className="text-4xl font-extrabold text-[#00456B]">
-                                How Do I Pay for Home Care?
+                                How Do I Pay for Homecare?
                             </h2>
 
                             <p className="mt-6 text-lg leading-8 text-slate-700">
-                                Paying for home care services can involve a mix of
+                                Paying for Homecare services can involve a mix of
                                 private funds, insurance such as long-term care policies,
                                 and government assistance such as VA programs, Homemaker
                                 and Home Health Aide services, Aid & Attendance, Medicaid,
@@ -186,7 +186,7 @@ export default async function VaFinancialSupportPage() {
                             </h2>
 
                             <p className="mt-4 text-lg leading-8 text-white/85">
-                                Cerna Home Care can help families understand what
+                                Cerna Homecare can help families understand what
                                 questions to ask and which programs may be worth exploring.
                             </p>
 
@@ -272,7 +272,7 @@ export default async function VaFinancialSupportPage() {
                                 Unreimbursed medical expenses may help reduce countable
                                 income for eligibility purposes. These can include
                                 insurance premiums, medications, assisted living costs,
-                                nursing home fees, and in-home care expenses.
+                                nursing home fees, and in-Homecare expenses.
                             </p>
                         </div>
 
@@ -282,7 +282,7 @@ export default async function VaFinancialSupportPage() {
                             </h2>
 
                             <p className="mt-6 text-lg leading-8 text-slate-700">
-                                Medicaid may help cover in-home care for qualifying
+                                Medicaid may help cover in-Homecare for qualifying
                                 individuals, though programs vary by state.
                             </p>
 
@@ -304,7 +304,7 @@ export default async function VaFinancialSupportPage() {
                         </h2>
 
                         <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-white/85">
-                            Contact Cerna Home Care and we can help point you in the
+                            Contact Cerna Homecare and we can help point you in the
                             right direction.
                         </p>
 

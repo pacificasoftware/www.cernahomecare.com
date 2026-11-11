@@ -72,7 +72,7 @@ export default function GuideLeadForm() {
                 {submitting ? "Sending..." : "Submit Request"}
             </button>
             {message && <p className={`formFeedback ${success ? "success" : "error"}`} role="status">{message}</p>}
-            <p className="formPrivacy">By submitting, you agree to be contacted by Cerna Home Care about your inquiry.</p>
+            <p className="formPrivacy">By submitting, you agree to be contacted by Cerna Homecare about your inquiry.</p>
         </form>
     );
 }

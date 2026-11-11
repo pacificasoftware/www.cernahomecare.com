@@ -112,7 +112,7 @@ export default async function HomeCarePage() {
                         </h1>
 
                         <p className={styles.heroText}>
-                            With Cerna In-Home Care Services, you are treated like family.
+                            With Cerna In-Homecare Services, you are treated like family.
                             Whether you need a few hours of help each day or full-time care,
                             we provide flexible solutions tailored to your needs.
                         </p>
@@ -138,7 +138,7 @@ export default async function HomeCarePage() {
             <section className={styles.cernaBoxSection}>
                 <Image
                     src="/assets/cerna-box.webp"
-                    alt="Cerna Homecare is a local leader in the home care service industry"
+                    alt="Cerna Homecare is a local leader in the Homecare service industry"
                     width={1600}
                     height={420}
                     className={styles.cernaBoxImage}
